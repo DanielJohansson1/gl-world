@@ -2,7 +2,7 @@
   "name": "Grindlife World",
   "short_name": "GL World",
   "description": "Grindlife with a world to explore. Your real life opens the map.",
-  "id": "./",
+  "id": "/grindlife-world/",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
