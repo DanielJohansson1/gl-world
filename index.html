@@ -164,6 +164,9 @@ body.inworld main{max-width:none;padding:0}
 #wdlg .wport{flex:none;width:72px;height:96px;background:var(--field);border:3px solid var(--fg);display:flex;align-items:flex-end;justify-content:center;overflow:hidden}#wdlg .wport canvas{width:72px;height:auto;image-rendering:pixelated}
 #wdlg .wtxt{flex:1;display:flex;flex-direction:column;gap:6px}#wdlg b{font-size:9px;color:var(--mid);font-weight:normal}#wdlg p{margin:0;font-size:10px;line-height:1.7}#wdlg small{align-self:flex-end;font-size:7px;color:var(--mid);animation:wflash2 1s steps(2) infinite}
 #wdlg.quest p{color:#8a6200}
+#wdlg .wch{display:flex;gap:8px;flex-wrap:wrap}#wdlg .wch button{flex:1;min-width:100px;padding:10px 6px;font-size:9px}#wdlg .wch button:first-child{background:#ffd36b}
+.task.mq .n small{color:#8a5a2a}.task.mq{border-left:4px solid #e0a64e;padding-left:8px}.task.mq.rep .n small{color:#2f7a1f}.task.mq.rep{background:#eef7d8}
+.mtag{flex:none;border:2px solid #b0742c;color:#8a5a2a;padding:3px 5px;font-size:8px}.rlport canvas{width:84px;image-rendering:pixelated}
 #wdlg[hidden],#wact[hidden],#wjoy[hidden]{display:none}
 
 .fxc{position:fixed;inset:0;pointer-events:none;z-index:60;image-rendering:pixelated}
@@ -750,6 +753,7 @@ var PET_COLORS = { A: '#e0a64e', a: '#b0742c', l: '#f7dca0', x: '#2a1a12', T: '#
 
 function charLayers(str, int, cha, gear, pose) {
   pose = pose || '';
+  const run = /^run[0-3]$/.test(pose) ? +pose[3] : -1, walk = /^(walk|back)[01]$/.test(pose) ? +pose.slice(-1) : -1, bk = /^back[01]?$/.test(pose);   // bk = seen from behind (walking up)   // world movement frames (run = facing right)
   const W = 44, H = 44, FB = 40, CX = (gear && gear.pet) ? ((gear.tiers && gear.tiers.STR) ? 17 : 19) : 22; // FB = feet bottom row, CX = centre (between CX-1 and CX)
   const tier = l => l >= 6 ? 2 : l >= 3 ? 1 : 0;
   const sT = tier(str), iT = tier(int), cT = tier(cha), TT = (gear && gear.tiers) || {}, stT = TT.STR || 0, inT = TT.INT || 0, chT = TT.CHA || 0;
@@ -796,16 +800,37 @@ function charLayers(str, int, cha, gear, pose) {
   const headBot = shirtTop - 1, top = headBot - HH + 1, hL = CX - HW / 2, hR = CX + HW / 2 - 1;
 
   // ---- legs / pants
+  if (run >= 0) {                                                   // side run cycle: far leg darker, near leg on top
+    const hipW = Math.max(6, LW * 2 - 2), lw = Math.max(3, LW - 2);
+    rect(body, CX - hipW / 2, pantsTop, hipW, 2, 'p'); rect(body, CX - hipW / 2, pantsTop, hipW, 1, 'q');
+    const F = [[5, -5, 0, 0], [0, 2, 3, 0], [-5, 5, 0, 0], [2, 0, 0, 3]][run];          // near foot dx, far foot dx, near lift, far lift
+    const leg = (fdx, lift, c) => {
+      const hx = CX - Math.floor(lw / 2), fx = CX - Math.floor(lw / 2) + fdx, fy = shoeTop - 1 - lift, n = Math.max(1, fy - (pantsTop + 2));
+      for (let i = 0; i <= n; i++) { const x = Math.round(hx + (fx - hx) * i / n); rect(body, x, pantsTop + 2 + i, lw, 1, c); }
+      rect(body, fx, fy + 1, lw + 2, 2, 'f'); rect(body, fx, fy + 2, lw + 2, 1, 'F');
+    };
+    leg(F[1], F[3], 'q'); leg(F[0], F[2], 'p');
+  } else {
   rect(body, CX - LW, pantsTop, LW * 2, 6, 'p');
   for (let y = pantsTop + 3; y < pantsTop + 6; y++) { body[y][CX - 1] = null; body[y][CX] = null; }
   for (let y = pantsTop; y < pantsTop + 6; y++) { put(body, CX + LW - 1, y, 'q'); if (y >= pantsTop + 3) put(body, CX - 2, y, 'q'); }
   rect(body, CX - LW, pantsTop, LW * 2, 1, 'q'); // waistband shadow
-  // shoes
-  rect(body, CX - LW - 1, shoeTop, LW, 2, 'f'); rect(body, CX + 1, shoeTop, LW, 2, 'f');
-  rect(body, CX - LW - 1, shoeTop + 1, LW, 1, 'F'); rect(body, CX + 1, shoeTop + 1, LW, 1, 'F');
+  // shoes (walking up/down lifts one foot)
+  const lL = walk === 0 ? 1 : 0, lR = walk === 1 ? 1 : 0;
+  rect(body, CX - LW - 1, shoeTop - lL, LW, 2, 'f'); rect(body, CX + 1, shoeTop - lR, LW, 2, 'f');
+  rect(body, CX - LW - 1, shoeTop + 1 - lL, LW, 1, 'F'); rect(body, CX + 1, shoeTop + 1 - lR, LW, 1, 'F');
+  if (lL) for (let x = CX - LW - 1; x < CX - 1; x++) put(body, x, shoeTop + 1, null); if (lR) for (let x = CX + 1; x < CX + LW + 1; x++) put(body, x, shoeTop + 1, null);
+  }
 
   // ---- torso
-  if (naked) {
+  if (naked && bk) {                                                  // bare back: shoulder blades + spine
+    rect(body, tL, shirtTop, TW, 7, 's'); rect(body, tR, shirtTop, 1, 7, 'S');
+    rect(body, CX - LW, pantsTop + 1, LW * 2, 1, 'q');
+    rect(body, tL + 2, shirtTop + 2, TW / 2 - 4, 1, 'S'); rect(body, CX + 2, shirtTop + 2, TW / 2 - 4, 1, 'S');
+    put(body, tL + 2, shirtTop + 1, 'K'); put(body, CX + 2, shirtTop + 1, 'K');
+    for (let y = shirtTop + 1; y < shirtTop + 7; y++) put(body, CX - 1, y, 'S');
+    put(body, tL + 1, shirtTop + 4, 'S'); put(body, tL + 2, shirtTop + 5, 'S'); put(body, tR - 1, shirtTop + 4, 'S'); put(body, tR - 2, shirtTop + 5, 'S');
+  } else if (naked) {
     rect(body, tL, shirtTop, TW, 7, 's');
     rect(body, tR, shirtTop, 1, 7, 'S');
     rect(body, CX - LW, pantsTop + 1, LW * 2, 1, 'q');                 // waistband sits lower
@@ -820,16 +845,20 @@ function charLayers(str, int, cha, gear, pose) {
   rect(body, tR - 1, shirtTop, 2, 6, ss);
   rect(body, tL, shirtTop + 5, TW, 1, ss);
   if (shirt) rect(body, tL, shirtTop + 3, TW - 2, 1, 'r');
-  if (hood) { rect(body, CX - 4, shirtTop, 8, 1, 'U'); put(body, CX - 2, shirtTop + 1, 'n'); put(body, CX - 2, shirtTop + 2, 'n'); put(body, CX + 1, shirtTop + 1, 'n'); put(body, CX + 1, shirtTop + 2, 'n'); rect(body, CX - 3, shirtTop + 4, 6, 1, 'U'); }
+  if (hood && bk) { rect(body, CX - 4, shirtTop, 8, 3, 'U'); rect(body, CX - 3, shirtTop, 6, 2, 'X'); rect(body, CX - 2, shirtTop + 3, 4, 1, 'U'); put(body, CX - 4, shirtTop + 2, sb); put(body, CX + 3, shirtTop + 2, sb); }
+  else if (hood) { rect(body, CX - 4, shirtTop, 8, 1, 'U'); put(body, CX - 2, shirtTop + 1, 'n'); put(body, CX - 2, shirtTop + 2, 'n'); put(body, CX + 1, shirtTop + 1, 'n'); put(body, CX + 1, shirtTop + 2, 'n'); rect(body, CX - 3, shirtTop + 4, 6, 1, 'U'); }
   // neckline
-  rect(body, CX - 2, shirtTop, 4, 1, 'S'); rect(body, CX - 1, shirtTop + 1, 2, 1, 'S');
-  if (tank) { rect(body, tL, shirtTop, 2, 1, 's'); rect(body, tR - 1, shirtTop, 2, 1, 's'); rect(body, CX - 3, shirtTop, 6, 1, 'S'); rect(body, CX - 2, shirtTop + 1, 4, 1, 'S'); rect(body, tL, shirtTop + 3, TW, 1, 'R'); }
-  if (sweater) { put(body, CX - 2, shirtTop + 2, 'R'); put(body, CX, shirtTop + 2, 'R'); rect(body, CX - 2, shirtTop + 3, 3, 1, 'R'); put(body, CX - 1, shirtTop + 4, 'R'); put(body, CX - 2, shirtTop + 2, 'r'); }
+  if (bk) { if (!hood && !gi) rect(body, CX - 3, shirtTop, 6, 1, ss); }
+  else { rect(body, CX - 2, shirtTop, 4, 1, 'S'); rect(body, CX - 1, shirtTop + 1, 2, 1, 'S'); }
+  if (tank && bk) { rect(body, tL, shirtTop, 2, 1, 's'); rect(body, tR - 1, shirtTop, 2, 1, 's'); rect(body, CX - 2, shirtTop, 4, 1, 'S'); rect(body, tL, shirtTop + 3, TW, 1, 'R'); }
+  else if (tank) { rect(body, tL, shirtTop, 2, 1, 's'); rect(body, tR - 1, shirtTop, 2, 1, 's'); rect(body, CX - 3, shirtTop, 6, 1, 'S'); rect(body, CX - 2, shirtTop + 1, 4, 1, 'S'); rect(body, tL, shirtTop + 3, TW, 1, 'R'); }
+  if (sweater && !bk) { put(body, CX - 2, shirtTop + 2, 'R'); put(body, CX, shirtTop + 2, 'R'); rect(body, CX - 2, shirtTop + 3, 3, 1, 'R'); put(body, CX - 1, shirtTop + 4, 'R'); put(body, CX - 2, shirtTop + 2, 'r'); }
   if (gi) {
-    for (let i = 0; i < 4; i++) { put(body, CX - 3 + i, shirtTop + i, 'N'); put(body, CX + 2 - i, shirtTop + i, 'N'); }
-    rect(body, tL, shirtTop + 4, TW, 1, 'E'); put(body, CX - 1, shirtTop + 5, 'E'); put(body, CX, shirtTop + 5, 'E');
+    if (bk) { rect(body, CX - 3, shirtTop, 6, 1, 'N'); rect(body, tL, shirtTop + 4, TW, 1, 'E'); }
+    else { for (let i = 0; i < 4; i++) { put(body, CX - 3 + i, shirtTop + i, 'N'); put(body, CX + 2 - i, shirtTop + i, 'N'); }
+    rect(body, tL, shirtTop + 4, TW, 1, 'E'); put(body, CX - 1, shirtTop + 5, 'E'); put(body, CX, shirtTop + 5, 'E'); }
     for (let y = pantsTop; y < pantsTop + 6; y++) for (let x = 0; x < W; x++) { if (body[y][x] === 'p') body[y][x] = 'n'; else if (body[y][x] === 'q') body[y][x] = 'N'; }
-    put(body, CX - 2, pantsTop, 'E'); put(body, CX - 2, pantsTop + 1, 'E'); put(body, CX + 1, pantsTop, 'E');
+    if (!bk) { put(body, CX - 2, pantsTop, 'E'); put(body, CX - 2, pantsTop + 1, 'E'); put(body, CX + 1, pantsTop, 'E'); }
   }
   }
 
@@ -876,16 +905,29 @@ function charLayers(str, int, cha, gear, pose) {
   };
   const armPose = { spell: [null, 'up'], spell2: [null, 'up'], wave1: [null, 'wave1'], wave2: [null, 'wave2'], stretch: ['up', 'up'], flex: ['flex', 'flex'], thumb: [null, 'thumb'], shuffleL: ['up', null], shuffleR: [null, 'up'] }[pose] || [null, null];
   [-1, 1].forEach((side, i) => { const k = armPose[i]; if (k) raised(side, k); else (naked || tank ? nArm : arm)(side); });
-  if (cape) {                                     // scholar's cape: mantle over the shoulders, sides hanging behind the arms
+  if (run === 0 || run === 2) [-1, 1].forEach(side => {           // hands swing opposite to the legs
+    const sx = side < 0 ? tL - AW - 2 : tR + 1, d = ((side > 0) === (run === 0) ? -1 : 1) * 2, px = [];
+    for (let y = shirtTop + 2; y <= shirtTop + 6; y++) for (let x = sx; x <= sx + AW + 1; x++) if (body[y] && body[y][x] && 'sSK'.includes(body[y][x])) { px.push([x, y, body[y][x]]); body[y][x] = null; }
+    px.forEach(([x, y, c]) => put(body, x + d, y + (d < 0 ? -1 : 0), c));
+  });
+  if (cape && bk) {                               // from behind the cape covers the whole back, widening toward the hem
+    for (let y = shirtTop - 1; y <= pantsTop + 5; y++) {
+      const hw = TW / 2 + 1 + Math.max(0, Math.floor((y - shirtTop) / 3)), x0 = CX - hw;
+      rect(body, x0, y, hw * 2, 1, 'I'); rect(body, CX + hw - 2, y, 2, 1, 'A');
+      if (y > shirtTop + 2) { put(body, CX - 4, y, 'A'); put(body, CX + 3, y, 'A'); }
+      if (y === pantsTop + 5) rect(body, x0, y, hw * 2, 1, 'y');
+    }
+    rect(body, tL - 1, shirtTop - 2, TW + 2, 1, 'I');
+  } else if (cape) {                              // scholar's cape: mantle over the shoulders, sides hanging behind the arms
     for (let x = tL - AW - 2; x <= tR + AW + 2; x++) if (!body[shirtTop - 1][x]) put(body, x, shirtTop - 1, x >= tL - 1 && x <= tR + 1 ? 'I' : 'A');
     rect(body, CX - 2, shirtTop, 4, 1, 'I'); put(body, CX - 1, shirtTop, 'y'); put(body, CX, shirtTop, 'y');
     [[tL - AW - 2, -1], [tR + AW + 2, 1]].forEach(([x, d]) => { for (let y = shirtTop - 1; y < pantsTop + 5; y++) { if (!body[y][x]) put(body, x, y, 'A'); if (y > shirtTop && !body[y][x + d]) put(body, x + d, y, y > pantsTop ? 'A' : 'I'); } put(body, x, pantsTop + 5, 'y'); put(body, x + d, pantsTop + 5, 'y'); });
     for (let x = tL - AW - 1; x <= tR + AW + 1; x++) if (!body[shirtTop - 2][x] && x > tL - 2 && x < tR + 2 && (x < CX - 3 || x > CX + 2)) put(body, x, shirtTop - 2, 'I');
   }
-  if (stT >= 1) [-1, 1].forEach((side, i) => { if (armPose[i]) return; const x0 = side < 0 ? tL - AW - 1 : tR - 1; rect(body, x0, shirtTop - 1, AW + 2, 1, naked ? 's' : sb); put(body, side < 0 ? x0 : x0 + AW + 1, shirtTop - 1, null); });
-  if (stT >= 1 && !naked) { rect(body, tL + 2, shirtTop + 2, TW / 2 - 3, 1, ss); rect(body, CX + 1, shirtTop + 2, TW / 2 - 3, 1, ss); }
+  if (stT >= 1) [-1, 1].forEach((side, i) => { if (armPose[i]) return; const x0 = side < 0 ? tL - AW - 1 : tR - 1; rect(body, x0, shirtTop - 1, AW + 2, 1, cape && bk ? 'I' : naked ? 's' : sb); put(body, side < 0 ? x0 : x0 + AW + 1, shirtTop - 1, null); });
+  if (stT >= 1 && !naked && !(cape && bk)) { rect(body, tL + 2, shirtTop + 2, TW / 2 - 3, 1, ss); rect(body, CX + 1, shirtTop + 2, TW / 2 - 3, 1, ss); }
   if (stT >= 2) [-1, 1].forEach((side, i) => { if (armPose[i]) return; const sx = side < 0 ? tL - AW - 1 : tR + 2; put(body, sx + 1, shirtTop + 2, 'K'); put(body, sx + 2, shirtTop + 2, 'K'); put(body, sx + 1, shirtTop + 3, 'K'); put(body, sx + AW - 2, shirtTop + 4, 'S'); });
-  if (stT >= 2 && !naked) { rect(body, CX - 1, shirtTop + 3, 2, 2, ss); rect(body, tL + 1, shirtTop + 4, 2, 1, ss); rect(body, tR - 2, shirtTop + 4, 2, 1, ss); }
+  if (stT >= 2 && !naked && !bk) { rect(body, CX - 1, shirtTop + 3, 2, 2, ss); rect(body, tL + 1, shirtTop + 4, 2, 1, ss); rect(body, tR - 2, shirtTop + 4, 2, 1, ss); }
 
   // ---- head
   for (let r = 0; r < HH; r++) {
@@ -934,14 +976,23 @@ function charLayers(str, int, cha, gear, pose) {
   // faded sides: darker short hair just above the ears
   [hL, hR].forEach(x => { put(body, x, ey - 1, 'H'); });
 
+  if (bk) {                                                           // back of the head: hair all the way down, faded at the nape
+    for (let r = hairRows; r < HH - 1; r++) { const ind = r === HH - 2 ? 1 : 0; rect(body, hL + ind, top + r, HW - ind * 2, 1, r >= HH - 3 ? 'H' : 'h'); }
+    for (let k = 0; k < Math.floor(HW / 4); k++) { const x = hL + 3 + k * 4, y0 = top + hairRows - 3 + (k & 1) * 2; for (let j = 0; j < 4; j++) { const y = y0 + j, xx = x - (j >> 1); if (body[y] && body[y][xx] === 'h') body[y][xx] = 'H'; } }
+    [[hL + 2, top + 2], [hL + 3, top + 1], [hL + 1, top + 3], [hL + 1, top + 4]].forEach(([x, y]) => { if (body[y] && body[y][x] === 'h') body[y][x] = 'L'; });
+    for (let r = hairRows; r < HH - 1; r++) { const y = top + r; for (let x = W - 1; x >= 0; x--) if (body[y][x] === 'h' || body[y][x] === 'L') { body[y][x] = 'H'; break; } }
+    rect(body, hL + 3, headBot, HW - 6, 1, 'S');                       // neck
+  }
   // ---- face
-  const ex1 = CX - Math.round(HW * 0.3) - 1, ex2 = CX + Math.round(HW * 0.3) - 1;
+  const fs = run >= 0 ? 2 : 0;                                       // three-quarter turn: features slide toward the front
+  const ex1 = CX - Math.round(HW * 0.3) - 1 + fs, ex2 = CX + Math.round(HW * 0.3) - 1 + fs, my = ey + 3;
+  if (!bk) {
   [ex1, ex2].forEach(x => { put(body, x, ey, 'e'); put(body, x + 1, ey, 'g'); put(body, x, ey + 1, 'e'); put(body, x + 1, ey + 1, 'e'); });
   put(body, ex1 - 1, ey + 2, 'b'); put(body, ex1, ey + 2, 'b');
   put(body, ex2 + 1, ey + 2, 'b'); put(body, ex2 + 2, ey + 2, 'b');
-  const my = ey + 3;
-  put(body, CX - 2, my, 'm'); put(body, CX - 1, my, 't'); put(body, CX, my, 't'); put(body, CX + 1, my, 'm');
-  put(body, CX - 1, my + 1, 'm'); put(body, CX, my + 1, 'm');
+  put(body, CX - 2 + fs, my, 'm'); put(body, CX - 1 + fs, my, 't'); put(body, CX + fs, my, 't'); put(body, CX + 1 + fs, my, 'm');
+  put(body, CX - 1 + fs, my + 1, 'm'); put(body, CX + fs, my + 1, 'm');
+  if (run >= 0) { put(body, hR + 1, ey, null); put(body, hR + 1, ey + 1, null); rect(body, hL, ey - 1, 2, 3, 'H'); put(body, hL + 2, ey - 1, 'h'); }
   put(body, hL + 2, ey - 1, 'K'); put(body, hL + 3, ey - 1, 'K'); // cheek light
   const shut = x => { put(body, x, ey, 's'); put(body, x + 1, ey, 's'); put(body, x, ey + 1, 'e'); put(body, x + 1, ey + 1, 'e'); };
   if (pose === 'blink' || pose === 'breath' || pose === 'zen') { shut(ex1); shut(ex2); }
@@ -950,6 +1001,7 @@ function charLayers(str, int, cha, gear, pose) {
   if (pose === 'wink') shut(ex2);
   if (pose === 'breath') { [CX - 2, CX - 1, CX, CX + 1].forEach(x => put(body, x, my, 's')); put(body, CX - 1, my + 1, 's'); put(body, CX, my + 1, 's'); put(body, CX - 1, my, 'm'); put(body, CX, my, 'm'); }
   if (pose === 'flex' || pose === 'jump') { put(body, CX - 2, my + 1, 'm'); put(body, CX + 1, my + 1, 'm'); }
+  }
 
   // ---- wizard hat (gear)
   if (head === 'hat') {
@@ -967,19 +1019,29 @@ function charLayers(str, int, cha, gear, pose) {
     }
     put(body, hL + Math.round(HW * 0.45), brimY - 4, 'Y');
   }
-  if (head === 'champ') {
+  const band = (c1, c2, c3, c4) => {                   // headband from behind: knot in the middle, two tails hanging down
+    const y = top + hairRows - 1;
+    rect(body, hL, y, HW, 2, c1); rect(body, hL, y + 1, HW, 1, c2);
+    rect(body, CX - 2, y - 1, 4, 3, c1); rect(body, CX - 2, y + 1, 4, 1, c3); put(body, CX - 1, y - 1, c4);
+    rect(body, CX - 3, y + 2, 2, 2, c1); put(body, CX - 4, y + 4, c1); put(body, CX - 3, y + 4, c3); put(body, CX - 4, y + 5, c3);
+    rect(body, CX + 1, y + 2, 2, 2, c1); put(body, CX + 2, y + 4, c1); put(body, CX + 3, y + 4, c1); put(body, CX + 3, y + 5, c3);
+  };
+  if (bk && head === 'champ') band('y', 'u', 'u', 'Y');
+  else if (bk && head === 'sweat') band('R', 'Q', 'Q', 'r');
+  else if (head === 'champ') {
     const y = top + hairRows - 1;
     rect(body, hL, y, HW, 2, 'y'); rect(body, hL, y + 1, HW, 1, 'u'); put(body, hL + 2, y, 'Y'); put(body, hL + 3, y, 'Y');
     put(body, CX - 1, y, 'R'); put(body, CX, y, 'R'); put(body, CX - 1, y + 1, 'Q'); put(body, CX, y + 1, 'Q');
     put(body, hR + 1, y, 'y'); put(body, hR + 2, y + 1, 'y'); put(body, hR + 2, y + 2, 'u');
   }
-  if (head === 'sweat') {
+  else if (head === 'sweat') {
     const y = top + hairRows - 1;
     rect(body, hL, y, HW, 2, 'R'); rect(body, hL, y + 1, HW, 1, 'Q');
     put(body, hL + 2, y, 'r'); put(body, hL + 3, y, 'r');
     put(body, hR + 1, y, 'R'); put(body, hR + 2, y + 1, 'R'); put(body, hR + 2, y + 2, 'Q');
   }
-  if (head === 'read' || head === 'sun') {
+  if (bk && (head === 'read' || head === 'sun')) { const c = head === 'read' ? 'G' : 'E'; put(body, hL, ey - 1, c); put(body, hR, ey - 1, c); }
+  else if (head === 'read' || head === 'sun') {
     const c = head === 'read' ? 'G' : 'E';
     [ex1, ex2].forEach(x => {
       if (head === 'sun') { rect(body, x - 1, ey - 1, 4, 3, 'E'); put(body, x - 1, ey - 1, 'D'); }
@@ -1005,7 +1067,7 @@ function charLayers(str, int, cha, gear, pose) {
     put(body, hL + 3, top - 1, 'n'); put(body, hL + 6, top - 2, 'n');
   }
   if (head === 'bloom') {                         // The Wallflower loot: flower behind the ear
-    const fx = hR - 2, fy = top + 2;
+    const fx = bk ? hL + 2 : hR - 2, fy = top + 2;
     rect(body, fx - 1, fy - 1, 3, 3, 'P'); [[0, -2], [-2, 0], [2, 0], [0, 2]].forEach(([dx, dy]) => put(body, fx + dx, fy + dy, 'P'));
     put(body, fx, fy, 'y'); put(body, fx + 1, fy + 1, 'k');
     put(body, fx - 2, fy + 2, 'Z'); put(body, fx - 3, fy + 3, 'Z'); put(body, fx - 2, fy + 3, 'Z');
@@ -1021,8 +1083,8 @@ function charLayers(str, int, cha, gear, pose) {
     clearTop(top + 1);
     rect(body, hL, top - 3, HW, 3, 'n'); rect(body, hL + 1, top - 4, HW - 2, 1, 'n'); rect(body, hR - 1, top - 4, 2, 4, 'N');
     rect(body, hL - 1, top, HW + 2, 1, 'M');
-    rect(body, hL, top + 1, HW, 1, 'O'); rect(body, hL + 2, top + 2, HW - 4, 1, 'O');
-    put(body, CX - 1, top - 2, 'y'); put(body, CX, top - 2, 'y'); put(body, CX - 1, top - 1, 'u'); put(body, CX, top - 1, 'u');
+    if (!bk) { rect(body, hL, top + 1, HW, 1, 'O'); rect(body, hL + 2, top + 2, HW - 4, 1, 'O');
+    put(body, CX - 1, top - 2, 'y'); put(body, CX, top - 2, 'y'); put(body, CX - 1, top - 1, 'u'); put(body, CX, top - 1, 'u'); }
   }
   if (head === 'antenna') {                       // The Excuse Machine loot
     rect(body, hL, top + 1, HW, 1, 'J'); put(body, hL, top + 2, 'J'); put(body, hR, top + 2, 'J');
@@ -1036,7 +1098,7 @@ function charLayers(str, int, cha, gear, pose) {
     put(body, CX - 1, top - 1, 'R'); put(body, CX, top - 1, 'R'); put(body, hL + 2, top - 1, 'Y');
   }
 
-  if (pose === 'wink') { put(body, ex2 + 3, ey - 2, 'Y'); put(body, ex2 + 4, ey - 3, 'y'); put(body, ex2 + 4, ey - 1, 'y'); put(body, ex2 + 5, ey - 2, 'y'); }
+  if (pose === 'wink' && !bk) { put(body, ex2 + 3, ey - 2, 'Y'); put(body, ex2 + 4, ey - 3, 'y'); put(body, ex2 + 4, ey - 1, 'y'); put(body, ex2 + 5, ey - 2, 'y'); }
   if (pose === 'flex') { put(body, hR + 2, top + 3, 'B'); put(body, hR + 2, top + 4, 'B'); put(body, hR + 3, top + 4, 'B'); }
   if (pose === 'bulb') {
     const bx = CX - 1, by = Math.max(0, top - 13);
@@ -1054,6 +1116,7 @@ function charLayers(str, int, cha, gear, pose) {
     rn.forEach((row, j) => [...row].forEach((c, i) => { if (c !== '.') put(body, 2 + i, ry + j, c === 'L' ? 'n' : c); }));
     if (inT >= 2) ['.nn.nn.', 'nNnInNn', 'nnnInnn', 'IIIAIII'].forEach((row, j) => [...row].forEach((c, i) => { if (c !== '.') put(body, 2 + i, 2 + j, c); }));
   }
+  if (run >= 0) for (let y = 0; y < shirtTop; y++) { body[y].pop(); body[y].unshift(null); }   // lean into the run
   outline(body);
   if (aura) {                                     // all four stats past their first trial: soft golden glow
     const near = (x, y) => [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, -1], [1, -1], [-1, 1]].some(([dx, dy]) => { const r = body[y + dy]; return r && r[x + dx] === 'o'; });
@@ -1134,8 +1197,9 @@ ${tr?`<button class="trial" onclick="trialK='${k}';render()" aria-label="${NAMES
 const w=wk(),tn=S.log.filter(e=>TRAIN.includes(e.id)&&wk(e.t)===w).length,q=tn>=4?3:tn>=3?2:tn>=1?1:0;
 const readToday=S.log.some(e=>e.id==2&&day(e.t)===day()),fin=t=>doneToday(t)||(t.id==2&&readToday);
 const row=t=>{const n=S.log.filter(e=>e.id==t.id&&wk(e.t)===w).length,dn=doneToday(t),f=fin(t),tr=TRAIN.includes(t.id);
+if(t.mentor)return`<div class="task mq${t.done?' rep':''}"><div class="n">${esc(t.name)}<small>${t.done?'Done! Report to '+MN[t.mentor]:'from '+MN[t.mentor]+' · +'+t.reward+' '+SHORT[t.stat]+' when you report'}</small></div><button class="chk" ${t.done?'disabled':''} onclick="done(${t.id})" aria-label="Complete ${esc(t.name)}">✔</button></div>`;
 return`<div class="task${tr?' sub':''}" style="${f?'opacity:.55':''}"><div class="n">${esc(t.name)}<small${tr&&q?' style="color:'+['','#2f7a1f','#1f5fa8','#8a6200'][q]+'"':''}>+${t.pts} ${SHORT[t.stat]} · ${t.once?'one-time':t.weekly?(dn?'weekly · done this week':'weekly'):t.daily?(dn?'daily · done today':'daily'):(t.id==2&&f?'goal done · extra counts':n+'x this week')}</small></div><button class="chk" ${tr?'style="background:'+['#d9c9a3','#8fcf6a','#4fb0e0','#f0c030'][q]+'"':''} ${dn?'disabled':''} onclick="done(${t.id})" aria-label="Complete ${esc(t.name)}">✔</button></div>`};
-const all=S.tasks.filter(t=>!t.done),open=all.filter(t=>!t.side),sides=all.filter(t=>t.side),isTr=t=>TRAIN.includes(t.id);
+const all=S.tasks.filter(t=>!t.done||t.mentor),open=all.filter(t=>!t.side),sides=all.filter(t=>t.side),isTr=t=>TRAIN.includes(t.id);
 const top=open.filter(t=>t.perm&&(t.daily||t.weekly||t.id==2)&&!fin(t));const rk=t=>t.id==2?2:t.weekly?1:0;top.sort((a,b)=>rk(a)-rk(b));
 const own=open.filter(t=>!t.perm&&!((t.daily||t.weekly)&&fin(t)));
 const trs=open.filter(isTr);
@@ -1160,7 +1224,7 @@ return`<div class="ovl" onclick="if(event.target===this){trialK=null;render()}">
 <p class="lbl">REWARD</p><p>Pass to unlock the next tier. Your stat starts growing again.</p>
 <button onclick="trialK=null;render()">CLOSE</button></div></div>`}
 function tasks(){
-const trow=t=>`<div class="task" style="${t.done?'opacity:.6':''}"><div class="n">${esc(t.name)}<small>+${t.pts} ${NAMES[t.stat]} · ${t.side?'side quest':t.once?(t.done?'done':'one-time'):t.weekly?'weekly':t.daily?'daily':'repeatable'}</small></div>${t.perm?'<small>CORE</small>':`<button class="qb" onclick="editId=${t.id};delArm=0;render()" aria-label="Edit ${esc(t.name)}">${QUILL}</button>`}</div>`;
+const trow=t=>t.mentor?`<div class="task mq"><div class="n">${esc(t.name)}<small>from ${MN[t.mentor]} · +${t.reward} ${NAMES[t.stat]} when you report</small></div><small class="mtag">${MN[t.mentor].toUpperCase()}</small></div>`:`<div class="task" style="${t.done?'opacity:.6':''}"><div class="n">${esc(t.name)}<small>+${t.pts} ${NAMES[t.stat]} · ${t.side?'side quest':t.once?(t.done?'done':'one-time'):t.weekly?'weekly':t.daily?'daily':'repeatable'}</small></div>${t.perm?'<small>CORE</small>':`<button class="qb" onclick="editId=${t.id};delArm=0;render()" aria-label="Edit ${esc(t.name)}">${QUILL}</button>`}</div>`;
 const mine=S.tasks.filter(t=>!t.perm&&!t.done&&!t.side),sideT=S.tasks.filter(t=>!t.perm&&!t.done&&t.side),core=S.tasks.filter(t=>t.perm);
 const arw='<svg class="arw" viewBox="0 0 6 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="0" width="2" height="8"/><rect x="2" y="1" width="2" height="6"/><rect x="4" y="3" width="2" height="2"/></svg>';
 const sideHead=sideT.length?`<button class="task trhead" onclick="openSideT=!openSideT;render()" aria-expanded="${openSideT}">${arw}<div class="n">SIDE QUESTS<small>for later</small></div><span class="chk trsum" style="background:#d9c9a3">${sideT.length}</span></button>${openSideT?sideT.map(t=>trow(t).replace('class="task"','class="task sub"')).join(''):''}`:'';
@@ -1581,11 +1645,26 @@ function heroCanvas(pose) {
 // ===================== Grindlife World — engine + Phase 1 quests =====================
 const WQ = {   // chapter 1 of each mentor: what to do, which stat gates it, what it gives
   bjorn: { name: 'Big Bjørn', stat: 'STR', req: 5, goal: 'Find Bjørn\'s lucky dumbbell in the cave', back: 'Bring the dumbbell back to Bjørn', reward: 'tank' },
-  orvel: { name: 'Old Orvel', stat: 'INT', req: 5, goal: 'Find Orvel\'s glasses in his tower', back: 'Bring the glasses back to Orvel', reward: 'q_spell' },
-  rose: { name: 'Granny Rose', stat: 'CHA', req: 5, goal: 'Bring Rose\'s cookies to the fisherman', back: 'Tell Rose the cookies arrived', reward: 'garden' },
-  kai: { name: 'Master Kai', stat: 'DIS', req: 5, goal: 'Climb to the shrine and ring the bell', back: 'Tell Kai you rang the bell', reward: 'q_zen' }
+  orvel: { name: 'Old Orvel', stat: 'INT', req: 6, goal: 'Find Orvel\'s glasses in his tower', back: 'Bring the glasses back to Orvel', reward: 'q_spell' },
+  rose: { name: 'Granny Rose', stat: 'CHA', req: 3, goal: 'Bring Rose\'s cookies to the fisherman', back: 'Tell Rose the cookies arrived', reward: 'garden' },
+  kai: { name: 'Master Kai', stat: 'DIS', req: 7, goal: 'Climb to the shrine and ring the bell', back: 'Tell Kai you rang the bell', reward: 'q_zen' }
 };
-function WS() { S.world = S.world || { q: {}, f: {}, pos: null }; return S.world; }
+function WS() { S.world = S.world || { q: {}, f: {}, pos: null }; S.world.rl = S.world.rl || {}; S.world.rlDay = S.world.rlDay || {}; S.world.rlLast = S.world.rlLast || {}; return S.world; }
+// ---- real-life quests: one new task per mentor per day, only while you don't already have one from them
+const MN = { bjorn: 'Bjørn', orvel: 'Orvel', rose: 'Rose', kai: 'Kai' };
+const RLQ = {
+  rose: [['Tell someone you love them', 3], ['Call a family member', 3], ['Compliment a stranger', 3], ['Write a thank-you message', 3], ['Help someone without being asked', 3], ['Ask a friend how they\'re really doing', 3]],
+  bjorn: [['50 push-ups through the day', 3], ['Take the stairs all day', 2], ['Hold a 1-minute plank', 2], ['Stretch for 10 minutes', 2], ['Try a new exercise', 3], ['Go for a long walk', 3]],
+  orvel: [['Learn 5 words in a new language', 3], ['Watch a documentary', 3], ['Write down 3 things you learned today', 2], ['Look up something you\'ve always wondered about', 2], ['Teach someone something you know', 3], ['Solve a crossword or sudoku', 2]],
+  kai: [['No phone for the first 30 minutes after waking up', 3], ['Go to bed on time', 3], ['Plan tomorrow tonight', 2], ['Clean one spot for 10 minutes', 2], ['Do one thing you\'ve been putting off', 4], ['5 minutes of calm breathing', 2]]
+};
+const rlTask = id => { const ws = WS(), tid = ws.rl[id]; return tid != null ? S.tasks.find(t => t.id === tid) : null; };
+function rlOffer(id) {                       // today's offer from this mentor, or null
+  const ws = WS(); if (rlTask(id) || ws.rlDay[id] === day()) return null;
+  const pool = RLQ[id], d = day(), start = hsh(d.length * 31 + d.split('-').reduce((a, b) => a * 37 + +b, 7), Object.keys(RLQ).indexOf(id) + 3) % pool.length;
+  for (let i = 0; i < pool.length; i++) { const it = pool[(start + i) % pool.length]; if (it[0] !== ws.rlLast[id]) return it; }
+  return pool[start];
+}
 const wq = id => (S.world && S.world.q[id]) || 0;        // 0 new · 1 on it · 2 got it · 3 done
 const didToday = () => S.log.some(e => day(e.t) === day());
 function weekCount(f) { const w = wk(); return S.log.filter(e => wk(e.t) === w && f(e)).length; }
@@ -1613,7 +1692,7 @@ function worldView() {
 <div id="whud"><b id="warea"></b><span id="wquest"></span></div>
 <div id="wjoy" hidden><i></i></div>
 <button id="wact" hidden></button>
-<div id="wdlg" hidden><div class="wport"></div><div class="wtxt"><b></b><p></p><small>▼ TAP</small></div></div></div>`;
+<div id="wdlg" hidden><div class="wport"></div><div class="wtxt"><b></b><p></p><div class="wch"></div><small>▼ TAP</small></div></div></div>`;
 }
 function worldStart() {
   const ws = WS();
@@ -1666,7 +1745,7 @@ function worldBindInput() {
   document.getElementById('wact').onclick = () => worldAct();
   document.getElementById('wdlg').onclick = () => dlgNext();
   if (!worldBindInput.keys) { worldBindInput.keys = 1;
-    addEventListener('keydown', e => { if (view !== 'world' || !WR) return; if ([' ', 'Enter', 'e'].includes(e.key)) { e.preventDefault(); WR.dlg ? dlgNext() : worldAct(); return; } WR.keys[e.key.toLowerCase()] = 1; if (e.key.startsWith('Arrow')) e.preventDefault(); });
+    addEventListener('keydown', e => { if (view !== 'world' || !WR) return; if ([' ', 'Enter', 'e'].includes(e.key)) { e.preventDefault(); if (WR.dlg && WR.dlg.choices && WR.dlg.lines.length === 1) { const b = document.querySelector('#wdlg .wch button'); if (b) b.click(); return; } WR.dlg ? dlgNext() : worldAct(); return; } WR.keys[e.key.toLowerCase()] = 1; if (e.key.startsWith('Arrow')) e.preventDefault(); });
     addEventListener('keyup', e => { if (WR) WR.keys[e.key.toLowerCase()] = 0; });
     addEventListener('resize', () => { if (view === 'world' && WR && WR.cv) worldResize(); }); }
 }
@@ -1687,7 +1766,10 @@ function worldTick(now) {
     const ok = (x, y) => !blocked(M, x - hw, y - .15) && !blocked(M, x + hw, y - .15) && !blocked(M, x - hw, y + .25) && !blocked(M, x + hw, y + .25);
     if (ok(nx, p.y)) p.x = nx; if (ok(p.x, ny)) p.y = ny;
     if (Math.abs(vx) > Math.abs(vy)) p.dir = vx > 0 ? 2 : 3; else p.dir = vy > 0 ? 1 : 0;
-    p.t += dt; WR.trail.push([p.x, p.y]); if (WR.trail.length > 40) WR.trail.shift();
+    p.t += dt; WR.trail.push([p.x, p.y]);
+    const side = p.dir >= 2, fr = side ? Math.floor(p.t * 12) % 4 : Math.floor(p.t * 7) % 2;
+    if (side && fr !== WR.lastFr && (fr === 0 || fr === 2)) (WR.dust = WR.dust || []).push({ x: p.x - (p.dir === 2 ? .35 : -.35), y: p.y + .38, t: 0 });
+    WR.lastFr = fr; if (WR.trail.length > 40) WR.trail.shift();
     worldGates(M);
     const w = M.warps.find(w => w.x === Math.floor(p.x) && w.y === Math.floor(p.y + .1));
     if (w && (w.to !== 'tower' || WS().f.door)) worldWarp(w);
@@ -1695,7 +1777,7 @@ function worldTick(now) {
   // Spirit trots after you
   if (WR.trail.length > 14) { const [tx, ty] = WR.trail[WR.trail.length - 14]; WR.spirit.x += (tx - WR.spirit.x) * Math.min(1, dt * 6); WR.spirit.y += (ty - WR.spirit.y) * Math.min(1, dt * 6); }
   // refresh the hero if gear/levels changed (e.g. after a reward)
-  const hk = JSON.stringify([gear(), Lv('STR'), Lv('INT'), Lv('CHA')]); if (hk !== WR.heroKey) { WR.heroKey = hk; WR.hero = heroCanvas(); }
+  const hk = JSON.stringify([gear(), Lv('STR'), Lv('INT'), Lv('CHA')]); if (hk !== WR.heroKey) { WR.heroKey = hk; WR.hero = heroCanvas(); WR.frames = {}; }
   worldNear(); worldDraw(); WR.raf = requestAnimationFrame(worldTick);
 }
 function worldWarp(w) {
@@ -1706,7 +1788,7 @@ function worldWarp(w) {
 function worldGates(M) {
   if (WR.cur !== 'village') return; const p = WR.p, tx = Math.floor(p.x), ty = Math.floor(p.y);
   if (M.g[ty] && M.g[ty][tx] === 'M' && ty === 7 && p.y > 7.3) {
-    if (Lv('DIS') < WQ.kai.req) { p.y = 8.25; dialog('kai', ['The stairs are steep and long...', `Your legs need more stamina. (Discipline ${WQ.kai.req} needed, you have ${Lv('DIS')})`]); }
+    if (Lv('DIS') < WQ.kai.req) { p.y = 8.25; dialog('kai', ['The stairs are steep and long...', 'Your legs need more stamina.']); }
   }
 }
 // ---- what can you interact with right now?
@@ -1725,11 +1807,11 @@ function worldAct() {
   if (e.npc) return talk(e.id);
   if (e.id === 'boulder') {
     if (f.boulder) return dialog(null, ['The boulder rests to the side now.']);
-    if (Lv('STR') < WQ.bjorn.req) return dialog(null, ['You push with everything you have...', `It won't budge. (Strength ${WQ.bjorn.req} needed, you have ${Lv('STR')})`]);
+    if (Lv('STR') < WQ.bjorn.req) return dialog(null, ['You push with everything you have...', 'It won\'t budge. Maybe with a bit more strength...']);
     f.boulder = 1; save(); sfx('lvl'); worldShake(); worldEntities(); return dialog(null, ['You plant your feet and PUSH!', 'The boulder rolls aside. The cave is open!']);
   }
   if (e.id === 'runedoor') {
-    if (Lv('INT') < WQ.orvel.req) return dialog(null, ['Glowing runes swirl across the door...', `You can't make sense of them yet. (Intellect ${WQ.orvel.req} needed, you have ${Lv('INT')})`]);
+    if (Lv('INT') < WQ.orvel.req) return dialog(null, ['Glowing runes swirl across the door...', 'You can\'t make sense of them yet. A sharper mind might.']);
     f.door = 1; save(); sfx('gear'); worldEntities(); return dialog(null, ['You trace the runes with your finger and read them aloud...', 'The door glows and swings open!']);
   }
   if (e.id === 'bell') {
@@ -1742,19 +1824,31 @@ function worldAct() {
 }
 function talk(id) {
   const ws = WS(), s = wq(id), Q = WQ[id];
+  if (WQ[id] && s !== 2) {                   // real-life quests come before story chatter, story hand-ins come first of all
+    const t = rlTask(id);
+    if (t && t.done) return rlReport(id, t);
+    if (!(s === 0 && didToday())) {
+      const off = rlOffer(id), st = WQ[id].stat;
+      if (off) return dialog(id, [mentorSmallTalk(id), 'I have a task for you. Not here... out there, in your real life:', '"' + off[0] + '"', `Do it, then come back and tell me. +${off[1]} ${NAMES[st][0] + NAMES[st].slice(1).toLowerCase()} and a little bonus.`], null,
+        [{ label: 'ACCEPT', fn: () => rlAccept(id, off) }, { label: 'MAYBE LATER', fn: () => dialog(id, ['No rush. I\'ll be right here.']) }]);
+      if (t) return dialog(id, ['Have you done it yet?', '"' + t.name + '"', 'Check it off in your quests when you have, then come tell me.'], null,
+        [{ label: "I'M ON IT", fn: () => {} }, { label: 'DROP IT', fn: () => { S.tasks = S.tasks.filter(x => x !== t); ws.rl[id] = null; ws.rlDay[id] = day(); save(); dialog(id, ['No worries. There\'s always tomorrow.']); } }]);
+      if (s !== 1 && ws.rlDay[id] === day()) return dialog(id, [mentorSmallTalk(id), 'Come back tomorrow. I\'ll have a new task for you.']);
+    }
+  }
   if (id === 'fisher') {
     if (wq('rose') !== 1) return dialog('fisher', ['...', 'The fish aren\'t biting today.']);
-    if (Lv('CHA') < WQ.rose.req) return dialog('fisher', ['...What do you want?', `He turns away. Maybe a warmer heart would reach him. (Heart ${WQ.rose.req} needed, you have ${Lv('CHA')})`]);
+    if (Lv('CHA') < WQ.rose.req) return dialog('fisher', ['...What do you want?', 'He turns away. Maybe a warmer heart would reach him.']);
     ws.q.rose = 2; save(); worldHud();
     return dialog('fisher', ['Cookies? From Rose? For... me?', 'Nobody has done something like that for me in years.', 'Thank you. Truly. Tell her I said hi.']);
   }
   if (s === 0) {
     if (!didToday()) return dialog(id, [mentorSmallTalk(id), 'Come back after you\'ve done something in real life today. Then we\'ll talk adventure.']);
     const intro = {
-      bjorn: ['HEY! You look strong! ...Well, getting there.', 'My lucky dumbbell rolled into the cave, and now a boulder blocks the way.', `Think you can push it? You'll need Strength ${Q.req}.`],
-      orvel: ['Oh! A visitor! Have you seen my glasses? No? Hmm...', 'I left them in my tower, but I sealed the door with runes. And I can\'t read the runes without my glasses!', `If you can read them, you'll need Intellect ${Q.req}, dear friend.`],
-      rose: ['Hello, sweetheart! Would you do an old lady a favor?', 'The fisherman by the pond is always so lonely. I baked him some cookies.', `He's shy, though. You'll need a big heart: Heart ${Q.req}.`],
-      kai: ['...', 'At the top of these stairs hangs the morning bell.', `Climb them and ring it. The climb asks for discipline: Discipline ${Q.req}.`]
+      bjorn: ['HEY! You look strong! ...Well, getting there.', 'My lucky dumbbell rolled into the cave, and now a boulder blocks the way.', 'Think you can push it? Come back when you\'re strong enough.'],
+      orvel: ['Oh! A visitor! Have you seen my glasses? No? Hmm...', 'I left them in my tower, but I sealed the door with runes. And I can\'t read the runes without my glasses!', 'If you can read them, you\'ll find my glasses inside, dear friend.'],
+      rose: ['Hello, sweetheart! Would you do an old lady a favor?', 'The fisherman by the pond is always so lonely. I baked him some cookies.', 'He\'s shy, though. It takes a warm heart to reach him.'],
+      kai: ['...', 'At the top of these stairs hangs the morning bell.', 'Climb them and ring it. The climb asks for discipline.']
     }[id];
     ws.q[id] = 1; if (id === 'rose') ws.f.cookies = 1; save(); worldHud();
     return dialog(id, intro.concat(['QUEST: ' + Q.goal]));
@@ -1767,23 +1861,42 @@ function talk(id) {
   }
   return dialog(id, [mentorSmallTalk(id)]);
 }
+function rlAccept(id, off) {
+  const ws = WS(), t = { id: S.next++, name: off[0], stat: WQ[id].stat, pts: 0, once: true, mentor: id, reward: off[1] };
+  S.tasks.push(t); ws.rl[id] = t.id; ws.rlDay[id] = day(); save(); sfx('ok');
+  dialog(id, ['Wonderful! I\'ve put it in your quests.', 'Off you go!']);
+}
+function rlReport(id, t) {
+  const ws = WS(), st = t.stat, lv0 = {}; Object.keys(NAMES).forEach(k => lv0[k] = Lv(k));
+  const a = gain(st, t.reward), b = gain(st, 1);
+  S.tasks = S.tasks.filter(x => x !== t); ws.rl[id] = null; ws.rlLast[id] = t.name; checkTrials(); checkUnlocks(); save();
+  const ups = Object.keys(NAMES).filter(k => Lv(k) > lv0[k]), nm = NAMES[st][0] + NAMES[st].slice(1).toLowerCase();
+  const thanks = { rose: 'Oh, that warms my heart, dear!', bjorn: 'THAT\'S what I\'m talking about! Strong!', orvel: 'Marvelous! A sharper mind every day!', kai: 'Good. Small steps build mountains.' }[id];
+  dialog(id, [thanks, 'Come back tomorrow for a new task.'], () => {
+    sfx('lvl');
+    fxCard('', `<small class="tpk">REAL-LIFE QUEST DONE!</small><h3>${esc(t.name)}</h3>${npcCanvas(id) ? '<div class="rlport"></div>' : ''}<p class="lbl">FROM ${MN[id].toUpperCase()}</p><p>${a || b ? '+' + a + ' ' + nm + ' &nbsp;+' + b + ' bonus' : 'Your ' + nm + ' trial is open, so no new points right now.'}</p>`, 'AWESOME!', () => { if (ups.length && fxOn()) levelBanner(ups); });
+    const port = document.querySelector('.fxtier .rlport'); if (port) { const c = npcCanvas(id), big = document.createElement('canvas'); big.width = c.width * 3; big.height = c.height * 3; const g = big.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(c, 0, 0, big.width, big.height); port.appendChild(big); }
+  });
+}
 function questReward(id) {
   const r = questRewardInfo(id); sfx('tier'); confetti(GOLD, 90, innerWidth / 2, innerHeight * .4, 13);
   fxCard('', `<small class="tpk">QUEST COMPLETE!</small><h3>${WQ[id].name}</h3>${r.pic}<p class="lbl">NEW ${r.kind}</p><p>${r.name}</p>`, 'AWESOME!', null);
 }
 // ---- dialog box
-function dialog(who, lines, then) {
-  WR.dlg = { who, lines: lines.slice(), then }; WR.joy = null; const j = document.getElementById('wjoy'); if (j) j.hidden = true; showDlg();
+function dialog(who, lines, then, choices) {
+  WR.dlg = { who, lines: lines.slice(), then, choices }; WR.joy = null; const j = document.getElementById('wjoy'); if (j) j.hidden = true; showDlg();
 }
 function showDlg() {
   const box = document.getElementById('wdlg'), d = WR.dlg; if (!box || !d) return;
   const port = box.querySelector('.wport'); port.innerHTML = '';
   if (d.who) { const c = npcCanvas(d.who), big = document.createElement('canvas'); big.width = c.width * 3; big.height = c.height * 3; const g = big.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(c, 0, 0, big.width, big.height); port.appendChild(big); port.hidden = false; } else port.hidden = true;
   box.querySelector('b').textContent = d.who ? ({ bjorn: 'BIG BJØRN', orvel: 'OLD ORVEL', rose: 'GRANNY ROSE', kai: 'MASTER KAI', fisher: 'FISHERMAN' }[d.who]) : '';
-  const t = d.lines[0]; box.querySelector('p').textContent = t; box.classList.toggle('quest', t.startsWith('QUEST:')); box.hidden = false; sfx('ok');
+  const t = d.lines[0]; box.querySelector('p').textContent = t; box.classList.toggle('quest', t.startsWith('QUEST:') || t.startsWith('"')); box.hidden = false; sfx('ok');
+  const ch = box.querySelector('.wch'); ch.innerHTML = ''; const last = d.lines.length === 1 && d.choices; box.querySelector('small').hidden = !!last;
+  if (last) d.choices.forEach(c => { const bt = document.createElement('button'); bt.textContent = c.label; bt.onclick = ev => { ev.stopPropagation(); WR.dlg = null; box.hidden = true; c.fn(); }; ch.appendChild(bt); });
   document.getElementById('wact').hidden = true;
 }
-function dlgNext() { const d = WR.dlg; if (!d) return; d.lines.shift(); if (d.lines.length) return showDlg(); WR.dlg = null; document.getElementById('wdlg').hidden = true; if (d.then) setTimeout(d.then, 150); }
+function dlgNext() { const d = WR.dlg; if (!d) return; if (d.choices && d.lines.length === 1) return; d.lines.shift(); if (d.lines.length) return showDlg(); WR.dlg = null; document.getElementById('wdlg').hidden = true; if (d.then) setTimeout(d.then, 150); }
 function worldHud() {
   const a = document.getElementById('warea'), q = document.getElementById('wquest'); if (!a) return;
   a.textContent = { village: 'VILLAGE', tower: "ORVEL'S TOWER", cave: 'THE CAVE' }[WR.cur];
@@ -1818,13 +1931,15 @@ function worldDraw() {
   });
   const st = Math.min(3, tierOf('DIS') + 1), hasDog = S.owned.spirit && S.equip.spirit;
   if (hasDog) { const c = spiritCanvas(st), sx = WR.spirit.x * WT - c.width / 2, sy = WR.spirit.y * WT + 6 - c.height; shadow(WR.spirit.x * WT, WR.spirit.y * WT + 5, c.width / 2.4); draws.push({ z: WR.spirit.y * WT + 6, c, x: Math.round(sx), y: Math.round(sy), flip: WR.spirit.x > p.x }); }
-  const hb = p.moving ? Math.round(Math.abs(Math.sin(p.t * 11)) * 1.5) : 0, hc = WR.hero;
+  const side = p.dir >= 2, pose = p.dir === 0 ? (p.moving ? 'back' + (Math.floor(p.t * 7) % 2) : 'back') : !p.moving ? '' : side ? 'run' + (Math.floor(p.t * 12) % 4) : 'walk' + (Math.floor(p.t * 7) % 2);
+  WR.frames = WR.frames || {}; const hc = pose ? (WR.frames[pose] || (WR.frames[pose] = heroCanvas(pose))) : WR.hero, hb = /run[13]/.test(pose) ? 1 : 0, flipH = p.moving && p.dir === 3;
+  (WR.dust || []).forEach(d => { d.t += 1 / 60; const a = Math.max(0, 1 - d.t / .4), r = 1.5 + d.t * 7; g.fillStyle = `rgba(240,230,210,${a * .7})`; g.beginPath(); g.arc(d.x * WT, d.y * WT, r, 0, 7); g.fill(); }); WR.dust = (WR.dust || []).filter(d => d.t < .4);
   shadow(p.x * WT, p.y * WT + 6, hc.width / 2.8);
-  draws.push({ z: p.y * WT + 6, c: hc, x: Math.round(p.x * WT - hc.width / 2), y: Math.round(p.y * WT + 7 - hc.height - hb) });
+  draws.push({ z: p.y * WT + 6, c: hc, x: Math.round(p.x * WT - hc.width / 2), y: Math.round(p.y * WT + 7 - hc.height - hb), flip: flipH });
   draws.sort((a, b) => a.z - b.z).forEach(d => { if (d.flip) { g.save(); g.translate(d.x + d.c.width, d.y); g.scale(-1, 1); g.drawImage(d.c, 0, 0); g.restore(); } else g.drawImage(d.c, d.x, d.y); });
   // quest markers over mentors
-  WR.ents.forEach(e => { if (!e.npc || !WQ[e.id]) return; const s = wq(e.id), mark = s === 0 && didToday() ? '!' : s === 2 ? '?' : ''; if (!mark) return; const x = e.x * WT + 8, y = (e.y + 1) * WT - 40 + Math.round(Math.sin(tnow / 250) * 1.5);
-    g.fillStyle = '#3b2416'; g.fillRect(x - 4, y - 1, 8, 11); g.fillStyle = s === 2 ? '#7fd7ff' : '#ffd36b'; g.fillRect(x - 3, y, 6, 9); g.fillStyle = '#3b2416'; if (mark === '!') { g.fillRect(x - 1, y + 1, 2, 4); g.fillRect(x - 1, y + 6, 2, 2); } else { g.fillRect(x - 2, y + 1, 4, 1); g.fillRect(x + 1, y + 2, 1, 2); g.fillRect(x - 1, y + 4, 2, 1); g.fillRect(x - 1, y + 6, 2, 2); } });
+  WR.ents.forEach(e => { if (!e.npc || !WQ[e.id]) return; const s = wq(e.id), rt = rlTask(e.id), mark = s === 2 || (rt && rt.done) ? '?' : (s === 0 && didToday()) || rlOffer(e.id) ? '!' : ''; if (!mark) return; const x = e.x * WT + 8, y = (e.y + 1) * WT - 40 + Math.round(Math.sin(tnow / 250) * 1.5);
+    g.fillStyle = '#3b2416'; g.fillRect(x - 4, y - 1, 8, 11); g.fillStyle = mark === '?' ? '#7fd7ff' : '#ffd36b'; g.fillRect(x - 3, y, 6, 9); g.fillStyle = '#3b2416'; if (mark === '!') { g.fillRect(x - 1, y + 1, 2, 4); g.fillRect(x - 1, y + 6, 2, 2); } else { g.fillRect(x - 2, y + 1, 4, 1); g.fillRect(x + 1, y + 2, 1, 2); g.fillRect(x - 1, y + 4, 2, 1); g.fillRect(x - 1, y + 6, 2, 2); } });
   // sparkle on things you can pick up
   WR.ents.forEach(e => { if (!e.pick) return; const ph = Math.floor(tnow / 180) % 4, x = e.x * WT + 8 + [-6, 5, -3, 7][ph], y = (e.y + 1) * WT - 14 - (e.lift || 0) + [-2, -6, -9, -4][ph]; g.fillStyle = '#fff6b0'; g.fillRect(x, y - 1, 1, 3); g.fillRect(x - 1, y, 3, 1); });
   // darkness: the cave is lit only around you and by its crystals; the tower is softly dim
