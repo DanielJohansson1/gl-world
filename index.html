@@ -229,7 +229,7 @@ const CORE=[{id:1,name:'Hit the gym',stat:'STR',pts:4},{id:1001,name:'CrossFit',
 const TRAIN=[1,1001,1002,1003];
 const QUILL=`<svg viewBox="0 0 14 14" shape-rendering="crispEdges" aria-hidden="true"><rect x="10" y="1" width="1" height="1" fill="#3b2416"/><rect x="11" y="0" width="1" height="1" fill="#3b2416"/><rect x="13" y="1" width="1" height="1" fill="#3b2416"/><rect x="12" y="0" width="1" height="1" fill="#3b2416"/><rect x="8" y="2" width="1" height="1" fill="#3b2416"/><rect x="9" y="1" width="1" height="1" fill="#3b2416"/><rect x="13" y="2" width="1" height="1" fill="#3b2416"/><rect x="7" y="3" width="1" height="1" fill="#3b2416"/><rect x="13" y="3" width="1" height="1" fill="#3b2416"/><rect x="12" y="4" width="1" height="1" fill="#3b2416"/><rect x="6" y="4" width="1" height="1" fill="#3b2416"/><rect x="11" y="5" width="1" height="1" fill="#3b2416"/><rect x="5" y="5" width="1" height="1" fill="#3b2416"/><rect x="10" y="6" width="1" height="1" fill="#3b2416"/><rect x="4" y="6" width="1" height="1" fill="#3b2416"/><rect x="8" y="7" width="1" height="1" fill="#3b2416"/><rect x="9" y="7" width="1" height="1" fill="#3b2416"/><rect x="3" y="7" width="1" height="1" fill="#3b2416"/><rect x="7" y="8" width="1" height="1" fill="#3b2416"/><rect x="3" y="8" width="1" height="1" fill="#3b2416"/><rect x="5" y="9" width="1" height="1" fill="#3b2416"/><rect x="6" y="9" width="1" height="1" fill="#3b2416"/><rect x="2" y="9" width="1" height="1" fill="#3b2416"/><rect x="4" y="10" width="1" height="1" fill="#3b2416"/><rect x="1" y="10" width="1" height="1" fill="#3b2416"/><rect x="3" y="11" width="1" height="1" fill="#3b2416"/><rect x="1" y="11" width="1" height="1" fill="#3b2416"/><rect x="2" y="12" width="1" height="1" fill="#3b2416"/><rect x="0" y="12" width="1" height="1" fill="#3b2416"/><rect x="1" y="13" width="1" height="1" fill="#3b2416"/><rect x="11" y="1" width="1" height="1" fill="#fffaf0"/><rect x="12" y="1" width="1" height="1" fill="#fffaf0"/><rect x="9" y="2" width="1" height="1" fill="#fffaf0"/><rect x="10" y="2" width="1" height="1" fill="#fffaf0"/><rect x="11" y="2" width="1" height="1" fill="#fffaf0"/><rect x="12" y="2" width="1" height="1" fill="#fffaf0"/><rect x="8" y="3" width="1" height="1" fill="#fffaf0"/><rect x="9" y="3" width="1" height="1" fill="#fffaf0"/><rect x="10" y="3" width="1" height="1" fill="#fffaf0"/><rect x="11" y="3" width="1" height="1" fill="#fffaf0"/><rect x="12" y="3" width="1" height="1" fill="#c9c2b0"/><rect x="7" y="4" width="1" height="1" fill="#fffaf0"/><rect x="8" y="4" width="1" height="1" fill="#fffaf0"/><rect x="9" y="4" width="1" height="1" fill="#fffaf0"/><rect x="10" y="4" width="1" height="1" fill="#fffaf0"/><rect x="11" y="4" width="1" height="1" fill="#c9c2b0"/><rect x="6" y="5" width="1" height="1" fill="#fffaf0"/><rect x="7" y="5" width="1" height="1" fill="#fffaf0"/><rect x="8" y="5" width="1" height="1" fill="#fffaf0"/><rect x="9" y="5" width="1" height="1" fill="#fffaf0"/><rect x="10" y="5" width="1" height="1" fill="#c9c2b0"/><rect x="5" y="6" width="1" height="1" fill="#fffaf0"/><rect x="6" y="6" width="1" height="1" fill="#fffaf0"/><rect x="7" y="6" width="1" height="1" fill="#fffaf0"/><rect x="8" y="6" width="1" height="1" fill="#fffaf0"/><rect x="9" y="6" width="1" height="1" fill="#c9c2b0"/><rect x="4" y="7" width="1" height="1" fill="#fffaf0"/><rect x="5" y="7" width="1" height="1" fill="#fffaf0"/><rect x="6" y="7" width="1" height="1" fill="#fffaf0"/><rect x="7" y="7" width="1" height="1" fill="#c9c2b0"/><rect x="4" y="8" width="1" height="1" fill="#fffaf0"/><rect x="5" y="8" width="1" height="1" fill="#fffaf0"/><rect x="6" y="8" width="1" height="1" fill="#c9c2b0"/><rect x="3" y="9" width="1" height="1" fill="#fffaf0"/><rect x="4" y="9" width="1" height="1" fill="#c9c2b0"/><rect x="2" y="10" width="1" height="1" fill="#c9c2b0"/><rect x="3" y="10" width="1" height="1" fill="#c9c2b0"/><rect x="2" y="11" width="1" height="1" fill="#3b2416"/><rect x="1" y="12" width="1" height="1" fill="#3b2416"/></svg>`;
 let view='home',rc=0,wtab='gear',openTr=false,openCore=false,editId=null,delArm=0,ideaDraft=null,openSide=false,openSideT=false,trialK=null,S=load();
-function ensure(){S.tasks=S.tasks.filter(t=>!(t.perm&&!CORE.some(c=>c.id==t.id)));S.tasks.forEach(t=>{if(t.side){t.once=true;t.daily=false;t.weekly=false}});const core=CORE.map(c=>{const t=S.tasks.find(t=>t.id==c.id);return t?Object.assign(t,c,{perm:true}):{...c,perm:true}});S.tasks=[...core,...S.tasks.filter(t=>!CORE.some(c=>c.id==t.id))];S.settings=Object.assign({sound:true,anim:true},S.settings);if(S.bossSeen===undefined)S.bossSeen=wk();S.owned=S.owned||{};S.equip=S.equip||{};S.fresh=S.fresh||{};S.qon=S.qon||{};S.tier=S.tier||{};S.trialWk=S.trialWk||{};checkTrials();checkUnlocks();S.next=Math.max(S.next||4,4);save()}
+function ensure(){S.tasks=S.tasks.filter(t=>!(t.perm&&!CORE.some(c=>c.id==t.id)));S.tasks.forEach(t=>{if(t.side){t.once=true;t.daily=false;t.weekly=false}});const core=CORE.map(c=>{const t=S.tasks.find(t=>t.id==c.id);return t?Object.assign(t,c,{perm:true}):{...c,perm:true}});S.tasks=[...core,...S.tasks.filter(t=>!CORE.some(c=>c.id==t.id))];S.settings=Object.assign({sound:true,anim:true,music:true},S.settings);if(S.bossSeen===undefined)S.bossSeen=wk();S.owned=S.owned||{};S.equip=S.equip||{};S.fresh=S.fresh||{};S.qon=S.qon||{};S.tier=S.tier||{};S.trialWk=S.trialWk||{};checkTrials();checkUnlocks();S.next=Math.max(S.next||4,4);save()}
 function load(){try{const r=localStorage.getItem(KEY);if(r)return JSON.parse(r)}catch(e){}
 return{pts:{STR:0,INT:0,CHA:0,DIS:0},tasks:[],log:[],bonus:{},next:4}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
@@ -316,7 +316,7 @@ function checkQuirks(){const n=[];QUIRKS.forEach(q=>{const k='q_'+q.id;if(!S.own
 let playing=0;
 function playQuirk(q){if(playing)return;playing=1;let i=0;const show=p=>document.querySelectorAll('svg.sprite').forEach(e=>{e.outerHTML=sprite(p)});
 const step=()=>{if(i>=q.f.length){show('');playing=0;return}const [p,ms]=q.f[i++];show(p);setTimeout(step,ms)};step()}
-function quirkTap(id){const k='q_'+id,q=QUIRKS.find(x=>x.id===id);if(!S.owned[k])return;if(S.fresh[k]){delete S.fresh[k];S.qon[id]=1}else S.qon[id]=S.qon[id]?0:1;save();render();sfx('ok');if(S.qon[id]&&S.settings.anim)setTimeout(()=>playQuirk(q),150)}
+function quirkTap(id){const k='q_'+id,q=QUIRKS.find(x=>x.id===id);if(!S.owned[k])return;if(S.fresh[k]){delete S.fresh[k];S.qon[id]=1}else S.qon[id]=S.qon[id]?0:1;save();render();sfx('click');if(S.qon[id]&&S.settings.anim)setTimeout(()=>playQuirk(q),150)}
 setInterval(()=>{if(!S||!S.settings.anim||document.hidden||playing)return;if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
 const on=QUIRKS.filter(q=>S.owned['q_'+q.id]&&S.qon[q.id]);if(on.length&&document.querySelector('svg.sprite'))playQuirk(on[Math.floor(Math.random()*on.length)])},10000);
 function sayLines(){const h=new Date().getHours(),w=wk(),L=[],P=[];
@@ -348,7 +348,7 @@ const dealt=S.log.filter(e=>wk(e.t)===w).reduce((a,e)=>a+b.dmg(e),0);return{b,w,
 // "A boss approaches!": first app open each week, warning first, then the boss card with an 8-bit theme
 let bossIntro=0,bossNotes=[];
 function bnote(f,d,t,type,vol){if(!S.settings.sound)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain(),a=AC.currentTime+t;o.type=type||'square';o.frequency.value=f;g.gain.setValueAtTime(vol||.04,a);g.gain.setValueAtTime(0,a+d);o.connect(g);g.connect(AC.destination);o.start(a);o.stop(a+d+.02);bossNotes.push(o)}catch(e){}}
-function bossTheme(){bossThemeStop();const st=.15,bar=st*8,BASS=[[82.41,82.41,164.81,82.41,82.41,164.81,82.41,87.31],[82.41,82.41,164.81,82.41,82.41,164.81,82.41,98],[87.31,87.31,174.61,87.31,98,98,196,98],[116.54,116.54,233.08,116.54,123.47,123.47,246.94,123.47]],
+function bossTheme(){bossThemeStop();SND.duck(11);const st=.15,bar=st*8,BASS=[[82.41,82.41,164.81,82.41,82.41,164.81,82.41,87.31],[82.41,82.41,164.81,82.41,82.41,164.81,82.41,98],[87.31,87.31,174.61,87.31,98,98,196,98],[116.54,116.54,233.08,116.54,123.47,123.47,246.94,123.47]],
 LEAD=[[[329.63,.6],[392,.3],[369.99,.3]],[[349.23,.9],[329.63,.3]],[[392,.3],[466.16,.3],[493.88,.6]],[[659.26,.6],[622.25,.3],[587.33,.3]]];
 bnote(82.41,.5,0,'sawtooth',.06);bnote(41.2,.5,0,'square',.05);                       // opening hit
 for(let rep=0;rep<2;rep++){const o=.6+rep*bar*4;BASS.forEach((b,i)=>b.forEach((f,j)=>bnote(f,st*.8,o+i*bar+j*st,'triangle',.09)));
@@ -378,7 +378,7 @@ ${bossSvg(b.id,'cpic bbig'+(won?' gone':''))}<small>THIS WEEK'S BOSS</small><h3>
 <p class="lbl">WHAT HURTS IT</p><p>${b.long}</p><p class="lbl">REWARD</p><p>${rwText(b.rw)}</p>
 <p class="lbl">TROPHY SHELF</p><div class="shelf">${BOSSES.map(x=>{const c=Object.values(S.bossWon||{}).filter(v=>v===x.id).length;return`<span class="tro${c?'':' none'}" title="${c?x.name:'Not beaten yet'}">${bossSvg(x.id,'tsp')}<small>${c?'×'+c:'?'}</small></span>`}).join('')}</div><p class="lbl">BOSSES BEATEN: ${n}</p>${won?'<p class="lbl">A new boss arrives on Monday.</p>':''}
 <button onclick="bossOpen=0;render()">CLOSE</button></div></div>`}
-function goPlace(id){if(!S.owned[id])return;delete S.fresh[id];S.place=id;save();render();sfx('ok');pop()}
+function goPlace(id){if(!S.owned[id])return;delete S.fresh[id];S.place=id;save();render();sfx('click');pop()}
 function placeBg(id) {
   const W = 44, H = 44, G = Array.from({ length: H }, () => Array(W).fill('#000'));
   const P = (x, y, c) => { if (x >= 0 && y >= 0 && x < W && y < H) G[y][x] = c; };
@@ -578,7 +578,7 @@ function placeBg(id) {
 
 
 function gear(){const o={head:null,torso:null,pet:0};ITEMS.forEach(i=>{if(S.owned&&S.owned[i.id]&&S.equip&&S.equip[i.id])o[i.slot]=i.id});if(o.pet)o.pet=Math.min(3,tierOf('DIS')+1);o.tiers={STR:tierOf('STR'),INT:tierOf('INT'),CHA:tierOf('CHA'),DIS:tierOf('DIS')};return o}
-function wear(id){const it=ITEMS.find(i=>i.id==id);if(!it||!S.owned[id])return;let on;if(S.fresh[id]){delete S.fresh[id];on=1}else on=S.equip[id]?0:1;if(on)ITEMS.forEach(i=>{if(i.slot===it.slot)S.equip[i.id]=0});S.equip[id]=on;save();render();sfx('ok');pop()}
+function wear(id){const it=ITEMS.find(i=>i.id==id);if(!it||!S.owned[id])return;let on;if(S.fresh[id]){delete S.fresh[id];on=1}else on=S.equip[id]?0:1;if(on)ITEMS.forEach(i=>{if(i.slot===it.slot)S.equip[i.id]=0});S.equip[id]=on;save();render();sfx('click');pop()}
 let infoId=null;
 const ib=(k,n)=>`<button class="ib" onclick="infoId='${k}';render()" aria-label="How you got ${n}">i</button>`;
 function infoCard(){if(!infoId)return'';const [t,id]=infoId.split(':');
@@ -609,10 +609,171 @@ return`${infoCard()}<h1>WARDROBE<button onclick="go('home')">BACK</button></h1><
 <div class="grid">${wtab==='gear'?tiles:wtab==='places'?pt:qt}</div>`}
 
 let AC;
-function beep(f,d,t){if(!S.settings.sound)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain(),a=AC.currentTime+(t||0);o.type='square';o.frequency.value=f;g.gain.value=.04;o.connect(g);g.connect(AC.destination);o.start(a);o.stop(a+d)}catch(e){}}
-function sfx(k){({ok:[[660,.07,0],[880,.09,.07]],lvl:[[523,.09,0],[659,.09,.09],[784,.14,.18]],gear:[[523,.09,0],[659,.09,.09],[784,.09,.18],[1047,.2,.27]],undo:[[330,.12,0]],bark:[[620,.05,0],[430,.09,.05],[620,.05,.28],[430,.11,.33]],tier:[[392,.1,0],[523,.1,.1],[659,.1,.2],[784,.1,.3],[1047,.12,.4],[784,.08,.52],[1047,.3,.6]]}[k]||[]).forEach(n=>beep(...n))}
+// ===================== Grindlife sound engine: soft sounds, cozy music, character voices =====================
+// Everything is made live with WebAudio (no audio files). Three buses: sfx, music, voices, all with a touch of room reverb.
+const SND = (() => {
+  let ac = null, master, verb, buses = {}, track = null, musicOn = false, startedAt = 0;
+  const vol = { sfx: .9, music: .55, voice: .85 };
+  const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
+  function impulse(sec, decay) {
+    const n = Math.floor(ac.sampleRate * sec), b = ac.createBuffer(2, n, ac.sampleRate);
+    for (let c = 0; c < 2; c++) { const d = b.getChannelData(c); for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, decay); }
+    return b;
+  }
+  function init() {
+    if (ac) { if (ac.state === 'suspended') ac.resume(); return true; }
+    try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return false; }
+    master = ac.createGain(); master.gain.value = 1.3;
+    const comp = ac.createDynamicsCompressor(); comp.threshold.value = -18; comp.ratio.value = 3; master.connect(comp); comp.connect(ac.destination);
+    verb = ac.createConvolver(); verb.buffer = impulse(2.2, 3); const vr = ac.createGain(); vr.gain.value = .5; verb.connect(vr); vr.connect(master);
+    const mk = (name, v, send) => { const g = ac.createGain(); g.gain.value = v; g.connect(master); const s = ac.createGain(); s.gain.value = send; g.connect(s); s.connect(verb); buses[name] = g; };
+    mk('sfx', vol.sfx, .18); mk('music', 0, .42); mk('voice', vol.voice, .12);
+    return true;
+  }
+  // one soft note: oscillator -> lowpass -> envelope -> bus
+  function note(bus, f, t, dur, o = {}) {
+    const osc = ac.createOscillator(), g = ac.createGain(), lp = ac.createBiquadFilter();
+    osc.type = o.type || 'triangle'; osc.frequency.setValueAtTime(f, t);
+    if (o.slide) osc.frequency.exponentialRampToValueAtTime(Math.max(30, f * o.slide), t + (o.slideT || dur));
+    if (o.detune) osc.detune.value = o.detune;
+    if (o.vib) { const l = ac.createOscillator(), lg = ac.createGain(); l.frequency.value = o.vib; lg.gain.value = o.vibD || 6; l.connect(lg); lg.connect(osc.frequency); l.start(t); l.stop(t + dur + .05); }
+    lp.type = 'lowpass'; lp.frequency.value = o.cut || 4000; lp.Q.value = .4;
+    const a = o.a || .005, v = o.vol || .1;
+    g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(v, t + a);
+    if (o.hold) g.gain.setValueAtTime(v, t + a + o.hold);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    osc.connect(lp); lp.connect(g); g.connect(o.dest || buses[bus]);
+    osc.start(t); osc.stop(t + dur + .05);
+  }
+  const bell = (bus, f, t, dur, v, dest) => { note(bus, f, t, dur, { type: 'sine', vol: v, a: .004, dest }); note(bus, f * 2.01, t, dur * .5, { type: 'sine', vol: v * .28, a: .004, dest }); note(bus, f * 3, t, dur * .25, { type: 'sine', vol: v * .1, a: .002, dest }); };
+  const now = () => ac.currentTime + .01;
+
+  // ---------------- sound effects ----------------
+  const PENTA = [72, 74, 76, 79, 81, 84];
+  let lastTap = -1;
+  const FX = {
+    tap() {                                           // checking a task: a soft wooden "pop", a different note each time
+      let i; do { i = Math.floor(Math.random() * PENTA.length); } while (i === lastTap); lastTap = i;
+      const t = now(), f = mtof(PENTA[i]);
+      note('sfx', f, t, .16, { type: 'triangle', vol: .16, slide: .82, slideT: .05, cut: 2600 });
+      note('sfx', f / 2, t, .09, { type: 'sine', vol: .12, slide: .7 });
+    },
+    tick() { const t = now(); note('sfx', 1250 + Math.random() * 120, t, .035, { type: 'sine', vol: .035, cut: 2000 }); },   // next line of dialog
+    click() { const t = now(); note('sfx', 640, t, .06, { type: 'triangle', vol: .07, slide: .85, cut: 1800 }); },          // buttons and switches
+    open() { const t = now(); note('sfx', 520, t, .1, { type: 'triangle', vol: .06, slide: 1.25, cut: 1800 }); },
+    ok() { const t = now(); bell('sfx', mtof(84), t, .45, .06); bell('sfx', mtof(91), t + .08, .6, .05); },               // accepted / saved
+    undo() { const t = now(); note('sfx', mtof(76), t, .14, { type: 'triangle', vol: .08, slide: .75, cut: 1600 }); note('sfx', mtof(69), t + .09, .18, { type: 'triangle', vol: .07, slide: .8, cut: 1400 }); },
+    lvl() { const t = now(); [72, 76, 79, 84].forEach((m, k) => bell('sfx', mtof(m), t + k * .085, .9, .075)); note('sfx', mtof(48), t, .8, { type: 'sine', vol: .07, a: .02 }); },
+    gear() { const t = now(); [79, 84, 88, 91].forEach((m, k) => bell('sfx', mtof(m), t + k * .07, .8, .06)); for (let k = 0; k < 5; k++) bell('sfx', mtof(96 + [0, 3, 7, 5, 10][k]), t + .32 + k * .05, .35, .025); },
+    tier() { const t = now(), seq = [[67, 0], [72, .12], [76, .24], [79, .36], [84, .52], [79, .7], [84, .82]];
+      seq.forEach(([m, d]) => { bell('sfx', mtof(m), t + d, 1, .07); }); [48, 55, 60].forEach(m => note('sfx', mtof(m), t + .5, 1.6, { type: 'triangle', vol: .045, a: .08, cut: 900 })); },
+    bark() { const t = now(); [0, .22].forEach(d => { note('sfx', 820, t + d, .07, { type: 'triangle', vol: .09, slide: .55, cut: 1500 }); note('sfx', 560, t + d + .06, .09, { type: 'triangle', vol: .08, slide: .7, cut: 1200 }); }); },
+    heart() { const t = now(); bell('sfx', mtof(81), t, .5, .07); bell('sfx', mtof(88), t + .1, .7, .07); },
+    pip() { const t = now(); [[79, 0], [83, .14], [86, .28], [83, .42], [88, .56]].forEach(([m, d], k) => bell('sfx', mtof(m), t + d, k === 4 ? .9 : .4, .06)); },
+    bellRing() { const t = now(); bell('sfx', mtof(64), t, 3.2, .11); bell('sfx', mtof(71), t + .02, 2.6, .05); }
+  };
+  const quiet = () => typeof S !== 'undefined' && S && S.settings && !S.settings.sound;   // the game's SOUND switch
+  function sfx(k) { if (quiet() || !init() || !FX[k]) return; FX[k](); }
+  function duck(sec) { if (!ac || !musicOn) return; const t = ac.currentTime, g = buses.music.gain; g.cancelScheduledValues(t); g.setValueAtTime(Math.max(.0001, g.value), t); g.linearRampToValueAtTime(vol.music * .12, t + .6); g.setValueAtTime(vol.music * .12, t + sec); g.linearRampToValueAtTime(vol.music, t + sec + 3); }
+  document.addEventListener('visibilitychange', () => { if (!ac) return; if (document.hidden) ac.suspend(); else ac.resume(); });
+
+  // ---------------- music ----------------
+  // Each track: tempo, bars of chords (voicing + bass), a melody of [step, midi, length] per bar (8 steps = eighth notes), and extras.
+  const TRACKS = {
+    village: { name: 'Village', bpm: 80, chords: [
+        [[53, 57, 60, 64], 41], [[57, 60, 64, 67], 45], [[58, 62, 65, 69], 46], [[55, 60, 64, 67], 48],
+        [[53, 57, 60, 64], 41], [[57, 60, 62, 65], 50], [[55, 58, 62, 65], 43], [[55, 60, 64, 67], 48]],
+      melody: [[[0, 69, 2], [2, 72, 2], [4, 74, 1], [5, 72, 1], [6, 69, 2]], [[0, 72, 3], [3, 69, 1], [4, 67, 4]], [[0, 65, 2], [2, 67, 2], [4, 69, 2], [6, 72, 2]], [[0, 74, 2], [2, 72, 2], [4, 67, 4]],
+        [[0, 69, 1], [1, 72, 1], [2, 77, 2], [4, 76, 2], [6, 72, 2]], [[0, 74, 3], [3, 72, 1], [4, 69, 4]], [[0, 70, 2], [2, 69, 2], [4, 67, 2], [6, 65, 2]], [[0, 67, 6]]],
+      arp: [0, 2, 1, 3, 2, 1, 3, 2], arpVol: .028, padVol: .022, bassVol: .085, leadVol: .05, bells: 'answer' },
+    forest: { name: 'Whisperwood', bpm: 68, chords: [
+        [[57, 60, 62, 65], 38], [[57, 60, 62, 65], 38], [[55, 59, 62, 64], 40], [[55, 59, 62, 64], 40],
+        [[53, 57, 60, 64], 41], [[53, 57, 60, 64], 41], [[55, 60, 62, 64], 36], [[55, 59, 62, 67], 43]],
+      melody: null, scale: [74, 76, 77, 81, 84, 86, 88], arp: [0, -1, 2, -1, 1, -1, 3, -1], arpVol: .022, padVol: .03, bassVol: .06, birds: true, bells: 'sparse' },
+    indoor: { name: 'Cave & tower', bpm: 54, chords: [
+        [[57, 60, 64, 71], 33], [[57, 60, 64, 71], 33], [[53, 57, 60, 64], 29], [[53, 57, 60, 64], 29],
+        [[55, 59, 62, 66], 31], [[55, 59, 62, 66], 31], [[52, 55, 59, 62], 28], [[52, 56, 59, 64], 28]],
+      melody: null, scale: [81, 84, 86, 88, 91, 93], arp: null, padVol: .034, bassVol: .07, drips: true, bells: 'sparse' }
+  };
+  function makeTrack(id) {
+    const T = TRACKS[id], g = ac.createGain(); g.gain.value = 0.0001; g.connect(buses.music);
+    return { id, T, g, step: 0, next: ac.currentTime + .1, timer: null, loop: 0 };
+  }
+  function schedule(tr) {
+    const T = tr.T, spb = 60 / T.bpm / 2;               // seconds per eighth note
+    while (tr.next < ac.currentTime + .25) {
+      const bar = Math.floor(tr.step / 8) % T.chords.length, s = tr.step % 8, t = tr.next, [ch, bass] = T.chords[bar];
+      const secA = Math.floor(tr.step / (8 * T.chords.length)) % 2 === 0;   // the village alternates: melody, then a breather
+      if (s === 0) {
+        ch.forEach((m, k) => { note('music', mtof(m), t, spb * 8.6, { type: 'triangle', vol: T.padVol, a: spb * 2.5, hold: spb * 4, cut: 1100, detune: k % 2 ? 6 : -6, dest: tr.g }); });
+        note('music', mtof(bass), t, spb * 7, { type: 'sine', vol: T.bassVol, a: .03, hold: spb * 3, dest: tr.g });
+      }
+      if (s === 4 && id_is(tr, 'village')) note('music', mtof(bass + 7), t, spb * 3.5, { type: 'sine', vol: T.bassVol * .7, a: .03, dest: tr.g });
+      if (T.arp && T.arp[s] >= 0) note('music', mtof(ch[T.arp[s]] + 12), t, spb * 2.2, { type: 'triangle', vol: T.arpVol * (s % 2 ? .75 : 1), a: .004, cut: 2400, dest: tr.g });
+      if (T.melody && secA) T.melody[bar].forEach(([st, m, len]) => { if (st === s) note('music', mtof(m + 12), t, spb * len * 1.1, { type: 'triangle', vol: T.leadVol, a: .01, hold: spb * len * .5, vib: 5, vibD: 3, cut: 3000, dest: tr.g }); });
+      if (T.bells === 'answer' && !secA && (s === 0 || s === 3 || s === 6) && hash(tr.step) % 3 !== 0) bell('music', mtof(ch[hash(tr.step + 7) % 4] + 24), t, 1.6, .03, tr.g);
+      if (T.bells === 'sparse' && s % 2 === 0 && hash(tr.step) % (T.drips ? 6 : 4) === 0) bell('music', mtof(T.scale[hash(tr.step + 3) % T.scale.length]), t, 2.4, T.drips ? .028 : .032, tr.g);
+      if (T.birds && s === 0 && hash(tr.step + 11) % 3 === 0) bird(t + (hash(tr.step) % 7) * spb * .5, tr.g);
+      if (T.drips && hash(tr.step + 5) % 9 === 0) drip(t + spb * .3, tr.g);
+      tr.step++; tr.next += spb;
+    }
+  }
+  const id_is = (tr, id) => tr.id === id;
+  const hash = n => { n = (n ^ 61) ^ (n >>> 16); n = n + (n << 3); n = n ^ (n >>> 4); n = Math.imul(n, 0x27d4eb2d); return (n ^ (n >>> 15)) >>> 0; };
+  function bird(t, dest) { const f = 2600 + (hash(Math.floor(t * 10)) % 900); for (let k = 0; k < 3; k++) note('music', f * (1 + k * .06), t + k * .09, .07, { type: 'sine', vol: .018, slide: 1.35, slideT: .05, dest }); }
+  function drip(t, dest) { const f = 1700 + (hash(Math.floor(t * 10)) % 1100); note('music', f, t, .25, { type: 'sine', vol: .03, slide: 1.6, slideT: .04, dest }); }
+  function play(id) {                                   // start or crossfade to a track; the first start fades in slowly
+    if (!init() || !TRACKS[id]) return;
+    if (track && track.id === id) return;
+    const t = ac.currentTime, first = !musicOn;
+    if (track) { const old = track; old.g.gain.cancelScheduledValues(t); old.g.gain.setValueAtTime(Math.max(.0001, old.g.gain.value), t); old.g.gain.exponentialRampToValueAtTime(.0001, t + 2.5); setTimeout(() => { clearInterval(old.timer); old.g.disconnect(); }, 3000); }
+    track = makeTrack(id); track.g.gain.setValueAtTime(.0001, t); track.g.gain.exponentialRampToValueAtTime(1, t + (first ? .2 : 2.5));
+    if (first) { buses.music.gain.cancelScheduledValues(t); buses.music.gain.setValueAtTime(.0001, t); buses.music.gain.exponentialRampToValueAtTime(vol.music, t + 5); musicOn = true; startedAt = t; }
+    const tr = track; schedule(tr); tr.timer = setInterval(() => schedule(tr), 60);
+  }
+  function stop() { if (!ac || !track) return; const t = ac.currentTime, tr = track; buses.music.gain.cancelScheduledValues(t); buses.music.gain.setValueAtTime(Math.max(.0001, buses.music.gain.value), t); buses.music.gain.exponentialRampToValueAtTime(.0001, t + 1.2); setTimeout(() => { clearInterval(tr.timer); tr.g.disconnect(); }, 1400); track = null; musicOn = false; }
+  function setVol(k, v) { vol[k] = v; if (ac && buses[k] && (k !== 'music' || musicOn)) buses[k].gain.setTargetAtTime(Math.max(.0001, v), ac.currentTime, .1); }
+
+  // ---------------- character voices (Animal Crossing–style babble) ----------------
+  const VOICES = {
+    bjorn: { base: 98, spread: 5, type: 'square', len: .075, vol: .075, cut: 700, rate: 30, every: 2, bounce: 1 },
+    orvel: { base: 196, spread: 4, type: 'triangle', len: .09, vol: .09, cut: 1500, rate: 42, every: 2, vib: 11, vibD: 14 },
+    rose: { base: 277, spread: 3, type: 'sine', len: .09, vol: .11, cut: 1400, rate: 38, every: 3, vib: 5, vibD: 4 },
+    kai: { base: 147, spread: 1, type: 'sine', len: .13, vol: .13, cut: 900, rate: 58, every: 3 },
+    wren: { base: 247, spread: 4, type: 'triangle', len: .06, vol: .08, cut: 1300, rate: 28, every: 3 },
+    pip: { song: [69, 72, 74, 76, 79, 81], type: 'triangle', len: .1, vol: .085, cut: 3000, rate: 34, every: 2, vib: 6, vibD: 5 },
+    fisher: { base: 117, spread: 3, type: 'sine', len: .055, vol: .12, cut: 500, rate: 40, every: 2 }
+  };
+  function blip(who, ch, k) {
+    if (quiet() || !init()) return; const V = VOICES[who]; if (!V) return;
+    const t = now(), c = ch.toLowerCase().charCodeAt(0);
+    let f;
+    if (V.song) { const i = (Math.floor(k / 2) + (c % 3)) % V.song.length; f = mtof(V.song[(k % 4 === 3) ? V.song.length - 1 - i : i]); }
+    else { const semis = ((c * 7) % (V.spread * 2 + 1)) - V.spread + (V.bounce ? (k % 4 < 2 ? 2 : -1) : 0); f = V.base * Math.pow(2, semis / 12); }
+    note('voice', f, t, V.len, { type: V.type, vol: V.vol, a: .006, cut: V.cut, vib: V.vib, vibD: V.vibD, slide: V.song ? 1 : .96 });
+  }
+  // type a line out letter by letter, with the speaker's voice; returns a function that finishes the line at once
+  function speak(who, text, onText, onDone) {
+    const V = VOICES[who] || { rate: 22, every: 99 }; let i = 0, n = 0, stopped = false;
+    const step = () => {
+      if (stopped) return; i++; const ch = text[i - 1]; onText(text.slice(0, i));
+      if (ch && /[a-zåäöø0-9]/i.test(ch)) { if (n % V.every === 0 && VOICES[who]) blip(who, ch, n); n++; }
+      if (i >= text.length) { stopped = true; onDone && onDone(); return; }
+      setTimeout(step, /[.,!?…]/.test(ch) ? V.rate * 4 : V.rate);
+    };
+    step();
+    const finish = () => { if (stopped) return; stopped = true; onText(text); onDone && onDone(); };
+    finish.cancel = () => { stopped = true; }; finish.busy = () => !stopped;
+    return finish;
+  }
+  return { init, sfx, play, stop, setVol, duck, playing: () => musicOn, speak, blip, tracks: TRACKS, voices: VOICES, current: () => track && track.id, vol };
+})();
+
+function sfx(k){SND.sfx(k)}
+const TRACK_FOR={village:'village',forest:'forest',tower:'indoor',cave:'indoor'};
+function musicFor(area){if(S.settings.music&&TRACK_FOR[area])SND.play(TRACK_FOR[area])}
 function pop(){if(!S.settings.anim)return;const e=document.querySelector('.sprite');if(e)e.animate([{transform:'scale(1)'},{transform:'scale(1.08)'},{transform:'scale(1)'}],{duration:250})}
-function tog(k){S.settings[k]=!S.settings[k];save();render();if(k==='sound')sfx('ok')}
+function tog(k){S.settings[k]=!S.settings[k];save();render();sfx('click');if(k==='music'){if(!S.settings.music)SND.stop();else if(WR&&WR.cur)musicFor(WR.cur)}}
 function reset(){if(!rc){rc=1;render();setTimeout(()=>{rc=0;if(view==='settings')render()},4000);return}
 try{localStorage.removeItem(KEY)}catch(e){}S=load();ensure();rc=0;view='home';render();toast('Fresh start')}
 function help(){const sec=(h,l)=>`<section><h3>${h}</h3><ul>${l.map(x=>`<li>${x}</li>`).join('')}</ul></section>`;
@@ -630,6 +791,7 @@ ${sec('SECRETS',['Keep growing to unlock new gear, places and quirks.'])}
 function settings(){const o=k=>S.settings[k]?'ON':'OFF';
 return`<h1>SETTINGS<button onclick="go('home')">BACK</button></h1><div class="box add">
 <button class="sqt${S.settings.sound?' on':''}" role="switch" aria-checked="${!!S.settings.sound}" onclick="tog('sound')"><span>SOUND</span><i class="sw"><b></b></i></button>
+<button class="sqt${S.settings.music?' on':''}" role="switch" aria-checked="${!!S.settings.music}" onclick="tog('music')"><span>MUSIC</span><i class="sw"><b></b></i></button>
 <button class="sqt${S.settings.anim?' on':''}" role="switch" aria-checked="${!!S.settings.anim}" onclick="tog('anim')"><span>ANIMATIONS</span><i class="sw"><b></b></i></button>
 <button onclick="go('help')">HOW TO PLAY</button></div>
 <h2>BACKUP</h2><div class="box add">
@@ -661,7 +823,7 @@ else if(Lv(t.stat)>before)m=atTrial(t.stat)&&!wasTrial?NAMES[t.stat]+' TRIAL OPE
 const tu=checkTrials(e);if(tu.includes(t.stat)){if(!e.pts)e.pts=gain(t.stat,t.pts);if(e.bk&&!e.bs)e.bs=gain(t.stat,10)}if(tu.includes('DIS')){if(e.show&&!e.sh)e.sh=gain('DIS',2);if(e.bk&&!e.bd)e.bd=gain('DIS',5)}if(tu.length){e.tr=tu;m=tu.map(k=>NAMES[k]+' → '+TIERN[Math.min(tierOf(k),4)]+'!').join(' ')}
 const nu=checkUnlocks();if(nu.includes('spirit')&&!tu.length)m='SPIRIT JOINED YOU!';else if(nu.length&&!tu.length)m=nu.some(id=>PLACES.some(p=>p.id===id))?'NEW PLACE UNLOCKED!':nu.some(id=>id.startsWith('q_'))&&!nu.some(id=>ITEMS.some(i=>i.id===id))?'NEW QUIRK UNLOCKED!':'NEW GEAR UNLOCKED!';
 if(atTrial(t.stat)&&!wasTrial&&!tu.includes(t.stat)&&!m.includes('TRIAL OPEN'))m=(m?m+' · ':'')+NAMES[t.stat]+' TRIAL OPEN!';
-sfx(tu.length?'tier':nu.length?'gear':m?'lvl':'ok');const bs=boss(),hit=bs.won?0:bs.b.dmg(e);
+sfx(tu.length?'tier':nu.length?'gear':m?'lvl':'tap');const bs=boss(),hit=bs.won?0:bs.b.dmg(e);
 if(hit&&!bs.won&&bs.dealt>=bs.b.hp){S.bossWon=S.bossWon||{};S.bossWon[bs.w]=bs.b.id;e.bossWin=bs.w;e.brw={};Object.keys(bs.b.rw).forEach(k=>e.brw[k]=gain(k,bs.b.rw[k]));m='BOSS DEFEATED: '+bs.b.name.toUpperCase()+'!';var loot=checkUnlocks();if(loot.length)m+=' LOOT DROPPED!';sfx('tier')}
 const ups=Object.keys(NAMES).filter(k=>Lv(k)>lv0[k]&&!tu.includes(k)),joined=nu.includes('spirit'),bw=e.bossWin?{id:bs.b.id,loot:loot||[]}:null;
 const big=fxOn()&&(tu.length||ups.length||joined||bw);if(m&&!big)toast(m);save();
@@ -1226,7 +1388,7 @@ ${tr?`<button class="trial" onclick="trialK='${k}';render()" aria-label="${NAMES
 const w=wk(),tn=S.log.filter(e=>TRAIN.includes(e.id)&&wk(e.t)===w).length,q=tn>=4?3:tn>=3?2:tn>=1?1:0;
 const readToday=S.log.some(e=>e.id==2&&day(e.t)===day()),fin=t=>doneToday(t)||(t.id==2&&readToday);
 const row=t=>{const n=S.log.filter(e=>e.id==t.id&&wk(e.t)===w).length,dn=doneToday(t),f=fin(t),tr=TRAIN.includes(t.id);
-if(t.mentor)return`<div class="task mq${t.done?' rep':''}"><div class="n">${esc(t.name)}<small>${t.done?'Done! Report to '+MN[t.mentor]:'from '+MN[t.mentor]+' · +'+t.reward+' '+SHORT[t.stat]+' when you report'}</small></div><button class="chk" ${t.done?'disabled':''} onclick="done(${t.id})" aria-label="Complete ${esc(t.name)}">✔</button></div>`;
+if(t.mentor)return`<div class="task mq${t.done?' rep':''}"><div class="n">${esc(t.name)}<small>${t.done?'Done! Report to '+MN[t.mentor]:'from '+MN[t.mentor]+' · +'+(t.reward+1)+' '+SHORT[t.stat]+' when you report'}</small></div><button class="chk" ${t.done?'disabled':''} onclick="done(${t.id})" aria-label="Complete ${esc(t.name)}">✔</button></div>`;
 return`<div class="task${tr?' sub':''}" style="${f?'opacity:.55':''}"><div class="n">${esc(t.name)}<small${tr&&q?' style="color:'+['','#2f7a1f','#1f5fa8','#8a6200'][q]+'"':''}>+${t.pts} ${SHORT[t.stat]} · ${t.once?'one-time':t.weekly?(dn?'weekly · done this week':'weekly'):t.daily?(dn?'daily · done today':'daily'):(t.id==2&&f?'goal done · extra counts':n+'x this week')}</small></div><button class="chk" ${tr?'style="background:'+['#d9c9a3','#8fcf6a','#4fb0e0','#f0c030'][q]+'"':''} ${dn?'disabled':''} onclick="done(${t.id})" aria-label="Complete ${esc(t.name)}">✔</button></div>`};
 const all=S.tasks.filter(t=>!t.done||t.mentor),open=all.filter(t=>!t.side),sides=all.filter(t=>t.side),isTr=t=>TRAIN.includes(t.id);
 const top=open.filter(t=>t.perm&&(t.daily||t.weekly||t.id==2)&&!fin(t));const rk=t=>t.id==2?2:t.weekly?1:0;top.sort((a,b)=>rk(a)-rk(b));
@@ -1253,7 +1415,7 @@ return`<div class="ovl" onclick="if(event.target===this){trialK=null;render()}">
 <p class="lbl">REWARD</p><p>Pass to unlock the next tier. Your stat starts growing again.</p>
 <button onclick="trialK=null;render()">CLOSE</button></div></div>`}
 function tasks(){
-const trow=t=>t.mentor?`<div class="task mq"><div class="n">${esc(t.name)}<small>from ${MN[t.mentor]} · +${t.reward} ${NAMES[t.stat]} when you report</small></div><small class="mtag">${MN[t.mentor].toUpperCase()}</small></div>`:`<div class="task" style="${t.done?'opacity:.6':''}"><div class="n">${esc(t.name)}<small>+${t.pts} ${NAMES[t.stat]} · ${t.side?'side quest':t.once?(t.done?'done':'one-time'):t.weekly?'weekly':t.daily?'daily':'repeatable'}</small></div>${t.perm?'<small>CORE</small>':`<button class="qb" onclick="editId=${t.id};delArm=0;render()" aria-label="Edit ${esc(t.name)}">${QUILL}</button>`}</div>`;
+const trow=t=>t.mentor?`<div class="task mq"><div class="n">${esc(t.name)}<small>from ${MN[t.mentor]} · +${t.reward + 1} ${NAMES[t.stat]} when you report</small></div><small class="mtag">${MN[t.mentor].toUpperCase()}</small></div>`:`<div class="task" style="${t.done?'opacity:.6':''}"><div class="n">${esc(t.name)}<small>+${t.pts} ${NAMES[t.stat]} · ${t.side?'side quest':t.once?(t.done?'done':'one-time'):t.weekly?'weekly':t.daily?'daily':'repeatable'}</small></div>${t.perm?'<small>CORE</small>':`<button class="qb" onclick="editId=${t.id};delArm=0;render()" aria-label="Edit ${esc(t.name)}">${QUILL}</button>`}</div>`;
 const mine=S.tasks.filter(t=>!t.perm&&!t.done&&!t.side),sideT=S.tasks.filter(t=>!t.perm&&!t.done&&t.side),core=S.tasks.filter(t=>t.perm);
 const arw='<svg class="arw" viewBox="0 0 6 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="0" width="2" height="8"/><rect x="2" y="1" width="2" height="6"/><rect x="4" y="3" width="2" height="2"/></svg>';
 const sideHead=sideT.length?`<button class="task trhead" onclick="openSideT=!openSideT;render()" aria-expanded="${openSideT}">${arw}<div class="n">SIDE QUESTS<small>for later</small></div><span class="chk trsum" style="background:#d9c9a3">${sideT.length}</span></button>${openSideT?sideT.map(t=>trow(t).replace('class="task"','class="task sub"')).join(''):''}`:'';
@@ -1914,12 +2076,12 @@ function newcSmallTalk(id) {
   const t = S.tasks.find(x => x.id == h.id), nm = (t ? t.name : 'were kind to someone').toLowerCase(), wd = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date(h.t).getDay()];
   return `This week's verse: "Oh, they ${nm.replace(/[.!]$/, '')}, on a ${wd}... la la laaa!" A hit, if I say so myself.`;
 }
-function pipTune() { [[784, .12, 0], [988, .12, .14], [1175, .12, .28], [988, .12, .42], [1319, .3, .56]].forEach(n => beep(...n)); }
+function pipTune() { sfx('pip'); }
 function giftCard(kind, name, pic, title) { sfx('tier'); confetti(GOLD, 70, innerWidth / 2, innerHeight * .4, 12); fxCard('', `<small class="tpk">${title}</small>${pic}<p class="lbl">${kind}</p><p>${name}</p>`, 'AWESOME!', null); }
 function itemPic(id) { const it = ITEMS.find(i => i.id === id); return `<svg class="cpic" viewBox="0 0 16 16" shape-rendering="crispEdges">${it.ic}</svg>`; }
 function heartUp(id) {                        // show the next earned heart (one per conversation)
   const ws = WS(), seen = ws.seen[id] || 0; if (frEarned(id) <= seen) return false;
-  const k = seen + 1; ws.seen[id] = k; save(); sfx('gear');
+  const k = seen + 1; ws.seen[id] = k; save(); sfx('heart');
   const say = (lines, then) => { dialog(id, lines, then); WR.dlg.popHeart = 1; showDlg(); };
   if (id === 'wren') {
     if (k === 1) say(['You know what? I think we\'re going to be good friends.']);
@@ -1939,7 +2101,7 @@ function newcTaskTalk(id) {                   // their real-life task: report, o
   const ws = WS(), t = rlTask(id);
   if (t && t.done) { rlReport(id, t); return true; }
   const off = nrlOffer(id);
-  if (off) { dialog(id, [newcSmallTalk(id), id === 'wren' ? 'Oh! I have an idea for you. Out there, in your real life:' : 'Here\'s a little challenge, from one artist to another:', '"' + off[0] + '"', `Do it, then come tell me. +${off[1]} ${NAMES[off[2]][0] + NAMES[off[2]].slice(1).toLowerCase()} and a little bonus.`], null,
+  if (off) { dialog(id, [newcSmallTalk(id), id === 'wren' ? 'Oh! I have an idea for you. Out there, in your real life:' : 'Here\'s a little challenge, from one artist to another:', '"' + off[0] + '"', `Do it, then come tell me. +${off[1] + 1} ${NAMES[off[2]][0] + NAMES[off[2]].slice(1).toLowerCase()}.`], null,
       [{ label: 'ACCEPT', fn: () => rlAccept(id, off) }, { label: 'MAYBE LATER', fn: () => dialog(id, ['Sure thing. No rush.']) }]); return true; }
   if (t) { dialog(id, ['How\'s it going with this one?', '"' + t.name + '"', 'Check it off in your quests when it\'s done, then come tell me.'], null,
       [{ label: "I'M ON IT", fn: () => {} }, { label: 'DROP IT', fn: () => { S.tasks = S.tasks.filter(x => x !== t); ws.rl[id] = null; ws.rlDay[id] = dn(); save(); dialog(id, ['No worries at all.']); } }]); return true; }
@@ -2003,7 +2165,7 @@ function worldStart() {
   WR.cur = pos.map; WR.p = { x: pos.x, y: pos.y, dir: 1, moving: 0, t: 0 }; WR.spirit = { x: pos.x - .8, y: pos.y + .2 }; WR.trail = [];
   WR.hero = heroCanvas(); WR.frames = {}; WR.heroKey = JSON.stringify([gear(), Lv('STR'), Lv('INT'), Lv('CHA')]);   // walk/run frames are redrawn with the new outfit
   const cv = document.getElementById('wc'); WR.cv = cv; WR.g = cv.getContext('2d');
-  worldResize(); worldBindInput(); worldEntities(); worldHud();
+  worldResize(); worldBindInput(); worldEntities(); worldHud(); musicFor(WR.cur);
   cancelAnimationFrame(WR.raf); WR.last = performance.now(); WR.raf = requestAnimationFrame(worldTick);
 }
 function worldStop() { if (!WR) return; cancelAnimationFrame(WR.raf); WR.raf = 0; WR.alive = 0; WR.dlg = null; const ws = WS(); ws.pos = { map: WR.cur, x: +WR.p.x.toFixed(2), y: +WR.p.y.toFixed(2) }; save(); }
@@ -2058,7 +2220,7 @@ function worldBindInput() {
   document.getElementById('wact').onclick = () => worldAct();
   document.getElementById('wdlg').onclick = () => dlgNext();
   if (!worldBindInput.keys) { worldBindInput.keys = 1;
-    addEventListener('keydown', e => { if (view !== 'world' || !WR) return; if ([' ', 'Enter', 'e'].includes(e.key)) { e.preventDefault(); if (WR.dlg && WR.dlg.choices && WR.dlg.lines.length === 1) { const b = document.querySelector('#wdlg .wch button'); if (b) b.click(); return; } WR.dlg ? dlgNext() : worldAct(); return; } WR.keys[e.key.toLowerCase()] = 1; if (e.key.startsWith('Arrow')) e.preventDefault(); });
+    addEventListener('keydown', e => { if (view !== 'world' || !WR) return; if ([' ', 'Enter', 'e'].includes(e.key)) { e.preventDefault(); if (WR.typing && WR.typing.busy()) { dlgNext(); return; } if (WR.dlg && WR.dlg.choices && WR.dlg.lines.length === 1) { const b = document.querySelector('#wdlg .wch button'); if (b) b.click(); return; } WR.dlg ? dlgNext() : worldAct(); return; } WR.keys[e.key.toLowerCase()] = 1; if (e.key.startsWith('Arrow')) e.preventDefault(); });
     addEventListener('keyup', e => { if (WR) WR.keys[e.key.toLowerCase()] = 0; });
     addEventListener('resize', () => { if (view === 'world' && WR && WR.cv) worldResize(); }); }
 }
@@ -2096,7 +2258,7 @@ function worldTick(now) {
 }
 function worldWarp(w) {
   WR.busy = 1; const cv = WR.cv; cv.style.transition = 'opacity .18s'; cv.style.opacity = 0;
-  setTimeout(() => { WR.cur = w.to; WR.p.x = w.tx + .5; WR.p.y = w.ty + (w.to === 'village' ? .3 : -.2); WR.spirit = { x: WR.p.x - .6, y: WR.p.y }; WR.trail = []; worldEntities(); worldHud(); cv.style.opacity = 1; setTimeout(() => { WR.busy = 0; }, 150); }, 190);
+  musicFor(w.to); setTimeout(() => { WR.cur = w.to; WR.p.x = w.tx + .5; WR.p.y = w.ty + (w.to === 'village' ? .3 : -.2); WR.spirit = { x: WR.p.x - .6, y: WR.p.y }; WR.trail = []; worldEntities(); worldHud(); cv.style.opacity = 1; setTimeout(() => { WR.busy = 0; }, 150); }, 190);
 }
 // stepping onto the steep stairs needs Discipline
 function worldGates(M) {
@@ -2129,7 +2291,7 @@ function worldAct() {
     f.door = 1; save(); sfx('gear'); worldEntities(); return dialog(null, ['You trace the runes with your finger and read them aloud...', 'The door glows and swings open!']);
   }
   if (e.id === 'bell') {
-    if (wq('kai') === 1) { ws.q.kai = 2; save(); bellSound(); worldHud(); return dialog(null, ['DONGGG...', 'The bell rings out over the whole valley. Kai will have heard it.']); }
+    if (wq('kai') === 1) { ws.q.kai = 2; ws.f.kaiCheat = Lv('DIS') < WQ.kai.req ? 1 : 0; save(); bellSound(); worldHud(); return dialog(null, ['DONGGG...', 'The bell rings out over the whole valley. Kai will have heard it.']); }
     bellSound(); return dialog(null, ['DONGGG... The sound is calm and clear.']);
   }
   if (e.id === 'glasses') { ws.q.orvel = 2; save(); sfx('ok'); worldEntities(); worldHud(); return dialog(null, ['A pair of round golden glasses!', 'Orvel will be happy to see these again.']); }
@@ -2146,7 +2308,7 @@ function talk(id) {
     if (t && t.done) return rlReport(id, t);
     if (!(s === 0 && didToday())) {
       const off = rlOffer(id), st = WQ[id].stat;
-      if (off) return dialog(id, [mentorSmallTalk(id), 'I have a task for you. Not here... out there, in your real life:', '"' + off[0] + '"', `Do it, then come back and tell me. +${off[1]} ${NAMES[st][0] + NAMES[st].slice(1).toLowerCase()} and a little bonus.`], null,
+      if (off) return dialog(id, [mentorSmallTalk(id), 'I have a task for you. Not here... out there, in your real life:', '"' + off[0] + '"', `Do it, then come back and tell me. +${off[1] + 1} ${NAMES[st][0] + NAMES[st].slice(1).toLowerCase()}.`], null,
         [{ label: 'ACCEPT', fn: () => rlAccept(id, off) }, { label: 'MAYBE LATER', fn: () => dialog(id, ['No rush. I\'ll be right here.']) }]);
       if (t) return dialog(id, ['Have you done it yet?', '"' + t.name + '"', 'Check it off in your quests when you have, then come tell me.'], null,
         [{ label: "I'M ON IT", fn: () => {} }, { label: 'DROP IT', fn: () => { S.tasks = S.tasks.filter(x => x !== t); ws.rl[id] = null; ws.rlDay[id] = day(); save(); dialog(id, ['No worries. There\'s always tomorrow.']); } }]);
@@ -2171,6 +2333,10 @@ function talk(id) {
     return dialog(id, intro.concat(['QUEST: ' + Q.goal]));
   }
   if (s === 1) return dialog(id, [{ bjorn: 'The dumbbell is in the cave past the boulder. You got this!', orvel: 'My glasses... somewhere on my desk, I think. Probably.', rose: 'The fisherman sits by the pond, dear. Go on!', kai: 'The bell waits at the top.' }[id]]);
+  if (s === 2 && id === 'kai' && ws.f.kaiCheat) {      // rang the bell without the discipline for the stairs: Kai knows
+    ws.q.kai = 1; ws.f.kaiCheat = 0; save(); worldHud();
+    return dialog('kai', ['I heard the bell.', 'But I did not hear your steps on the stairs.', 'You found another way up. Clever. But the bell is not the lesson. The climb is.', 'Come back when your legs are ready, and take the stairs.', 'QUEST: ' + WQ.kai.goal]);
+  }
   if (s === 2) {
     ws.q[id] = 3; save(); checkUnlocks(); save(); worldHud(); worldEntities();
     const done = { bjorn: ['MY LUCKY DUMBBELL! You legend!', 'Here, take my old training top. You\'ve earned it.'], orvel: ['My glasses! Oh, now I can see you! You\'re taller than I thought.', 'Let me teach you a little spell as thanks.'], rose: ['He smiled? Oh, that makes my whole week.', 'You have a good heart. My garden is always open to you.'], kai: ['I heard the bell.', 'You showed up, step by step. Sit with me a moment. I will teach you to be still.'] }[id];
@@ -2191,7 +2357,7 @@ function rlReport(id, t) {
   const thanks = { rose: 'Oh, that warms my heart, dear!', bjorn: 'THAT\'S what I\'m talking about! Strong!', orvel: 'Marvelous! A sharper mind every day!', kai: 'Good. Small steps build mountains.', wren: 'Nice work! See? You\'re a builder too.', pip: 'Bravo! That one\'s going in a song.' }[id];
   dialog(id, [thanks, NEWC[id] ? 'Give me a couple of days and I\'ll think of something new.' : 'Come back tomorrow for a new task.'], () => {
     sfx('lvl');
-    fxCard('', `<small class="tpk">REAL-LIFE QUEST DONE!</small><h3>${esc(t.name)}</h3>${npcCanvas(id) ? '<div class="rlport"></div>' : ''}<p class="lbl">FROM ${MN[id].toUpperCase()}</p><p>${a || b ? '+' + a + ' ' + nm + ' &nbsp;+' + b + ' bonus' : 'Your ' + nm + ' trial is open, so no new points right now.'}</p>`, 'AWESOME!', () => { if (ups.length && fxOn()) levelBanner(ups); });
+    fxCard('', `<small class="tpk">REAL-LIFE QUEST DONE!</small><h3>${esc(t.name)}</h3>${npcCanvas(id) ? '<div class="rlport"></div>' : ''}<p class="lbl">FROM ${MN[id].toUpperCase()}</p><p>${a || b ? '+' + (a + b) + ' ' + nm : 'Your ' + nm + ' trial is open, so no new points right now.'}</p>`, 'AWESOME!', () => { if (ups.length && fxOn()) levelBanner(ups); });
     const port = document.querySelector('.fxtier .rlport'); if (port) { const c = npcCanvas(id), big = document.createElement('canvas'); big.width = c.width * 3; big.height = c.height * 3; const g = big.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(c, 0, 0, big.width, big.height); port.appendChild(big); }
   });
 }
@@ -2210,13 +2376,17 @@ function showDlg() {
   box.querySelector('b').textContent = d.who ? ({ bjorn: 'BIG BJØRN', orvel: 'OLD ORVEL', rose: 'GRANNY ROSE', kai: 'MASTER KAI', fisher: 'FISHERMAN', wren: 'WREN', pip: 'PIP THE BARD' }[d.who]) : '';
   const hz = box.querySelector('.whearts'), fh = d.who && typeof frHearts === 'function' ? frHearts(d.who) : null;
   hz.innerHTML = fh ? Array.from({ length: fh.max }, (_, i) => heartSvg(i < fh.n, d.popHeart && i === fh.n - 1)).join('') : ''; d.popHeart = 0;
-  const t = d.lines[0]; box.querySelector('p').textContent = t; box.classList.toggle('quest', t.startsWith('QUEST:') || t.startsWith('"')); box.hidden = false; sfx('ok');
-  const ch = box.querySelector('.wch'); ch.innerHTML = ''; const last = d.lines.length === 1 && d.choices; box.querySelector('small').hidden = !!last;
-  if (last) d.choices.forEach(c => { const bt = document.createElement('button'); bt.textContent = c.label; bt.onclick = ev => { ev.stopPropagation(); WR.dlg = null; box.hidden = true; c.fn(); }; ch.appendChild(bt); });
+  const t = d.lines[0], pe = box.querySelector('p'), quest = t.startsWith('QUEST:'); box.classList.toggle('quest', quest || t.startsWith('"')); box.hidden = false;
+  const ch = box.querySelector('.wch'); ch.innerHTML = ''; const last = d.lines.length === 1 && d.choices, tap = box.querySelector('small'); tap.hidden = true;
+  if (WR.typing) WR.typing.cancel();
+  const done = () => { WR.typing = null; tap.hidden = !!last; if (quest) sfx('ok'); if (last) addChoices(); };
+  WR.typing = SND.speak(quest ? null : d.who, t, s => { pe.textContent = s; }, done);
+  if (!d.who && !quest) sfx('tick');
+  function addChoices() { d.choices.forEach(c => { const bt = document.createElement('button'); bt.textContent = c.label; bt.onclick = ev => { ev.stopPropagation(); WR.dlg = null; box.hidden = true; c.fn(); }; ch.appendChild(bt); }); }
   document.getElementById('wact').hidden = true;
 }
 const heartSvg = (on, pop) => `<svg viewBox="0 0 7 6" shape-rendering="crispEdges"${pop ? ' class="pop"' : ''}><path fill="#3b2416" d="M1 0h2v1h1V0h2v1h1v2H6v1H5v1H4v1H3V5H2V4H1V3H0V1h1z"/><path fill="${on ? '#e5607e' : '#e4d6bd'}" d="M1 1h2v1h1V1h2v2H5v1H4v1H3V4H2V3H1z"/>${on ? '<rect x="1" y="1" width="1" height="1" fill="#ffc2cf"/>' : ''}</svg>`;
-function dlgNext() { const d = WR.dlg; if (!d) return; if (d.choices && d.lines.length === 1) return; d.lines.shift(); if (d.lines.length) return showDlg(); WR.dlg = null; document.getElementById('wdlg').hidden = true; if (d.then) setTimeout(d.then, 150); }
+function dlgNext() { if (WR.typing && WR.typing.busy()) { WR.typing(); return; } const d = WR.dlg; if (!d) return; if (d.choices && d.lines.length === 1) return; d.lines.shift(); if (d.lines.length) return showDlg(); WR.dlg = null; document.getElementById('wdlg').hidden = true; if (d.then) setTimeout(d.then, 150); }
 function worldHud() {
   const a = document.getElementById('warea'), q = document.getElementById('wquest'); if (!a) return;
   a.textContent = { village: 'VILLAGE', tower: "ORVEL'S TOWER", cave: 'THE CAVE', forest: 'WHISPERWOOD' }[WR.cur];
@@ -2225,7 +2395,7 @@ function worldHud() {
   q.textContent = act ? '► ' + (wq(act) === 1 ? WQ[act].goal : WQ[act].back) : ng ? '► ' + ng : '';
 }
 function worldShake() { const cv = WR.cv; cv.animate && cv.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(-4px,2px)' }, { transform: 'translate(4px,-2px)' }, { transform: 'translate(0,0)' }], { duration: 300 }); }
-function bellSound() { [[523, .5, 0], [784, .9, .05], [1047, 1.2, .1]].forEach(n => beep(...n)); }
+function bellSound() { sfx('bellRing'); }
 // ---- drawing
 function worldDraw() {
   const g = WR.g, cv = WR.cv, sc = WR.sc, M = WR.maps[WR.cur], p = WR.p;
