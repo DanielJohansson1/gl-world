@@ -622,30 +622,31 @@ const SND = (() => {
   }
   function init() {
     if (ac) { if (ac.state === 'suspended') ac.resume(); return true; }
-    try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return false; }
-    master = ac.createGain(); master.gain.value = 1.3;
-    const comp = ac.createDynamicsCompressor(); comp.threshold.value = -18; comp.ratio.value = 3; master.connect(comp); comp.connect(ac.destination);
-    verb = ac.createConvolver(); verb.buffer = impulse(2.2, 3); const vr = ac.createGain(); vr.gain.value = .5; verb.connect(vr); vr.connect(master);
+    try { ac = new (window.AudioContext || window.webkitAudioContext)({ latencyHint: 'balanced' }); } catch (e) { try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch (e2) { return false; } }
+    master = ac.createGain(); master.gain.value = 1.3; master.connect(ac.destination);
+    // light "room" made of two short echo loops (much cheaper for a phone than a full reverb)
+    verb = ac.createGain(); const vr = ac.createGain(); vr.gain.value = .55; vr.connect(master);
+    [[.067, .42], [.109, .36]].forEach(([dt, fb]) => { const d = ac.createDelay(1), lp = ac.createBiquadFilter(), f = ac.createGain(); d.delayTime.value = dt; lp.type = 'lowpass'; lp.frequency.value = 2200; f.gain.value = fb; verb.connect(d); d.connect(lp); lp.connect(f); f.connect(d); lp.connect(vr); });
     const mk = (name, v, send) => { const g = ac.createGain(); g.gain.value = v; g.connect(master); const s = ac.createGain(); s.gain.value = send; g.connect(s); s.connect(verb); buses[name] = g; };
-    mk('sfx', vol.sfx, .18); mk('music', 0, .42); mk('voice', vol.voice, .12);
+    mk('sfx', vol.sfx, .18); mk('music', 0, 0); mk('voice', vol.voice, .12);
     return true;
   }
   // one soft note: oscillator -> lowpass -> envelope -> bus
   function note(bus, f, t, dur, o = {}) {
-    const osc = ac.createOscillator(), g = ac.createGain(), lp = ac.createBiquadFilter();
+    const c = o.ctx || ac, osc = c.createOscillator(), g = c.createGain(), needLp = o.cut && o.cut < 2600 && o.type !== 'sine', lp = needLp ? c.createBiquadFilter() : null;
     osc.type = o.type || 'triangle'; osc.frequency.setValueAtTime(f, t);
     if (o.slide) osc.frequency.exponentialRampToValueAtTime(Math.max(30, f * o.slide), t + (o.slideT || dur));
     if (o.detune) osc.detune.value = o.detune;
-    if (o.vib) { const l = ac.createOscillator(), lg = ac.createGain(); l.frequency.value = o.vib; lg.gain.value = o.vibD || 6; l.connect(lg); lg.connect(osc.frequency); l.start(t); l.stop(t + dur + .05); }
-    lp.type = 'lowpass'; lp.frequency.value = o.cut || 4000; lp.Q.value = .4;
+    if (o.vib) { const l = c.createOscillator(), lg = c.createGain(); l.frequency.value = o.vib; lg.gain.value = o.vibD || 6; l.connect(lg); lg.connect(osc.frequency); l.start(t); l.stop(t + dur + .05); }
+    if (lp) { lp.type = 'lowpass'; lp.frequency.value = o.cut; lp.Q.value = .4; }
     const a = o.a || .005, v = o.vol || .1;
     g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(v, t + a);
     if (o.hold) g.gain.setValueAtTime(v, t + a + o.hold);
     g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    osc.connect(lp); lp.connect(g); g.connect(o.dest || buses[bus]);
+    if (lp) { osc.connect(lp); lp.connect(g); } else osc.connect(g); g.connect(o.dest || buses[bus]);
     osc.start(t); osc.stop(t + dur + .05);
   }
-  const bell = (bus, f, t, dur, v, dest) => { note(bus, f, t, dur, { type: 'sine', vol: v, a: .004, dest }); note(bus, f * 2.01, t, dur * .5, { type: 'sine', vol: v * .28, a: .004, dest }); note(bus, f * 3, t, dur * .25, { type: 'sine', vol: v * .1, a: .002, dest }); };
+  const bell = (bus, f, t, dur, v, dest, ctx) => { note(bus, f, t, dur, { type: 'sine', vol: v, a: .004, dest, ctx }); note(bus, f * 2.01, t, dur * .5, { type: 'sine', vol: v * .28, a: .004, dest, ctx }); if (!dest) note(bus, f * 3, t, dur * .25, { type: 'sine', vol: v * .1, a: .002, dest, ctx }); };
   const now = () => ac.currentTime + .01;
 
   // ---------------- sound effects ----------------
@@ -695,43 +696,66 @@ const SND = (() => {
         [[55, 59, 62, 66], 31], [[55, 59, 62, 66], 31], [[52, 55, 59, 62], 28], [[52, 56, 59, 64], 28]],
       melody: null, scale: [81, 84, 86, 88, 91, 93], arp: null, padVol: .034, bassVol: .07, drips: true, bells: 'sparse' }
   };
-  function makeTrack(id) {
-    const T = TRACKS[id], g = ac.createGain(); g.gain.value = 0.0001; g.connect(buses.music);
-    return { id, T, g, step: 0, next: ac.currentTime + .1, timer: null, loop: 0 };
-  }
-  function schedule(tr) {
-    const T = tr.T, spb = 60 / T.bpm / 2;               // seconds per eighth note
-    while (tr.next < ac.currentTime + .25) {
-      const bar = Math.floor(tr.step / 8) % T.chords.length, s = tr.step % 8, t = tr.next, [ch, bass] = T.chords[bar];
-      const secA = Math.floor(tr.step / (8 * T.chords.length)) % 2 === 0;   // the village alternates: melody, then a breather
-      if (s === 0) {
-        ch.forEach((m, k) => { note('music', mtof(m), t, spb * 8.6, { type: 'triangle', vol: T.padVol, a: spb * 2.5, hold: spb * 4, cut: 1100, detune: k % 2 ? 6 : -6, dest: tr.g }); });
-        note('music', mtof(bass), t, spb * 7, { type: 'sine', vol: T.bassVol, a: .03, hold: spb * 3, dest: tr.g });
-      }
-      if (s === 4 && id_is(tr, 'village')) note('music', mtof(bass + 7), t, spb * 3.5, { type: 'sine', vol: T.bassVol * .7, a: .03, dest: tr.g });
-      if (T.arp && T.arp[s] >= 0) note('music', mtof(ch[T.arp[s]] + 12), t, spb * 2.2, { type: 'triangle', vol: T.arpVol * (s % 2 ? .75 : 1), a: .004, cut: 2400, dest: tr.g });
-      if (T.melody && secA) T.melody[bar].forEach(([st, m, len]) => { if (st === s) note('music', mtof(m + 12), t, spb * len * 1.1, { type: 'triangle', vol: T.leadVol, a: .01, hold: spb * len * .5, vib: 5, vibD: 3, cut: 3000, dest: tr.g }); });
-      if (T.bells === 'answer' && !secA && (s === 0 || s === 3 || s === 6) && hash(tr.step) % 3 !== 0) bell('music', mtof(ch[hash(tr.step + 7) % 4] + 24), t, 1.6, .03, tr.g);
-      if (T.bells === 'sparse' && s % 2 === 0 && hash(tr.step) % (T.drips ? 6 : 4) === 0) bell('music', mtof(T.scale[hash(tr.step + 3) % T.scale.length]), t, 2.4, T.drips ? .028 : .032, tr.g);
-      if (T.birds && s === 0 && hash(tr.step + 11) % 3 === 0) bird(t + (hash(tr.step) % 7) * spb * .5, tr.g);
-      if (T.drips && hash(tr.step + 5) % 9 === 0) drip(t + spb * .3, tr.g);
-      tr.step++; tr.next += spb;
-    }
-  }
-  const id_is = (tr, id) => tr.id === id;
+  // The music is "recorded" once per area into a sound clip (an offline render, ~1 s of work), then looped.
+  // Looping a finished clip is very light for a phone, so a busy game can't make it stutter.
   const hash = n => { n = (n ^ 61) ^ (n >>> 16); n = n + (n << 3); n = n ^ (n >>> 4); n = Math.imul(n, 0x27d4eb2d); return (n ^ (n >>> 15)) >>> 0; };
-  function bird(t, dest) { const f = 2600 + (hash(Math.floor(t * 10)) % 900); for (let k = 0; k < 3; k++) note('music', f * (1 + k * .06), t + k * .09, .07, { type: 'sine', vol: .018, slide: 1.35, slideT: .05, dest }); }
-  function drip(t, dest) { const f = 1700 + (hash(Math.floor(t * 10)) % 1100); note('music', f, t, .25, { type: 'sine', vol: .03, slide: 1.6, slideT: .04, dest }); }
+  const clips = {}, rendering = {};
+  function compose(id, c, out) {                       // write the whole loop into context c
+    const T = TRACKS[id], spb = 60 / T.bpm / 2, steps = 16 * 8, o0 = .02;
+    const N = (f, t, dur, o) => note('music', f, t, dur, Object.assign({ ctx: c, dest: out }, o));
+    for (let step = 0; step < steps; step++) {
+      const bar = Math.floor(step / 8) % T.chords.length, s = step % 8, t = o0 + step * spb, [ch, bass] = T.chords[bar];
+      const secA = Math.floor(step / (8 * T.chords.length)) % 2 === 0;   // the village alternates: melody, then a breather
+      if (s === 0) {
+        ch.forEach((m, k) => N(mtof(m), t, spb * 8.6, { type: 'triangle', vol: T.padVol, a: spb * 2.5, hold: spb * 4, cut: 1100, detune: k % 2 ? 6 : -6 }));
+        N(mtof(bass), t, spb * 7, { type: 'sine', vol: T.bassVol, a: .03, hold: spb * 3 });
+      }
+      if (s === 4 && id === 'village') N(mtof(bass + 7), t, spb * 3.5, { type: 'sine', vol: T.bassVol * .7, a: .03 });
+      if (T.arp && T.arp[s] >= 0) N(mtof(ch[T.arp[s]] + 12), t, spb * 2.2, { type: 'triangle', vol: T.arpVol * (s % 2 ? .75 : 1), a: .004, cut: 2400 });
+      if (T.melody && secA) T.melody[bar].forEach(([st, m, len]) => { if (st === s) N(mtof(m + 12), t, spb * len * 1.1, { type: 'triangle', vol: T.leadVol, a: .01, hold: spb * len * .5, vib: 5, vibD: 3 }); });
+      if (T.bells === 'answer' && !secA && (s === 0 || s === 3 || s === 6) && hash(step) % 3 !== 0) bell('music', mtof(ch[hash(step + 7) % 4] + 12), t, 1.6, .034, out, c);
+      if (T.bells === 'sparse' && s % 2 === 0 && hash(step) % (T.drips ? 8 : 6) === 0) bell('music', mtof(T.scale[hash(step + 3) % T.scale.length]), t, 2.4, T.drips ? .028 : .032, out, c);
+      if (T.birds && s === 0 && hash(step + 11) % 3 === 0) { const bt = t + (hash(step) % 7) * spb * .5, f = 2600 + hash(step + 2) % 900; for (let k = 0; k < 3; k++) N(f * (1 + k * .06), bt + k * .09, .07, { type: 'sine', vol: .018, slide: 1.35, slideT: .05 }); }
+      if (T.drips && hash(step + 5) % 14 === 0) N(1700 + hash(step + 9) % 1100, t + spb * .3, .25, { type: 'sine', vol: .03, slide: 1.6, slideT: .04 });
+    }
+    return o0 + steps * spb - o0;                        // loop length in seconds
+  }
+  function render(id) {
+    if (clips[id]) return Promise.resolve(clips[id]);
+    if (rendering[id]) return rendering[id];
+    const T = TRACKS[id], L = 16 * 8 * (60 / T.bpm / 2), tail = 4;
+    let sr = 22050, oc;
+    const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+    try { oc = new OAC(1, Math.ceil(sr * (L + tail)), sr); } catch (e) { sr = 44100; oc = new OAC(1, Math.ceil(sr * (L + tail)), sr); }
+    const out = oc.createGain(); out.connect(oc.destination);
+    const send = oc.createGain(); send.gain.value = .42; out.connect(send);              // the same soft room echo, baked in
+    [[.067, .42], [.109, .36]].forEach(([dt, fb]) => { const d = oc.createDelay(1), lp = oc.createBiquadFilter(), f = oc.createGain(), w = oc.createGain(); d.delayTime.value = dt; lp.type = 'lowpass'; lp.frequency.value = 2200; f.gain.value = fb; w.gain.value = .55; send.connect(d); d.connect(lp); lp.connect(f); f.connect(d); lp.connect(w); w.connect(oc.destination); });
+    compose(id, oc, out);
+    return rendering[id] = oc.startRendering().then(buf => {
+      const n = Math.round(L * sr), src = buf.getChannelData(0), clip = ac.createBuffer(1, n, sr), d = clip.getChannelData(0);
+      for (let i = 0; i < n; i++) d[i] = src[i] + (i + n < src.length ? src[i + n] : 0);   // fold the ringing tail into the start: a seamless loop
+      delete rendering[id]; return clips[id] = clip;
+    });
+  }
   function play(id) {                                   // start or crossfade to a track; the first start fades in slowly
     if (!init() || !TRACKS[id]) return;
     if (track && track.id === id) return;
-    const t = ac.currentTime, first = !musicOn;
-    if (track) { const old = track; old.g.gain.cancelScheduledValues(t); old.g.gain.setValueAtTime(Math.max(.0001, old.g.gain.value), t); old.g.gain.exponentialRampToValueAtTime(.0001, t + 2.5); setTimeout(() => { clearInterval(old.timer); old.g.disconnect(); }, 3000); }
-    track = makeTrack(id); track.g.gain.setValueAtTime(.0001, t); track.g.gain.exponentialRampToValueAtTime(1, t + (first ? .2 : 2.5));
-    if (first) { buses.music.gain.cancelScheduledValues(t); buses.music.gain.setValueAtTime(.0001, t); buses.music.gain.exponentialRampToValueAtTime(vol.music, t + 5); musicOn = true; startedAt = t; }
-    const tr = track; schedule(tr); tr.timer = setInterval(() => schedule(tr), 60);
+    const first = !musicOn, me = track = { id, g: ac.createGain(), src: null };
+    me.g.gain.value = .0001; me.g.connect(buses.music);
+    if (first) { const t = ac.currentTime; buses.music.gain.cancelScheduledValues(t); buses.music.gain.setValueAtTime(.0001, t); musicOn = true; }
+    render(id).then(clip => {
+      if (track !== me) { me.g.disconnect(); return; }
+      const t = ac.currentTime + .05, s = ac.createBufferSource(); s.buffer = clip; s.loop = true; s.connect(me.g); s.start(t); me.src = s;
+      me.g.gain.setValueAtTime(.0001, t); me.g.gain.exponentialRampToValueAtTime(1, t + (first ? .3 : 2.5));
+      if (first) { buses.music.gain.setValueAtTime(.0001, t); buses.music.gain.exponentialRampToValueAtTime(vol.music, t + 5); }
+      if (prev) fadeOut(prev, 2.5); prev = null;
+      Object.keys(TRACKS).forEach((k, i) => setTimeout(() => render(k), 1500 + i * 1500));   // get the other areas ready in the background
+    }).catch(() => {});
+    let prev = null; if (lastTrack && lastTrack !== me) prev = lastTrack; lastTrack = me;
   }
-  function stop() { if (!ac || !track) return; const t = ac.currentTime, tr = track; buses.music.gain.cancelScheduledValues(t); buses.music.gain.setValueAtTime(Math.max(.0001, buses.music.gain.value), t); buses.music.gain.exponentialRampToValueAtTime(.0001, t + 1.2); setTimeout(() => { clearInterval(tr.timer); tr.g.disconnect(); }, 1400); track = null; musicOn = false; }
+  let lastTrack = null;
+  function fadeOut(tr, sec) { const t = ac.currentTime; tr.g.gain.cancelScheduledValues(t); tr.g.gain.setValueAtTime(Math.max(.0001, tr.g.gain.value), t); tr.g.gain.exponentialRampToValueAtTime(.0001, t + sec); setTimeout(() => { try { tr.src && tr.src.stop(); } catch (e) {} tr.g.disconnect(); }, sec * 1000 + 300); }
+  function stop() { if (!ac || !track) return; const t = ac.currentTime; buses.music.gain.cancelScheduledValues(t); buses.music.gain.setValueAtTime(Math.max(.0001, buses.music.gain.value), t); buses.music.gain.exponentialRampToValueAtTime(.0001, t + 1.2); const tr = track; setTimeout(() => { try { tr.src && tr.src.stop(); } catch (e) {} tr.g.disconnect(); }, 1400); track = null; lastTrack = null; musicOn = false; }
   function setVol(k, v) { vol[k] = v; if (ac && buses[k] && (k !== 'music' || musicOn)) buses[k].gain.setTargetAtTime(Math.max(.0001, v), ac.currentTime, .1); }
 
   // ---------------- character voices (Animal Crossing–style babble) ----------------
