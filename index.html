@@ -164,12 +164,17 @@ body.inworld main{max-width:none;padding:0}
 #wdlg .wport{flex:none;width:72px;height:96px;background:var(--field);border:3px solid var(--fg);display:flex;align-items:flex-end;justify-content:center;overflow:hidden}#wdlg .wport canvas{width:72px;height:auto;image-rendering:pixelated}
 #wdlg .wtxt{flex:1;display:flex;flex-direction:column;gap:6px}#wdlg b{font-size:9px;color:var(--mid);font-weight:normal}#wdlg p{margin:0;font-size:10px;line-height:1.7}#wdlg small{align-self:flex-end;font-size:7px;color:var(--mid);animation:wflash2 1s steps(2) infinite}
 #wdlg.quest p{color:#8a6200}
+#wv .cbar{position:absolute;left:0;right:0;height:0;background:#000;z-index:5;transition:height .6s ease}#wv .cbar.top{top:0}#wv .cbar.bot{bottom:0}#wv .cbar.on{height:11%}
+body.cine #whud,body.cine #wact,body.cine #wjoy{visibility:hidden}
+.pbig{width:144px;height:auto;image-rendering:pixelated;display:block;margin:4px auto}.gtent{width:168px;height:auto;image-rendering:pixelated;display:block;margin:6px auto}.wglove{width:56px;image-rendering:pixelated;display:block;margin:10px auto;animation:wflash2 .8s steps(2) infinite}
+.pgal .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}.pgal .pcell{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}.pgal .pcell b{font-size:6px;font-weight:normal;text-align:center}.pgal .pcell small{font-size:7px;color:var(--mid)}
+.pgal .pimg{width:100%;max-width:72px;image-rendering:pixelated}.pgal .pcell.none .pq{display:grid;place-items:center;width:100%;max-width:72px;aspect-ratio:48/66;background:#3a3348;color:#8a8478;border:3px dashed #8a8478;font-size:16px}
 #wdlg .whead{display:flex;align-items:center;gap:8px;min-height:12px}#wdlg .whearts{display:flex;gap:2px}#wdlg .whearts svg{width:12px;height:11px}#wdlg .whearts svg.pop{animation:hpop .5s steps(4)}
 @keyframes hpop{0%{transform:scale(1)}40%{transform:scale(1.8)}100%{transform:scale(1)}}
 #wdlg .wch{display:flex;gap:8px;flex-wrap:wrap}#wdlg .wch button{flex:1;min-width:100px;padding:10px 6px;font-size:9px}#wdlg .wch button:first-child{background:#ffd36b}
 .task.mq .n small{color:#8a5a2a}.task.mq{border-left:4px solid #e0a64e;padding-left:8px}.task.mq.rep .n small{color:#2f7a1f}.task.mq.rep{background:#eef7d8}
 .mtag{flex:none;border:2px solid #b0742c;color:#8a5a2a;padding:3px 5px;font-size:8px}.rlport canvas{width:84px;image-rendering:pixelated}
-#wdlg[hidden],#wact[hidden],#wjoy[hidden]{display:none}
+#wdlg .wport[hidden],#wdlg[hidden],#wact[hidden],#wjoy[hidden]{display:none}
 
 .fxc{position:fixed;inset:0;pointer-events:none;z-index:60;image-rendering:pixelated}
 .fxflash{position:fixed;pointer-events:none;z-index:55;background:#fff;animation:fxf .45s steps(3) forwards}
@@ -229,7 +234,7 @@ const CORE=[{id:1,name:'Hit the gym',stat:'STR',pts:4},{id:1001,name:'CrossFit',
 const TRAIN=[1,1001,1002,1003];
 const QUILL=`<svg viewBox="0 0 14 14" shape-rendering="crispEdges" aria-hidden="true"><rect x="10" y="1" width="1" height="1" fill="#3b2416"/><rect x="11" y="0" width="1" height="1" fill="#3b2416"/><rect x="13" y="1" width="1" height="1" fill="#3b2416"/><rect x="12" y="0" width="1" height="1" fill="#3b2416"/><rect x="8" y="2" width="1" height="1" fill="#3b2416"/><rect x="9" y="1" width="1" height="1" fill="#3b2416"/><rect x="13" y="2" width="1" height="1" fill="#3b2416"/><rect x="7" y="3" width="1" height="1" fill="#3b2416"/><rect x="13" y="3" width="1" height="1" fill="#3b2416"/><rect x="12" y="4" width="1" height="1" fill="#3b2416"/><rect x="6" y="4" width="1" height="1" fill="#3b2416"/><rect x="11" y="5" width="1" height="1" fill="#3b2416"/><rect x="5" y="5" width="1" height="1" fill="#3b2416"/><rect x="10" y="6" width="1" height="1" fill="#3b2416"/><rect x="4" y="6" width="1" height="1" fill="#3b2416"/><rect x="8" y="7" width="1" height="1" fill="#3b2416"/><rect x="9" y="7" width="1" height="1" fill="#3b2416"/><rect x="3" y="7" width="1" height="1" fill="#3b2416"/><rect x="7" y="8" width="1" height="1" fill="#3b2416"/><rect x="3" y="8" width="1" height="1" fill="#3b2416"/><rect x="5" y="9" width="1" height="1" fill="#3b2416"/><rect x="6" y="9" width="1" height="1" fill="#3b2416"/><rect x="2" y="9" width="1" height="1" fill="#3b2416"/><rect x="4" y="10" width="1" height="1" fill="#3b2416"/><rect x="1" y="10" width="1" height="1" fill="#3b2416"/><rect x="3" y="11" width="1" height="1" fill="#3b2416"/><rect x="1" y="11" width="1" height="1" fill="#3b2416"/><rect x="2" y="12" width="1" height="1" fill="#3b2416"/><rect x="0" y="12" width="1" height="1" fill="#3b2416"/><rect x="1" y="13" width="1" height="1" fill="#3b2416"/><rect x="11" y="1" width="1" height="1" fill="#fffaf0"/><rect x="12" y="1" width="1" height="1" fill="#fffaf0"/><rect x="9" y="2" width="1" height="1" fill="#fffaf0"/><rect x="10" y="2" width="1" height="1" fill="#fffaf0"/><rect x="11" y="2" width="1" height="1" fill="#fffaf0"/><rect x="12" y="2" width="1" height="1" fill="#fffaf0"/><rect x="8" y="3" width="1" height="1" fill="#fffaf0"/><rect x="9" y="3" width="1" height="1" fill="#fffaf0"/><rect x="10" y="3" width="1" height="1" fill="#fffaf0"/><rect x="11" y="3" width="1" height="1" fill="#fffaf0"/><rect x="12" y="3" width="1" height="1" fill="#c9c2b0"/><rect x="7" y="4" width="1" height="1" fill="#fffaf0"/><rect x="8" y="4" width="1" height="1" fill="#fffaf0"/><rect x="9" y="4" width="1" height="1" fill="#fffaf0"/><rect x="10" y="4" width="1" height="1" fill="#fffaf0"/><rect x="11" y="4" width="1" height="1" fill="#c9c2b0"/><rect x="6" y="5" width="1" height="1" fill="#fffaf0"/><rect x="7" y="5" width="1" height="1" fill="#fffaf0"/><rect x="8" y="5" width="1" height="1" fill="#fffaf0"/><rect x="9" y="5" width="1" height="1" fill="#fffaf0"/><rect x="10" y="5" width="1" height="1" fill="#c9c2b0"/><rect x="5" y="6" width="1" height="1" fill="#fffaf0"/><rect x="6" y="6" width="1" height="1" fill="#fffaf0"/><rect x="7" y="6" width="1" height="1" fill="#fffaf0"/><rect x="8" y="6" width="1" height="1" fill="#fffaf0"/><rect x="9" y="6" width="1" height="1" fill="#c9c2b0"/><rect x="4" y="7" width="1" height="1" fill="#fffaf0"/><rect x="5" y="7" width="1" height="1" fill="#fffaf0"/><rect x="6" y="7" width="1" height="1" fill="#fffaf0"/><rect x="7" y="7" width="1" height="1" fill="#c9c2b0"/><rect x="4" y="8" width="1" height="1" fill="#fffaf0"/><rect x="5" y="8" width="1" height="1" fill="#fffaf0"/><rect x="6" y="8" width="1" height="1" fill="#c9c2b0"/><rect x="3" y="9" width="1" height="1" fill="#fffaf0"/><rect x="4" y="9" width="1" height="1" fill="#c9c2b0"/><rect x="2" y="10" width="1" height="1" fill="#c9c2b0"/><rect x="3" y="10" width="1" height="1" fill="#c9c2b0"/><rect x="2" y="11" width="1" height="1" fill="#3b2416"/><rect x="1" y="12" width="1" height="1" fill="#3b2416"/></svg>`;
 let view='home',rc=0,wtab='gear',openTr=false,openCore=false,editId=null,delArm=0,ideaDraft=null,openSide=false,openSideT=false,trialK=null,S=load();
-function ensure(){S.tasks=S.tasks.filter(t=>!(t.perm&&!CORE.some(c=>c.id==t.id)));S.tasks.forEach(t=>{if(t.side){t.once=true;t.daily=false;t.weekly=false}});const core=CORE.map(c=>{const t=S.tasks.find(t=>t.id==c.id);return t?Object.assign(t,c,{perm:true}):{...c,perm:true}});S.tasks=[...core,...S.tasks.filter(t=>!CORE.some(c=>c.id==t.id))];S.settings=Object.assign({sound:true,anim:true,music:true},S.settings);if(S.bossSeen===undefined)S.bossSeen=wk();S.owned=S.owned||{};S.equip=S.equip||{};S.fresh=S.fresh||{};S.qon=S.qon||{};S.tier=S.tier||{};S.trialWk=S.trialWk||{};checkTrials();checkUnlocks();S.next=Math.max(S.next||4,4);save()}
+function ensure(){if(!S.circus1){S.circus1=1;S.bossWon={};['nightcap','bloom','hoodie','chef','captainhat','antenna','arena'].forEach(k=>{if(S.owned)delete S.owned[k];if(S.equip)delete S.equip[k];if(S.fresh)delete S.fresh[k]});if(S.place==='arena')S.place='meadow'}S.tasks=S.tasks.filter(t=>!(t.perm&&!CORE.some(c=>c.id==t.id)));S.tasks.forEach(t=>{if(t.side){t.once=true;t.daily=false;t.weekly=false}});const core=CORE.map(c=>{const t=S.tasks.find(t=>t.id==c.id);return t?Object.assign(t,c,{perm:true}):{...c,perm:true}});S.tasks=[...core,...S.tasks.filter(t=>!CORE.some(c=>c.id==t.id))];S.settings=Object.assign({sound:true,anim:true,music:true},S.settings);if(S.bossSeen===undefined)S.bossSeen=wk();S.owned=S.owned||{};S.equip=S.equip||{};S.fresh=S.fresh||{};S.qon=S.qon||{};S.tier=S.tier||{};S.trialWk=S.trialWk||{};checkTrials();checkUnlocks();S.next=Math.max(S.next||4,4);save()}
 function load(){try{const r=localStorage.getItem(KEY);if(r)return JSON.parse(r)}catch(e){}
 return{pts:{STR:0,INT:0,CHA:0,DIS:0},tasks:[],log:[],bonus:{},next:4}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
@@ -268,17 +273,17 @@ const ITEMS=[
 {id:'flower',slot:'head',name:'Flower crown',how:'Complimented someone 10 times',cond:()=>S.log.filter(e=>e.id==1004).length>=10,ic:'<rect x="1" y="9" width="14" height="2" fill="#5c9e45"/><rect x="1" y="6" width="3" height="3" fill="#f08ca8"/><rect x="6" y="6" width="3" height="3" fill="#fffaf0"/><rect x="11" y="6" width="3" height="3" fill="#f08ca8"/><rect x="2" y="7" width="1" height="1" fill="#e8bf4f"/><rect x="7" y="7" width="1" height="1" fill="#e8bf4f"/><rect x="12" y="7" width="1" height="1" fill="#e8bf4f"/>'},
 {id:'crown',slot:'head',name:'Golden crown',how:'Got all four stats to level 5',cond:()=>['STR','INT','CHA','DIS'].every(k=>Lv(k)>=5),ic:'<rect x="2" y="8" width="12" height="4" fill="#e8bf4f"/><rect x="2" y="11" width="12" height="1" fill="#b8860b"/><rect x="2" y="4" width="2" height="4" fill="#e8bf4f"/><rect x="7" y="3" width="2" height="5" fill="#e8bf4f"/><rect x="12" y="4" width="2" height="4" fill="#e8bf4f"/><rect x="7" y="9" width="2" height="2" fill="#c23b2c"/>'},
 {id:'spirit',slot:'pet',name:'Spirit',how:'Reached Discipline level 3',cond:()=>Lv('DIS')>=3,ic:'<rect x="2" y="5" width="2" height="6" fill="#b0742c"/><rect x="12" y="5" width="2" height="6" fill="#b0742c"/><rect x="4" y="3" width="8" height="10" fill="#e0a64e"/><rect x="5" y="2" width="6" height="1" fill="#e0a64e"/><rect x="5" y="7" width="1" height="1" fill="#2a1a12"/><rect x="10" y="7" width="1" height="1" fill="#2a1a12"/><rect x="6" y="9" width="4" height="3" fill="#f7dca0"/><rect x="7" y="9" width="2" height="1" fill="#2a1a12"/><rect x="7" y="12" width="2" height="2" fill="#e5607e"/><rect x="5" y="13" width="6" height="1" fill="#c23b2c"/>'},
-{id:'nightcap',slot:'head',name:'Nightcap',how:'Dropped by Restday Everyday',cond:()=>beat('restday'),ic:'<rect x="2" y="10" width="11" height="3" fill="#fffaf0"/><rect x="3" y="7" width="9" height="3" fill="#3d6fb5"/><rect x="5" y="5" width="7" height="2" fill="#3d6fb5"/><rect x="9" y="3" width="4" height="2" fill="#3d6fb5"/><rect x="12" y="4" width="2" height="2" fill="#284f8a"/><rect x="13" y="6" width="2" height="2" fill="#fffaf0"/>'},
-{id:'bloom',slot:'head',name:'Wallflower bloom',how:'Dropped by The Wallflower',cond:()=>beat('social'),ic:'<rect x="5" y="3" width="6" height="6" fill="#f08ca8"/><rect x="7" y="1" width="2" height="10" fill="#f08ca8"/><rect x="3" y="5" width="10" height="2" fill="#f08ca8"/><rect x="7" y="5" width="2" height="2" fill="#e8bf4f"/><rect x="4" y="11" width="3" height="2" fill="#5c9e45"/><rect x="2" y="13" width="3" height="2" fill="#5c9e45"/>'},
-{id:'hoodie',slot:'torso',name:'Doom hoodie',how:'Dropped by The Doomscroller',cond:()=>beat('doom'),ic:'<rect x="4" y="3" width="8" height="10" fill="#3b3f5c"/><rect x="2" y="4" width="2" height="6" fill="#3b3f5c"/><rect x="12" y="4" width="2" height="6" fill="#3b3f5c"/><rect x="5" y="3" width="6" height="2" fill="#272a40"/><rect x="6" y="5" width="1" height="3" fill="#fffaf0"/><rect x="9" y="5" width="1" height="3" fill="#fffaf0"/><rect x="5" y="9" width="6" height="2" fill="#272a40"/>'},
-{id:'chef',slot:'head',name:'Chef hat',how:'Dropped by Takeaway Titan',cond:()=>beat('takeaway'),ic:'<rect x="2" y="3" width="12" height="5" fill="#fffaf0"/><rect x="3" y="2" width="10" height="1" fill="#fffaf0"/><rect x="4" y="8" width="8" height="5" fill="#fffaf0"/><rect x="4" y="11" width="8" height="2" fill="#e2d9c5"/><rect x="12" y="4" width="2" height="3" fill="#e2d9c5"/>'},
-{id:'captainhat',slot:'head',name:'Captain hat',how:'Dropped by Captain Tomorrow',cond:()=>beat('captain'),ic:'<rect x="2" y="4" width="12" height="4" fill="#fffaf0"/><rect x="3" y="3" width="10" height="1" fill="#fffaf0"/><rect x="1" y="8" width="14" height="2" fill="#23395b"/><rect x="3" y="10" width="10" height="2" fill="#1e1e24"/><rect x="7" y="5" width="2" height="2" fill="#e8bf4f"/>'},
-{id:'antenna',slot:'head',name:'Robot antenna',how:'Dropped by The Excuse Machine',cond:()=>beat('excuse'),ic:'<rect x="2" y="11" width="12" height="2" fill="#9aa5b1"/><rect x="7" y="4" width="2" height="7" fill="#9aa5b1"/><rect x="6" y="1" width="4" height="3" fill="#c23b2c"/><rect x="6" y="1" width="1" height="1" fill="#ec8a6c"/>'},
+{id:'nightcap',slot:'head',name:'Nightcap',how:'Left behind by The Somnambulist',cond:()=>beat('restday'),ic:'<rect x="2" y="10" width="11" height="3" fill="#fffaf0"/><rect x="3" y="7" width="9" height="3" fill="#3d6fb5"/><rect x="5" y="5" width="7" height="2" fill="#3d6fb5"/><rect x="9" y="3" width="4" height="2" fill="#3d6fb5"/><rect x="12" y="4" width="2" height="2" fill="#284f8a"/><rect x="13" y="6" width="2" height="2" fill="#fffaf0"/>'},
+{id:'chef',slot:'head',name:'Chef hat',how:'Left behind by The Feast Master',cond:()=>beat('takeaway'),ic:'<rect x="2" y="3" width="12" height="5" fill="#fffaf0"/><rect x="3" y="2" width="10" height="1" fill="#fffaf0"/><rect x="4" y="8" width="8" height="5" fill="#fffaf0"/><rect x="4" y="11" width="8" height="2" fill="#e2d9c5"/><rect x="12" y="4" width="2" height="3" fill="#e2d9c5"/>'},
 {id:'champ',slot:'head',name:'Champion headband',how:'Reached Strength level 13',cond:()=>tierOf('STR')>=1&&Lv('STR')>=13,ic:'<rect x="1" y="6" width="14" height="3" fill="#e8bf4f"/><rect x="1" y="8" width="14" height="1" fill="#b8860b"/><rect x="7" y="6" width="2" height="2" fill="#c23b2c"/><rect x="14" y="9" width="2" height="3" fill="#e8bf4f"/><rect x="3" y="6" width="2" height="1" fill="#fff1a8"/>'},
 {id:'cape',slot:'torso',name:"Scholar's cape",how:'Reached Intellect level 13',cond:()=>tierOf('INT')>=1&&Lv('INT')>=13,ic:'<rect x="2" y="3" width="12" height="2" fill="#3d6fb5"/><rect x="2" y="5" width="12" height="9" fill="#284f8a"/><rect x="5" y="5" width="6" height="9" fill="#f7f4ee"/><rect x="2" y="13" width="3" height="1" fill="#e8bf4f"/><rect x="11" y="13" width="3" height="1" fill="#e8bf4f"/><rect x="7" y="3" width="2" height="2" fill="#e8bf4f"/>'},
 {id:'sweater',slot:'torso',name:'Heart sweater',how:'Reached Heart level 13',cond:()=>tierOf('CHA')>=1&&Lv('CHA')>=13,ic:'<rect x="2" y="4" width="12" height="10" fill="#f08ca8"/><rect x="2" y="13" width="12" height="1" fill="#e5607e"/><rect x="6" y="4" width="4" height="1" fill="#d99b7e"/><rect x="5" y="7" width="2" height="1" fill="#c23b2c"/><rect x="9" y="7" width="2" height="1" fill="#c23b2c"/><rect x="5" y="8" width="6" height="1" fill="#c23b2c"/><rect x="6" y="9" width="4" height="1" fill="#c23b2c"/><rect x="7" y="10" width="2" height="1" fill="#c23b2c"/>'},
 {id:'gi',slot:'torso',name:'Black belt',how:'Reached Discipline level 13',cond:()=>tierOf('DIS')>=1&&Lv('DIS')>=13,ic:'<rect x="2" y="3" width="12" height="11" fill="#fffaf0"/><rect x="5" y="3" width="1" height="4" fill="#e2d9c5"/><rect x="10" y="3" width="1" height="4" fill="#e2d9c5"/><rect x="6" y="7" width="4" height="1" fill="#e2d9c5"/><rect x="2" y="9" width="12" height="2" fill="#1f1a27"/><rect x="7" y="11" width="1" height="3" fill="#1f1a27"/><rect x="9" y="11" width="1" height="2" fill="#1f1a27"/>'},
 {id:'bandana',slot:'head',name:"Wren's bandana",how:'A gift from a good friend',cond:()=>!!(S.world&&S.world.gift&&S.world.gift.bandana),ic:'<rect x="2" y="4" width="12" height="6" fill="#5c9e45"/><rect x="3" y="3" width="10" height="1" fill="#5c9e45"/><rect x="2" y="9" width="12" height="1" fill="#3a7a2a"/><rect x="4" y="5" width="1" height="1" fill="#fffaf0"/><rect x="8" y="4" width="1" height="1" fill="#fffaf0"/><rect x="11" y="6" width="1" height="1" fill="#fffaf0"/><rect x="6" y="7" width="1" height="1" fill="#fffaf0"/><rect x="13" y="10" width="2" height="2" fill="#5c9e45"/><rect x="14" y="12" width="1" height="2" fill="#3a7a2a"/>'},
+{id:'mask',slot:'head',name:'Marionette mask',how:'Left behind by The Puppeteer',cond:()=>beat('social'),ic:'<rect x="3" y="5" width="10" height="2" fill="#1f1a27"/><rect x="7" y="2" width="7" height="10" fill="#f4f1ea"/><rect x="9" y="5" width="2" height="2" fill="#1f1a27"/><rect x="12" y="8" width="1" height="2" fill="#1f1a27"/><rect x="11" y="10" width="1" height="1" fill="#1f1a27"/><rect x="8" y="9" width="1" height="1" fill="#e5607e"/>'},
+{id:'turban',slot:'head',name:"Hypnotist's turban",how:'Left behind by The Hypnotist',cond:()=>beat('doom'),ic:'<rect x="2" y="5" width="12" height="6" fill="#e8bf4f"/><rect x="4" y="3" width="8" height="2" fill="#e8bf4f"/><rect x="2" y="10" width="12" height="1" fill="#b8860b"/><rect x="4" y="6" width="1" height="1" fill="#b8860b"/><rect x="10" y="8" width="1" height="1" fill="#b8860b"/><rect x="7" y="5" width="3" height="3" fill="#c23b2c"/><rect x="7" y="5" width="1" height="1" fill="#ec8a6c"/>'},
+{id:'clown',slot:'head',name:'Clown nose and ruff',how:'Left behind by The Clockwork Clown',cond:()=>beat('captain'),ic:'<rect x="6" y="2" width="4" height="4" fill="#c23b2c"/><rect x="6" y="2" width="1" height="1" fill="#ec8a6c"/><rect x="1" y="9" width="14" height="3" fill="#fffaf0"/><rect x="1" y="12" width="2" height="1" fill="#fffaf0"/><rect x="5" y="12" width="2" height="1" fill="#fffaf0"/><rect x="9" y="12" width="2" height="1" fill="#fffaf0"/><rect x="13" y="12" width="2" height="1" fill="#fffaf0"/><rect x="4" y="10" width="1" height="1" fill="#e2d9c5"/><rect x="8" y="10" width="1" height="1" fill="#e2d9c5"/><rect x="12" y="10" width="1" height="1" fill="#e2d9c5"/>'},
+{id:'tophat',slot:'head',name:"Magician's top hat",how:'Left behind by The Mirror Magician',cond:()=>beat('excuse'),ic:'<rect x="4" y="1" width="8" height="9" fill="#1e1e24"/><rect x="4" y="7" width="8" height="2" fill="#c23b2c"/><rect x="1" y="10" width="14" height="2" fill="#1e1e24"/><rect x="5" y="2" width="1" height="3" fill="#3b3f5c"/>'},
 {id:'tank',slot:'torso',name:'Gym tank top',how:"Reward from Big Bjørn's quest",cond:()=>wq('bjorn')>=3,ic:'<rect x="4" y="3" width="2" height="3" fill="#9aa5b1"/><rect x="10" y="3" width="2" height="3" fill="#9aa5b1"/><rect x="3" y="6" width="10" height="8" fill="#9aa5b1"/><rect x="6" y="3" width="4" height="2" fill="#f3c4a2"/><rect x="3" y="9" width="10" height="1" fill="#c23b2c"/><rect x="3" y="13" width="10" height="1" fill="#6d7884"/>'}
 ];
 const SLOTS=20;
@@ -289,7 +294,7 @@ const PLACES=[
 {id:'tower',name:'Astronomy Tower',how:'Reached Intellect level 8',cond:()=>Lv('INT')>=8},
 {id:'gym',name:'The Gym',how:'Hit the gym 20 times',cond:()=>S.log.filter(e=>e.id==1).length>=20},
 {id:'dojo',name:'Dojo',how:'Reached Discipline level 13',cond:()=>Lv('DIS')>=13},
-{id:'arena',name:'Boss Arena',how:'Beat all six weekly bosses',cond:()=>['restday','social','doom','takeaway','captain','excuse'].every(beat)},
+{id:'arena',name:'The Center Ring',how:'Beat all six circus acts',cond:()=>['restday','social','doom','takeaway','captain','excuse'].every(beat)},
 {id:'beach',name:'Beach court',how:'Reached Strength level 16',cond:()=>tierOf('STR')>=1&&Lv('STR')>=16},
 {id:'library',name:'Library',how:'Reached Intellect level 16',cond:()=>tierOf('INT')>=1&&Lv('INT')>=16},
 {id:'square',name:'Town square',how:'Reached Heart level 16',cond:()=>tierOf('CHA')>=1&&Lv('CHA')>=16},
@@ -336,12 +341,12 @@ setTimeout(speak,6000);setInterval(speak,30000);
 var BOSS_SPR={"restday":{"p":["#2a1a14","#5a4a8c","#5d8fd5","#284f8a","#3d6fb5","#6f5ea6","#bfb2ea","#cfc6b4","#ffffff","#f4f0e6","#9d8cd0","#8473b8","#3a1a2a","#e5607e","#ece6ff","#b3a6dc","#cdbfa6","#d7cdf2","#f3efe6","#e56b5a","#8c2a1f","#c94a3a"],"r":["..............aaaaaaaaaa........","....bbb.....aacccccccccdaa......",".....b.....acceeeeeeeeeecdaa....","....bbb..aaceeeeeeeeeeeeeedda...","........afceeeeeeeeeeeeeedada...",".bbbb..agfceeeeeeeeeeeeeda.aa...","...b...afceeeeeeeeeeeeeda..ada..","..b....afceeeeeeeeeeeeeda..aha..",".bbbb...addddddddddddddda.aijha.","........agggggggggggggfa..ahjha.","........agkkkkkkkkkkkkfa...aha..",".......afkkkkkkkkkkkkkkfa...a...","........agkaaakkkkkaaafa........","........afklllkkkkklllfa........",".........agkkkkkkkkkkfa....a....",".....a..agkkkkkmmmkkkkfa..afa...","....afaagkkkkkkmnmkkkkkfaagkfa..","...agkggkkkkkffffffkkkfffgkkkfa.","..agkkkkkkkffooooopfffiiqgkkkfa.","..agkkkkkkfoorrrrrropissqfkkkfa.","..agkkkkkkforrrrrrrpissssqfkfqa.","..agkkkkkforrrrrrrrpisssssqfiqa.","..agkkkkkforrrrrrrrpqssssssisqa.","..afkkkkkforrrrrrrrrpqssssssqa..","...afkfkkfprrrrrrrrrrpqqqqqqa...","....afafkkforrrrrrrrpgggfaaa....",".....a.afkfpprrrrrrppgkfa.......","........affffppppppffffa........",".......atttttugggftttttua.......",".......atvvvvufffftvvvvua.......",".......auuuuuuaaaauuuuuua.......","........aaaaaa....aaaaaa........"]},"social":{"p":["#2a1a14","#f0b3d6","#a8588a","#d98bb8","#faf8dc","#c9c48c","#ece8bd","#7cc4f0","#4fa3d8","#73bf69","#2f6b2c","#ffffff","#4a9447","#f0a0a8","#3d7a3a","#82c47a","#5fa35a","#a8703f","#5e3a1e","#8a5a32"],"r":["................................","..............aaaa..............","..........aa.abbbca.aa..........",".........abcabddddcabca.........","........abddbddddddbddca........",".......abddddccccccddddca.......",".......abddcceeeeefccddca.......","......abddceeggggggefbdhca......",".....abdcccffffgggggfcdhica.....","....acdcjjjjjjkfggllgfbdddca....",".....acjmmmmmmmkeglagfbddca.....",".....acjmmmmmkmkeggggfbddca.....","......ajmmkmkmmkeggfnncdca......",".....ackmmmkmmmkegfjjjkcdca.....",".....acckkkkkkkegaammmmkcca.....","......accopocffffkmmmmmmka......",".......accoqocpppokmmmmka.......","........aacpqpqqqqokkkka........","..........aoqqqqqqqpooa.........","...........apqqqqqqoaa..........","...........apqqqqqqoa...........","...........apqqqqqqoa...........","...........apqqqqqqoa...........","...........apqqqqqqoa...........","...........apqqqqqqoa...........","...........aooqqqqooa...........","...........arspooorsa...........","..........artsorsostsa..........",".........artsaarsaastsa.........","........artsa.arsa.astsa........",".......artsa..arsa..astsa.......",".......assa...assa...assa......."]},"doom":{"p":["#2a1a14","#52704a","#9cbc8a","#7a9a6a","#ff4b4b","#ffd0d0","#3d4f3a","#555a7e","#24273b","#e8e4d0","#3b3f5c","#a8d8e0","#3a3e4c","#141620","#7fd7ff","#d6f6ff"],"r":["................................","................................","................................","................................",".........................a......","...........aaaaa.......aaba.....","..a......aaccccbaa....acba......",".aba....accdddddcba.aacdba......","..abaa.acdddddddddbaccdba.......","...abbacdddddddddddcddba........","....abcdddddddddddddddba........",".....abdddefdddefdddbba.........","......acddggdddggddbaba.........","......acdddddddddddbaa..........","......abdddddddddddbhia.........",".......abddajajaddbhkkia........","........acddddddbbhkkkkiaa......","........aldlblblhlkkkkiccba.....","........acdbihhhkkkkkkicdba.....","........acddbhkkkkkkkicddba.....","........abddbiiiiiiiicdddba.....","........aicdbmmmmmmnicddbia.....","........aicdbmooooonicdbhia.....","........aibdbmoppooncddbhia.....",".........aiccmopoooncddbia......","..........abbmooooonbbbia.......","...........ainnnnnnnhhia........","...........aaiiiihiiiiaa........","..........acccbaaiaacccba.......",".........abddddbaaabddddba......","..........abbbba...abbbba.......","...........aaaa.....aaaa........"]},"takeaway":{"p":["#2a1a14","#94622f","#fde9b0","#c99a3a","#f3d27a","#bfb293","#fbf7ec","#e8e0cb","#ffffff","#cbbfa5","#f2c08e","#b0703f","#f4efe2","#e0a46e","#e05a47","#86251b","#c23b2c","#8a5a32","#462a14"],"r":["..........a...........a.........",".........aba.........aba........","..........aba.......aba.........","..........aba.......aba.........","...........aba.....aba..........","...........aba.....aba..........","..........aaabaaaaabaa..........",".........accdbdddddbcda.........","........aceddfbggfbddeda........",".......adddgghghhhggfddda.......","........affffffffffffffa........",".......aijddcddddddcddjja.......","....aaaajdjjdiiiiijdijdjaaaa....","...akklaijdaimmmmmmijaijakkla...","..aknnnlimimaammmmmaaimjknnnla..",".aknnnnljmmmaimmmmmiammjknnnnla.",".aknnnnnlimmmmmmmmmmmmjknnnnnla.",".aknnnnnlimmmaaaaaaammjknnnnnla.",".aknnnnnlimmmaimimiammjknnnnnla.",".aknnnnnljjjjjjjjjjjjjjknnnnnla.",".alnnnnnloooooooooooooplnnnnnla.","..aknnnlappppppppppppppalnnnla..","..aknnlaaiiiiiiiiiiiiiqaaknnla..",".aknnnnlaimmmmmmmmmmmmqaknnnnla.",".aknnnnlaimmmmmmmmmmmmpaknnnnla.",".alnnnnlaimmmmmmmmmmmmjalnnnnla.","..allllaajjjjjjjjjjjjjjaalllla..","...aaaa..aarrrsaaarrrsa..aaaa...","..........assssa.assssa.........",".........aooooopaooooopa........",".........appppppappppppa........","..........aaaaaa.aaaaaa........."]},"captain":{"p":["#2a1a14","#ffffff","#cbbfa5","#f4efe2","#e8bf4f","#c99a3a","#34507a","#132036","#0e0e12","#34343e","#3a3e4c","#141620","#f8d27c","#c4842a","#7fd7ff","#f0b54a","#22252f","#f08ca0","#fff0c8","#d6aa62","#e05a47","#86251b","#f8d89a","#c23b2c","#5aaee0","#246a9a","#3a8fc9"],"r":["................................","................................","............aaaaaaaa............","..........aabbbbbbbcaa..........",".........abbddddddddbca.........","........abdddddeedddddca........",".......acddddddfeddddddca.......","........acccccccccccccca........",".......agggggggggggggggha.......",".......ahhhhhhhhhhhhhhhha.......","........aijjjjjjjjjjjjia..aaaa..",".........aiiiiiiiiiiiia..akkkla.",".........aammmmmmmmmnaa..akoola.","........ammppppppppppmna.akoola.",".......amppnnnpppppnnnpnankoola.","...aaaamppppaapppppaapppmnkqqla.","..abmmmppppppppppppppppppnlllla.","..bmpppppprppnnnnaappprpppmmmna.",".annnpppppppnaaaastnpppppppppna.","auuuvmpppppnswwwwwwtnpppppppna..","vuxxvmppppnswwwwwwwwtnppppnnna..","vuxxvmpppnswwwwwwwwwwtmppnaaa...","vuxxvnnppnswwwwwwwwwwtnppna.....","avvvvaamntwwwwwwwwwwwwtmna......",".aaaa.ampnswwwwwwwwwwtmpna......","......anpntwwwwwwwwwwtmpna......",".......anpntwwwwwwwwtmpna.......","........annntwwwwwwtmnna........",".........aannttttttnnaa.........","........ayyyyyznnyyyyyza........","........azAAAAzaazAAAAza........",".........azzzza..azzzza........."]},"excuse":{"p":["#2a1a14","#ff8a7a","#a33427","#e05a47","#525b67","#c6cfd8","#69747f","#9aa5b1","#d2f4ff","#3a9fd0","#7fd7ff","#ffffff","#a3adb8","#7d8794","#e8e4d0","#c9bfa6","#6f7884","#3e4550","#f6f1e4","#5b6470","#9a9384","#7cd67c","#4f5560","#23272d","#3a3f48"],"r":["..............abca..............",".............abddca.............",".............acddca.............","..............acca..............","...............aea..............","........aaaaaaaaeaaaaaaa........",".......afffffffffffgggfga.......","......affhgggghhhhgiijgfga......","......afhgiiijfhhgikkkjgga......","......afhgilkjghgikklkkjga......","......afgjkkakjfgikkkkkjga......","......afhgikkjfhgjkkkakjgaa.....",".....aefhgjjjjfhhgjkkkjfgmea....","....amefhhffffhhhhgjjjfhgmnea...","....amefhhhhohohohofofhhgmnea...","...amnefhhhaaaaaaaaaaahhgmnea...","...amnefhhgggglllpgggghhgmnnea..","..amnnefhgqqqrlsspqqqrfhgennnea.","..amnnefhgqttrluupqttrfhgaeeeea.",".aeneeafhgqtdrlsspqvtrfhgaabbca.","awxewxafhgqttrluupqttrfhgabdddca","awxewxafhgrrrrlssprrrrfhgacdddca","axxaxxagfhfffgluupfffggfgaaccca.",".aa.aa.agggggglsspgggllpa..aaa..","........ammmealsspaeelspa.......","........amnnealssslllsspa.......","........aeeeealsusususpa........",".......awwwwwxpppppppppxa.......",".......awyyyyxaaaawwwwwxa.......",".......axxxxxxa..axxxxxxa.......","........aaaaaa....aaaaaa........","................................"]}};
 const own=id=>!CORE.some(c=>c.id==id);
 const BOSSES=[
-{id:'restday',name:'Restday Everyday',hp:4,rw:{STR:15},hurt:'trainings',long:'Every training session hits it for 1.',dmg:e=>TRAIN.includes(e.id)?1:0},
-{id:'social',name:'The Wallflower',hp:5,rw:{CHA:15},hurt:'Heart quests',long:'Every Heart quest hits it for 1.',dmg:e=>e.stat==='CHA'?1:0},
-{id:'doom',name:'The Doomscroller',hp:8,rw:{INT:15},hurt:'reading and Duolingo',long:'Reading 10 pages or doing Duolingo hits it for 1.',dmg:e=>(e.id==2||e.id==1000)?1:0},
-{id:'takeaway',name:'Takeaway Titan',hp:6,rw:{DIS:15},hurt:'food prep and your own tasks',long:'Food prep hits it for 3. Every task you made yourself hits it for 1.',dmg:e=>e.id==1005?3:own(e.id)?1:0},
-{id:'captain',name:'Captain Tomorrow',hp:20,rw:{STR:10,INT:10,CHA:10,DIS:10},hurt:'every task, double before noon',long:'Every task hits him for 1. Tasks done before noon hit for 2.',dmg:e=>new Date(e.t).getHours()<12?2:1},
-{id:'excuse',name:'The Excuse Machine',hp:10,rw:{DIS:15},hurt:'every task, double for your own',long:'Every task hits it for 1. Tasks you made yourself hit for 2.',dmg:e=>own(e.id)?2:1}];
+{id:'restday',name:'The Somnambulist',hp:4,rw:{STR:15},hurt:'trainings',long:'Every training session hits it for 1.',dmg:e=>TRAIN.includes(e.id)?1:0},
+{id:'social',name:'The Puppeteer',hp:5,rw:{CHA:15},hurt:'Heart quests',long:'Every Heart quest hits it for 1.',dmg:e=>e.stat==='CHA'?1:0},
+{id:'doom',name:'The Hypnotist',hp:8,rw:{INT:15},hurt:'reading and Duolingo',long:'Reading 10 pages or doing Duolingo hits it for 1.',dmg:e=>(e.id==2||e.id==1000)?1:0},
+{id:'takeaway',name:'The Feast Master',hp:6,rw:{DIS:15},hurt:'food prep and your own tasks',long:'Food prep hits it for 3. Every task you made yourself hits it for 1.',dmg:e=>e.id==1005?3:own(e.id)?1:0},
+{id:'captain',name:'The Clockwork Clown',hp:20,rw:{STR:10,INT:10,CHA:10,DIS:10},hurt:'every task, double before noon',long:'Every task hits it for 1. Tasks done before noon hit for 2.',dmg:e=>new Date(e.t).getHours()<12?2:1},
+{id:'excuse',name:'The Mirror Magician',hp:10,rw:{DIS:15},hurt:'every task, double for your own',long:'Every task hits it for 1. Tasks you made yourself hit for 2.',dmg:e=>own(e.id)?2:1}];
 function weekNo(d){const x=new Date(d||Date.now());x.setHours(12,0,0,0);x.setDate(x.getDate()-((x.getDay()+6)%7));return Math.round(x.getTime()/6048e5)}
 function boss(){const b=BOSSES[((weekNo()%BOSSES.length)+BOSSES.length)%BOSSES.length],w=wk();
 const dealt=S.log.filter(e=>wk(e.t)===w).reduce((a,e)=>a+b.dmg(e),0);return{b,w,dealt,left:Math.max(0,b.hp-dealt),won:!!(S.bossWon&&S.bossWon[w])}}
@@ -355,8 +360,6 @@ for(let rep=0;rep<2;rep++){const o=.6+rep*bar*4;BASS.forEach((b,i)=>b.forEach((f
 LEAD.forEach((l,i)=>{let t=o+i*bar;l.forEach(([f,d])=>{bnote(f,d*.9,t,'square',.035);t+=d})})}
 bnote(82.41,.8,.6+bar*8,'sawtooth',.05)}
 function bossThemeStop(){bossNotes.forEach(o=>{try{o.stop()}catch(e){}});bossNotes=[]}
-function bossCheck(){if(view!=='home'||bossIntro||suggOpen||trialK||editId!=null||ideaDraft!=null||bossOpen||infoId)return;if(S.bossSeen===wk())return;
-S.bossSeen=wk();S.bossDay=day();save();bossIntro=1;render()}
 function bossReveal(){bossIntro=2;render();bossTheme()}
 function bossIntroClose(){bossIntro=0;bossThemeStop();render()}
 function bossIntroCard(){if(!bossIntro)return'';const {b}=boss();
@@ -481,23 +484,14 @@ function placeBg(id) {
     line(30, 30, 33, 6, '#8a5a32'); line(31, 30, 34, 6, '#6b4423');
   }
 
-  if (id === 'arena') {
-    for (let y = 0; y < 18; y++) R(0, y, W, 1, y < 6 ? '#f2a65a' : y < 12 ? '#f7c27a' : '#fbd99a');   // dusk sky
-    R(30, 3, 4, 4, '#fff1c4'); R(31, 2, 2, 6, '#fff1c4'); R(29, 4, 6, 2, '#fff1c4');                   // low sun
-    R(0, 10, W, 20, '#9a8a78');                                                                         // colosseum wall
-    for (let y = 10; y < 30; y += 4) R(0, y, W, 1, '#7e705f');
-    for (let y = 10; y < 30; y += 4) for (let x = (y / 4) % 2 ? 0 : 4; x < W; x += 8) R(x, y, 1, 4, '#7e705f');
-    for (let x = 1; x < W; x += 9) { R(x, 13, 6, 7, '#4a3f35'); R(x + 1, 12, 4, 1, '#4a3f35'); R(x, 13, 1, 7, '#3a312a'); }    // arches
-    for (let x = 1; x < W; x += 9) { R(x, 22, 6, 5, '#4a3f35'); R(x + 1, 21, 4, 1, '#4a3f35'); }
-    R(0, 10, W, 1, '#b5a490'); R(0, 9, W, 1, '#6b5e50');
-    [[4, '#c23b2c'], [22, '#2f6fd0'], [39, '#3f9b3f']].forEach(([x, c]) => { R(x, 4, 1, 6, '#4e3020'); R(x + 1, 4, 3, 5, c); R(x + 1, 9, 1, 1, c); R(x + 3, 9, 1, 1, c); R(x + 2, 6, 1, 1, '#e8bf4f'); });  // banners
-    [[9, 17], [33, 17]].forEach(([x, y]) => { R(x, y, 2, 4, '#4e3020'); R(x, y - 2, 2, 2, '#ff9f3b'); R(x, y - 3, 1, 1, '#ffd36b'); R(x + 1, y - 1, 1, 1, '#ffd36b'); });  // torches
-    R(0, 30, W, 14, '#e2c48a');                                                                         // sand floor
-    for (let i = 0; i < 40; i++) { const x = (i * 17 + 3) % W, y = 31 + (i * 7) % 13; P(x, y, i % 3 ? '#cfae72' : '#f0d8a6'); }
-    R(0, 30, W, 1, '#b8955c');
-    R(2, 38, 3, 1, '#b8955c'); R(36, 41, 4, 1, '#b8955c');
+  if (id === 'arena') {                                   // The Center Ring: inside the big top, under the spotlight
+    for (let y = 0; y < 30; y++) for (let x = 0; x < W; x++) P(x, y, (Math.floor((x + (y >> 1)) / 5)) % 2 ? '#5a1a22' : '#1f1a27');
+    for (let x = 0; x < W; x += 6) { R(x, 0, 6, 2, '#e8bf4f'); P(x + 2, 2, '#e8bf4f'); P(x + 3, 2, '#e8bf4f'); }
+    for (let y = 2; y < 30; y++) { const hw = 3 + Math.round((y - 2) * .55); for (let x = 22 - hw; x <= 22 + hw; x++) if (x >= 0 && x < W) { const c = G[y][x]; G[y][x] = c === '#5a1a22' ? '#8a3a3a' : '#4a3a4a'; } }   // spotlight cone
+    R(0, 30, W, 14, '#2a1a14'); for (let y = 31; y < 44; y++) { const hw = Math.round(20 * Math.sqrt(Math.max(0, 1 - ((y - 37) / 6.5) ** 2))); R(22 - hw, y, hw * 2, 1, y < 33 || y > 41 ? '#c23b2c' : '#c9a46a'); }
+    for (let i = 0; i < 14; i++) P(8 + (i * 7) % 28, 33 + (i * 5) % 8, '#9a7a48');
+    R(3, 24, 4, 6, '#1f1a27'); R(37, 24, 4, 6, '#1f1a27'); R(4, 22, 2, 2, '#1f1a27'); R(38, 22, 2, 2, '#1f1a27'); P(4, 23, '#ffd36b'); P(39, 23, '#ffd36b');   // two watchers in the dark
   }
-
   if (id === 'beach') {                                   // Strength tier II
     for (let y = 0; y < 16; y++) R(0, y, W, 1, y < 6 ? '#7fc6f2' : y < 11 ? '#9fd6f7' : '#bfe5fa');
     for (let y = 1; y <= 10; y++) for (let x = 1; x <= 10; x++) { const d = Math.hypot(x - 5.5, y - 5.5); if (d <= 3.4) P(x, y, '#ffe27a'); else if (d <= 4.3) P(x, y, '#fff1b0'); }
@@ -671,6 +665,10 @@ const SND = (() => {
     bark() { const t = now(); [0, .22].forEach(d => { note('sfx', 820, t + d, .07, { type: 'triangle', vol: .09, slide: .55, cut: 1500 }); note('sfx', 560, t + d + .06, .09, { type: 'triangle', vol: .08, slide: .7, cut: 1200 }); }); },
     heart() { const t = now(); bell('sfx', mtof(81), t, .5, .07); bell('sfx', mtof(88), t + .1, .7, .07); },
     pip() { const t = now(); [[79, 0], [83, .14], [86, .28], [83, .42], [88, .56]].forEach(([m, d], k) => bell('sfx', mtof(m), t + d, k === 4 ? .9 : .4, .06)); },
+    laugh() { const t = now(); [0, .55, 1.1].forEach((d, k) => { note('sfx', 150 - k * 14, t + d, .45, { type: 'triangle', vol: .09, a: .03, slide: .78, vib: 7, vibD: 9, cut: 900 }); note('sfx', 75 - k * 7, t + d, .5, { type: 'sine', vol: .07, a: .03, slide: .8 }); }); },
+    creak() { const t = now(); for (let k = 0; k < 3; k++) note('sfx', 210 + k * 30, t + k * .32, .28, { type: 'triangle', vol: .05, slide: 1.35, slideT: .25, vib: 23, vibD: 18, cut: 1100 }); },
+    hammer() { const t = now(); note('sfx', 190 + Math.random() * 30, t, .09, { type: 'triangle', vol: .14, slide: .55, slideT: .05, cut: 1200 }); note('sfx', 900, t, .025, { type: 'square', vol: .03, cut: 2500 }); note('sfx', 95, t, .12, { type: 'sine', vol: .1, slide: .7 }); },
+    puff() { const t = now(); note('sfx', 300, t, .5, { type: 'triangle', vol: .07, slide: .4, cut: 700 }); bell('sfx', mtof(62), t + .1, 1.2, .05); },
     bellRing() { const t = now(); bell('sfx', mtof(64), t, 3.2, .11); bell('sfx', mtof(71), t + .02, 2.6, .05); }
   };
   const quiet = () => typeof S !== 'undefined' && S && S.settings && !S.settings.sound;   // the game's SOUND switch
@@ -691,6 +689,12 @@ const SND = (() => {
         [[57, 60, 62, 65], 38], [[57, 60, 62, 65], 38], [[55, 59, 62, 64], 40], [[55, 59, 62, 64], 40],
         [[53, 57, 60, 64], 41], [[53, 57, 60, 64], 41], [[55, 60, 62, 64], 36], [[55, 59, 62, 67], 43]],
       melody: null, scale: [74, 76, 77, 81, 84, 86, 88], arp: [0, -1, 2, -1, 1, -1, 3, -1], arpVol: .022, padVol: .03, bassVol: .06, birds: true, bells: 'sparse' },
+    tent: { name: 'Circus tent', bpm: 100, sb: 6, waltz: true, box: true, whistle: true, chords: [
+        [[50, 62, 65, 69], 38], [[49, 61, 64, 67], 37], [[48, 60, 65, 69], 36], [[46, 58, 62, 65], 34],
+        [[43, 55, 58, 64], 31], [[45, 57, 62, 65], 33], [[44, 56, 59, 65], 32], [[45, 57, 61, 67], 33]],
+      melody: [[[0, 74, 2], [2, 73, 1], [3, 74, 1], [4, 77, 2]], [[0, 76, 3], [3, 73, 1], [4, 69, 2]], [[0, 74, 2], [2, 72, 2], [4, 69, 2]], [[0, 70, 4], [4, 69, 2]],
+        [[0, 67, 2], [2, 70, 2], [4, 74, 2]], [[0, 77, 3], [3, 76, 1], [4, 74, 2]], [[0, 73, 2], [2, 74, 1], [3, 73, 1], [4, 71, 2]], [[0, 69, 6]]],
+      arp: null, padVol: .02, bassVol: .1, stabVol: .022, leadVol: .055 },
     indoor: { name: 'Cave & tower', bpm: 54, chords: [
         [[57, 60, 64, 71], 33], [[57, 60, 64, 71], 33], [[53, 57, 60, 64], 29], [[53, 57, 60, 64], 29],
         [[55, 59, 62, 66], 31], [[55, 59, 62, 66], 31], [[52, 55, 59, 62], 28], [[52, 56, 59, 64], 28]],
@@ -701,18 +705,21 @@ const SND = (() => {
   const hash = n => { n = (n ^ 61) ^ (n >>> 16); n = n + (n << 3); n = n ^ (n >>> 4); n = Math.imul(n, 0x27d4eb2d); return (n ^ (n >>> 15)) >>> 0; };
   const clips = {}, rendering = {};
   function compose(id, c, out) {                       // write the whole loop into context c
-    const T = TRACKS[id], spb = 60 / T.bpm / 2, steps = 16 * 8, o0 = .02;
+    const T = TRACKS[id], spb = 60 / T.bpm / 2, SB = T.sb || 8, steps = 16 * SB, o0 = .02;
     const N = (f, t, dur, o) => note('music', f, t, dur, Object.assign({ ctx: c, dest: out }, o));
     for (let step = 0; step < steps; step++) {
-      const bar = Math.floor(step / 8) % T.chords.length, s = step % 8, t = o0 + step * spb, [ch, bass] = T.chords[bar];
-      const secA = Math.floor(step / (8 * T.chords.length)) % 2 === 0;   // the village alternates: melody, then a breather
+      const bar = Math.floor(step / SB) % T.chords.length, s = step % SB, t = o0 + step * spb, [ch, bass] = T.chords[bar];
+      const secA = Math.floor(step / (SB * T.chords.length)) % 2 === 0;   // the village alternates: melody, then a breather
       if (s === 0) {
-        ch.forEach((m, k) => N(mtof(m), t, spb * 8.6, { type: 'triangle', vol: T.padVol, a: spb * 2.5, hold: spb * 4, cut: 1100, detune: k % 2 ? 6 : -6 }));
+        ch.forEach((m, k) => N(mtof(m), t, spb * (SB + .6), { type: 'triangle', vol: T.padVol, a: spb * 2.5, hold: spb * SB / 2, cut: 1100, detune: k % 2 ? 6 : -6 }));
         N(mtof(bass), t, spb * 7, { type: 'sine', vol: T.bassVol, a: .03, hold: spb * 3 });
       }
       if (s === 4 && id === 'village') N(mtof(bass + 7), t, spb * 3.5, { type: 'sine', vol: T.bassVol * .7, a: .03 });
       if (T.arp && T.arp[s] >= 0) N(mtof(ch[T.arp[s]] + 12), t, spb * 2.2, { type: 'triangle', vol: T.arpVol * (s % 2 ? .75 : 1), a: .004, cut: 2400 });
-      if (T.melody && secA) T.melody[bar].forEach(([st, m, len]) => { if (st === s) N(mtof(m + 12), t, spb * len * 1.1, { type: 'triangle', vol: T.leadVol, a: .01, hold: spb * len * .5, vib: 5, vibD: 3 }); });
+      if (T.waltz && (s === 2 || s === 4)) ch.slice(1).forEach(m => N(mtof(m), t, spb * 1.3, { type: 'triangle', vol: T.stabVol, a: .004, cut: 1500 }));
+      if (T.box && T.melody[bar]) T.melody[bar].forEach(([st, m, len]) => { if (st === s) { const fq = mtof(m + 12); N(fq * .994, t, spb * len + .9, { type: 'sine', vol: T.leadVol, a: .004, vib: 4.5, vibD: 4 }); N(fq * 1.006, t, spb * len + .7, { type: 'sine', vol: T.leadVol * .6, a: .004 }); N(fq * 2, t, .35, { type: 'sine', vol: T.leadVol * .25, a: .002 }); } });
+      if (T.whistle && s === 0 && hash(step + 21) % 9 === 0) N(mtof(86), t + spb, 1.6, { type: 'sine', vol: .016, slide: .5, slideT: 1.5, vib: 6, vibD: 8 });
+      if (T.melody && !T.box && secA) T.melody[bar].forEach(([st, m, len]) => { if (st === s) N(mtof(m + 12), t, spb * len * 1.1, { type: 'triangle', vol: T.leadVol, a: .01, hold: spb * len * .5, vib: 5, vibD: 3 }); });
       if (T.bells === 'answer' && !secA && (s === 0 || s === 3 || s === 6) && hash(step) % 3 !== 0) bell('music', mtof(ch[hash(step + 7) % 4] + 12), t, 1.6, .034, out, c);
       if (T.bells === 'sparse' && s % 2 === 0 && hash(step) % (T.drips ? 8 : 6) === 0) bell('music', mtof(T.scale[hash(step + 3) % T.scale.length]), t, 2.4, T.drips ? .028 : .032, out, c);
       if (T.birds && s === 0 && hash(step + 11) % 3 === 0) { const bt = t + (hash(step) % 7) * spb * .5, f = 2600 + hash(step + 2) % 900; for (let k = 0; k < 3; k++) N(f * (1 + k * .06), bt + k * .09, .07, { type: 'sine', vol: .018, slide: 1.35, slideT: .05 }); }
@@ -723,7 +730,7 @@ const SND = (() => {
   function render(id) {
     if (clips[id]) return Promise.resolve(clips[id]);
     if (rendering[id]) return rendering[id];
-    const T = TRACKS[id], L = 16 * 8 * (60 / T.bpm / 2), tail = 4;
+    const T = TRACKS[id], L = 16 * (T.sb || 8) * (60 / T.bpm / 2), tail = 4;
     let sr = 22050, oc;
     const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
     try { oc = new OAC(1, Math.ceil(sr * (L + tail)), sr); } catch (e) { sr = 44100; oc = new OAC(1, Math.ceil(sr * (L + tail)), sr); }
@@ -755,7 +762,11 @@ const SND = (() => {
   }
   let lastTrack = null;
   function fadeOut(tr, sec) { const t = ac.currentTime; tr.g.gain.cancelScheduledValues(t); tr.g.gain.setValueAtTime(Math.max(.0001, tr.g.gain.value), t); tr.g.gain.exponentialRampToValueAtTime(.0001, t + sec); setTimeout(() => { try { tr.src && tr.src.stop(); } catch (e) {} tr.g.disconnect(); }, sec * 1000 + 300); }
-  function stop() { if (!ac || !track) return; const t = ac.currentTime; buses.music.gain.cancelScheduledValues(t); buses.music.gain.setValueAtTime(Math.max(.0001, buses.music.gain.value), t); buses.music.gain.exponentialRampToValueAtTime(.0001, t + 1.2); const tr = track; setTimeout(() => { try { tr.src && tr.src.stop(); } catch (e) {} tr.g.disconnect(); }, 1400); track = null; lastTrack = null; musicOn = false; }
+  function slowdown(sec) {                          // the music winds down like an old record player
+    if (!track || !track.src) return; const t = ac.currentTime, r = track.src.playbackRate; r.cancelScheduledValues(t); r.setValueAtTime(1, t); r.linearRampToValueAtTime(.72, t + sec);
+    track.g.gain.cancelScheduledValues(t); track.g.gain.setValueAtTime(Math.max(.0001, track.g.gain.value), t); track.g.gain.exponentialRampToValueAtTime(.0001, t + sec + .4);
+  }
+  function stop(sec) { if (!ac || !track) return; const t = ac.currentTime, d = sec || 1.2; buses.music.gain.cancelScheduledValues(t); buses.music.gain.setValueAtTime(Math.max(.0001, buses.music.gain.value), t); buses.music.gain.exponentialRampToValueAtTime(.0001, t + d); const tr = track; setTimeout(() => { try { tr.src && tr.src.stop(); } catch (e) {} tr.g.disconnect(); }, d * 1000 + 200); track = null; lastTrack = null; musicOn = false; }
   function setVol(k, v) { vol[k] = v; if (ac && buses[k] && (k !== 'music' || musicOn)) buses[k].gain.setTargetAtTime(Math.max(.0001, v), ac.currentTime, .1); }
 
   // ---------------- character voices (Animal Crossing–style babble) ----------------
@@ -766,6 +777,7 @@ const SND = (() => {
     kai: { base: 147, spread: 1, type: 'sine', len: .13, vol: .13, cut: 900, rate: 58, every: 3 },
     wren: { base: 247, spread: 4, type: 'triangle', len: .06, vol: .08, cut: 1300, rate: 28, every: 3 },
     pip: { song: [69, 72, 74, 76, 79, 81], type: 'triangle', len: .1, vol: .085, cut: 3000, rate: 34, every: 2, vib: 6, vibD: 5 },
+    me: { base: 233, spread: 4, type: 'triangle', len: .06, vol: .08, cut: 1500, rate: 30, every: 2 },   // you: a friendly, middle voice
     fisher: { base: 117, spread: 3, type: 'sine', len: .055, vol: .12, cut: 500, rate: 40, every: 2 }
   };
   function blip(who, ch, k) {
@@ -790,14 +802,14 @@ const SND = (() => {
     finish.cancel = () => { stopped = true; }; finish.busy = () => !stopped;
     return finish;
   }
-  return { init, sfx, play, stop, setVol, duck, playing: () => musicOn, speak, blip, tracks: TRACKS, voices: VOICES, current: () => track && track.id, vol };
+  return { init, sfx, play, stop, setVol, duck, slowdown, playing: () => musicOn, speak, blip, tracks: TRACKS, voices: VOICES, current: () => track && track.id, vol };
 })();
 
 function sfx(k){SND.sfx(k)}
 const TRACK_FOR={village:'village',forest:'forest',tower:'indoor',cave:'indoor'};
-function musicFor(area){if(S.settings.music&&TRACK_FOR[area])SND.play(TRACK_FOR[area])}
+function musicFor(area){const t=typeof trackFor==='function'?trackFor(area):TRACK_FOR[area];if(S.settings.music&&t)SND.play(t)}
 function pop(){if(!S.settings.anim)return;const e=document.querySelector('.sprite');if(e)e.animate([{transform:'scale(1)'},{transform:'scale(1.08)'},{transform:'scale(1)'}],{duration:250})}
-function tog(k){S.settings[k]=!S.settings[k];save();render();sfx('click');if(k==='music'){if(!S.settings.music)SND.stop();else if(WR&&WR.cur)musicFor(WR.cur)}}
+function tog(k){S.settings[k]=!S.settings[k];save();render();sfx('click');if(k==='music'){if(!S.settings.music)SND.stop();else if(view==='world'&&WR&&WR.cur)musicFor(WR.cur)}}
 function reset(){if(!rc){rc=1;render();setTimeout(()=>{rc=0;if(view==='settings')render()},4000);return}
 try{localStorage.removeItem(KEY)}catch(e){}S=load();ensure();rc=0;view='home';render();toast('Fresh start')}
 function help(){const sec=(h,l)=>`<section><h3>${h}</h3><ul>${l.map(x=>`<li>${x}</li>`).join('')}</ul></section>`;
@@ -807,7 +819,7 @@ ${sec('QUEST TYPES',['<b>Repeatable:</b> do it any time.','<b>Daily:</b> comes b
 ${sec('LEVELS',[`Points fill up your level bar.`,`Level 1 takes ${lvl(0).need} points. Each level after needs 3 more than the last.`,'Stats never go down.'])}
 ${sec('DISCIPLINE',['+2 Discipline on any day you finish a quest.','Missing a day costs you nothing.'])}
 ${sec('WEEKLY BONUS',['Finish 4 quests for the same stat in one week (Mon–Sun).','You get +10 in that stat and +5 Discipline.'])}
-${sec('WEEKLY BOSS',['A new boss shows up every Monday below your quests.','Matching quests deal damage. Tap the boss to see what hurts it.','Beat it by Sunday night for a reward.'])}
+${sec('CIRCUS MAÑANA',['Every Monday a new act takes the stage in the big top on the east side of the village.','Real tasks hurt it. Walk into the tent to see your hits land.','When it drops to 0, finish it before Sunday night for a reward and its poster.'])}
 ${sec('TRIALS',['Every 10 levels a stat reaches a trial and stops gaining points.','Tap the trial under the bar to see what it asks.','Pass it within 7 days to reach the next tier. You can\'t fail.'])}
 ${sec('WORLD',['Drag anywhere on the screen to walk. Tap the yellow button to talk or use things.','Mentors give quests on days you\'ve done at least one real task.','Your real levels open new paths, and quest rewards show up in your wardrobe.','New faces may find their way to the village. Friends notice what you do in real life, and friendship never goes down.'])}
 ${sec('SECRETS',['Keep growing to unlock new gear, places and quirks.'])}
@@ -848,10 +860,10 @@ const tu=checkTrials(e);if(tu.includes(t.stat)){if(!e.pts)e.pts=gain(t.stat,t.pt
 const nu=checkUnlocks();if(nu.includes('spirit')&&!tu.length)m='SPIRIT JOINED YOU!';else if(nu.length&&!tu.length)m=nu.some(id=>PLACES.some(p=>p.id===id))?'NEW PLACE UNLOCKED!':nu.some(id=>id.startsWith('q_'))&&!nu.some(id=>ITEMS.some(i=>i.id===id))?'NEW QUIRK UNLOCKED!':'NEW GEAR UNLOCKED!';
 if(atTrial(t.stat)&&!wasTrial&&!tu.includes(t.stat)&&!m.includes('TRIAL OPEN'))m=(m?m+' · ':'')+NAMES[t.stat]+' TRIAL OPEN!';
 sfx(tu.length?'tier':nu.length?'gear':m?'lvl':'tap');const bs=boss(),hit=bs.won?0:bs.b.dmg(e);
-if(hit&&!bs.won&&bs.dealt>=bs.b.hp){S.bossWon=S.bossWon||{};S.bossWon[bs.w]=bs.b.id;e.bossWin=bs.w;e.brw={};Object.keys(bs.b.rw).forEach(k=>e.brw[k]=gain(k,bs.b.rw[k]));m='BOSS DEFEATED: '+bs.b.name.toUpperCase()+'!';var loot=checkUnlocks();if(loot.length)m+=' LOOT DROPPED!';sfx('tier')}
+var loot=null;
 const ups=Object.keys(NAMES).filter(k=>Lv(k)>lv0[k]&&!tu.includes(k)),joined=nu.includes('spirit'),bw=e.bossWin?{id:bs.b.id,loot:loot||[]}:null;
 const big=fxOn()&&(tu.length||ups.length||joined||bw);if(m&&!big)toast(m);save();
-const gains={};Object.keys(NAMES).forEach(k=>{const d=S.pts[k]-p0[k];if(d>0)gains[k]=d});if(!gains[t.stat]&&atTrial(t.stat))gains[t.stat]='T';flashDone(id,gains,hit);pop();if(big)celebrate(ups,tu,bw,joined)}
+const gains={};Object.keys(NAMES).forEach(k=>{const d=S.pts[k]-p0[k];if(d>0)gains[k]=d});if(!gains[t.stat]&&atTrial(t.stat))gains[t.stat]='T';flashDone(id,gains,0);pop();if(big)celebrate(ups,tu,bw,joined)}
 // ---- celebrations: confetti + banner on level up, a big tap-to-close card when a trial is passed
 function fxOn(){return S.settings.anim&&!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)}
 const STATC={STR:['#c0392b','#e8735e'],INT:['#2f6fd0','#7fb3ff'],CHA:['#d9658f','#ffb3c9'],DIS:['#3f9b3f','#8fcf6a']},GOLD=['#f0c030','#fff1a8','#e8bf4f','#ffffff'];
@@ -1313,6 +1325,32 @@ function charLayers(str, int, cha, gear, pose) {
     put(body, CX - 1, top - 1, 'R'); put(body, CX, top - 1, 'R'); put(body, hL + 2, top - 1, 'Y');
   }
 
+  // ---- Circus Mañana loot
+  if (head === 'tophat') {                        // The Mirror Magician: black top hat with a red band
+    clearTop(top + 1);
+    rect(body, hL + 1, top - 7, HW - 2, 8, 'O'); rect(body, hL + 1, top - 2, HW - 2, 2, 'R'); rect(body, hL + 1, top - 1, HW - 2, 1, 'Q');
+    rect(body, hL - 2, top + 1, HW + 4, 1, 'O'); put(body, hL + 2, top - 6, 'X'); put(body, hL + 2, top - 5, 'X'); put(body, hL + 3, top - 6, 'X');
+  }
+  if (head === 'turban') {                        // The Hypnotist: golden turban (red gem in front)
+    clearTop(top + 2);
+    rect(body, hL, top - 3, HW, 5, 'y'); rect(body, hL + 2, top - 4, HW - 4, 1, 'y'); rect(body, hL - 1, top - 1, HW + 2, 3, 'y');
+    for (let x = hL; x < hR; x += 3) { put(body, x, top - 2, 'u'); put(body, x + 1, top - 1, 'u'); put(body, x + 2, top, 'u'); }
+    rect(body, hL - 1, top + 1, HW + 2, 1, 'u');
+    if (bk) { rect(body, CX - 1, top + 2, 2, 3, 'y'); put(body, CX - 1, top + 4, 'u'); }
+    else { rect(body, CX - 1, top - 2, 3, 3, 'R'); put(body, CX - 1, top - 2, 'r'); put(body, CX, top - 4, 'Y'); }
+  }
+  if (head === 'mask') {                          // The Puppeteer: a cracked white half-mask worn on the side of the head
+    const my0 = top + 3;
+    rect(body, hL, my0, HW, 1, 'E');
+    if (bk) { rect(body, hL - 2, my0 - 1, 2, 5, 'n'); put(body, hL - 2, my0 + 1, 'N'); }
+    else { rect(body, hR - 2, my0 - 3, 5, 9, 'n'); [[hR - 2, my0 - 3], [hR + 2, my0 - 3], [hR - 2, my0 + 5], [hR + 2, my0 + 5]].forEach(([x, y]) => put(body, x, y, null)); rect(body, hR + 2, my0 - 2, 1, 7, 'N');
+      put(body, hR - 1, my0, 'E'); put(body, hR, my0, 'E'); put(body, hR + 1, my0 - 2, 'E'); put(body, hR + 1, my0 - 1, 'E'); put(body, hR + 2, my0 + 1, 'E'); put(body, hR - 1, my0 + 3, 'Q'); put(body, hR, my0 + 4, 'Q'); put(body, hR + 1, my0 + 3, 'Q'); }
+  }
+  if (head === 'clown') {                         // The Clockwork Clown: red nose and a little ruffled collar
+    const cy = shirtTop - 1;
+    for (let x = tL - 2; x <= tR + 2; x++) { put(body, x, cy - 1, 'n'); put(body, x, cy, (x - tL) % 3 === 0 ? 'N' : 'n'); put(body, x, cy + 1, (x - tL) % 3 === 1 ? 'R' : 'n'); if ((x - tL) % 3 === 1) put(body, x, cy + 2, 'R'); }
+    if (!bk) { rect(body, CX - 1 + fs, ey + 2, 2, 2, 'R'); put(body, CX - 1 + fs, ey + 2, 'r'); }
+  }
   if (pose === 'wink' && !bk) { put(body, ex2 + 3, ey - 2, 'Y'); put(body, ex2 + 4, ey - 3, 'y'); put(body, ex2 + 4, ey - 1, 'y'); put(body, ex2 + 5, ey - 2, 'y'); }
   if (pose === 'flex') { put(body, hR + 2, top + 3, 'B'); put(body, hR + 2, top + 4, 'B'); put(body, hR + 3, top + 4, 'B'); }
   if (pose === 'bulb') {
@@ -1425,7 +1463,6 @@ const sdHead=sides.length?`<button class="task trhead" onclick="openSide=!openSi
 const tl=(top.map(row).join('')+trHead+own.map(row).join('')+sdHead+bottom.map(row).join(''))||'<p class="empty">No open quests. Add one in TASKS.</p>';
 return`<h1>GRINDLIFE${COG}</h1><div class="box hero"><div class="spr">${sprite()}<div id="say" class="say" aria-live="polite"></div></div><div class="stats">${stats}</div></div>
 <p>${Object.keys(S.fresh).length?'<button id="wbtn" class="glow" onclick="go(\'wardrobe\')"><i class="spk"></i>WARDROBE<i class="spk"></i></button>':'<button id="wbtn" onclick="go(\'wardrobe\')">WARDROBE</button>'}</p><h2>QUESTS</h2><div class="box">${tl}</div>
-<h2>WEEKLY BOSS</h2>${bossStrip()}
 <p><button onclick="undo()" ${S.log.length?'':'disabled'}>UNDO LAST</button></p>${bossCard()}${suggCard()}${trialCard()}${bossIntroCard()}`}
 const TRIAL_TXT={STR:'Do 4 trainings within 7 days.',INT:'Read 10 pages on 5 different days within 7 days.',CHA:'Finish a Heart quest on 5 different days within 7 days.',DIS:'Finish at least one quest on 6 different days within 7 days.'};
 function trialCard(){const k=trialK;if(!k||!atTrial(k))return'';const [a,b]=trialProg(k),from=trialFrom(k);let boxes;
@@ -1531,12 +1568,13 @@ function buildVillage() {
   box(4, 25, 6, 6, 'W'); box(3, 26, 1, 4, 'W'); box(10, 26, 1, 2, 'W');
   for (let y = 0; y < M.h; y++) for (let x = 0; x < M.w; x++) if ('RWF'.includes(M.g[y][x]) && M.g[y][x] !== 'E') M.solid[y][x] = 1;
   // props (footprints become solid)
-  box(0, 16, 5, 2, 'P'); box(5, 22, 4, 1, 'P'); box(8, 18, 1, 4, 'P');                  // road west into the woods, path to the plot
+  box(0, 16, 5, 2, 'P'); box(5, 22, 4, 1, 'P'); box(8, 18, 1, 4, 'P');
+  box(36, 18, 1, 7, 'P'); box(33, 24, 4, 1, 'P');                                        // path to the circus tent                  // road west into the woods, path to the plot
   const keep = (x, y) => (x <= 1 && (y === 16 || y === 17)) || (x >= 2 && x <= 8 && y >= 18 && y <= 22);
   const tree = (x, y, kind) => { if (keep(x, y)) return; prop(kind || (hsh(x, y) % 4 === 0 ? 'pine' : 'tree'), x, y); block(x, y, 1, 1); };
   for (let x = 0; x < M.w; x++) { tree(x, M.h - 1); if (hsh(x, 7) % 2) tree(x, M.h - 2); if (x < 11 || x > 28) { tree(x, 0); } }
   for (let y = 1; y < M.h - 2; y++) { tree(0, y); tree(M.w - 1, y); if (hsh(3, y) % 3 === 0 && y > 3) tree(1, y); if (hsh(5, y) % 3 === 0 && y > 3 && (y < 6 || y > 18)) tree(M.w - 2, y); }
-  [[3, 4], [6, 2], [8, 6], [4, 8], [31, 3], [35, 2], [30, 6], [36, 5], [13, 22], [25, 22], [9, 22], [30, 25], [31, 29], [11, 9], [29, 9], [35, 26], [4, 21], [2, 13], [37, 20], [26, 31], [15, 31]].forEach(([x, y]) => tree(x, y));
+  [[3, 4], [6, 2], [8, 6], [4, 8], [31, 3], [35, 2], [30, 6], [36, 5], [13, 22], [9, 22], [30, 25], [31, 29], [11, 9], [29, 9], [35, 26], [4, 21], [2, 13], [37, 20], [26, 31], [15, 31]].forEach(([x, y]) => tree(x, y));
   [[14, 7], [24, 4], [15, 3], [23, 8], [37, 11], [34, 9]].forEach(([x, y]) => { prop('rock', x, y); block(x, y, 1, 1); });
   [[35, 9], [37, 8], [36, 13], [34, 12]].forEach(([x, y]) => prop('pine', x, y));
   prop('house', 10, 11, { w: 5, roof: '#b5653a' }); block(10, 11, 5, 3);
@@ -1555,6 +1593,8 @@ function buildVillage() {
   M.warps.push({ x: 35, y: 15, to: 'cave', tx: 6, ty: 8 }, { x: 5, y: 15, to: 'tower', tx: 5, ty: 7 });
   M.warps.push({ x: 0, y: 16, to: 'forest', tx: 28, ty: 11 }, { x: 0, y: 17, to: 'forest', tx: 28, ty: 12 });
   M.plot = { x: 3, y: 19 };
+  M.warps.push({ x: 33, y: 23, to: 'tent', tx: 6, ty: 9 });
+  prop('board', 22, 14); block(22, 14, 2, 1);
   M.spawn = { x: 17, y: 17 };
   return M;
 }
@@ -1701,6 +1741,8 @@ function paintGround(M) {
     else if (t === 'X') { const n = hsh(Math.floor((x + (Math.floor(y / 5) % 2) * 4) / 8), Math.floor(y / 5), 3); col = (y % 5 === 4 || (x + (Math.floor(y / 5) % 2) * 4) % 8 === 7) ? '#4a4e66' : n % 3 ? '#6b7090' : '#7a80a0'; if (ty === 1 && ly > 11) col = '#3a3d54'; }
     else if (t === 'c') { const n = vnoise(x, y, 5, 13); col = n < .4 ? '#2a2630' : n < .8 ? '#332e3a' : '#3d3745'; if (h % 47 === 0) col = '#4a4452';
       const d = edgeDist(tx, ty, lx, ly, 'c'), jag = 2 + hsh(x >> 2, y >> 2, 6) % 4; if (d < jag) col = d < jag - 1 ? '#1e1b24' : '#4a4352'; }
+    else if (t === 'B') { const row = y % 12; col = row < 2 ? '#2a1a14' : row < 9 ? ((x >> 3) % 2 ? '#5a1a22' : '#4a141c') : '#3a0e14'; if (row === 2) col = '#7a2a32'; }
+    else if (t === 'r') { const dx = (x - 6.5 * 16) / 84, dy = (y - 6 * 16) / 56, d = Math.hypot(dx, dy); col = d < .92 ? (hsh(x, y, 51) % 7 === 0 ? '#c9a46a' : hsh(x, y, 52) % 9 === 0 ? '#9a7a48' : '#b8955c') : d < 1 ? '#c23b2c' : d < 1.04 ? '#e8bf4f' : ((x + (y >> 3) * 5) % 16 === 0 ? '#1a100c' : '#2a1a14'); }
     else if (t === 'g') { const n = vnoise(x, y, 9, 41); col = n < .4 ? '#6db84c' : n < .75 ? '#7cc556' : '#8cd068'; const fh = hsh(Math.floor(x / 4), Math.floor(y / 4), 42); if (fh % 6 === 0 && x % 4 === 1 && y % 4 === 1) col = ['#fffaf0', '#f08ca8', '#ffd36b', '#b39ddb'][fh % 4]; }
     else col = grass(x, y);
     P(x, y, col);
@@ -1735,7 +1777,7 @@ function matSprite(w, h, draw, mats, opts = {}) {
 // ---------------- props ----------------
 const PROP_ART = {};
 function propCanvas(p) {
-  const key = p.type + (p.w || '') + (p.roof || '') + (p.bakery || '') + (p.wren ? 'wr' : '') + (p.stage != null ? 's' + p.stage : '') + (p.h ? 'h' : '') + (p.v ? 'v' : '') + (['tree', 'pine', 'bush', 'oak', 'fern', 'mush', 'flowers', 'thicket'].includes(p.type) ? hsh(p.x, p.y) % 3 : '');
+  const key = p.type + (p.act || '') + (p.quiet ? 'q' : '') + (p.got ? p.got.join('') : '') + (p.w || '') + (p.roof || '') + (p.bakery || '') + (p.wren ? 'wr' : '') + (p.stage != null ? 's' + p.stage : '') + (p.h ? 'h' : '') + (p.v ? 'v' : '') + (['tree', 'pine', 'bush', 'oak', 'fern', 'mush', 'flowers', 'thicket'].includes(p.type) ? hsh(p.x, p.y) % 3 : '');
   if (PROP_ART[key]) return PROP_ART[key];
   let c, ax = 0, ay = 0;   // anchor: where the footprint's top-left tile sits inside the canvas
   const v = hsh(p.x, p.y) % 3;
@@ -1908,6 +1950,13 @@ function propCanvas(p) {
       R(w - 4, 20, 2, H - 22, '#6b4423'); R(w + 1, 20, 2, H - 22, '#6b4423'); for (let y = 24; y < H; y += 7) R(w - 4, y, 7, 2, '#8a5a32');   // ladder
     }
     ax = 3; ay = H - 48;
+  } else if (p.type === 'bigtop') { c = tentCanvas(p.act, p.quiet); ax = 8; ay = 56;
+  } else if (p.type === 'wagon') { c = wagonCanvas(0); ax = 6; ay = 48;
+  } else if (p.type === 'board') {
+    c = matSprite(36, 32, a => { a.rect(4, 14, 3, 18, 'po'); a.rect(29, 14, 3, 18, 'po'); a.rect(0, 0, 36, 22, 'bd'); }, { po: ['#5a3820', '#7a4c2a', '#3b2416'], bd: ['#8a5a32', '#a8703f', '#5a3820'] });
+    const g = c.getContext('2d'); g.fillStyle = '#6b4423'; g.fillRect(2, 2, 32, 18);
+    (p.got || []).forEach((id, i) => { const pc = posterCanvas(id, 0); g.drawImage(pc, 3 + i * 5.2, 3 + (i % 2), 6, 8); });
+    g.fillStyle = '#c23b2c'; g.fillRect(2, 0, 32, 2); ax = 2; ay = 16;
   } else if (p.type === 'crystal') {
     c = matSprite(12, 14, a => { a.rect(4, 2, 4, 11, 'cr'); a.rect(1, 6, 3, 7, 'cr'); a.rect(8, 5, 3, 8, 'cr'); }, { cr: ['#7fd7ff', '#d9f6ff', '#3fa7d6'] }); ax = -2; ay = 0;
   }
@@ -2171,9 +2220,404 @@ function wrenAsk(again) {
   return dialog('wren', [again ? 'I\'m still thinking about your village. Soon, I hope.' : 'Hey... is there room in your village? I\'d love to build a house there someday.', 'I\'ll wait a little. When your village feels a bit warmer, I\'ll come.']);
 }
 
+// ===================== Circus Mañana: art =====================
+// The six weekly bosses are now acts of a dark traveling circus. Ids stay the same so old wins still count.
+const ACTS = {
+  restday: { name: 'The Somnambulist', short: 'SOMNAMBULIST', tag: 'The tightrope sleeper', c1: '#5a4a8c', c2: '#bfb2ea', line: 'Her lullaby makes every arm and leg in the village heavy.' },
+  social: { name: 'The Puppeteer', short: 'PUPPETEER', tag: 'He cuts the strings between friends', c1: '#2f4f5a', c2: '#d6453a', line: 'His scissors snip the strings that tie friends together.' },
+  doom: { name: 'The Hypnotist', short: 'HYPNOTIST', tag: 'Look into the spiral...', c1: '#2a2a6b', c2: '#b39ddb', line: 'One glance at his spiral and your mind goes blank for hours.' },
+  takeaway: { name: 'The Feast Master', short: 'FEAST MASTER', tag: 'Endless sweets, no cooking', c1: '#3f7f5a', c2: '#f0e2c2', line: 'He serves endless boxes of sweets, until no one cooks or tidies anymore.' },
+  captain: { name: 'The Clockwork Clown', short: 'CLOCKWORK CLOWN', tag: 'It is always tomorrow', c1: '#c23b2c', c2: '#e8bf4f', line: 'His clock always points at tomorrow, and the days slip away.' },
+  excuse: { name: 'The Mirror Magician', short: 'MIRROR MAGICIAN', tag: 'Every excuse looks real', c1: '#1f1a27', c2: '#c23b2c', line: 'His mirror shows you a perfect excuse for everything.' }
+};
+const ACT_ART = {};
+function actCanvas(id, fr) {                      // 48x64, feet on the bottom row; fr = idle frame 0/1
+  const k = id + (fr || 0); if (ACT_ART[k]) return ACT_ART[k];
+  const f = fr || 0, sk = ['#e9c9a8', '#f8e0c8', '#c99a7e'];
+  let c;
+  if (id === 'restday') {                         // pale acrobat on a tightrope, eyes closed, droopy nightcap, parasol
+    c = matSprite(48, 64, a => {
+      a.rect(0, 60, 48, 2, 'rp');
+      a.rect(20, 44, 3, 16, 'lg'); a.rect(25, 44, 3, 16, 'lg'); a.rect(19, 58, 4, 2, 'sh'); a.rect(25, 58, 4, 2, 'sh');
+      a.ell(24, 36, 7.5, 10, 'lt');
+      a.rect(6, 30 + f, 14, 3, 'sk'); a.rect(28, 30 - f, 14, 3, 'sk');
+      a.rect(21, 25, 6, 4, 'sk'); a.ell(24, 19, 7.5, 7.5, 'sk');
+      for (let i = 0; i < 9; i++) a.rect(17 + i, 12 - Math.min(i, 8 - i) * .6 - i * .5, 15 - i * 1.5, 2, 'nc');
+      a.ell(36, 16 + f, 2, 2, 'pm');
+      a.rect(41, 18 - f, 1, 13, 'st'); a.ell(41, 17 - f, 8, 3.5, 'pa');
+    }, { rp: ['#b8955c', '#d8b07a', '#8a6a3a'], lg: ['#2e2a52', '#45407a', '#1c1934'], sh: ['#5a4a8c', '#7a6aac', '#3a2e5c'], lt: ['#5a4a8c', '#7a6aac', '#3a2e5c'], sk: ['#e2dcef', '#f6f2ff', '#b8b0cf'], nc: ['#7a6aac', '#9a8acc', '#4e4280'], pm: ['#fffaf0', '#ffffff', '#cfc6b4'], st: ['#4e3020', '#6b4423', '#2e1c12'], pa: ['#d9a6c8', '#f0c6e0', '#a8789a'] });
+    const g = c.getContext('2d'), R = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); };
+    for (let y = 30; y < 46; y += 3) R(18, y, 13, 1, '#bfb2ea');                     // leotard stripes
+    R(20, 19, 3, 1, '#3a2e5c'); R(26, 19, 3, 1, '#3a2e5c'); R(23, 23, 2, 1, '#8a7aa8');   // closed eyes, small mouth
+    R(19, 21, 2, 1, '#e6b8d0'); R(28, 21, 2, 1, '#e6b8d0');
+    g.fillStyle = '#bfb2ea'; g.font = '6px monospace'; [[3, 10 - f * 2, 'z'], [6, 5 - f * 2, 'Z']].forEach(([x, y, t]) => { R(x, y, 4, 1, '#bfb2ea'); R(x + 3 - 0, y + 1, 1, 1, '#bfb2ea'); R(x + 2, y + 2, 1, 1, '#bfb2ea'); R(x + 1, y + 3, 1, 1, '#bfb2ea'); R(x, y + 4, 4, 1, '#bfb2ea'); });
+  } else if (id === 'social') {                   // gaunt puppeteer in a long coat, white mask, cross-bar control with cut red strings
+    c = matSprite(48, 64, a => {
+      a.rect(6, 4 + f, 36, 3, 'wd'); a.rect(22, 0 + f, 3, 3, 'wd');
+      a.rect(11, 8 + f, 3, 20, 'sl'); a.rect(34, 8 + f, 3, 20, 'sl'); a.rect(13, 26, 4, 3, 'sl'); a.rect(31, 26, 4, 3, 'sl'); a.ell(12.5, 7 + f, 2, 2, 'gv'); a.ell(35.5, 7 + f, 2, 2, 'gv');
+      a.ell(24, 20, 6.5, 7, 'mk');
+      a.rect(17, 11, 14, 3, 'ht'); a.rect(19, 6, 10, 6, 'ht');
+      for (let y = 27; y < 61; y++) { const w = 10 + Math.floor((y - 27) / 3); a.rect(24 - w / 2, y, w, 1, 'ct'); }
+      a.rect(17, 61, 6, 2, 'sh'); a.rect(26, 61, 6, 2, 'sh');
+    }, { gv: ['#f4f1ea', '#ffffff', '#c9c4b8'], wd: ['#7a4c2a', '#9a6a3a', '#4e3020'], sl: ['#2f4f5a', '#456a76', '#1d333a'], mk: ['#f4f1ea', '#ffffff', '#c9c4b8'], ht: ['#1f1a27', '#3a3348', '#0e0b14'], ct: ['#2f4f5a', '#456a76', '#1d333a'], sh: ['#1f1a27', '#3a3348', '#0e0b14'] });
+    const g = c.getContext('2d'), R = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); };
+    R(20, 19, 2, 2, '#1f1a27'); R(26, 19, 2, 2, '#1f1a27'); R(21, 24, 6, 1, '#1f1a27'); R(21, 25, 1, 1, '#1f1a27'); R(26, 25, 1, 1, '#1f1a27');   // mask face, a thin smile
+    R(18, 9, 12, 1, '#d6453a');                                                              // hat band
+    [[8, 30], [15, 22], [33, 26], [40, 34]].forEach(([x, len], i) => { R(x, 7 + f, 1, len - 6, '#d6453a'); R(x + (i < 2 ? -1 : 1), 7 + f + len - 6, 1, 2, '#d6453a'); });   // strings hanging from the bar, snipped short
+    R(36, 46, 6, 1, '#cfd6de'); R(36, 48, 6, 1, '#cfd6de'); R(35, 47, 2, 1, '#9aa5b1');                                                   // scissors
+    for (let y = 30; y < 58; y += 6) R(23, y, 2, 2, '#d6453a');                                // coat buttons
+  } else if (id === 'doom') {                     // robed hypnotist with a turban, glowing eyes, giant spiral disc
+    c = matSprite(48, 64, a => {
+      for (let y = 30; y < 62; y++) { const w = 14 + Math.floor((y - 30) / 2.5); a.rect(24 - w / 2, y, w, 1, 'rb'); }
+      a.ell(24, 21, 7, 7.5, 'sk'); a.ell(24, 13, 9, 5.5, 'tb'); a.rect(15, 12, 18, 4, 'tb');
+      a.rect(9, 33, 6, 10, 'rb'); a.rect(33, 33, 6, 10, 'rb');
+      a.ell(24, 44, 11, 11, 'sp');
+    }, { rb: ['#2a2a6b', '#40409a', '#18183e'], sk: sk, tb: ['#e8bf4f', '#fff1a8', '#b8860b'], sp: ['#fffaf0', '#ffffff', '#cfc6b4'] });
+    const g = c.getContext('2d'), R = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); };
+    g.strokeStyle = '#6a44ad'; g.lineWidth = 2; g.beginPath(); for (let i = 0; i < 60; i++) { const a = i * .42 + f * 1.6, r = i * .17; const x = 24 + Math.cos(a) * r, y = 44 + Math.sin(a) * r; i ? g.lineTo(x, y) : g.moveTo(x, y); } g.stroke();
+    R(19, 20, 3, 2, '#7fd7ff'); R(26, 20, 3, 2, '#7fd7ff'); R(20, 20, 1, 1, '#ffffff'); R(27, 20, 1, 1, '#ffffff');      // glowing eyes
+    R(22, 25, 4, 1, '#8a5a32'); R(18, 22, 1, 3, '#2a1a14'); R(29, 22, 1, 3, '#2a1a14');                                   // thin mustache ends
+    R(23, 10, 3, 3, '#c23b2c'); R(23, 10, 1, 1, '#f07060');                                                                 // turban gem
+    R(10, 42, 4, 3, sk[0]); R(34, 42, 4, 3, sk[0]);
+  } else if (id === 'takeaway') {                 // round ghostly chef with a tall hat and a tray of takeaway boxes
+    c = matSprite(48, 64, a => {
+      a.ell(24, 40, 14, 13, 'gh'); for (let i = 0; i < 4; i++) a.ell(13 + i * 7.3, 53 + (i + f) % 2 * 2, 3.8, 5, 'gh');
+      a.ell(24, 22, 9, 8.5, 'gh');
+      a.rect(16, 4, 16, 12, 'hat'); a.ell(18, 5, 4, 4, 'hat'); a.ell(24, 3, 5, 4, 'hat'); a.ell(30, 5, 4, 4, 'hat');
+      a.rect(4, 33 - f, 16, 3, 'tr');
+      a.rect(5, 26 - f, 6, 7, 'bx'); a.rect(12, 28 - f, 6, 5, 'bx2');
+    }, { gh: ['#bfe8c8', '#e2f8e6', '#86c09a'], hat: ['#fffaf0', '#ffffff', '#cfc6b4'], tr: ['#9aa5b1', '#cfd6de', '#5e6773'], bx: ['#d6453a', '#f07060', '#a02a20'], bx2: ['#fffaf0', '#ffffff', '#cfc6b4'] });
+    const g = c.getContext('2d'), R = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); };
+    R(19, 21, 3, 3, '#2a4a36'); R(26, 21, 3, 3, '#2a4a36'); R(20, 21, 1, 1, '#ffffff'); R(27, 21, 1, 1, '#ffffff');
+    R(21, 26, 6, 2, '#2a4a36'); R(22, 26, 4, 1, '#c23b2c');                                      // open, hungry mouth
+    R(16, 15, 16, 2, '#cfc6b4');
+    R(6, 29 - f, 4, 1, '#fffaf0'); R(13, 30 - f, 4, 1, '#d6453a'); R(14, 27 - f, 2, 1, '#f08ca8');  // box stripes, a cupcake swirl
+    R(18, 36, 12, 10, 'rgba(255,255,255,.35)');
+  } else if (id === 'captain') {                  // clown with a clock for a face, ruff collar, wind-up key, big shoes
+    c = matSprite(48, 64, a => {
+      a.rect(13, 58, 9, 4, 'sh'); a.rect(27, 58, 9, 4, 'sh');
+      a.rect(17, 46, 5, 12, 'pt'); a.rect(26, 46, 5, 12, 'pt');
+      a.ell(24, 38, 10, 10, 'st');
+      a.rect(9, 33, 6, 11, 'st'); a.rect(33, 33, 6, 11, 'st');
+      a.ell(24, 27, 11, 3.5, 'rf');
+      a.ell(24, 15, 9, 9, 'ck');
+      a.rect(37, 34 + f, 6, 2, 'ky'); a.ell(44, 35 + f, 2.5, 3.5, 'ky');
+      a.ell(14, 8, 3, 3, 'hr'); a.ell(34, 8, 3, 3, 'hr');
+    }, { sh: ['#c23b2c', '#e06a5a', '#8c2a1f'], pt: ['#e8bf4f', '#fff1a8', '#b8860b'], st: ['#c23b2c', '#e06a5a', '#8c2a1f'], rf: ['#fffaf0', '#ffffff', '#cfc6b4'], ck: ['#f6ead0', '#fffaf0', '#cfc6b4'], ky: ['#e8bf4f', '#fff1a8', '#b8860b'], hr: ['#3fa7d6', '#7fd7ff', '#2f6fd0'] });
+    const g = c.getContext('2d'), R = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); };
+    for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2; R(Math.round(24 + Math.cos(a) * 7.2), Math.round(15 + Math.sin(a) * 7.2), 1, 1, '#5a3820'); }
+    g.strokeStyle = '#2a1a14'; g.lineWidth = 1; g.beginPath(); g.moveTo(24.5, 15.5); g.lineTo(24.5 + Math.cos(-1.2 + f * .5) * 6, 15.5 + Math.sin(-1.2 + f * .5) * 6); g.moveTo(24.5, 15.5); g.lineTo(29, 17); g.stroke();
+    R(23, 14, 3, 3, '#d6453a');                                                                  // red nose in the middle of the dial
+    for (let y = 30; y < 47; y += 4) for (let x = 15 + (y % 8 ? 2 : 0); x < 33; x += 4) R(x, y, 2, 2, '#e8bf4f');   // diamond pattern
+    R(20, 21, 9, 1, '#5a3820'); R(19, 20, 1, 1, '#5a3820'); R(29, 20, 1, 1, '#5a3820');          // wide painted grin
+  } else {                                        // excuse: magician in a top hat and cape, a mirror where the face should be
+    c = matSprite(48, 64, a => {
+      for (let y = 26; y < 62; y++) { const w = 18 + Math.floor((y - 26) / 2); a.rect(24 - w / 2, y, w, 1, 'cp'); }
+      a.rect(19, 30, 10, 26, 'sui'); a.rect(19, 56, 4, 6, 'sh'); a.rect(25, 56, 4, 6, 'sh');
+      a.ell(24, 18, 7, 8, 'mr');
+      a.rect(16, 9, 16, 2, 'ht'); a.rect(18, 0, 12, 10, 'ht');
+      a.rect(37, 30 + f, 2, 14, 'wd'); a.rect(37, 28 + f, 2, 2, 'tip');
+      a.ell(8, 38 - f, 4, 5, 'mr'); a.rect(7, 43 - f, 2, 5, 'wd');
+    }, { cp: ['#1f1a27', '#3a3348', '#0e0b14'], sui: ['#2e2a3a', '#4a4458', '#1a1724'], sh: ['#1f1a27', '#3a3348', '#0e0b14'], mr: ['#cfd6de', '#ffffff', '#8a95a5'], ht: ['#1f1a27', '#3a3348', '#0e0b14'], wd: ['#1f1a27', '#3a3348', '#0e0b14'], tip: ['#fffaf0', '#ffffff', '#cfc6b4'] });
+    const g = c.getContext('2d'), R = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); };
+    for (let y = 30; y < 61; y++) { const w = 18 + Math.floor((y - 26) / 2); R(24 - w / 2 + 1, y, 2, 1, '#c23b2c'); R(24 + w / 2 - 3, y, 2, 1, '#c23b2c'); }   // red lining
+    R(20, 13, 2, 6, '#ffffff'); R(22, 12, 1, 3, '#ffffff'); R(25, 20, 3, 1, '#a8b2c0'); R(18, 8, 12, 1, '#c23b2c');
+    R(23, 31, 2, 3, '#fffaf0'); R(22, 34, 4, 1, '#c23b2c');                                      // shirt and bow tie
+    R(7, 36 - f, 1, 3, '#ffffff');
+  }
+  return (ACT_ART[k] = c);
+}
+// Señor Mañana: only ever a shadow and a pair of white gloves
+function gloveCanvas(wave) {
+  return matSprite(14, 16, a => { a.rect(3, 6, 8, 8, 'gl'); for (let i = 0; i < 4; i++) a.rect(3 + i * 2, 1 + (i === 1 || i === 2 ? 0 : 1) - (wave && i === 3 ? 1 : 0), 2, 6, 'gl'); a.rect(0, 8 - (wave ? 1 : 0), 3, 3, 'gl'); a.rect(3, 13, 8, 3, 'cf'); },
+    { gl: ['#fffaf0', '#ffffff', '#cfc6b4'], cf: ['#c23b2c', '#e06a5a', '#8c2a1f'] });
+}
+function shadowCanvas(fr) {                      // Señor Mañana: a tall, lanky silhouette with glowing eyes, a grin and white gloves
+  const f = fr || 0;
+  const c = matSprite(44, 84, a => {
+    a.rect(14, 0, 14, 15, 'sd'); a.rect(13, 13, 16, 2, 'bd'); a.rect(8, 15, 26, 3, 'sd');           // tall top hat with a band
+    a.ell(21, 24, 6.5, 7, 'sd');                                                                  // head
+    for (let y = 30; y < 60; y++) { const w = 10 + Math.floor((y - 30) / 2.2); a.rect(21 - w / 2, y, w, 1, 'sd'); }   // coat
+    for (let y = 60; y < 76; y++) { a.rect(6 + (y - 60) * .2, y, 6, 1, 'sd'); a.rect(30 - (y - 60) * .2, y, 6, 1, 'sd'); }   // coat tails, split and ragged
+    a.rect(16, 60, 3, 22, 'sd'); a.rect(23, 60, 3, 22, 'sd'); a.rect(13, 81, 7, 3, 'sd'); a.rect(23, 81, 7, 3, 'sd');   // thin legs, pointed shoes
+    for (let i = 0; i < 14; i++) a.rect(29 + i * .5, 32 - i * 1.2 - f, 3, 2, 'sd');               // raised arm
+    a.rect(4, 34, 3, 16, 'sd'); a.rect(5, 50, 2, 30, 'cn'); a.ell(7, 34, 4, 2.5, 'cn');            // other arm leaning on a cane
+  }, { sd: ['#24142c', '#3a2246', '#120a16'], bd: ['#5a1a22', '#7a2a32', '#3a0e14'], cn: ['#3b2a1a', '#5a4028', '#1e140c'] }, { outline: '#0c060e' });
+  const g = c.getContext('2d'), R = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); };
+  R(17, 22, 3, 2, '#ffd36b'); R(23, 22, 3, 2, '#ffd36b'); R(18, 22, 1, 1, '#fff6b0'); R(24, 22, 1, 1, '#fff6b0');   // glowing eyes
+  R(17, 27, 9, 1, '#f4f1ea'); R(16, 26, 1, 1, '#f4f1ea'); R(26, 26, 1, 1, '#f4f1ea'); for (let x = 18; x < 26; x += 2) R(x, 28, 1, 1, '#f4f1ea');   // crescent grin with teeth
+  const glove = (x, y, up) => { R(x, y, 6, 5, '#fffaf0'); for (let k = 0; k < 4; k++) R(x + k * 1.5, y - 4 - (k === 1 || k === 2 ? 1 : 0), 1, 4, '#fffaf0'); R(x - 2, y + 1, 2, 2, '#fffaf0'); R(x, y + 4, 6, 1, '#cfc6b4'); R(x, y + 5, 6, 2, '#5a1a22'); };
+  glove(34, 12 - f, 1); glove(3, 31, 0);
+  R(19, 36, 4, 1, '#5a1a22'); R(20, 37, 2, 2, '#7a2a32');                                        // a red rose on the lapel
+  return c;
+}
+// the caravan wagon: black-red cage wagon, iron bars, something watching from inside, a green lantern
+const WAGON_ART = {};
+function wagonCanvas(fr, rot) {
+  const f = fr || 0, rk = Math.round(((rot || 0) % (Math.PI / 4)) / (Math.PI / 4) * 6) % 6, key = f + '_' + rk; if (WAGON_ART[key]) return WAGON_ART[key];
+  const c = matSprite(76, 64, a => {
+    for (let y = 2; y < 12; y++) { const ins = Math.max(0, 6 - y); a.rect(4 + ins, y, 68 - ins * 2, 1, 'rf'); }   // arched roof
+    a.rect(6, 12, 64, 32, 'wd');                                                                 // body
+    a.rect(4, 44, 68, 4, 'tr');                                                                  // chassis
+    a.ell(18, 52, 10, 10, 'wh'); a.ell(58, 52, 10, 10, 'wh');                                     // big wheels
+    a.rect(62, 0, 3, 6, 'ch');                                                                   // crooked chimney
+    a.rect(0, 18, 4, 2, 'tr'); a.rect(72, 18, 4, 2, 'tr');
+  }, { rf: ['#1f1a27', '#3a3348', '#0e0b14'], wd: ['#5a1a22', '#7a2a32', '#3a0e14'], tr: ['#2a1a14', '#3b2416', '#160c08'], wh: ['#3b2416', '#5a3820', '#1e140c'], ch: ['#2a1a14', '#3b2416', '#160c08'] });
+  const g = c.getContext('2d'), R = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); };
+  R(24, 17, 28, 20, '#0c060e'); for (let x = 25; x < 52; x += 4) R(x, 17, 2, 20, '#5e6773'); R(24, 17, 28, 2, '#8a95a5'); R(24, 35, 28, 2, '#8a95a5');   // iron cage window
+  R(33 + f, 25, 2, 2, '#c8f060'); R(39 + f, 25, 2, 2, '#c8f060');                                // something watching
+  for (let x = 8; x < 68; x += 6) { R(x, 12, 3, 2, '#b8860b'); } R(6, 41, 64, 1, '#b8860b');    // faded gold trim
+  R(9, 18, 12, 10, '#2a1a14'); R(10, 19, 10, 8, '#c9a46a'); R(11, 21, 8, 1, '#5a1a22'); R(11, 23, 6, 1, '#5a1a22'); R(11, 25, 7, 1, '#5a1a22');   // torn notice
+  R(57, 18, 9, 18, '#3a0e14'); R(58, 19, 7, 16, '#2a1a14'); R(63, 27, 1, 2, '#b8860b');          // back door
+  [18, 58].forEach(cx => { for (let k = 0; k < 4; k++) { const an = k / 4 * Math.PI + rk / 6 * Math.PI / 4; for (let r = -7; r <= 7; r++) { g.fillStyle = '#7a4c2a'; g.fillRect(Math.round(cx + Math.cos(an) * r), Math.round(52 + Math.sin(an) * r), 1, 1); } } R(cx - 1, 51, 3, 3, '#b8860b'); });   // spokes (they turn while rolling)
+  [10, 22, 34, 46, 58].forEach((x, i) => { R(x, 0 + (i % 2), 2, 4, '#1f1a27'); R(x, 0 + (i % 2), 2, 1, '#8a95a5'); });   // iron spikes on the roof
+  for (let x = 7; x < 69; x += 4) { const c2 = (x / 4) % 2 ? '#c23b2c' : '#e8d4a4'; R(x, 14, 4, 2, c2); R(x + 1, 16, 2, 1, c2); }   // tattered pennant fringe
+  R(57, 20, 7, 7, '#c23b2c'); R(58, 21, 5, 5, '#e8d4a4'); R(59, 22, 1, 1, '#1f1a27'); R(61, 22, 1, 1, '#1f1a27'); R(59, 24, 3, 1, '#1f1a27'); R(58, 23, 1, 1, '#1f1a27'); R(62, 23, 1, 1, '#1f1a27');   // grinning emblem on the door
+  R(2, 20, 1, 6, '#2a1a14'); R(0, 26, 5, 6, '#2a1a14'); R(1, 27, 3, 4, f ? '#a8f060' : '#7fd040'); // green lantern
+  return (WAGON_ART[key] = c);
+}
+// the big top: striped in the act's colors; quiet = the act is beaten (flaps closed, colors faded)
+function tentCanvas(id, quiet) {
+  const A = ACTS[id], W = 112, H = 104, c1 = quiet ? shadeHex(A.c1, -20) : A.c1, c2 = quiet ? '#cfc6b4' : '#f6ead0';
+  const c = matSprite(W, H, a => {
+    for (let y = 34; y < 100; y++) a.rect(8, y, W - 16, 1, (Math.floor((y > 0 ? 0 : 0) + 0)) ? 'b' : 'a');
+    for (let y = 6; y < 40; y++) { const hw = Math.round(8 + (y - 6) * 1.42); a.rect(56 - hw, y, hw * 2, 1, 'a'); }
+    a.rect(55, 0, 2, 8, 'p');
+  }, { a: [c2, '#ffffff', shadeHex(c2, -30)], b: [c1, shadeHex(c1, 30), shadeHex(c1, -30)], p: ['#4e3020', '#6b4423', '#2e1c12'] });
+  const g = c.getContext('2d'), R = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); };
+  for (let k = 0; k < 7; k++) {                                             // stripes on the walls and the roof
+    const x0 = 9 + k * 14; R(x0, 40, 7, 59, c1); R(x0, 40, 1, 59, shadeHex(c1, 25));
+    for (let y = 7; y < 40; y++) { const hw = 8 + (y - 6) * 1.42, l = 56 - hw, sx = l + (hw * 2) * (k / 7), w = (hw * 2) / 14; R(Math.round(sx), y, Math.max(1, Math.round(w)), 1, c1); }
+  }
+  R(9, 39, W - 18, 3, shadeHex(c1, -35)); for (let x = 10; x < W - 10; x += 6) { R(x, 42, 4, 3, quiet ? '#a8a296' : '#e8bf4f'); }   // scalloped trim
+  R(44, 66, 24, 33, '#2a1a14');                                                                 // entrance
+  if (quiet) { R(44, 66, 12, 33, c1); R(56, 66, 12, 33, shadeHex(c1, -15)); R(55, 66, 2, 33, '#2a1a14'); }
+  else { R(42, 64, 8, 35, c1); R(62, 64, 8, 35, c1); R(47, 78, 3, 3, '#e8bf4f'); R(62, 78, 3, 3, '#e8bf4f'); g.fillStyle = 'rgba(255,200,90,.35)'; g.fillRect(50, 70, 12, 29); }
+  R(57, 1, 10, 6, quiet ? '#8a8478' : A.c2); R(57, 1, 10, 1, '#ffffff');                        // pennant
+  if (!quiet) { R(14, 52, 18, 24, '#3b2416'); R(15, 53, 16, 22, A.c1); R(16, 54, 14, 20, '#f6ead0'); const s = actCanvas(id, 0); g.drawImage(s, 0, 0, 48, 64, 17, 55, 12, 16); R(16, 71, 14, 2, A.c1); }   // poster on the tent
+  return c;
+}
+function tentFrameCanvas() {
+  if (WAGON_ART.frame) return WAGON_ART.frame;
+  const c = matSprite(112, 104, a => {
+    a.rect(55, 2, 3, 98, 'wd');                                                                  // center pole
+    [10, 30, 82, 101].forEach(x => a.rect(x, 40, 3, 60, 'wd'));                                  // side poles
+    for (let i = 0; i <= 40; i++) { a.rect(56 - i * 1.15, 6 + i * .85, 2, 2, 'wd'); a.rect(56 + i * 1.15, 6 + i * .85, 2, 2, 'wd'); }   // roof beams
+    a.rect(10, 40, 94, 3, 'wd'); a.rect(10, 70, 94, 2, 'wd');
+  }, { wd: ['#8a5a32', '#a8703f', '#5a3820'] });
+  const g = c.getContext('2d'); g.strokeStyle = '#e8d4a4'; g.lineWidth = 1; g.beginPath(); g.moveTo(57, 4); g.lineTo(6, 100); g.moveTo(57, 4); g.lineTo(108, 100); g.stroke();   // guy ropes
+  return (WAGON_ART.frame = c);
+}
+// the poster (trophy): vintage circus bill, art only; the text is drawn by the page around it
+function posterCanvas(id, torn) {
+  const A = ACTS[id], c = document.createElement('canvas'); c.width = 48; c.height = 66; const g = c.getContext('2d'), R = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); };
+  R(0, 0, 48, 66, '#3b2416'); R(1, 1, 46, 64, '#f2e3c0'); R(3, 3, 42, 60, A.c1);
+  for (let i = 0; i < 12; i++) { g.fillStyle = 'rgba(255,255,255,.07)'; g.beginPath(); g.moveTo(24, 36); g.lineTo(24 + Math.cos(i / 6 * Math.PI) * 60, 36 + Math.sin(i / 6 * Math.PI) * 60); g.lineTo(24 + Math.cos((i + .5) / 6 * Math.PI) * 60, 36 + Math.sin((i + .5) / 6 * Math.PI) * 60); g.fill(); }   // sunburst
+  R(3, 3, 42, 7, A.c2); R(3, 10, 42, 1, '#3b2416'); for (let x = 5; x < 44; x += 4) R(x, 5, 2, 3, A.c1);   // header band
+  g.drawImage(actCanvas(id, 0), 0, 0, 48, 64, 9, 13, 30, 40);
+  R(3, 55, 42, 8, '#f2e3c0'); for (let x = 6; x < 42; x += 3) R(x, 58, 2, 2, A.c1);
+  [[2, 2], [44, 2], [2, 62], [44, 62]].forEach(([x, y]) => R(x, y, 2, 2, '#9aa5b1'));
+  if (torn) { g.clearRect(40, 0, 8, 3); g.clearRect(44, 3, 4, 4); g.clearRect(0, 60, 5, 6); }
+  return c;
+}
+// inside the tent: a sawdust ring under a spotlight, benches all around
+function buildTent() {
+  const M = makeMap(13, 11, 'B'), { box, block, prop } = mapTools(M);
+  box(1, 2, 11, 8, 'r'); M.g[10][6] = 'r';
+  for (let y = 0; y < 11; y++) for (let x = 0; x < 13; x++) if (M.g[y][x] === 'B') M.solid[y][x] = 1;
+  M.g[10][6] = 'r'; M.solid[10][6] = 0;
+  M.warps.push({ x: 6, y: 10, to: 'village', tx: 33, ty: 24 }); M.dark = .28; M.tent = 1;
+  return M;
+}
+
+// ===================== Circus Mañana in the world =====================
+// The weekly boss is an act in the big top. Real tasks still do all the damage; the tent replays your hits,
+// and at 0 HP the act is left staggered until you walk in and FINISH IT.
+const CIRC = () => { const ws = WS(); ws.circ = ws.circ || { hits: {} }; ws.circ.hits = ws.circ.hits || {}; return ws.circ; };
+const STAT_COL = { STR: '#d6453a', INT: '#3f8fe0', CHA: '#f06a9a', DIS: '#4fb84f' };
+const ACT_LINE = {
+  restday: 'The Somnambulist... Don\'t listen to her lullaby. Keep moving, and her song can\'t catch you.',
+  social: 'The Puppeteer is back. Hold on to your friends. He can\'t cut what you keep tying.',
+  doom: 'The Hypnotist... Whatever you do, don\'t look into the spiral. Open a book instead.',
+  takeaway: 'The Feast Master. Those sweets are never free. Cook something real and watch him wilt.',
+  captain: 'The Clockwork Clown. Tick, tock... He wants you to wait until tomorrow. Don\'t.',
+  excuse: 'The Mirror Magician. Every excuse in that mirror looks perfect. Do the thing anyway.'
+};
+const LEGEND = ['Black and red wagons... a calliope playing in the fog... I hoped I would never see them again.',
+  'It\'s Circus Mañana. It travels from valley to valley. Wherever it raises its tent, the laughter fades.',
+  'People stop visiting each other, stop working, stop dreaming. They just... wait for tomorrow.',
+  'I saw Hollowmere after the circus left. Not a single light in a single window.',
+  'No one has ever seen the ringmaster, Señor Mañana. Only his shadow on the tent... and a pair of white gloves.',
+  'His acts feed on the joy you don\'t use. But every real thing you do burns a little of their spell away. Every single one.',
+  'The tent is on the east side of the village. Go, and show them what doing looks like.'];
+function weekHits() { const B = boss(); return S.log.filter(e => wk(e.t) === B.w && B.b.dmg(e) > 0).sort((a, b) => a.t - b.t).map(e => ({ n: B.b.dmg(e), stat: e.stat })); }
+function actState() {                               // shown = HP after the hits you've already landed in the tent; pending = hits waiting to be landed
+  const B = boss(), all = weekHits(), seen = Math.min(CIRC().hits[B.w] || 0, all.length), shown = Math.max(0, B.b.hp - all.slice(0, seen).reduce((a, h) => a + h.n, 0));
+  return Object.assign(B, { A: ACTS[B.b.id], all, seen, shown, pending: !B.won && all.length > seen, staggered: !B.won && shown === 0 && B.left === 0 });
+}
+const trackFor = area => area === 'tent' ? (boss().won ? 'indoor' : 'tent') : TRACK_FOR[area];
+function posterImg(id, cls) { return `<img class="${cls || 'pimg'}" alt="" src="${posterCanvas(id, 1).toDataURL()}">`; }
+function bigCanvasImg(c, z, cls) { const b = document.createElement('canvas'); b.width = c.width * z; b.height = c.height * z; const g = b.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(c, 0, 0, b.width, b.height); return `<img class="${cls || ''}" alt="" src="${b.toDataURL()}">`; }
+
+// ---- Monday: a short note on Home, the warning when you enter the World
+function bossCheck() {
+  if (view !== 'home' || suggOpen || trialK || editId != null || ideaDraft != null || infoId || document.querySelector('.fxtier')) return;
+  if (S.bossSeen === wk()) return; S.bossSeen = wk(); S.bossDay = day(); save();
+  fxCard('fxgloom', `<small class="tpk">MONDAY GLOOMS...</small>${bigCanvasImg(tentCanvas(boss().b.id), 2, 'gtent')}<p>A new act is threatening the village.</p><p class="lbl">Visit the World to face it.</p>`, 'OK', null, 'open');
+}
+function circusReveal(then) {                       // "Señor Mañana presents..." card with this week's act
+  WR.busy = 1; const B = actState(), A = B.A; bossTheme();
+  const r = document.createElement('div'); r.className = 'ovl'; r.setAttribute('role', 'dialog'); r.setAttribute('aria-modal', 'true');
+  r.innerHTML = `<div class="box card bossin"><small class="bnew">SEÑOR MAÑANA PRESENTS</small>${posterImg(B.b.id, 'pbig')}<h3>${A.name.toUpperCase()}</h3><p>${A.line}</p>
+<span class="hpbar big"><i style="width:${Math.round(B.shown / B.b.hp * 100)}%"></i></span><p>${B.shown} / ${B.b.hp} HP</p><p class="lbl">WHAT HURTS IT</p><p>${B.b.long}</p><button>BRING IT ON!</button></div>`;
+  document.body.appendChild(r);
+  const close = () => { r.remove(); bossThemeStop(); WR.busy = 0; then && then(); };
+  r.querySelector('button').onclick = close; r.onclick = e => { if (e.target === r) close(); };
+}
+function circusWarn(then) {                         // later Mondays: a new act takes the stage
+  WR.busy = 1;
+  const o = document.createElement('div'); o.className = 'ovl warn'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true');
+  o.innerHTML = `<div class="warnbar">⚠ WARNING ⚠<br>A NEW ACT<br>TAKES THE STAGE</div>${bigCanvasImg(gloveCanvas(1), 4, 'wglove')}<p class="tap">TAP TO FACE IT</p>`;
+  document.body.appendChild(o); sfx('open');
+  o.onclick = () => { o.remove(); circusReveal(then); };
+}
+// Until you've talked to Orvel about the caravan (the first time, and every Monday), nothing else happens in the village.
+const circusStage = () => { const C = CIRC(); return C.arrived && C.briefed !== wk() ? 'orvel' : C.legend && !C.wagon ? 'wagon' : C.legend && !C.tentSeen ? 'tent' : ''; };   // the first time: Orvel, then the wagon, then inside the tent   // the first time, you also go look at the wagon
+const circusGate = () => !!circusStage();
+const gateLine = () => ({ wagon: 'I should check out that wagon first.', tent: 'I should see what\'s inside that tent first.' })[circusStage()] || 'I should talk to Orvel first.';
+function circusOnEnter() {                          // called when the World opens
+  const C = CIRC(), first = !C.arrived;
+  if (first) return startCinematic();
+  if (circusGate()) setTimeout(() => circusThought(!C.legend), 600);
+}
+function circusThought(first) {
+  if (WR.dlg || WR.busy) return setTimeout(() => circusThought(first), 800);
+  dialog('me', first ? ['What is that scary-looking wagon...?', 'Orvel should know something about this.'] : ['The caravan is back... and there\'s a new act on the poster.', 'Orvel should know something about this.'], () => worldHud());
+}
+function orvelLegend() {                            // the first time: Orvel tells the story, then this week's act is revealed
+  dialog('orvel', LEGEND.slice(), () => { const C = CIRC(); C.legend = 1; C.briefed = wk(); save(); worldHud(); worldEntities();
+    dialog('me', ['It can\'t be that bad. Orvel is probably just a little high on that pipe.', 'Let\'s go check out the wagon.'], () => worldHud()); });
+}
+function checkWagon() {
+  if (circusStage() === 'orvel') return dialog('me', [gateLine()]);
+  if (circusStage() === 'wagon') return dialog(null, ['The wagon creaks, even though there is no wind.', 'Something shifts behind the bars...', 'Two yellow-green eyes blink at you from the dark.', 'A torn notice is nailed to the side: "CIRCUS MAÑANA. TONIGHT: ' + ACTS[boss().b.id].name.toUpperCase() + '."'], () => {
+    dialog('me', ['...Okay. Maybe Orvel wasn\'t joking.', 'Let\'s see what\'s inside that tent.'], () => { CIRC().wagon = 1; save(); worldHud(); worldEntities(); });
+  });
+  return dialog(null, ['The wagon is silent. Something watches you from behind the bars.']);
+}
+function orvelWeekly() {                            // every Monday after that
+  dialog('orvel', ['So you saw it too. The caravan is back.', ACT_LINE[boss().b.id]], () => { CIRC().briefed = wk(); save(); worldHud(); worldEntities(); });
+}
+
+// ---- the tent: replay hits since your last visit
+function circusHint() {                            // walking in: tell what's waiting
+  const B = actState(); if (B.won) return;
+  const n = B.all.length - B.seen;
+  if (n) dialog(null, [`You've got ${n === 1 ? '1 hit' : n + ' hits'} waiting from the things you've done.`, 'Walk up to the act and HIT IT!']);
+  else if (B.staggered) dialog(null, ['The act is staggering under the spotlight...', 'Walk up and FINISH IT!']);
+}
+function circusReplay() {                           // HIT IT: every real thing you did since last time lands, one by one
+  const B = actState(); if (!B.pending) return;
+  const C = CIRC(), all = B.all, fresh = all.slice(B.seen);
+  WR.busy = 1; WR.replay = { list: fresh, i: -1, hp: B.shown, t: performance.now(), pops: [] };
+  const step = () => {
+    const R = WR.replay; if (!R) return; R.i++;
+    if (R.i >= R.list.length) {
+      setTimeout(() => {
+        WR.replay = null; WR.busy = 0; C.hits[B.w] = all.length; save();
+        const n = fresh.length, lines = [`You hit it ${n === 1 ? 'once' : n + ' times'} with the power of doing stuff!`];
+        if (actState().staggered) lines.push('It\'s staggering! FINISH IT!');
+        dialog(null, lines);
+      }, 700);
+      return;
+    }
+    const h = R.list[R.i]; R.hp = Math.max(0, R.hp - h.n); R.flash = performance.now(); R.pops.push({ n: h.n, col: STAT_COL[h.stat] || '#ffffff', t: performance.now(), dx: (R.i % 3 - 1) * 9 });
+    sfx(R.i % 2 ? 'undo' : 'click');
+    setTimeout(step, R.list.length > 8 ? 260 : 480);
+  };
+  setTimeout(step, 450);
+}
+function finishAct() {
+  const B = actState(); if (!B.staggered) return;
+  S.bossWon = S.bossWon || {}; S.bossWon[B.w] = B.b.id; const rw = {}; Object.keys(B.b.rw).forEach(k => rw[k] = gain(k, B.b.rw[k]));
+  checkTrials(); const loot = checkUnlocks(); save(); WR.finish = performance.now(); WR.busy = 1; sfx('tier'); worldShake();
+  setTimeout(() => {
+    WR.busy = 0; worldEntities(); musicFor('tent');
+    const it = ITEMS.find(i => loot.includes(i.id)), n = Object.values(S.bossWon).filter(v => v === B.b.id).length;
+    confetti(GOLD, 90, innerWidth / 2, innerHeight * .4, 13);
+    fxCard('fxboss', `<small class="tpk">ACT DEFEATED!</small>${posterImg(B.b.id, 'pbig')}<h3>${B.A.name.toUpperCase()}</h3><p class="lbl">REWARD</p><p>${rwText(B.b.rw)}</p>
+${it ? `<div class="tpdog"><svg class="cpic" style="width:48px;height:48px" viewBox="0 0 16 16" shape-rendering="crispEdges">${it.ic}</svg><p>LOOT: <b>${it.name}</b></p></div>` : ''}<p class="lbl">${n === 1 ? 'NEW POSTER FOR YOUR COLLECTION' : 'POSTER ×' + n}</p>`, 'VICTORY!', () => {
+      dialog(null, ['The act packs up and vanishes behind the curtain.', 'For a moment, a tall shadow with white gloves watches you from the back of the tent...', '...and then it\'s gone.']);
+    }, null);
+  }, 1300);
+}
+function posterGallery() {
+  const won = Object.values(S.bossWon || {}), o = document.createElement('div'); o.className = 'ovl';
+  o.innerHTML = `<div class="box card pgal" role="dialog" aria-modal="true" aria-label="Poster collection"><small class="tpk">POSTER COLLECTION</small><div class="pgrid">${Object.keys(ACTS).map(id => { const n = won.filter(v => v === id).length;
+    return n ? `<div class="pcell">${posterImg(id)}<b>${ACTS[id].short}</b><small>×${n}</small></div>` : `<div class="pcell none"><span class="pq">?</span><b>???</b><small>not yet</small></div>`; }).join('')}</div>
+<p class="lbl">${new Set(won).size} / 6 ACTS BEATEN</p><button>CLOSE</button></div>`;
+  document.body.appendChild(o); sfx('open'); WR.busy = 1;
+  const close = () => { o.remove(); WR.busy = 0; sfx('click'); }; o.querySelector('button').onclick = close; o.onclick = e => { if (e.target === o) close(); };
+}
+// draw the circus extras on top of the world (fog, gloves, wagon smoke, the act's HP bar, hit numbers...)
+function circusDraw(g, tnow) {
+  const M = WR.maps[WR.cur], B = actState();
+  if (WR.cur === 'village' && CIRC().arrived) {
+    const arr = WR.arrive ? (tnow - WR.arrive) / 1000 : 99, fogA = Math.max(0, Math.min(1, (arr - 6.5) / 2));   // fog and chimney smoke only once the wagon has stopped
+    if (!B.won && fogA > 0) for (let i = 0; i < 9; i++) { const t = tnow / 1000 + i * 2.1, x = (33 + Math.sin(t * .23 + i) * 4.2) * WT, y = (22.4 + Math.cos(t * .17 + i * 1.3) * 2) * WT; g.fillStyle = `rgba(190,185,200,${.13 * fogA})`; g.beginPath(); g.ellipse(x, y, 30, 12, 0, 0, 7); g.fill(); }
+    const wx = 25 * WT + 52 + 6, wy = 22 * WT - 48; if (arr > 6.5) for (let i = 0; i < 4; i++) { const t = ((tnow / 1600) + i / 4) % 1; g.fillStyle = `rgba(120,80,150,${(1 - t) * .45})`; g.beginPath(); g.arc(wx + t * 8 + Math.sin(t * 6 + i) * 2, wy - t * 20, 2 + t * 4, 0, 7); g.fill(); }
+    if (circusStage() === 'tent') { const x = 33 * WT + 8, y = 21 * WT - 50 + Math.round(Math.sin(tnow / 250) * 1.5); g.fillStyle = '#3b2416'; g.fillRect(x - 4, y - 1, 8, 11); g.fillStyle = '#ffd36b'; g.fillRect(x - 3, y, 6, 9); g.fillStyle = '#3b2416'; g.fillRect(x - 1, y + 1, 2, 4); g.fillRect(x - 1, y + 6, 2, 2); }
+    if (circusStage() === 'wagon') { const x = 27 * WT, y = 22 * WT - 58 + Math.round(Math.sin(tnow / 250) * 1.5); g.fillStyle = '#3b2416'; g.fillRect(x - 4, y - 1, 8, 11); g.fillStyle = '#ffd36b'; g.fillRect(x - 3, y, 6, 9); g.fillStyle = '#3b2416'; g.fillRect(x - 1, y + 1, 2, 4); g.fillRect(x - 1, y + 6, 2, 2); }
+    if (!B.won && !(WR.arrive && tnow - WR.arrive < 10000) && (Math.floor(tnow / 1000) % 9 < 2 || (WR.cine && WR.cine.gloves && tnow - WR.cine.gloves < 3000))) { const gl = gloveCanvas(Math.floor(tnow / 250) % 2); g.drawImage(gl, 33 * WT + 1, 21 * WT + 26); }
+  }
+  if (WR.cur === 'tent') {
+    const A = B.A; for (let x = 0; x < M.w * WT; x += 12) { g.fillStyle = (x / 12) % 2 ? A.c1 : A.c2; g.beginPath(); g.moveTo(x, 28); g.lineTo(x + 12, 28); g.lineTo(x + 6, 38 + Math.sin(x + tnow / 700) * 1.5); g.fill(); }   // bunting
+    for (let i = 0; i < 9; i++) { const x = 14 + i * 21 + (i % 2) * 5, y = 8 + (i % 2) * 6; g.fillStyle = 'rgba(30,18,36,.85)'; g.beginPath(); g.arc(x, y, 5, 0, 7); g.fill(); g.fillRect(x - 6, y + 4, 12, 7); if ((Math.floor(tnow / 1700) + i) % 5 === 0) { g.fillStyle = '#ffd36b'; g.fillRect(x - 3, y - 1, 1, 1); g.fillRect(x + 2, y - 1, 1, 1); } }
+    if (Math.floor(tnow / 1000) % 11 < 2 || (WR.finish && tnow - WR.finish < 4000)) { const sh = shadowCanvas(0); g.globalAlpha = .55; g.drawImage(sh, 150, -6, 33, 63); g.globalAlpha = 1; }   // he watches from the back
+    const e = WR.ents.find(x => x.act); if (!e) return;
+    const R = WR.replay, hp = R ? R.hp : B.shown, cx = e.x * WT + 8, top = (e.y + 1) * WT - 70;
+    g.fillStyle = '#1f1a27'; g.fillRect(cx - 21, top - 6, 42, 6); g.fillStyle = '#3a3348'; g.fillRect(cx - 20, top - 5, 40, 4); g.fillStyle = hp ? '#d6453a' : '#8a8478'; g.fillRect(cx - 20, top - 5, Math.round(40 * hp / B.b.hp), 4);
+    if (R) R.pops.forEach(p => { const a = (tnow - p.t) / 900; if (a > 1) return; g.globalAlpha = 1 - a * .8; g.font = "10px 'Press Start 2P', monospace"; g.textAlign = 'center'; const tx = cx + p.dx, ty = top + 18 - a * 26; g.fillStyle = '#1f1a27'; [[-1, 0], [1, 0], [0, -1], [0, 1]].forEach(([u, v]) => g.fillText(p.n, tx + u, ty + v)); g.fillStyle = p.col; g.fillText(p.n, tx, ty); g.globalAlpha = 1; });
+    if (B.pending && !R) { const yb = top - 18 + Math.round(Math.sin(tnow / 250) * 1.5); g.fillStyle = '#3b2416'; g.fillRect(cx - 4, yb - 1, 8, 11); g.fillStyle = '#ffd36b'; g.fillRect(cx - 3, yb, 6, 9); g.fillStyle = '#3b2416'; g.fillRect(cx - 1, yb + 1, 2, 4); g.fillRect(cx - 1, yb + 6, 2, 2); }
+    if (B.staggered && !R) for (let k = 0; k < 3; k++) { const a = tnow / 300 + k * 2.1; g.fillStyle = '#ffd36b'; g.fillRect(Math.round(cx + Math.cos(a) * 12), Math.round(top + 10 + Math.sin(a) * 4), 2, 2); }
+  }
+}
+
+// ---- the intro cinematic: a peaceful village, then the caravan rolls in (first time the circus arrives in a save)
+function startCinematic() {
+  const C = CIRC(); WR.busy = 1; WR.cur = 'village'; WR.p.x = 17.5; WR.p.y = 17.3; WR.p.dir = 1; WR.p.moving = 0; WR.spirit = { x: 16.7, y: 17.6 }; WR.trail = [];
+  worldEntities(); worldHud(); musicFor('village');
+  WR.cine = { t0: performance.now(), gloom: 0, cam: { x: 17.5, y: 17.3 } };
+  const wv = document.getElementById('wv'); ['top', 'bot'].forEach(k => { const d = document.createElement('div'); d.className = 'cbar ' + k; wv.appendChild(d); requestAnimationFrame(() => d.classList.add('on')); });
+  document.body.classList.add('cine');
+  const pan = (x, y, ms, then) => { const c = WR.cine, a = { x: c.cam.x, y: c.cam.y }, t0 = performance.now(); c.pan = { a, b: { x, y }, t0, ms, then }; };
+  const wait = (ms, f) => setTimeout(f, ms);
+  wait(900, () => dialog('me', ['I just love this village.', 'Bjørn shouting encouragement at the gym, Rose\'s cookies cooling in the window, Kai\'s bell every morning...', 'Everyone here looks out for each other. It\'s the kind of place where people actually show up.'], () => {
+    WR.cine.gloomTo = .32; SND.slowdown(2.6);
+    wait(2400, () => { SND.play('tent'); WR.cine.fog = 1;
+      pan(29.5, 20.5, 2600, () => {
+        C.arrived = 1; save(); WR.arrive = performance.now(); worldEntities(); [0, 1300, 2600, 3900, 5200].forEach(ms => wait(ms, () => SND.sfx('creak')));
+        [6900, 7250, 7600, 8050, 8400, 8750].forEach(ms => wait(ms, () => SND.sfx('hammer')));
+        wait(9200, () => SND.sfx('puff')); wait(10300, () => { WR.cine.gloves = performance.now(); SND.sfx('laugh'); });
+        wait(13200, () => pan(17.5, 17.3, 2000, () => dialog('me', ['What is that horrid thing...?', 'Orvel should know something about this.'], endCinematic)));
+      });
+    });
+  }));
+}
+function endCinematic() {
+  const c = WR.cine; if (!c) return; c.gloomTo = 0; c.ending = performance.now();
+  document.querySelectorAll('#wv .cbar').forEach(d => { d.classList.remove('on'); setTimeout(() => d.remove(), 600); });
+  setTimeout(() => { WR.cine = null; WR.busy = 0; document.body.classList.remove('cine'); musicFor('village'); worldHud(); }, 700);
+}
+function cineTick(now) {
+  const c = WR.cine; if (!c) return;
+  if (c.pan) { const k = Math.min(1, (now - c.pan.t0) / c.pan.ms), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; c.cam.x = c.pan.a.x + (c.pan.b.x - c.pan.a.x) * e; c.cam.y = c.pan.a.y + (c.pan.b.y - c.pan.a.y) * e; if (k >= 1) { const f = c.pan.then; c.pan = null; f && f(); } }
+  const to = c.gloomTo || 0; c.gloom += (to - c.gloom) * .02;
+}
+
 // ---- runtime
 let WR = null;   // { maps, cur, p:{x,y,dir,moving,anim}, spirit:{x,y}, trail:[], joy, keys, raf, dlg, hint }
-const W_MAPS = () => ({ village: buildVillage(), tower: buildTower(), cave: buildCave(), forest: buildForest() });
+const W_MAPS = () => ({ village: buildVillage(), tower: buildTower(), cave: buildCave(), forest: buildForest(), tent: buildTent() });
 function worldView() {
   return `<div id="wv"><canvas id="wc"></canvas>
 <div id="whud"><b id="warea"></b><span id="wquest"></span></div>
@@ -2189,10 +2633,12 @@ function worldStart() {
   WR.cur = pos.map; WR.p = { x: pos.x, y: pos.y, dir: 1, moving: 0, t: 0 }; WR.spirit = { x: pos.x - .8, y: pos.y + .2 }; WR.trail = [];
   WR.hero = heroCanvas(); WR.frames = {}; WR.heroKey = JSON.stringify([gear(), Lv('STR'), Lv('INT'), Lv('CHA')]);   // walk/run frames are redrawn with the new outfit
   const cv = document.getElementById('wc'); WR.cv = cv; WR.g = cv.getContext('2d');
-  worldResize(); worldBindInput(); worldEntities(); worldHud(); musicFor(WR.cur);
+  Object.keys(WQ).forEach(id => { if (wq(id) === 1 && !storyReady(id)) { ws.q[id] = 0; if (id === 'rose') ws.f.cookies = 0; } });
+  worldResize(); worldBindInput(); worldEntities(); worldHud(); musicFor(WR.cur); circusOnEnter();
   cancelAnimationFrame(WR.raf); WR.last = performance.now(); WR.raf = requestAnimationFrame(worldTick);
 }
-function worldStop() { if (!WR) return; cancelAnimationFrame(WR.raf); WR.raf = 0; WR.alive = 0; WR.dlg = null; const ws = WS(); ws.pos = { map: WR.cur, x: +WR.p.x.toFixed(2), y: +WR.p.y.toFixed(2) }; save(); }
+function worldStop() { if (!WR) return; SND.stop(3);   // the music fades out slowly when you leave the World
+  if (WR.cine) { WR.cine = null; WR.busy = 0; document.body.classList.remove('cine'); } cancelAnimationFrame(WR.raf); WR.raf = 0; WR.alive = 0; WR.dlg = null; const ws = WS(); ws.pos = { map: WR.cur, x: +WR.p.x.toFixed(2), y: +WR.p.y.toFixed(2) }; save(); }
 function worldResize() {
   const cv = WR.cv, r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
   cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr);
@@ -2217,6 +2663,14 @@ function worldEntities() {
     if (np.ask && !np.feather) E.push({ id: 'feather', obj: 'feather', x: 24, y: 4, pick: 1 });
     const [gx, gy] = M.thicketGap; M.solid[gy][gx] = f.glade ? 0 : 1; M.props.forEach(q => { if (q.type === 'thicket' && q.x === gx && q.y === gy) q.hidden = !!f.glade; });
   }
+  if (WR.cur === 'village') {                                    // Circus Mañana: tent + wagon (after it has arrived), the poster board
+    const V = WR.maps.village, on = !!CIRC().arrived, B = boss(); V.props = V.props.filter(q => !q.circ);
+    if (on) V.props.push({ type: 'bigtop', act: B.b.id, quiet: B.won ? 1 : 0, x: 30, y: 21, circ: 1 }, { type: 'wagon', x: 25, y: 22, circ: 1 });
+    for (let j = 0; j < 3; j++) for (let i = 0; i < 6; i++) V.solid[21 + j][30 + i] = on && !(i === 3 && j === 2) ? 1 : 0;
+    for (let i = 0; i < 4; i++) V.solid[22][25 + i] = on ? 1 : 0;
+    const bd = V.props.find(q => q.type === 'board'); if (bd) bd.got = [...new Set(Object.values(S.bossWon || {}))];
+  }
+  if (WR.cur === 'tent' && !boss().won) E.push({ id: 'act', act: 1, x: 6, y: 4, noShadow: 1 });
   const sp = wrenSpot(); if (sp.map === WR.cur) E.push({ id: 'wren', npc: 1, x: sp.x, y: sp.y });
   if (WR.cur === 'village' && pipHere()) E.push({ id: 'pip', npc: 1, x: 22, y: 18 });
   if (WR.cur === 'village') {                                    // Wren's plot / house by the forest road
@@ -2261,7 +2715,7 @@ function worldTick(now) {
   const L = Math.hypot(vx, vy); if (L > 1) { vx /= L; vy /= L; }
   p.moving = L > 0.01;
   if (p.moving) {
-    const sp = 4.6 * dt, nx = p.x + vx * sp, ny = p.y + vy * sp, hw = .3;
+    const sp = 4.6 * dt, nx = p.x + vx * sp, ny = p.y + vy * sp, hw = .3, px0 = p.x, py0 = p.y;
     const ok = (x, y) => !blocked(M, x - hw, y - .15) && !blocked(M, x + hw, y - .15) && !blocked(M, x - hw, y + .25) && !blocked(M, x + hw, y + .25);
     if (ok(nx, p.y)) p.x = nx; if (ok(p.x, ny)) p.y = ny;
     if (Math.abs(vx) > Math.abs(vy)) p.dir = vx > 0 ? 2 : 3; else p.dir = vy > 0 ? 1 : 0;
@@ -2271,24 +2725,27 @@ function worldTick(now) {
     WR.lastFr = fr; if (WR.trail.length > 40) WR.trail.shift();
     worldGates(M);
     if (WR.cur === 'forest' && p.x < 9 && p.y > 16 && !WS().gift.glade) { NS('wren'); WS().gift.glade = 1; checkUnlocks(); save(); sfx('tier'); setTimeout(() => giftCard('NEW PLACE', 'Firefly glade', `<svg class="cpic" viewBox="0 0 44 44" shape-rendering="crispEdges">${runs(placeBg('glade'))}</svg>`, 'WREN\'S SECRET SPOT'), 200); }
-    const w = M.warps.find(w => w.x === Math.floor(p.x) && w.y === Math.floor(p.y + .1));
-    if (w && (w.to !== 'tower' || WS().f.door)) worldWarp(w);
+    let w = M.warps.find(w => w.x === Math.floor(p.x) && w.y === Math.floor(p.y + .1));
+    if (w && circusGate() && w.to !== 'village' && !(w.to === 'tent' && circusStage() === 'tent')) { p.x = px0; p.y = py0; w = null; if (!WR.gateSaid || performance.now() - WR.gateSaid > 4000) { WR.gateSaid = performance.now(); dialog('me', [gateLine()]); } }
+    if (w && (w.to !== 'tower' || WS().f.door) && (w.to !== 'tent' || CIRC().arrived)) worldWarp(w);
   }
   // Spirit trots after you
   if (WR.trail.length > 14) { const [tx, ty] = WR.trail[WR.trail.length - 14]; WR.spirit.x += (tx - WR.spirit.x) * Math.min(1, dt * 6); WR.spirit.y += (ty - WR.spirit.y) * Math.min(1, dt * 6); }
   // refresh the hero if gear/levels changed (e.g. after a reward)
   const hk = JSON.stringify([gear(), Lv('STR'), Lv('INT'), Lv('CHA')]); if (hk !== WR.heroKey) { WR.heroKey = hk; WR.hero = heroCanvas(); WR.frames = {}; }
+  if (WR.cine) cineTick(now);
   worldNear(); worldDraw(); WR.raf = requestAnimationFrame(worldTick);
 }
 function worldWarp(w) {
   WR.busy = 1; const cv = WR.cv; cv.style.transition = 'opacity .18s'; cv.style.opacity = 0;
-  musicFor(w.to); setTimeout(() => { WR.cur = w.to; WR.p.x = w.tx + .5; WR.p.y = w.ty + (w.to === 'village' ? .3 : -.2); WR.spirit = { x: WR.p.x - .6, y: WR.p.y }; WR.trail = []; worldEntities(); worldHud(); cv.style.opacity = 1; setTimeout(() => { WR.busy = 0; }, 150); }, 190);
+  musicFor(w.to); setTimeout(() => { WR.cur = w.to; WR.p.x = w.tx + .5; WR.p.y = w.ty + (w.to === 'village' ? .3 : -.2); WR.spirit = { x: WR.p.x - .6, y: WR.p.y }; WR.trail = []; worldEntities(); worldHud(); cv.style.opacity = 1; setTimeout(() => { WR.busy = 0; if (w.to === 'tent') { const first = circusStage() === 'tent', done = () => { if (first) { CIRC().tentSeen = 1; save(); worldHud(); dialog('me', ['So that\'s what Orvel meant...', 'Every real thing I do out there will hurt it. Time to get to work.']); } };
+          if (CIRC().revealed !== wk() && !boss().won) { CIRC().revealed = wk(); save(); circusReveal(done); } else done(); } }, 150); }, 190);
 }
 // stepping onto the steep stairs needs Discipline
 function worldGates(M) {
   if (WR.cur !== 'village') return; const p = WR.p, tx = Math.floor(p.x), ty = Math.floor(p.y);
-  if (M.g[ty] && M.g[ty][tx] === 'M' && ty === 7 && p.y > 7.3) {
-    if (Lv('DIS') < WQ.kai.req) { p.y = 8.25; dialog('kai', ['The stairs are steep and long...', 'Your legs need more stamina.']); }
+  if (p.y < 8 && p.x > 12 && p.x < 28 && wq('kai') === 0) {
+    p.y = 8.25; if (!WR.kaiSaid || performance.now() - WR.kaiSaid > 3000) { WR.kaiSaid = performance.now(); dialog('kai', ['The way to the shrine is not open to everyone.', 'When you are ready, I will tell you.']); }
   }
 }
 // ---- what can you interact with right now?
@@ -2297,14 +2754,18 @@ function worldNear() {
   let best = null, bd = 1.35;
   WR.ents.forEach(e => { const d = Math.hypot(e.x + .5 - fx, e.y + .5 - fy) * .7 + Math.hypot(e.x + .5 - p.x, e.y + .6 - p.y) * .3; if (d < bd) { bd = d; best = e; } });
   if (WR.cur === 'tower' && Math.hypot(5.5 - p.x, 3.7 - p.y) < 1.3 && !best) best = { id: 'table' };
+  if (WR.cur === 'village' && Math.hypot(23 - p.x, 15.2 - p.y) < 1.4 && !best) best = { id: 'board' };
+  if (WR.cur === 'village' && CIRC().arrived && Math.hypot(27 - p.x, 23.2 - p.y) < 2.3 && !best) best = { id: 'wagon' };
   WR.near = best;
   const b = document.getElementById('wact'); if (!b) return;
-  const lab = !best ? '' : best.npc ? 'TALK' : best.id === 'boulder' ? 'PUSH' : best.id === 'runedoor' ? 'READ' : best.id === 'bell' ? 'RING' : best.pick ? 'TAKE' : 'LOOK';
+  const lab = !best ? '' : best.act ? (() => { const B = actState(); return B.pending ? 'HIT IT' : B.staggered ? 'FINISH IT' : 'LOOK'; })() : best.id === 'board' || best.id === 'wagon' ? 'LOOK' : best.npc ? 'TALK' : best.id === 'boulder' ? 'PUSH' : best.id === 'runedoor' ? 'READ' : best.id === 'bell' ? 'RING' : best.pick ? 'TAKE' : 'LOOK';
   if (b.textContent !== lab) b.textContent = lab; b.hidden = !best || !!WR.dlg;
 }
 function worldAct() {
   const e = WR.near; if (!e || WR.dlg || WR.busy) return; const ws = WS(), f = ws.f;
   if (e.npc) return talk(e.id);
+  if (e.id === 'wagon') return checkWagon();
+  if (circusGate()) return dialog('me', [gateLine()]);
   if (e.id === 'boulder') {
     if (f.boulder) return dialog(null, ['The boulder rests to the side now.']);
     if (Lv('STR') < WQ.bjorn.req) return dialog(null, ['You push with everything you have...', 'It won\'t budge. Maybe with a bit more strength...']);
@@ -2320,17 +2781,51 @@ function worldAct() {
   }
   if (e.id === 'glasses') { ws.q.orvel = 2; save(); sfx('ok'); worldEntities(); worldHud(); return dialog(null, ['A pair of round golden glasses!', 'Orvel will be happy to see these again.']); }
   if (e.id === 'dumbbell') { ws.q.bjorn = 2; save(); sfx('ok'); worldEntities(); worldHud(); return dialog(null, ['A shiny golden dumbbell, heavier than it looks!', 'Time to bring it back to Bjørn.']); }
+  if (e.act) { const B = actState(); if (B.pending) return circusReplay(); if (B.staggered) return finishAct(); return dialog(null, [B.A.name + ': ' + B.shown + ' / ' + B.b.hp + ' HP. ' + B.A.line, 'What hurts it: ' + B.b.long]); }
+  if (e.id === 'board') return posterGallery();
   if (e.id === 'toolbox') { NS('wren').box = 1; save(); sfx('ok'); worldEntities(); worldHud(); return dialog(null, ['A red toolbox, full of well-loved tools.', 'This must be Wren\'s!']); }
   if (e.id === 'feather') { NS('pip').feather = 1; save(); sfx('ok'); worldEntities(); worldHud(); return dialog(null, ['A long blue feather, caught on a branch.', 'Pip will want this back next time he\'s in town.']); }
   if (e.id === 'table') return dialog(null, ['Old Orvel\'s desk. Star charts, scribbled notes... and a cold cup of tea.']);
 }
+// ---- mentor story quests only show up once you can actually do them
+const storyReady = id => !!WQ[id] && Lv(WQ[id].stat) >= WQ[id].req;
+const storyOpen = id => wq(id) === 0 && storyReady(id) && didToday();       // a story quest waiting to be offered
+const TEASE = {
+  bjorn: 'Some fool rolled a boulder in front of the cave. One day someone strong enough will move it...',
+  orvel: 'My tower door is sealed with runes, and I can\'t read them without my glasses. A sharp young mind could, someday...',
+  rose: 'The fisherman by the pond seems so lonely. It would take a warm heart to reach him...',
+  kai: 'The stairs to the shrine are long. Only a disciplined climber reaches the bell.'
+};
+const HINT = {
+  bjorn: 'Bjørn has been pacing by the gym all day. I think he wants to ask you something.',
+  orvel: 'Old Orvel keeps squinting at his tower door. He might need your help.',
+  rose: 'Granny Rose was asking for you. Something about cookies?',
+  kai: 'Master Kai looked up at the shrine and said your name. Strange, isn\'t it?'
+};
+function extraLines(id) {                          // once a day per person: a teaser (mentor, not ready yet) or a hint about someone else's story quest
+  const ws = WS(); ws.tdays = ws.tdays || {}; if (ws.tdays[id] === day()) return [];
+  let out = [];
+  if (TEASE[id] && wq(id) === 0 && !storyReady(id)) out = [TEASE[id]];
+  else if (!(WQ[id] && storyOpen(id))) { const other = Object.keys(WQ).find(k => k !== id && storyOpen(k)); if (other) out = [HINT[other]]; }
+  if (out.length) { ws.tdays[id] = day(); save(); }
+  return out;
+}
 function talk(id) {
+  if (circusStage() === 'wagon') return dialog(id, [id === 'orvel' ? 'Go on, see it for yourself. But don\'t get too close to those bars.' : 'Are you checking out the wagon?']);
+  if (circusStage() === 'tent') return dialog(id, [id === 'orvel' ? 'Go and look inside the tent. Know your enemy.' : 'You\'re not really going inside that tent... are you?']);
+  if (circusGate()) {
+    if (id === 'orvel') return CIRC().legend ? orvelWeekly() : orvelLegend();
+    return dialog(id, CIRC().legend ? ['The caravan is back...', 'Orvel should know something about this.'] : ['Did you see that creepy wagon?', 'Orvel should know something about this. He knows all the old stories.']);
+  }
+  WR.pre = { id, lines: extraLines(id) }; try { return talkInner(id); } finally { WR.pre = null; }
+}
+function talkInner(id) {
   if (NEWC[id]) return talkNew(id);
   const ws = WS(), s = wq(id), Q = WQ[id];
   if (WQ[id] && s !== 2) {                   // real-life quests come before story chatter, story hand-ins come first of all
     const t = rlTask(id);
     if (t && t.done) return rlReport(id, t);
-    if (!(s === 0 && didToday())) {
+    if (!(s === 0 && storyOpen(id))) {
       const off = rlOffer(id), st = WQ[id].stat;
       if (off) return dialog(id, [mentorSmallTalk(id), 'I have a task for you. Not here... out there, in your real life:', '"' + off[0] + '"', `Do it, then come back and tell me. +${off[1] + 1} ${NAMES[st][0] + NAMES[st].slice(1).toLowerCase()}.`], null,
         [{ label: 'ACCEPT', fn: () => rlAccept(id, off) }, { label: 'MAYBE LATER', fn: () => dialog(id, ['No rush. I\'ll be right here.']) }]);
@@ -2346,12 +2841,13 @@ function talk(id) {
     return dialog('fisher', ['Cookies? From Rose? For... me?', 'Nobody has done something like that for me in years.', 'Thank you. Truly. Tell her I said hi.']);
   }
   if (s === 0) {
+    if (!storyReady(id)) return dialog(id, [mentorSmallTalk(id)]);
     if (!didToday()) return dialog(id, [mentorSmallTalk(id), 'Come back after you\'ve done something in real life today. Then we\'ll talk adventure.']);
     const intro = {
-      bjorn: ['HEY! You look strong! ...Well, getting there.', 'My lucky dumbbell rolled into the cave, and now a boulder blocks the way.', 'Think you can push it? Come back when you\'re strong enough.'],
+      bjorn: ['HEY! You look strong! ...Well, getting there.', 'My lucky dumbbell rolled into the cave, and now a boulder blocks the way.', 'You look strong enough now. Think you can push it?'],
       orvel: ['Oh! A visitor! Have you seen my glasses? No? Hmm...', 'I left them in my tower, but I sealed the door with runes. And I can\'t read the runes without my glasses!', 'If you can read them, you\'ll find my glasses inside, dear friend.'],
-      rose: ['Hello, sweetheart! Would you do an old lady a favor?', 'The fisherman by the pond is always so lonely. I baked him some cookies.', 'He\'s shy, though. It takes a warm heart to reach him.'],
-      kai: ['...', 'At the top of these stairs hangs the morning bell.', 'Climb them and ring it. The climb asks for discipline.']
+      rose: ['Hello, sweetheart! Would you do an old lady a favor?', 'The fisherman by the pond is always so lonely. I baked him some cookies.', 'He\'s shy, though. But you have the warmest heart in the village. He\'ll open up to you.'],
+      kai: ['...', 'At the top of these stairs hangs the morning bell.', 'You are ready now. Climb them and ring it.']
     }[id];
     ws.q[id] = 1; if (id === 'rose') ws.f.cookies = 1; save(); worldHud();
     return dialog(id, intro.concat(['QUEST: ' + Q.goal]));
@@ -2389,15 +2885,27 @@ function questReward(id) {
   const r = questRewardInfo(id); sfx('tier'); confetti(GOLD, 90, innerWidth / 2, innerHeight * .4, 13);
   fxCard('', `<small class="tpk">QUEST COMPLETE!</small><h3>${WQ[id].name}</h3>${r.pic}<p class="lbl">NEW ${r.kind}</p><p>${r.name}</p>`, 'AWESOME!', null);
 }
+// a big golden badge with light rays and sparkles: this is a story quest, not a daily task
+function storyBadge(g, x, y, ch, tnow) {
+  g.save(); g.translate(x, y + 7); g.globalAlpha = .35 + .2 * Math.sin(tnow / 300); g.fillStyle = '#fff1a8';
+  for (let i = 0; i < 8; i++) { g.rotate(Math.PI / 4); g.fillRect(-1, -14 - (i % 2) * 2, 2, 6); } g.restore();
+  g.fillStyle = '#3b2416'; g.fillRect(x - 6, y - 1, 12, 16); g.fillRect(x - 7, y, 14, 14);
+  g.fillStyle = '#e8bf4f'; g.fillRect(x - 5, y, 10, 14); g.fillRect(x - 6, y + 1, 12, 12); g.fillStyle = '#fff1a8'; g.fillRect(x - 5, y, 10, 2); g.fillRect(x - 5, y, 2, 6);
+  g.fillStyle = '#3b2416';
+  if (ch === '!') { g.fillRect(x - 1, y + 2, 3, 6); g.fillRect(x - 1, y + 10, 3, 2); }
+  else { g.fillRect(x - 3, y + 2, 6, 2); g.fillRect(x + 2, y + 3, 2, 3); g.fillRect(x - 1, y + 6, 3, 2); g.fillRect(x - 1, y + 10, 3, 2); }
+  const ph = Math.floor(tnow / 160) % 6, sp = [[-9, -3], [9, 2], [-8, 12], [10, 10], [0, -6], [-11, 5]][ph]; g.fillStyle = '#ffffff'; g.fillRect(x + sp[0], y + sp[1] - 1, 1, 3); g.fillRect(x + sp[0] - 1, y + sp[1], 3, 1);
+}
 // ---- dialog box
 function dialog(who, lines, then, choices) {
+  if (WR.pre && WR.pre.id === who && WR.pre.lines.length) { lines = WR.pre.lines.concat(lines); WR.pre = null; }
   WR.dlg = { who, lines: lines.slice(), then, choices }; WR.joy = null; const j = document.getElementById('wjoy'); if (j) j.hidden = true; showDlg();
 }
 function showDlg() {
   const box = document.getElementById('wdlg'), d = WR.dlg; if (!box || !d) return;
   const port = box.querySelector('.wport'); port.innerHTML = '';
-  if (d.who) { const c = npcCanvas(d.who), big = document.createElement('canvas'); big.width = c.width * 3; big.height = c.height * 3; const g = big.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(c, 0, 0, big.width, big.height); port.appendChild(big); port.hidden = false; } else port.hidden = true;
-  box.querySelector('b').textContent = d.who ? ({ bjorn: 'BIG BJØRN', orvel: 'OLD ORVEL', rose: 'GRANNY ROSE', kai: 'MASTER KAI', fisher: 'FISHERMAN', wren: 'WREN', pip: 'PIP THE BARD' }[d.who]) : '';
+  if (d.who) { const c = d.who === 'me' ? heroCanvas() : npcCanvas(d.who), big = document.createElement('canvas'); big.width = c.width * 3; big.height = c.height * 3; const g = big.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(c, 0, 0, big.width, big.height); port.appendChild(big); port.hidden = false; } else port.hidden = true;
+  box.querySelector('b').textContent = d.who ? ({ bjorn: 'BIG BJØRN', orvel: 'OLD ORVEL', rose: 'GRANNY ROSE', kai: 'MASTER KAI', fisher: 'FISHERMAN', wren: 'WREN', pip: 'PIP THE BARD', me: 'YOU' }[d.who]) : '';
   const hz = box.querySelector('.whearts'), fh = d.who && typeof frHearts === 'function' ? frHearts(d.who) : null;
   hz.innerHTML = fh ? Array.from({ length: fh.max }, (_, i) => heartSvg(i < fh.n, d.popHeart && i === fh.n - 1)).join('') : ''; d.popHeart = 0;
   const t = d.lines[0], pe = box.querySelector('p'), quest = t.startsWith('QUEST:'); box.classList.toggle('quest', quest || t.startsWith('"')); box.hidden = false;
@@ -2413,10 +2921,11 @@ const heartSvg = (on, pop) => `<svg viewBox="0 0 7 6" shape-rendering="crispEdge
 function dlgNext() { if (WR.typing && WR.typing.busy()) { WR.typing(); return; } const d = WR.dlg; if (!d) return; if (d.choices && d.lines.length === 1) return; d.lines.shift(); if (d.lines.length) return showDlg(); WR.dlg = null; document.getElementById('wdlg').hidden = true; if (d.then) setTimeout(d.then, 150); }
 function worldHud() {
   const a = document.getElementById('warea'), q = document.getElementById('wquest'); if (!a) return;
-  a.textContent = { village: 'VILLAGE', tower: "ORVEL'S TOWER", cave: 'THE CAVE', forest: 'WHISPERWOOD' }[WR.cur];
+  a.textContent = { village: 'VILLAGE', tower: "ORVEL'S TOWER", cave: 'THE CAVE', forest: 'WHISPERWOOD', tent: 'CIRCUS MAÑANA' }[WR.cur];
   const act = Object.keys(WQ).find(id => wq(id) === 1 || wq(id) === 2), nw = NS('wren'), np = NS('pip');
   const ng = nw.ask && nw.met == null ? (nw.box ? 'Bring the toolbox back to Wren' : 'Find Wren\'s toolbox in Whisperwood') : np.ask && !np.featherBack ? (np.feather ? 'Bring the feather to Pip' : 'Find Pip\'s blue feather in Whisperwood') : '';
-  q.textContent = act ? '► ' + (wq(act) === 1 ? WQ[act].goal : WQ[act].back) : ng ? '► ' + ng : '';
+  const st = circusStage(), cg = st === 'tent' ? 'Go inside the tent' : st === 'wagon' ? 'Check out the wagon' : st ? (CIRC().legend ? 'Talk to Orvel about the caravan' : 'Ask Orvel about the strange wagon') : '';
+  q.textContent = cg ? '► ' + cg : act ? '► ' + (wq(act) === 1 ? WQ[act].goal : WQ[act].back) : ng ? '► ' + ng : '';
 }
 function worldShake() { const cv = WR.cv; cv.animate && cv.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(-4px,2px)' }, { transform: 'translate(4px,-2px)' }, { transform: 'translate(0,0)' }], { duration: 300 }); }
 function bellSound() { sfx('bellRing'); }
@@ -2424,23 +2933,40 @@ function bellSound() { sfx('bellRing'); }
 function worldDraw() {
   const g = WR.g, cv = WR.cv, sc = WR.sc, M = WR.maps[WR.cur], p = WR.p;
   const vw = cv.width / sc, vh = cv.height / sc;
-  let cx = p.x * WT - vw / 2, cy = p.y * WT - vh / 2;
+  const fx = WR.cine ? WR.cine.cam.x : p.x, fy = WR.cine ? WR.cine.cam.y : p.y;
+  let cx = fx * WT - vw / 2, cy = fy * WT - vh / 2;
   cx = M.w * WT <= vw ? (M.w * WT - vw) / 2 : Math.max(0, Math.min(M.w * WT - vw, cx));
   cy = M.h * WT <= vh ? (M.h * WT - vh) / 2 : Math.max(0, Math.min(M.h * WT - vh, cy));
   cx = Math.round(cx * sc) / sc; cy = Math.round(cy * sc) / sc;
-  g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = WR.cur === 'cave' ? '#0c0910' : WR.cur === 'tower' ? '#1a1630' : '#2f6b2a'; g.fillRect(0, 0, cv.width, cv.height);
+  g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = WR.cur === 'cave' ? '#0c0910' : WR.cur === 'tower' ? '#1a1630' : WR.cur === 'tent' ? '#0e0810' : '#2f6b2a'; g.fillRect(0, 0, cv.width, cv.height);
   g.setTransform(sc, 0, 0, sc, -cx * sc, -cy * sc); g.imageSmoothingEnabled = false;
   g.drawImage(M.bg, 0, 0);
   const draws = [], shadow = (x, y, rx) => { g.fillStyle = 'rgba(20,40,10,.24)'; g.beginPath(); g.ellipse(x, y, rx, 3, 0, 0, 7); g.fill(); };
-  M.props.forEach(q => { if (q.hidden) return; const a = propCanvas(q); if (!a.c) return; const x = q.x * WT - a.ax, y = q.y * WT - a.ay;
+  M.props.forEach(q => { if (q.hidden) return; const a = propCanvas(q); if (!a.c) return; let ox = 0, oy = 0, art = a; if (q.circ && WR.arrive) { const at = (performance.now() - WR.arrive) / 1000;
+      if (q.type === 'wagon') { const d = Math.max(0, 1 - at / 6.5) ** 2 * 15 * WT; ox = Math.round(d); if (d > 0) { art = { c: wagonCanvas(0, d / 10), ax: a.ax, ay: a.ay }; oy = Math.round(Math.abs(Math.sin(d / 7))); } }
+      if (q.type === 'bigtop') {
+        if (at < 6.8) return;
+        if (at < 9.2) { const fr = tentFrameCanvas(), k = Math.min(1, (at - 6.8) / 1.8), hgt = Math.round(fr.height * k); draws.push({ z: q.y * WT - a.ay + fr.height, c: fr, x: q.x * WT - a.ax, y: q.y * WT - a.ay + fr.height - hgt, clipH: hgt }); return; }
+        if (at < 10) { const k = (at - 9.2) / .8; for (let i = 0; i < 7; i++) { g.fillStyle = `rgba(230,225,235,${(1 - k) * .8})`; g.beginPath(); g.arc(33 * WT + Math.cos(i) * (20 + k * 30), 21 * WT + Math.sin(i * 1.7) * (10 + k * 14), 10 + k * 8, 0, 7); g.fill(); } }
+      } } const x = q.x * WT - a.ax + ox, y = q.y * WT - a.ay - oy;
     if (x > cx + vw + 64 || y > cy + vh + 64 || x + a.c.width < cx - 64 || y + a.c.height < cy - 64) return;
     if (q.type === 'lily' || q.type === 'bridge' || q.type === 'flowers') { g.drawImage(a.c, x, y); return; }   // flat on the ground: you walk over them
     if (['tree', 'pine', 'bush', 'house', 'tower', 'well', 'rock'].includes(q.type)) shadow(x + a.ax + (q.type === 'house' ? q.w * 8 : q.type === 'tower' ? 40 : q.type === 'well' ? 16 : 8), y + a.c.height - 2, q.type === 'house' ? q.w * 8 + 4 : q.type === 'tower' ? 44 : q.type === 'well' ? 18 : 9);
-    draws.push({ z: y + a.c.height, c: a.c, x, y }); });
+    draws.push({ z: y + a.c.height + oy, c: art.c, x, y }); });
   const tnow = performance.now();
   WR.ents.forEach(e => {
-    const c = e.npc ? npcCanvas(e.id) : itemCanvas(e.obj), bob = e.pick ? Math.round(Math.sin(tnow / 300) * 1.5) : 0;
-    const x = Math.round(e.x * WT + 8 - c.width / 2), y = Math.round((e.y + 1) * WT - c.height - (e.lift || 0)) + bob;
+    const c = e.act ? actCanvas(boss().b.id, Math.floor(tnow / 520) % 2) : e.npc ? npcCanvas(e.id) : itemCanvas(e.obj), bob = e.pick ? Math.round(Math.sin(tnow / 300) * 1.5) : 0;
+    let x = Math.round(e.x * WT + 8 - c.width / 2), y = Math.round((e.y + 1) * WT - c.height - (e.lift || 0)) + bob;
+    if (e.act) {                                                   // the act: hit flashes and shakes, staggered wobble, the finishing spin
+      const R = WR.replay, fl = R && R.flash && tnow - R.flash < 180, st = actState().staggered && !actState().pending && !R, fin = WR.finish && tnow - WR.finish < 1300;
+      shadow(e.x * WT + 8, (e.y + 1) * WT - 2, 14);
+      g.save(); g.translate(x + c.width / 2 + (fl ? (Math.random() * 4 - 2) : 0), y + c.height);
+      if (st) { g.rotate(Math.sin(tnow / 260) * .12); g.translate(0, 4); }
+      if (fin) { const a = (tnow - WR.finish) / 1300; g.rotate(a * 9); g.scale(1 - a, 1 - a); g.globalAlpha = 1 - a; }
+      g.drawImage(c, -c.width / 2, -c.height);
+      if (fl) { g.globalCompositeOperation = 'source-atop'; g.globalAlpha = .7; g.fillStyle = '#ffffff'; g.fillRect(-c.width / 2, -c.height, c.width, c.height); }
+      g.restore(); return;
+    }
     if (!e.noShadow && !e.flat) shadow(e.x * WT + 8, (e.y + 1) * WT - 2, c.width / 2.6);
     draws.push({ z: e.flat ? (e.y + 1) * WT - 20 : (e.y + 1) * WT, c, x, y, e });
   });
@@ -2451,12 +2977,15 @@ function worldDraw() {
   (WR.dust || []).forEach(d => { d.t += 1 / 60; const a = Math.max(0, 1 - d.t / .4), r = 1.5 + d.t * 7; g.fillStyle = `rgba(240,230,210,${a * .7})`; g.beginPath(); g.arc(d.x * WT, d.y * WT, r, 0, 7); g.fill(); }); WR.dust = (WR.dust || []).filter(d => d.t < .4);
   shadow(p.x * WT, p.y * WT + 6, hc.width / 2.8);
   draws.push({ z: p.y * WT + 6, c: hc, x: Math.round(p.x * WT - hc.width / 2), y: Math.round(p.y * WT + 7 - hc.height - hb), flip: flipH });
-  draws.sort((a, b) => a.z - b.z).forEach(d => { if (d.flip) { g.save(); g.translate(d.x + d.c.width, d.y); g.scale(-1, 1); g.drawImage(d.c, 0, 0); g.restore(); } else g.drawImage(d.c, d.x, d.y); });
+  draws.sort((a, b) => a.z - b.z).forEach(d => { if (d.clipH != null) { if (d.clipH > 0) g.drawImage(d.c, 0, d.c.height - d.clipH, d.c.width, d.clipH, d.x, d.y, d.c.width, d.clipH); return; } if (d.flip) { g.save(); g.translate(d.x + d.c.width, d.y); g.scale(-1, 1); g.drawImage(d.c, 0, 0); g.restore(); } else g.drawImage(d.c, d.x, d.y); });
   // quest markers over mentors
-  WR.ents.forEach(e => { if (!e.npc || !(WQ[e.id] || NEWC[e.id])) return; let mark;
-    if (NEWC[e.id]) { const n = NS(e.id), rt = rlTask(e.id); mark = (rt && rt.done) || (e.id === 'wren' && n.box && n.met == null) || (e.id === 'pip' && n.feather && !n.featherBack) ? '?' : n.met == null || frEarned(e.id) > (WS().seen[e.id] || 0) || nrlOffer(e.id) || (e.id === 'wren' && wrenStage() >= 3 && !n.home) ? '!' : ''; }
-    else { const s = wq(e.id), rt = rlTask(e.id); mark = s === 2 || (rt && rt.done) ? '?' : (s === 0 && didToday()) || rlOffer(e.id) ? '!' : ''; }
-    if (!mark) return; const x = e.x * WT + 8, y = (e.y + 1) * WT - 40 + Math.round(Math.sin(tnow / 250) * 1.5);
+  WR.ents.forEach(e => { if (WR.cine || !e.npc || !(WQ[e.id] || NEWC[e.id])) return; let mark;
+    if (circusGate() && NEWC[e.id]) mark = '';
+    else if (NEWC[e.id]) { const n = NS(e.id), rt = rlTask(e.id); mark = (rt && rt.done) || (e.id === 'wren' && n.box && n.met == null) || (e.id === 'pip' && n.feather && !n.featherBack) ? '?' : (n.met == null && e.id === 'wren') || (n.met != null && frEarned(e.id) > (WS().seen[e.id] || 0)) || nrlOffer(e.id) || (e.id === 'wren' && wrenStage() >= 3 && !n.home) ? '!' : ''; }
+    else if (circusGate()) mark = e.id === 'orvel' && circusStage() === 'orvel' ? '!' : '';
+    else { const s = wq(e.id), rt = rlTask(e.id); mark = s === 2 ? 'S?' : storyOpen(e.id) ? 'S!' : (rt && rt.done) ? '?' : rlOffer(e.id) ? '!' : ''; }
+    if (!mark) return;
+    if (mark[0] === 'S') { storyBadge(g, e.x * WT + 8, (e.y + 1) * WT - 46 + Math.round(Math.sin(tnow / 250) * 2), mark[1], tnow); return; } const x = e.x * WT + 8, y = (e.y + 1) * WT - 40 + Math.round(Math.sin(tnow / 250) * 1.5);
     g.fillStyle = '#3b2416'; g.fillRect(x - 4, y - 1, 8, 11); g.fillStyle = mark === '?' ? '#7fd7ff' : '#ffd36b'; g.fillRect(x - 3, y, 6, 9); g.fillStyle = '#3b2416'; if (mark === '!') { g.fillRect(x - 1, y + 1, 2, 4); g.fillRect(x - 1, y + 6, 2, 2); } else { g.fillRect(x - 2, y + 1, 4, 1); g.fillRect(x + 1, y + 2, 1, 2); g.fillRect(x - 1, y + 4, 2, 1); g.fillRect(x - 1, y + 6, 2, 2); } });
   // campfire flames, chimney smoke, fireflies
   M.props.forEach(q => {
@@ -2472,11 +3001,14 @@ function worldDraw() {
   if (M.dark) {
     const D = WR.dark || (WR.dark = document.createElement('canvas')); if (D.width !== Math.ceil(vw) + 2) { D.width = Math.ceil(vw) + 2; D.height = Math.ceil(vh) + 2; }
     const d = D.getContext('2d'); d.globalCompositeOperation = 'source-over'; d.clearRect(0, 0, D.width, D.height); d.fillStyle = `rgba(8,4,18,${Math.min(.85, M.dark * 2.2)})`; d.fillRect(0, 0, D.width, D.height); d.globalCompositeOperation = 'destination-out';
-    const L = [[p.x * WT, p.y * WT - 4, WR.cur === 'cave' ? 60 : 140]]; M.props.filter(q => q.type === 'crystal' || q.type === 'candle').forEach(q => L.push([q.x * WT + 8, q.y * WT + 8, q.type === 'candle' ? 40 : 26]));
+    const L = [[p.x * WT, p.y * WT - 4, WR.cur === 'cave' ? 60 : 140]]; if (M.tent) L.push([6.5 * WT, 4 * WT, boss().won ? 50 : 95]); M.props.filter(q => q.type === 'crystal' || q.type === 'candle').forEach(q => L.push([q.x * WT + 8, q.y * WT + 8, q.type === 'candle' ? 40 : 26]));
     L.forEach(([x, y, r]) => { const gr = d.createRadialGradient(x - cx, y - cy, 2, x - cx, y - cy, r); gr.addColorStop(0, 'rgba(0,0,0,1)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); d.fillStyle = gr; d.beginPath(); d.arc(x - cx, y - cy, r, 0, 7); d.fill(); });
     g.drawImage(D, cx, cy);
+    if (M.tent && !boss().won) { const gr = g.createRadialGradient(6.5 * WT, 4.5 * WT, 4, 6.5 * WT, 4.5 * WT, 60); gr.addColorStop(0, 'rgba(255,236,170,.22)'); gr.addColorStop(1, 'rgba(255,236,170,0)'); g.fillStyle = gr; g.fillRect(0, 0, M.w * WT, M.h * WT); }
     M.props.filter(q => q.type === 'crystal').forEach(q => { const gr = g.createRadialGradient(q.x * WT + 8, q.y * WT + 8, 1, q.x * WT + 8, q.y * WT + 8, 15); gr.addColorStop(0, 'rgba(127,215,255,.4)'); gr.addColorStop(1, 'rgba(127,215,255,0)'); g.fillStyle = gr; g.fillRect(q.x * WT - 8, q.y * WT - 8, 32, 32); });
   }
+  circusDraw(g, performance.now());
+  if (WR.cine && WR.cine.gloom > .005) { g.fillStyle = `rgba(28,16,40,${WR.cine.gloom})`; g.fillRect(cx - 2, cy - 2, vw + 4, vh + 4); }
 }
 
 ensure();render();
