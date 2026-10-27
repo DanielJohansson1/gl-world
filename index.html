@@ -164,8 +164,11 @@ body.inworld main{max-width:none;padding:0}
 #wdlg .wport{flex:none;width:72px;height:96px;background:var(--field);border:3px solid var(--fg);display:flex;align-items:flex-end;justify-content:center;overflow:hidden}#wdlg .wport canvas{width:72px;height:auto;image-rendering:pixelated}
 #wdlg .wtxt{flex:1;display:flex;flex-direction:column;gap:6px}#wdlg b{font-size:9px;color:var(--mid);font-weight:normal}#wdlg p{margin:0;font-size:10px;line-height:1.7}#wdlg small{align-self:flex-end;font-size:7px;color:var(--mid);animation:wflash2 1s steps(2) infinite}
 #wdlg.quest p{color:#8a6200}
+.bossin .creed{font-style:italic;color:#7a2a32}
 #wv .cbar{position:absolute;left:0;right:0;height:0;background:#000;z-index:5;transition:height .6s ease}#wv .cbar.top{top:0}#wv .cbar.bot{bottom:0}#wv .cbar.on{height:11%}
 body.cine #whud,body.cine #wact,body.cine #wjoy{visibility:hidden}
+.fxtier .hfport{display:flex;gap:6px;justify-content:center;align-items:flex-end}
+body.wlock nav button{pointer-events:none;opacity:.45}
 .pbig{width:144px;height:auto;image-rendering:pixelated;display:block;margin:4px auto}.gtent{width:168px;height:auto;image-rendering:pixelated;display:block;margin:6px auto}.wglove{width:56px;image-rendering:pixelated;display:block;margin:10px auto;animation:wflash2 .8s steps(2) infinite}
 .pgal .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}.pgal .pcell{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}.pgal .pcell b{font-size:6px;font-weight:normal;text-align:center}.pgal .pcell small{font-size:7px;color:var(--mid)}
 .pgal .pimg{width:100%;max-width:72px;image-rendering:pixelated}.pgal .pcell.none .pq{display:grid;place-items:center;width:100%;max-width:72px;aspect-ratio:48/66;background:#3a3348;color:#8a8478;border:3px dashed #8a8478;font-size:16px}
@@ -341,9 +344,9 @@ setTimeout(speak,6000);setInterval(speak,30000);
 var BOSS_SPR={"restday":{"p":["#2a1a14","#5a4a8c","#5d8fd5","#284f8a","#3d6fb5","#6f5ea6","#bfb2ea","#cfc6b4","#ffffff","#f4f0e6","#9d8cd0","#8473b8","#3a1a2a","#e5607e","#ece6ff","#b3a6dc","#cdbfa6","#d7cdf2","#f3efe6","#e56b5a","#8c2a1f","#c94a3a"],"r":["..............aaaaaaaaaa........","....bbb.....aacccccccccdaa......",".....b.....acceeeeeeeeeecdaa....","....bbb..aaceeeeeeeeeeeeeedda...","........afceeeeeeeeeeeeeedada...",".bbbb..agfceeeeeeeeeeeeeda.aa...","...b...afceeeeeeeeeeeeeda..ada..","..b....afceeeeeeeeeeeeeda..aha..",".bbbb...addddddddddddddda.aijha.","........agggggggggggggfa..ahjha.","........agkkkkkkkkkkkkfa...aha..",".......afkkkkkkkkkkkkkkfa...a...","........agkaaakkkkkaaafa........","........afklllkkkkklllfa........",".........agkkkkkkkkkkfa....a....",".....a..agkkkkkmmmkkkkfa..afa...","....afaagkkkkkkmnmkkkkkfaagkfa..","...agkggkkkkkffffffkkkfffgkkkfa.","..agkkkkkkkffooooopfffiiqgkkkfa.","..agkkkkkkfoorrrrrropissqfkkkfa.","..agkkkkkkforrrrrrrpissssqfkfqa.","..agkkkkkforrrrrrrrpisssssqfiqa.","..agkkkkkforrrrrrrrpqssssssisqa.","..afkkkkkforrrrrrrrrpqssssssqa..","...afkfkkfprrrrrrrrrrpqqqqqqa...","....afafkkforrrrrrrrpgggfaaa....",".....a.afkfpprrrrrrppgkfa.......","........affffppppppffffa........",".......atttttugggftttttua.......",".......atvvvvufffftvvvvua.......",".......auuuuuuaaaauuuuuua.......","........aaaaaa....aaaaaa........"]},"social":{"p":["#2a1a14","#f0b3d6","#a8588a","#d98bb8","#faf8dc","#c9c48c","#ece8bd","#7cc4f0","#4fa3d8","#73bf69","#2f6b2c","#ffffff","#4a9447","#f0a0a8","#3d7a3a","#82c47a","#5fa35a","#a8703f","#5e3a1e","#8a5a32"],"r":["................................","..............aaaa..............","..........aa.abbbca.aa..........",".........abcabddddcabca.........","........abddbddddddbddca........",".......abddddccccccddddca.......",".......abddcceeeeefccddca.......","......abddceeggggggefbdhca......",".....abdcccffffgggggfcdhica.....","....acdcjjjjjjkfggllgfbdddca....",".....acjmmmmmmmkeglagfbddca.....",".....acjmmmmmkmkeggggfbddca.....","......ajmmkmkmmkeggfnncdca......",".....ackmmmkmmmkegfjjjkcdca.....",".....acckkkkkkkegaammmmkcca.....","......accopocffffkmmmmmmka......",".......accoqocpppokmmmmka.......","........aacpqpqqqqokkkka........","..........aoqqqqqqqpooa.........","...........apqqqqqqoaa..........","...........apqqqqqqoa...........","...........apqqqqqqoa...........","...........apqqqqqqoa...........","...........apqqqqqqoa...........","...........apqqqqqqoa...........","...........aooqqqqooa...........","...........arspooorsa...........","..........artsorsostsa..........",".........artsaarsaastsa.........","........artsa.arsa.astsa........",".......artsa..arsa..astsa.......",".......assa...assa...assa......."]},"doom":{"p":["#2a1a14","#52704a","#9cbc8a","#7a9a6a","#ff4b4b","#ffd0d0","#3d4f3a","#555a7e","#24273b","#e8e4d0","#3b3f5c","#a8d8e0","#3a3e4c","#141620","#7fd7ff","#d6f6ff"],"r":["................................","................................","................................","................................",".........................a......","...........aaaaa.......aaba.....","..a......aaccccbaa....acba......",".aba....accdddddcba.aacdba......","..abaa.acdddddddddbaccdba.......","...abbacdddddddddddcddba........","....abcdddddddddddddddba........",".....abdddefdddefdddbba.........","......acddggdddggddbaba.........","......acdddddddddddbaa..........","......abdddddddddddbhia.........",".......abddajajaddbhkkia........","........acddddddbbhkkkkiaa......","........aldlblblhlkkkkiccba.....","........acdbihhhkkkkkkicdba.....","........acddbhkkkkkkkicddba.....","........abddbiiiiiiiicdddba.....","........aicdbmmmmmmnicddbia.....","........aicdbmooooonicdbhia.....","........aibdbmoppooncddbhia.....",".........aiccmopoooncddbia......","..........abbmooooonbbbia.......","...........ainnnnnnnhhia........","...........aaiiiihiiiiaa........","..........acccbaaiaacccba.......",".........abddddbaaabddddba......","..........abbbba...abbbba.......","...........aaaa.....aaaa........"]},"takeaway":{"p":["#2a1a14","#94622f","#fde9b0","#c99a3a","#f3d27a","#bfb293","#fbf7ec","#e8e0cb","#ffffff","#cbbfa5","#f2c08e","#b0703f","#f4efe2","#e0a46e","#e05a47","#86251b","#c23b2c","#8a5a32","#462a14"],"r":["..........a...........a.........",".........aba.........aba........","..........aba.......aba.........","..........aba.......aba.........","...........aba.....aba..........","...........aba.....aba..........","..........aaabaaaaabaa..........",".........accdbdddddbcda.........","........aceddfbggfbddeda........",".......adddgghghhhggfddda.......","........affffffffffffffa........",".......aijddcddddddcddjja.......","....aaaajdjjdiiiiijdijdjaaaa....","...akklaijdaimmmmmmijaijakkla...","..aknnnlimimaammmmmaaimjknnnla..",".aknnnnljmmmaimmmmmiammjknnnnla.",".aknnnnnlimmmmmmmmmmmmjknnnnnla.",".aknnnnnlimmmaaaaaaammjknnnnnla.",".aknnnnnlimmmaimimiammjknnnnnla.",".aknnnnnljjjjjjjjjjjjjjknnnnnla.",".alnnnnnloooooooooooooplnnnnnla.","..aknnnlappppppppppppppalnnnla..","..aknnlaaiiiiiiiiiiiiiqaaknnla..",".aknnnnlaimmmmmmmmmmmmqaknnnnla.",".aknnnnlaimmmmmmmmmmmmpaknnnnla.",".alnnnnlaimmmmmmmmmmmmjalnnnnla.","..allllaajjjjjjjjjjjjjjaalllla..","...aaaa..aarrrsaaarrrsa..aaaa...","..........assssa.assssa.........",".........aooooopaooooopa........",".........appppppappppppa........","..........aaaaaa.aaaaaa........."]},"captain":{"p":["#2a1a14","#ffffff","#cbbfa5","#f4efe2","#e8bf4f","#c99a3a","#34507a","#132036","#0e0e12","#34343e","#3a3e4c","#141620","#f8d27c","#c4842a","#7fd7ff","#f0b54a","#22252f","#f08ca0","#fff0c8","#d6aa62","#e05a47","#86251b","#f8d89a","#c23b2c","#5aaee0","#246a9a","#3a8fc9"],"r":["................................","................................","............aaaaaaaa............","..........aabbbbbbbcaa..........",".........abbddddddddbca.........","........abdddddeedddddca........",".......acddddddfeddddddca.......","........acccccccccccccca........",".......agggggggggggggggha.......",".......ahhhhhhhhhhhhhhhha.......","........aijjjjjjjjjjjjia..aaaa..",".........aiiiiiiiiiiiia..akkkla.",".........aammmmmmmmmnaa..akoola.","........ammppppppppppmna.akoola.",".......amppnnnpppppnnnpnankoola.","...aaaamppppaapppppaapppmnkqqla.","..abmmmppppppppppppppppppnlllla.","..bmpppppprppnnnnaappprpppmmmna.",".annnpppppppnaaaastnpppppppppna.","auuuvmpppppnswwwwwwtnpppppppna..","vuxxvmppppnswwwwwwwwtnppppnnna..","vuxxvmpppnswwwwwwwwwwtmppnaaa...","vuxxvnnppnswwwwwwwwwwtnppna.....","avvvvaamntwwwwwwwwwwwwtmna......",".aaaa.ampnswwwwwwwwwwtmpna......","......anpntwwwwwwwwwwtmpna......",".......anpntwwwwwwwwtmpna.......","........annntwwwwwwtmnna........",".........aannttttttnnaa.........","........ayyyyyznnyyyyyza........","........azAAAAzaazAAAAza........",".........azzzza..azzzza........."]},"excuse":{"p":["#2a1a14","#ff8a7a","#a33427","#e05a47","#525b67","#c6cfd8","#69747f","#9aa5b1","#d2f4ff","#3a9fd0","#7fd7ff","#ffffff","#a3adb8","#7d8794","#e8e4d0","#c9bfa6","#6f7884","#3e4550","#f6f1e4","#5b6470","#9a9384","#7cd67c","#4f5560","#23272d","#3a3f48"],"r":["..............abca..............",".............abddca.............",".............acddca.............","..............acca..............","...............aea..............","........aaaaaaaaeaaaaaaa........",".......afffffffffffgggfga.......","......affhgggghhhhgiijgfga......","......afhgiiijfhhgikkkjgga......","......afhgilkjghgikklkkjga......","......afgjkkakjfgikkkkkjga......","......afhgikkjfhgjkkkakjgaa.....",".....aefhgjjjjfhhgjkkkjfgmea....","....amefhhffffhhhhgjjjfhgmnea...","....amefhhhhohohohofofhhgmnea...","...amnefhhhaaaaaaaaaaahhgmnea...","...amnefhhgggglllpgggghhgmnnea..","..amnnefhgqqqrlsspqqqrfhgennnea.","..amnnefhgqttrluupqttrfhgaeeeea.",".aeneeafhgqtdrlsspqvtrfhgaabbca.","awxewxafhgqttrluupqttrfhgabdddca","awxewxafhgrrrrlssprrrrfhgacdddca","axxaxxagfhfffgluupfffggfgaaccca.",".aa.aa.agggggglsspgggllpa..aaa..","........ammmealsspaeelspa.......","........amnnealssslllsspa.......","........aeeeealsusususpa........",".......awwwwwxpppppppppxa.......",".......awyyyyxaaaawwwwwxa.......",".......axxxxxxa..axxxxxxa.......","........aaaaaa....aaaaaa........","................................"]}};
 const own=id=>!CORE.some(c=>c.id==id);
 const BOSSES=[
-{id:'restday',name:'The Somnambulist',hp:4,rw:{STR:15},hurt:'trainings',long:'Every training session hits it for 1.',dmg:e=>TRAIN.includes(e.id)?1:0},
+{id:'restday',name:'The Somnambulist',hp:4,rw:{STR:15},hurt:'Strength quests',long:'Every Strength quest hits it for 1.',dmg:e=>e.stat==='STR'?1:0},
 {id:'social',name:'The Puppeteer',hp:5,rw:{CHA:15},hurt:'Heart quests',long:'Every Heart quest hits it for 1.',dmg:e=>e.stat==='CHA'?1:0},
-{id:'doom',name:'The Hypnotist',hp:8,rw:{INT:15},hurt:'reading and Duolingo',long:'Reading 10 pages or doing Duolingo hits it for 1.',dmg:e=>(e.id==2||e.id==1000)?1:0},
+{id:'doom',name:'The Hypnotist',hp:8,rw:{INT:15},hurt:'Intellect quests',long:'Every Intellect quest hits it for 1.',dmg:e=>e.stat==='INT'?1:0},
 {id:'takeaway',name:'The Feast Master',hp:6,rw:{DIS:15},hurt:'food prep and your own tasks',long:'Food prep hits it for 3. Every task you made yourself hits it for 1.',dmg:e=>e.id==1005?3:own(e.id)?1:0},
 {id:'captain',name:'The Clockwork Clown',hp:20,rw:{STR:10,INT:10,CHA:10,DIS:10},hurt:'every task, double before noon',long:'Every task hits it for 1. Tasks done before noon hit for 2.',dmg:e=>new Date(e.t).getHours()<12?2:1},
 {id:'excuse',name:'The Mirror Magician',hp:10,rw:{DIS:15},hurt:'every task, double for your own',long:'Every task hits it for 1. Tasks you made yourself hit for 2.',dmg:e=>own(e.id)?2:1}];
@@ -667,8 +670,11 @@ const SND = (() => {
     pip() { const t = now(); [[79, 0], [83, .14], [86, .28], [83, .42], [88, .56]].forEach(([m, d], k) => bell('sfx', mtof(m), t + d, k === 4 ? .9 : .4, .06)); },
     laugh() { const t = now(); [0, .55, 1.1].forEach((d, k) => { note('sfx', 150 - k * 14, t + d, .45, { type: 'triangle', vol: .09, a: .03, slide: .78, vib: 7, vibD: 9, cut: 900 }); note('sfx', 75 - k * 7, t + d, .5, { type: 'sine', vol: .07, a: .03, slide: .8 }); }); },
     creak() { const t = now(); for (let k = 0; k < 3; k++) note('sfx', 210 + k * 30, t + k * .32, .28, { type: 'triangle', vol: .05, slide: 1.35, slideT: .25, vib: 23, vibD: 18, cut: 1100 }); },
+    growl() { const t = now(); note('sfx', 92, t, .7, { type: 'triangle', vol: .09, a: .05, vib: 17, vibD: 10, cut: 500, slide: .9 }); note('sfx', 61, t + .05, .6, { type: 'sine', vol: .07, a: .05, vib: 21, vibD: 6 }); },
     hammer() { const t = now(); note('sfx', 190 + Math.random() * 30, t, .09, { type: 'triangle', vol: .14, slide: .55, slideT: .05, cut: 1200 }); note('sfx', 900, t, .025, { type: 'square', vol: .03, cut: 2500 }); note('sfx', 95, t, .12, { type: 'sine', vol: .1, slide: .7 }); },
     puff() { const t = now(); note('sfx', 300, t, .5, { type: 'triangle', vol: .07, slide: .4, cut: 700 }); bell('sfx', mtof(62), t + .1, 1.2, .05); },
+    cart() { const t = now(); note('sfx', 150 + Math.random() * 25, t, .07, { type: 'triangle', vol: .07, slide: .8, cut: 700 }); note('sfx', 230 + Math.random() * 20, t + .11, .05, { type: 'triangle', vol: .045, slide: .8, cut: 900 }); },   // a handcart's wooden wheels
+    key() { const t = now(); bell('sfx', mtof(93), t, .5, .05); bell('sfx', mtof(96), t + .09, .6, .045); bell('sfx', mtof(100), t + .18, .9, .04); },
     bellRing() { const t = now(); bell('sfx', mtof(64), t, 3.2, .11); bell('sfx', mtof(71), t + .02, 2.6, .05); }
   };
   const quiet = () => typeof S !== 'undefined' && S && S.settings && !S.settings.sound;   // the game's SOUND switch
@@ -778,6 +784,9 @@ const SND = (() => {
     wren: { base: 247, spread: 4, type: 'triangle', len: .06, vol: .08, cut: 1300, rate: 28, every: 3 },
     pip: { song: [69, 72, 74, 76, 79, 81], type: 'triangle', len: .1, vol: .085, cut: 3000, rate: 34, every: 2, vib: 6, vibD: 5 },
     me: { base: 233, spread: 4, type: 'triangle', len: .06, vol: .08, cut: 1500, rate: 30, every: 2 },   // you: a friendly, middle voice
+    mira: { base: 220, spread: 3, type: 'sine', len: .08, vol: .1, cut: 1300, rate: 32, every: 3 },                 // warm and calm
+    elias: { base: 110, spread: 5, type: 'triangle', len: .07, vol: .075, cut: 800, rate: 28, every: 2, bounce: 1 },   // big and bouncy
+    tove: { base: 349, spread: 4, type: 'sine', len: .05, vol: .075, cut: 2400, rate: 24, every: 2, bounce: 1 },      // quick and bright
     fisher: { base: 117, spread: 3, type: 'sine', len: .055, vol: .12, cut: 500, rate: 40, every: 2 }
   };
   function blip(who, ch, k) {
@@ -918,7 +927,8 @@ if(t&&t.once)t.done=false;save();render();toast('Undone');sfx('undo')}
 function addTask(name,stat,pts,once,side){name=(name||'').trim();if(!name)return toast('Give the task a name');if(once==4){side=true;once=1}
 const t={id:S.next++,name,stat,pts:Math.max(1,Math.min(20,+pts||3)),once:once==1,daily:once==2,weekly:once==3};if(side)t.side=true;S.tasks.push(t);save();render()}
 function del(id){S.tasks=S.tasks.filter(t=>t.id!=id||t.perm);save();render()}
-function go(v){if(view==='world'&&v!=='world')worldStop();if(bossIntro){bossIntro=0;bossThemeStop()}loadPend=null;view=v;infoId=null;bossOpen=0;editId=null;delArm=0;ideaDraft=null;trialK=null;render()}
+const worldLocked=()=>view==='world'&&WR&&(WR.cine||WR.replay||(WR.finish&&performance.now()-WR.finish<1500));
+function go(v){if(worldLocked())return;if(view==='world'&&v!=='world')worldStop();if(bossIntro){bossIntro=0;bossThemeStop()}loadPend=null;view=v;infoId=null;bossOpen=0;editId=null;delArm=0;ideaDraft=null;trialK=null;render()}
 // Grindlife character generator: returns pixel layers for given stat levels.
 // Golden retriever pet: three growth stages, drawn facing the character (left).
 // A fur, a shade, l light cream, x dark (eye/nose), T tongue, c collar, j tag
@@ -1431,15 +1441,18 @@ let suggOpen=null;
 function suggCheck(){if(suggOpen||bossIntro||S.bossDay===day()||view!=='home'||bossOpen||infoId||trialK||editId!=null||ideaDraft!=null)return;const sg=S.sugg=S.sugg||{at:0,seen:{}};
 const d0=new Date();d0.setHours(0,0,0,0);const last=new Date(sg.at||0);last.setHours(0,0,0,0);if(d0-last<2*864e5-36e5)return;
 const from=Date.now()-7*864e5,g={};Object.keys(NAMES).forEach(k=>g[k]=0);S.log.forEach(e=>{if(e.t>from&&g[e.stat]!=null)g[e.stat]+=e.pts});
-const order=Object.keys(NAMES).sort((a,b)=>g[a]-g[b]||lvl(S.pts[a]).l-lvl(S.pts[b]).l);
+let order=Object.keys(NAMES).sort((a,b)=>g[a]-g[b]||lvl(S.pts[a]).l-lvl(S.pts[b]).l);
+// tips aim at this week's circus act (while it still stands)
+const B=boss(),ACT_TIP={restday:['STR','The Somnambulist is still swaying on her tightrope. A Strength quest would wake her up!'],social:['CHA','The Puppeteer is snipping strings again. A Heart quest would tie them back together!'],doom:['INT','The Hypnotist\'s spiral is still spinning. An Intellect quest would break the spell!'],takeaway:['DIS','The Feast Master is still serving sweets. A quest of your own would spoil his feast!'],captain:[null,'The Clockwork Clown keeps saying "tomorrow". Any quest hurts him, and twice as much before noon!'],excuse:[null,'The Mirror Magician has an excuse for everything. A quest of your own hits him twice as hard!']}[B.b.id];
+const aim=!B.won&&B.left>0&&ACT_TIP;if(aim&&aim[0])order=[aim[0]].concat(order.filter(k=>k!==aim[0]));
 const have=new Set(S.tasks.filter(t=>!t.done).map(t=>t.name.toLowerCase()));
 for(const k of order){const ok=IDEAS[k].l.filter(i=>!have.has(i[0].toLowerCase())&&!(sg.seen[i[0]]>Date.now()-21*864e5));
-if(ok.length){const i=ok[Math.floor(Math.random()*ok.length)];suggOpen={k,n:i[0],p:i[1]};sg.at=Date.now();sg.seen[i[0]]=Date.now();save();render();return}}}
+if(ok.length){const i=ok[Math.floor(Math.random()*ok.length)];suggOpen={k,n:i[0],p:i[1],say:aim?aim[1]:null};sg.at=Date.now();sg.seen[i[0]]=Date.now();save();render();return}}}
 function suggAnswer(yes){const o=suggOpen;suggOpen=null;if(yes&&o){addTask(o.n,o.k,o.p,1);toast('Added: '+o.n);sfx('ok')}else render()}
 function suggCard(){if(!suggOpen)return'';const o=suggOpen,d=charLayers(Lv('STR'),Lv('INT'),Lv('CHA'),gear(),'bulb');
 return`<div class="ovl" onclick="if(event.target===this)suggAnswer(0)"><div class="box card s-${o.k}" role="dialog" aria-modal="true" aria-label="Quest idea">
 <svg class="cpic" viewBox="0 0 44 44" shape-rendering="crispEdges"><g transform="translate(${d.dx} ${d.dy})">${runs(d.layers.body)}</g></svg>
-<small>QUEST IDEA</small><p>${IDEAS[o.k].say}</p><p class="lbl">HOW ABOUT</p><h3>${esc(o.n)}</h3><small class="sgpts">+${o.p} ${NAMES[o.k]} · ONE-TIME</small>
+<small>QUEST IDEA</small><p>${o.say||IDEAS[o.k].say}</p><p class="lbl">HOW ABOUT</p><h3>${esc(o.n)}</h3><small class="sgpts">+${o.p} ${NAMES[o.k]} · ONE-TIME</small>
 <button onclick="suggAnswer(1)">ADD TASK</button><button class="ghost" onclick="suggAnswer(0)">NOT NOW</button></div></div>`}
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){bossCheck();suggCheck()}else bossThemeStop()});
 function home(){
@@ -1515,7 +1528,7 @@ const ty=+document.getElementById('er').value;t.name=name;t.stat=document.getEle
 t.once=ty===1||ty===4;t.daily=ty===2;t.weekly=ty===3;if(ty===4)t.side=true;else delete t.side;editId=null;save();render();toast('Task saved')}
 function delEdit(id){if(!delArm){delArm=1;render();clearTimeout(delEdit.h);delEdit.h=setTimeout(()=>{if(delArm){delArm=0;if(editId!=null)render()}},4000);return}
 delArm=0;editId=null;del(id);toast('Task deleted')}
-function render(){
+function render(){if(typeof famCheck==='function')famCheck();
 document.getElementById('app').innerHTML=view==='home'?home():view==='world'?worldView():view==='tasks'?tasks():view==='help'?help():view==='wardrobe'?wardrobe():settings();
 document.body.classList.toggle('inworld',view==='world');if(view==='world')worldStart();
 document.body.classList.toggle('noanim',!S.settings.anim);
@@ -1577,7 +1590,7 @@ function buildVillage() {
   [[3, 4], [6, 2], [8, 6], [4, 8], [31, 3], [35, 2], [30, 6], [36, 5], [13, 22], [9, 22], [30, 25], [31, 29], [11, 9], [29, 9], [35, 26], [4, 21], [2, 13], [37, 20], [26, 31], [15, 31]].forEach(([x, y]) => tree(x, y));
   [[14, 7], [24, 4], [15, 3], [23, 8], [37, 11], [34, 9]].forEach(([x, y]) => { prop('rock', x, y); block(x, y, 1, 1); });
   [[35, 9], [37, 8], [36, 13], [34, 12]].forEach(([x, y]) => prop('pine', x, y));
-  prop('house', 10, 11, { w: 5, roof: '#b5653a' }); block(10, 11, 5, 3);
+  prop('plot', 10, 11, { stage: 1, site: 1 }); block(10, 11, 5, 3);                 // an old frame, waiting for Wren
   prop('house', 22, 10, { w: 5, roof: '#5f7fa8' }); block(22, 10, 5, 3);
   prop('house', 14, 23, { w: 5, roof: '#c75b5b', bakery: 1 }); block(14, 23, 5, 3);
   prop('well', 19, 16); block(19, 16, 2, 2);
@@ -1777,7 +1790,7 @@ function matSprite(w, h, draw, mats, opts = {}) {
 // ---------------- props ----------------
 const PROP_ART = {};
 function propCanvas(p) {
-  const key = p.type + (p.act || '') + (p.quiet ? 'q' : '') + (p.got ? p.got.join('') : '') + (p.w || '') + (p.roof || '') + (p.bakery || '') + (p.wren ? 'wr' : '') + (p.stage != null ? 's' + p.stage : '') + (p.h ? 'h' : '') + (p.v ? 'v' : '') + (['tree', 'pine', 'bush', 'oak', 'fern', 'mush', 'flowers', 'thicket'].includes(p.type) ? hsh(p.x, p.y) % 3 : '');
+  const key = p.type + (p.act || '') + (p.quiet ? 'q' : '') + (p.got ? p.got.join('') : '') + (p.w || '') + (p.roof || '') + (p.bakery || '') + (p.wren ? 'wr' : '') + (p.honey ? 'hy' : '') + (p.lit ? 'L' : '') + (p.stage != null ? 's' + p.stage : '') + (p.h ? 'h' : '') + (p.v ? 'v' : '') + (['tree', 'pine', 'bush', 'oak', 'fern', 'mush', 'flowers', 'thicket'].includes(p.type) ? hsh(p.x, p.y) % 3 : '');
   if (PROP_ART[key]) return PROP_ART[key];
   let c, ax = 0, ay = 0;   // anchor: where the footprint's top-left tile sits inside the canvas
   const v = hsh(p.x, p.y) % 3;
@@ -1815,8 +1828,10 @@ function propCanvas(p) {
     R(3, 44, w, 2, '#7a4c2a'); R(3, H - 2, w, 2, '#5a3820');
     const door = Math.floor(p.w / 2) * 16 + 3;
     R(door + 3, 38, 10, H - 40, '#5a3820'); R(door + 4, 39, 8, H - 41, '#8a5a32'); R(door + 4, 39, 8, 1, '#a8703f'); R(door + 10, 48, 1, 2, '#ffd36b');
-    for (let i = 0; i < p.w; i++) { if (i === Math.floor(p.w / 2)) continue; const wx = i * 16 + 6; R(wx - 1, 36, 12, 10, '#5a3820'); R(wx, 37, 10, 8, '#bfe2f5'); R(wx, 37, 10, 3, '#e3f4fb'); R(wx + 4, 37, 1, 8, '#5a3820'); R(wx, 40, 10, 1, '#5a3820'); R(wx - 1, 46, 12, 3, '#7a4c2a'); [0, 3, 6, 9].forEach(k => R(wx + k, 45, 2, 2, ['#f08ca8', '#ffd36b', '#e5607e', '#fffaf0'][(i + k) % 4])); }
+    if (p.honey) roundWindows(R, p.w, 41, p.lit);
+    for (let i = 0; i < p.w && !p.honey; i++) { if (i === Math.floor(p.w / 2)) continue; const wx = i * 16 + 6; R(wx - 1, 36, 12, 10, '#5a3820'); R(wx, 37, 10, 8, '#bfe2f5'); R(wx, 37, 10, 3, '#e3f4fb'); R(wx + 4, 37, 1, 8, '#5a3820'); R(wx, 40, 10, 1, '#5a3820'); R(wx - 1, 46, 12, 3, '#7a4c2a'); [0, 3, 6, 9].forEach(k => R(wx + k, 45, 2, 2, ['#f08ca8', '#ffd36b', '#e5607e', '#fffaf0'][(i + k) % 4])); }
     if (p.wren) { R(door - 14, 40, 12, 7, '#3b2416'); R(door - 13, 41, 10, 5, '#c08850'); R(door - 10, 42, 4, 1, '#5a3820'); R(door - 9, 43, 2, 2, '#5a3820'); R(door - 9, 47, 2, 6, '#5a3820'); }
+    if (p.honey) { R(door + 4, 33, 8, 6, '#3b2416'); R(door + 5, 34, 6, 4, '#e8bf4f'); R(door + 5, 34, 6, 1, '#fff1a8'); R(door + 6, 32, 4, 2, '#c8843c'); }   // honey-pot sign
     if (p.bakery) { R(door - 1, 30, 18, 6, '#fff3dc'); R(door - 1, 30, 18, 1, '#c9a46a'); [2, 7, 12].forEach(k => R(door + k, 32, 3, 2, '#c8843c')); }
     ax = 3; ay = H - 48;
   } else if (p.type === 'well') {
@@ -1925,7 +1940,7 @@ function propCanvas(p) {
     g.fillStyle = '#5a3820'; g.fillRect(0, 3, 36, 2); g.fillRect(0, 29, 36, 2);
     ax = 2; ay = 1;
   } else if (p.type === 'plot') {                                   // Wren's house, going up over a few real days
-    const st = p.stage || 0, w = 5 * 16, H = 3 * 16 + 14, roof = '#4f8a5a', rl = shadeHex(roof, 30), rd = shadeHex(roof, -45);
+    const st = p.stage || 0, w = 5 * 16, H = 3 * 16 + 14, roof = p.roof || '#4f8a5a', rl = shadeHex(roof, 30), rd = shadeHex(roof, -45);
     c = document.createElement('canvas'); c.width = w + 6; c.height = H; const g = c.getContext('2d'), R = (x, y, ww, hh, col) => { g.fillStyle = col; g.fillRect(x, y, ww, hh); };
     R(3, H - 30, w, 28, '#b8955c'); for (let i = 0; i < 40; i++) R(3 + (i * 37) % w, H - 28 + (i * 13) % 26, 2, 1, i % 2 ? '#a07c48' : '#cfae74');   // cleared dirt
     if (st === 0) {
@@ -1940,6 +1955,12 @@ function propCanvas(p) {
       for (let i = 0; i < 16; i++) { R(3 + i * 2.4, 22 - i, 4, 3, '#3b2416'); R(w - 1 - i * 2.4, 22 - i, 4, 3, '#3b2416'); }   // roof truss
       for (let i = 0; i < 16; i++) { R(4 + i * 2.4, 23 - i, 2, 1, '#c49660'); R(w - i * 2.4, 23 - i, 2, 1, '#c49660'); }
       for (let i = 0; i < 3; i++) { R(w - 26, H - 14 + i * 3, 22, 3, '#3b2416'); R(w - 25, H - 13 + i * 3, 20, 2, '#b98a56'); }
+    } else if (st === 3) {                                                                                     // the roof is on, windows still empty
+      R(3, 28, w, H - 28, '#3b2416'); R(4, 29, w - 2, H - 30, '#c49660'); for (let y = 32; y < H - 2; y += 4) R(4, y, w - 2, 1, '#a07c48');
+      for (let y = 0; y < 30; y++) { const ins = Math.max(0, 8 - y); R(ins, y + 2, w + 6 - ins * 2, 1, y % 4 ? roof : rd); } R(3, 31, w, 2, rd); R(w - 14, 0, 6, 10, '#7a3f30'); R(w - 13, 0, 4, 10, '#a8604a');
+      const door = 2 * 16 + 3; R(door + 3, 38, 10, H - 40, '#2e2218'); roundWindows(R, 5, 41, 0, 1);
+      R(w - 4, 20, 2, H - 22, '#6b4423'); R(w + 1, 20, 2, H - 22, '#6b4423'); for (let y = 24; y < H; y += 7) R(w - 4, y, 7, 2, '#8a5a32');
+      R(6, H - 8, 18, 3, '#3b2416'); R(7, H - 7, 16, 1, '#b98a56');
     } else {
       R(3, 28, w, H - 28, '#3b2416'); R(4, 29, w - 2, H - 30, '#c49660');                                       // plank walls
       for (let y = 32; y < H - 2; y += 4) R(4, y, w - 2, 1, '#a07c48');
@@ -1962,6 +1983,35 @@ function propCanvas(p) {
   }
   return (PROP_ART[key] = { c, ax, ay });
 }
+// round windows, like the old Hearthsvale houses (lit = someone lives there now)
+function roundWindows(R, n, cy, lit, empty) {
+  for (let i = 0; i < n; i++) { if (i === Math.floor(n / 2)) continue; const cx = i * 16 + 11;
+    for (let y = -6; y <= 6; y++) { const hw = Math.round(Math.sqrt(36 - y * y)); R(cx - hw, cy + y, hw * 2, 1, '#5a3820'); }
+    for (let y = -4; y <= 4; y++) { const hw = Math.round(Math.sqrt(20.5 - y * y)); R(cx - hw, cy + y, hw * 2, 1, empty ? '#2e2218' : lit ? '#ffd36b' : '#7f9cb0'); }
+    if (empty) continue;
+    R(cx - 3, cy - 3, 3, 2, lit ? '#fff4c0' : '#c6dbe6'); R(cx - .5, cy - 4, 1, 9, '#5a3820'); R(cx - 4, cy - .5, 9, 1, '#5a3820');
+    R(cx - 6, cy + 6, 12, 3, '#7a4c2a'); [-5, -2, 1, 4].forEach((k, j) => R(cx + k, cy + 5, 2, 2, ['#f08ca8', '#ffd36b', '#fffaf0', '#e5607e'][(i + j) % 4])); }
+}
+// the Honeyfields' handcart: crate of honey jars, a bundle, a chair and a plant (rot turns the wheel)
+const CART_ART = {};
+function cartCanvas(rot) {
+  const rk = Math.round(((rot || 0) % (Math.PI / 3)) / (Math.PI / 3) * 6) % 6; if (CART_ART[rk]) return CART_ART[rk];
+  const c = matSprite(66, 46, a => {
+    a.rect(4, 26, 44, 6, 'wd'); a.rect(4, 20, 2, 7, 'wd'); a.rect(46, 20, 2, 7, 'wd'); a.rect(4, 20, 44, 2, 'wd');   // bed
+    for (let i = 0; i < 16; i++) a.rect(47 + i, 25 + Math.floor(i * .7), 2, 2, 'wd');                                     // handles
+    a.rect(8, 11, 15, 10, 'cr');                                                                                          // crate
+    a.ell(31, 15, 8, 6.5, 'cl');                                                                                          // bundle
+    a.rect(39, 15, 7, 3, 'ch'); a.rect(39, 6, 2, 10, 'ch'); a.rect(44, 6, 2, 10, 'ch'); a.rect(40, 18, 1, 3, 'ch'); a.rect(44, 18, 1, 3, 'ch');   // a chair, upside down
+    a.rect(12, 5, 6, 6, 'pt'); a.ell(15, 3, 4.5, 3, 'lf');                                                                // a potted plant
+    a.ell(26, 36, 9, 9, 'wh');
+  }, { wd: ['#a8703f', '#c08850', '#7a4c2a'], cr: ['#c49660', '#dcb27a', '#9a7040'], cl: ['#e8a93a', '#f6c66a', '#b87a20'], ch: ['#8a5a32', '#a8703f', '#5a3820'], pt: ['#c8643c', '#e0845a', '#9a4a2a'], lf: ['#4f9a48', '#70c060', '#36702e'], wh: ['#5a3820', '#7a4c2a', '#3b2416'] });
+  const g = c.getContext('2d'), R = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); };
+  R(9, 15, 13, 1, '#9a7040'); [10, 14, 18].forEach(x => { R(x, 12, 3, 3, '#e8bf4f'); R(x, 11, 3, 1, '#fffaf0'); R(x, 12, 1, 1, '#fff1a8'); });   // honey jars
+  R(25, 13, 12, 1, '#b87a20'); R(30, 9, 2, 12, '#b87a20'); R(27, 11, 2, 2, '#fffaf0'); R(34, 16, 2, 2, '#fffaf0');   // bundle tied with string, little flowers
+  for (let k = 0; k < 3; k++) { const an = k / 3 * Math.PI + rk / 6 * Math.PI / 3; for (let r = -6; r <= 6; r++) R(Math.round(26 + Math.cos(an) * r), Math.round(36 + Math.sin(an) * r), 1, 1, '#c08850'); }
+  R(25, 35, 3, 3, '#e8bf4f');
+  return (CART_ART[rk] = c);
+}
 function shadeHex(h, amt) { const n = parseInt(h.slice(1), 16), f = v => Math.max(0, Math.min(255, v + amt)); return '#' + [f(n >> 16), f((n >> 8) & 255), f(n & 255)].map(v => v.toString(16).padStart(2, '0')).join(''); }
 
 // ---------------- characters (NPCs share the hero's chibi proportions) ----------------
@@ -1972,24 +2022,27 @@ function chibi(o) {
     bn: [o.bandana || '#4f9a48', shadeHex(o.bandana || '#4f9a48', 30), shadeHex(o.bandana || '#4f9a48', -40)], mt: ['#9aa5b1', '#cfd6de', '#5e6773'], lt: ['#c08850', '#dca870', '#8a5a32'], fe: ['#d6453a', '#f07060', '#a02a20'] };
   const W = 30, H = 36, cx = 15, big = o.big;
   return matSprite(W, H, a => {
-    const hy = 12, hw = 8;                                            // head centre / half width
+    const hy = o.kid ? 16 : 12, hw = o.kid ? 7 : 8;                   // head centre / half width (kids: smaller, lower head)
     if (o.staff) { a.rect(26, 6, 2, 29, 'st'); a.ell(27, 6, 2.5, 2.5, 'ac'); }
     if (o.rod) { a.rect(25, 8, 1, 26, 'st'); for (let i = 0; i < 6; i++) a.px(25 - i, 8 - i, 'st'); }
     // body
-    const tw = big ? 14 : o.robe ? 12 : 10, ty = 21;
-    if (o.robe) { for (let y = ty; y < 34; y++) { const ww = tw + Math.floor((y - ty) / 3); a.rect(cx - ww / 2, y, ww, 1, 'tp'); } }
+    const tw = big ? 14 : o.robe ? 12 : o.kid ? 8 : 10, ty = o.kid ? 23 : 21;
+    if (o.kid) { a.rect(cx - 4, ty, 8, 6, 'tp'); a.rect(cx - 3, 29, 6, 4, 'bt'); a.rect(cx - 4, 33, 3, 2, 'sh'); a.rect(cx + 1, 33, 3, 2, 'sh'); }
+    else if (o.robe) { for (let y = ty; y < 34; y++) { const ww = tw + Math.floor((y - ty) / 3); a.rect(cx - ww / 2, y, ww, 1, 'tp'); } }
     else { a.rect(cx - tw / 2, ty, tw, 8, 'tp'); a.rect(cx - 4, 29, 8, 4, 'bt'); a.rect(cx - 5, 33, 4, 2, 'sh'); a.rect(cx + 1, 33, 4, 2, 'sh'); }
     if (o.robe) { a.rect(cx - 5, 34, 4, 1, 'sh'); a.rect(cx + 1, 34, 4, 1, 'sh'); }
-    const aw = big ? 5 : 3, ax = cx - tw / 2 - aw, axr = cx + tw / 2;     // arms
-    a.rect(ax, ty + 1, aw, big ? 8 : 7, o.sleeves ? 'tp' : 'sk'); a.rect(axr, ty + 1, aw, big ? 8 : 7, o.sleeves ? 'tp' : 'sk');
-    a.rect(ax, ty + (big ? 8 : 7), aw, 2, 'sk'); a.rect(axr, ty + (big ? 8 : 7), aw, 2, 'sk');
+    const aw = big ? 5 : o.kid ? 2 : 3, ax = cx - tw / 2 - aw, axr = cx + tw / 2, al = big ? 8 : o.kid ? 4 : 7;     // arms
+    a.rect(ax, ty + 1, aw, al, o.sleeves ? 'tp' : 'sk'); a.rect(axr, ty + 1, aw, al, o.sleeves ? 'tp' : 'sk');
+    a.rect(ax, ty + al, aw, 2, 'sk'); a.rect(axr, ty + al, aw, 2, 'sk');
     if (big) { a.rect(ax - 1, ty + 2, 1, 4, 'sk'); a.rect(axr + aw, ty + 2, 1, 4, 'sk'); }
     if (o.apron) { a.rect(cx - 4, ty + 2, 8, 9, 'ac'); }
     if (o.sash) { for (let i = 0; i < 9; i++) a.px(cx - 4 + i, ty + 1 + Math.floor(i * 0.9), 'ac'); }
     // head
-    a.ell(cx, hy, hw, 8, 'sk'); a.rect(cx - 2, hy + 7, 4, 3, 'sk');
+    if (o.pigtails) [-1, 1].forEach(sd => { a.ell(cx + sd * (hw + 1.5), hy - 1, 2.4, 2.6, 'hr'); a.ell(cx + sd * (hw + 2.5), hy + 3, 2, 2.4, 'hr'); });
+    a.ell(cx, hy, hw, o.kid ? 7 : 8, 'sk'); if (!o.kid) a.rect(cx - 2, hy + 7, 4, 3, 'sk');
     if (o.hairStyle === 'short') { a.ell(cx, hy - 4, hw + .5, 4.5, 'hr'); a.rect(cx - hw, hy - 3, 2, 4, 'hr'); a.rect(cx + hw - 2, hy - 3, 2, 4, 'hr'); }
     if (o.hairStyle === 'bun') { a.ell(cx, hy - 4, hw + .5, 4.5, 'hr'); a.ell(cx, hy - 10, 3.5, 3, 'hr'); a.rect(cx - hw, hy - 3, 2, 6, 'hr'); a.rect(cx + hw - 2, hy - 3, 2, 6, 'hr'); }
+    if (o.hairStyle === 'long') { a.ell(cx, hy - 4, hw + .8, 4.8, 'hr'); a.rect(cx - hw - 1, hy - 3, 3, 14, 'hr'); a.rect(cx + hw - 2, hy - 3, 3, 14, 'hr'); }
     if (o.hairStyle === 'bald') { a.rect(cx - hw + 1, hy + 1, 1, 3, 'sk'); }
     if (o.tail) { a.ell(cx + hw + 1.5, hy + 1, 2.2, 3.5, 'hr'); a.ell(cx + hw + 2.5, hy + 5, 1.8, 2.5, 'hr'); }
     if (o.bandana) { a.ell(cx, hy - 4.5, hw + .5, 4, 'bn'); a.rect(cx + hw - 1, hy - 3, 3, 2, 'bn'); a.rect(cx + hw + 1, hy - 1, 2, 2, 'bn'); }
@@ -2004,11 +2057,15 @@ function chibi(o) {
   }, mats);
 }
 function drawFace(c, o) {   // eyes, blush, mouth, glasses as crisp details on top
-  const g = c.getContext('2d'), R = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); }, cx = 15, hy = 12;
-  if (o.closedEyes) { R(cx - 5, hy + 1, 3, 1, '#2a2230'); R(cx + 2, hy + 1, 3, 1, '#2a2230'); }
+  const g = c.getContext('2d'), R = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); }, cx = 15, hy = o.kid ? 16 : 12;
+  if (o.plaid) { for (let x = 9; x < 22; x += 4) R(x, 21, 1, 8, 'rgba(20,30,10,.28)'); [23, 26].forEach(y => R(8, y, 14, 1, 'rgba(20,30,10,.28)')); for (let x = 11; x < 22; x += 4) R(x, 21, 1, 8, 'rgba(255,240,200,.14)'); }
+  if (o.happy) { [[-5, 1], [-4, 0], [-3, 1], [2, 1], [3, 0], [4, 1]].forEach(([u, v]) => R(cx + u, hy + v, 1, 1, '#2a2230')); R(cx - 2, hy + 4, 4, 2, '#7a2a24'); R(cx - 1, hy + 5, 2, 1, '#e5607e'); }
+  else if (o.closedEyes) { R(cx - 5, hy + 1, 3, 1, '#2a2230'); R(cx + 2, hy + 1, 3, 1, '#2a2230'); }
   else { R(cx - 4, hy, 2, 3, '#2a2230'); R(cx + 2, hy, 2, 3, '#2a2230'); R(cx - 4, hy, 1, 1, '#fff'); R(cx + 2, hy, 1, 1, '#fff'); }
   if (!o.beard || !o.longBeard) { R(cx - 6, hy + 3, 2, 1, '#ef9b8f'); R(cx + 4, hy + 3, 2, 1, '#ef9b8f'); }
-  if (!o.longBeard) { R(cx - 1, hy + 4, 2, 1, '#a5433b'); }
+  if (!o.longBeard && !o.happy) { R(cx - 1, hy + 4, 2, 1, '#a5433b'); }
+  if (o.flower) { R(cx - 9, hy - 6, 3, 3, '#f08ca8'); R(cx - 8, hy - 7, 1, 5, '#f08ca8'); R(cx - 10, hy - 5, 5, 1, '#f08ca8'); R(cx - 8, hy - 5, 1, 1, '#ffd36b'); }
+  if (o.book) { R(20, 24, 7, 8, '#3b2416'); R(21, 25, 5, 6, '#fffaf0'); R(21, 25, 1, 6, '#c23b2c'); [26.5, 28.5].forEach(y => R(23, Math.floor(y), 2, 1, '#8a8478')); }
   if (o.glasses) { g.strokeStyle = '#8a6200'; g.lineWidth = 1; g.strokeRect(cx - 5.5, hy - .5, 4, 4); g.strokeRect(cx + 1.5, hy - .5, 4, 4); R(cx - 1, hy + 1, 2, 1, '#8a6200'); }
   if (o.brows) { R(cx - 5, hy - 2, 3, 1, o.brows); R(cx + 2, hy - 2, 3, 1, o.brows); }
   if (o.star) { R(cx + 2, 1, 2, 2, '#ffd36b'); }
@@ -2023,6 +2080,9 @@ const NPC_LOOK = {
   rose: { top: '#f08ca8', bottom: '#f08ca8', hair: '#c9c4d6', hairStyle: 'bun', apron: 1, acc: '#fffaf0', glasses: 1, robe: 1 },
   kai: { top: '#e8873a', hairStyle: 'bald', robe: 1, sleeves: 1, sash: 1, acc: '#c23b2c', closedEyes: 1 },
   fisher: { top: '#5c9e45', bottom: '#4a5774', cap: 1, hat: '#3d6fb5', hairStyle: 'short', hair: '#6b4423', rod: 1 },
+  mira: { top: '#e8a93a', hair: '#7a4128', hairStyle: 'long', robe: 1, sleeves: 1, book: 1, flower: 1, brows: '#5a2a18' },
+  elias: { top: '#5a8a4a', bottom: '#6b4a2a', hair: '#7a4a28', hairStyle: 'short', beard: '#7a4a28', big: 1, plaid: 1, happy: 1 },
+  tove: { kid: 1, top: '#7fbfe8', bottom: '#3d6fb5', hair: '#d8913a', hairStyle: 'short', pigtails: 1, freckles: 1 },
   wren: { top: '#e8d4a4', bottom: '#4a5774', hair: '#b5532f', hairStyle: 'short', tail: 1, bandana: '#4f9a48', apron: 1, acc: '#6b8fb5', hammer: 1, freckles: 1 },
   pip: { top: '#3d6fb5', bottom: '#c23b2c', hair: '#e8c35a', hairStyle: 'short', sleeves: 1, feathercap: 1, hat: '#2f7a45', lute: 1 }
 };
@@ -2128,6 +2188,7 @@ const frBonus = (id, k) => { const ws = WS(); NS(id); ws.fb[id] = (ws.fb[id] || 
 function wrenStage() { const n = NS('wren'); if (n.moved == null) return -1; return Math.min(3, new Set(S.log.filter(e => dn(e.t) > n.moved).map(e => dn(e.t))).size); }
 function wrenSpot() {
   const n = NS('wren'); if (n.moved == null) return { map: 'forest', x: 12, y: 10 };
+  if (famStage() === 'build') return { map: 'village', x: 14, y: 14 };               // at the Honeyfield site, hammering
   if ((WS().seen.wren || 0) >= 5 && wrenStage() >= 3) { const h = hsh(dn(), 61); if (h % 3 === 0) { const sp = [[16, 19], [13, 27], [26, 25]][(h >> 4) % 3]; return { map: 'village', x: sp[0], y: sp[1] }; } }
   return { map: 'village', x: 3, y: 23 };
 }
@@ -2137,8 +2198,8 @@ function pipHere() {                          // two random days every week
 }
 function nrlOffer(id) {
   const ws = WS(), n = NS(id); if (n.met == null || rlTask(id)) return null;
-  if (ws.rlDay[id] != null && dn() - ws.rlDay[id] < 2) return null;
-  const pool = NRLQ[id], start = hsh(dn(), 90 + (id === 'pip' ? 1 : 0)) % pool.length;
+  if (ws.rlDay[id] != null && dn() - ws.rlDay[id] < (FAMQ[id] ? FAMQ[id].gap : 2)) return null;
+  const pool = NRLQ[id], start = hsh(dn(), 90 + (id === 'pip' ? 1 : id === 'mira' ? 2 : 0)) % pool.length;
   for (let i = 0; i < pool.length; i++) { const it = pool[(start + i) % pool.length]; if (it[0] !== ws.rlLast[id]) return it; }
   return pool[start];
 }
@@ -2174,7 +2235,7 @@ function newcTaskTalk(id) {                   // their real-life task: report, o
   const ws = WS(), t = rlTask(id);
   if (t && t.done) { rlReport(id, t); return true; }
   const off = nrlOffer(id);
-  if (off) { dialog(id, [newcSmallTalk(id), id === 'wren' ? 'Oh! I have an idea for you. Out there, in your real life:' : 'Here\'s a little challenge, from one artist to another:', '"' + off[0] + '"', `Do it, then come tell me. +${off[1] + 1} ${NAMES[off[2]][0] + NAMES[off[2]].slice(1).toLowerCase()}.`], null,
+  if (off) { dialog(id, [FAMQ[id] ? famSmall(id) : newcSmallTalk(id), id === 'wren' ? 'Oh! I have an idea for you. Out there, in your real life:' : id === 'mira' ? 'There\'s something on my list for you. Out there, in your real life:' : 'Here\'s a little challenge, from one artist to another:', '"' + off[0] + '"', `Do it, then come tell me. +${off[1] + 1} ${NAMES[off[2]][0] + NAMES[off[2]].slice(1).toLowerCase()}.`], null,
       [{ label: 'ACCEPT', fn: () => rlAccept(id, off) }, { label: 'MAYBE LATER', fn: () => dialog(id, ['Sure thing. No rush.']) }]); return true; }
   if (t) { dialog(id, ['How\'s it going with this one?', '"' + t.name + '"', 'Check it off in your quests when it\'s done, then come tell me.'], null,
       [{ label: "I'M ON IT", fn: () => {} }, { label: 'DROP IT', fn: () => { S.tasks = S.tasks.filter(x => x !== t); ws.rl[id] = null; ws.rlDay[id] = dn(); save(); dialog(id, ['No worries at all.']); } }]); return true; }
@@ -2193,6 +2254,7 @@ function talkNew(id) {
       if (newcTaskTalk(id)) return;
       return dialog('wren', ['I\'m still thinking about your village. When it feels a bit warmer, I\'ll come.']);
     }
+    if (n.home && (famStage() === 'build' || famStage() === 'ready')) { if (heartUp(id)) return; return wrenBuildTalk(); }   // building for the Honeyfields
     const st = wrenStage();
     if (st < 3) {
       if (heartUp(id)) return;
@@ -2223,12 +2285,12 @@ function wrenAsk(again) {
 // ===================== Circus Mañana: art =====================
 // The six weekly bosses are now acts of a dark traveling circus. Ids stay the same so old wins still count.
 const ACTS = {
-  restday: { name: 'The Somnambulist', short: 'SOMNAMBULIST', tag: 'The tightrope sleeper', c1: '#5a4a8c', c2: '#bfb2ea', line: 'Her lullaby makes every arm and leg in the village heavy.' },
-  social: { name: 'The Puppeteer', short: 'PUPPETEER', tag: 'He cuts the strings between friends', c1: '#2f4f5a', c2: '#d6453a', line: 'His scissors snip the strings that tie friends together.' },
-  doom: { name: 'The Hypnotist', short: 'HYPNOTIST', tag: 'Look into the spiral...', c1: '#2a2a6b', c2: '#b39ddb', line: 'One glance at his spiral and your mind goes blank for hours.' },
-  takeaway: { name: 'The Feast Master', short: 'FEAST MASTER', tag: 'Endless sweets, no cooking', c1: '#3f7f5a', c2: '#f0e2c2', line: 'He serves endless boxes of sweets, until no one cooks or tidies anymore.' },
-  captain: { name: 'The Clockwork Clown', short: 'CLOCKWORK CLOWN', tag: 'It is always tomorrow', c1: '#c23b2c', c2: '#e8bf4f', line: 'His clock always points at tomorrow, and the days slip away.' },
-  excuse: { name: 'The Mirror Magician', short: 'MIRROR MAGICIAN', tag: 'Every excuse looks real', c1: '#1f1a27', c2: '#c23b2c', line: 'His mirror shows you a perfect excuse for everything.' }
+  restday: { name: 'The Somnambulist', short: 'SOMNAMBULIST', tag: 'The tightrope sleeper', c1: '#5a4a8c', c2: '#bfb2ea', creed: 'Sleep is the closest we come to peace.', line: 'Her lullaby makes every arm and leg in the village heavy.' },
+  social: { name: 'The Puppeteer', short: 'PUPPETEER', tag: 'He cuts the strings between friends', c1: '#2f4f5a', c2: '#d6453a', creed: 'Alone, no one can disappoint you.', line: 'His scissors snip the strings that tie friends together.' },
+  doom: { name: 'The Hypnotist', short: 'HYPNOTIST', tag: 'Look into the spiral...', c1: '#2a2a6b', c2: '#b39ddb', creed: 'Why think, when you can simply watch?', line: 'One glance at his spiral and your mind goes blank for hours.' },
+  takeaway: { name: 'The Feast Master', short: 'FEAST MASTER', tag: 'Endless sweets, no cooking', c1: '#3f7f5a', c2: '#f0e2c2', creed: 'Take, eat. Why make what you can be served?', line: 'He serves endless boxes of sweets, until no one cooks or tidies anymore.' },
+  captain: { name: 'The Clockwork Clown', short: 'CLOCKWORK CLOWN', tag: 'It is always tomorrow', c1: '#c23b2c', c2: '#e8bf4f', creed: 'Today is for resting. Tomorrow is for doing.', line: 'His clock always points at tomorrow, and the days slip away.' },
+  excuse: { name: 'The Mirror Magician', short: 'MIRROR MAGICIAN', tag: 'Every excuse looks real', c1: '#1f1a27', c2: '#c23b2c', creed: 'See? You have a very good reason.', line: 'His mirror shows you a perfect excuse for everything.' }
 };
 const ACT_ART = {};
 function actCanvas(id, fr) {                      // 48x64, feet on the bottom row; fr = idle frame 0/1
@@ -2446,7 +2508,7 @@ const ACT_LINE = {
 const LEGEND = ['Black and red wagons... a calliope playing in the fog... I hoped I would never see them again.',
   'It\'s Circus Mañana. It travels from valley to valley. Wherever it raises its tent, the laughter fades.',
   'People stop visiting each other, stop working, stop dreaming. They just... wait for tomorrow.',
-  'I saw Hollowmere after the circus left. Not a single light in a single window.',
+  'I saw Emberbrook after the circus left. Not a single light in a single window.',
   'No one has ever seen the ringmaster, Señor Mañana. Only his shadow on the tent... and a pair of white gloves.',
   'His acts feed on the joy you don\'t use. But every real thing you do burns a little of their spell away. Every single one.',
   'The tent is on the east side of the village. Go, and show them what doing looks like.'];
@@ -2468,7 +2530,7 @@ function bossCheck() {
 function circusReveal(then) {                       // "Señor Mañana presents..." card with this week's act
   WR.busy = 1; const B = actState(), A = B.A; bossTheme();
   const r = document.createElement('div'); r.className = 'ovl'; r.setAttribute('role', 'dialog'); r.setAttribute('aria-modal', 'true');
-  r.innerHTML = `<div class="box card bossin"><small class="bnew">SEÑOR MAÑANA PRESENTS</small>${posterImg(B.b.id, 'pbig')}<h3>${A.name.toUpperCase()}</h3><p>${A.line}</p>
+  r.innerHTML = `<div class="box card bossin"><small class="bnew">SEÑOR MAÑANA PRESENTS</small>${posterImg(B.b.id, 'pbig')}<h3>${A.name.toUpperCase()}</h3><p class="creed">"${A.creed}"</p><p>${A.line}</p>
 <span class="hpbar big"><i style="width:${Math.round(B.shown / B.b.hp * 100)}%"></i></span><p>${B.shown} / ${B.b.hp} HP</p><p class="lbl">WHAT HURTS IT</p><p>${B.b.long}</p><button>BRING IT ON!</button></div>`;
   document.body.appendChild(r);
   const close = () => { r.remove(); bossThemeStop(); WR.busy = 0; then && then(); };
@@ -2488,7 +2550,9 @@ const gateLine = () => ({ wagon: 'I should check out that wagon first.', tent: '
 function circusOnEnter() {                          // called when the World opens
   const C = CIRC(), first = !C.arrived;
   if (first) return startCinematic();
-  if (circusGate()) setTimeout(() => circusThought(!C.legend), 600);
+  const gate = () => { if (circusGate()) setTimeout(() => circusThought(!C.legend), 600); };
+  if (famStage() === 'ready') return setTimeout(() => { if (WR && WR.alive && !WR.cine) hfCinematic(gate); }, 400);
+  gate();
 }
 function circusThought(first) {
   if (WR.dlg || WR.busy) return setTimeout(() => circusThought(first), 800);
@@ -2563,6 +2627,7 @@ function posterGallery() {
 function circusDraw(g, tnow) {
   const M = WR.maps[WR.cur], B = actState();
   if (WR.cur === 'village' && CIRC().arrived) {
+    if (!B.won) { const k = Math.max(0, Math.min(1, ((WR.arrive ? (tnow - WR.arrive) / 1000 : 99) - 6.5) / 3)); if (k > 0) { g.save(); g.globalCompositeOperation = 'saturation'; const cxg = 32 * WT, cyg = 21 * WT, gr = g.createRadialGradient(cxg, cyg, 20, cxg, cyg, 7 * WT); gr.addColorStop(0, `rgba(128,128,128,${.75 * k})`); gr.addColorStop(1, 'rgba(128,128,128,0)'); g.fillStyle = gr; g.fillRect(cxg - 7 * WT, cyg - 7 * WT, 14 * WT, 14 * WT); g.restore(); } }
     const arr = WR.arrive ? (tnow - WR.arrive) / 1000 : 99, fogA = Math.max(0, Math.min(1, (arr - 6.5) / 2));   // fog and chimney smoke only once the wagon has stopped
     if (!B.won && fogA > 0) for (let i = 0; i < 9; i++) { const t = tnow / 1000 + i * 2.1, x = (33 + Math.sin(t * .23 + i) * 4.2) * WT, y = (22.4 + Math.cos(t * .17 + i * 1.3) * 2) * WT; g.fillStyle = `rgba(190,185,200,${.13 * fogA})`; g.beginPath(); g.ellipse(x, y, 30, 12, 0, 0, 7); g.fill(); }
     const wx = 25 * WT + 52 + 6, wy = 22 * WT - 48; if (arr > 6.5) for (let i = 0; i < 4; i++) { const t = ((tnow / 1600) + i / 4) % 1; g.fillStyle = `rgba(120,80,150,${(1 - t) * .45})`; g.beginPath(); g.arc(wx + t * 8 + Math.sin(t * 6 + i) * 2, wy - t * 20, 2 + t * 4, 0, 7); g.fill(); }
@@ -2570,6 +2635,7 @@ function circusDraw(g, tnow) {
     if (circusStage() === 'wagon') { const x = 27 * WT, y = 22 * WT - 58 + Math.round(Math.sin(tnow / 250) * 1.5); g.fillStyle = '#3b2416'; g.fillRect(x - 4, y - 1, 8, 11); g.fillStyle = '#ffd36b'; g.fillRect(x - 3, y, 6, 9); g.fillStyle = '#3b2416'; g.fillRect(x - 1, y + 1, 2, 4); g.fillRect(x - 1, y + 6, 2, 2); }
     if (!B.won && !(WR.arrive && tnow - WR.arrive < 10000) && (Math.floor(tnow / 1000) % 9 < 2 || (WR.cine && WR.cine.gloves && tnow - WR.cine.gloves < 3000))) { const gl = gloveCanvas(Math.floor(tnow / 250) % 2); g.drawImage(gl, 33 * WT + 1, 21 * WT + 26); }
   }
+  if (WR.growl && performance.now() - WR.growl < 1600 && WR.cur === 'village') { const x = WR.spirit.x * WT, y = WR.spirit.y * WT - 26 + Math.sin(tnow / 60); g.font = "7px 'Press Start 2P', monospace"; g.textAlign = 'center'; g.fillStyle = '#1f1a27'; g.fillText('grr', x + 1, y + 1); g.fillStyle = '#fffaf0'; g.fillText('grr', x, y); }
   if (WR.cur === 'tent') {
     const A = B.A; for (let x = 0; x < M.w * WT; x += 12) { g.fillStyle = (x / 12) % 2 ? A.c1 : A.c2; g.beginPath(); g.moveTo(x, 28); g.lineTo(x + 12, 28); g.lineTo(x + 6, 38 + Math.sin(x + tnow / 700) * 1.5); g.fill(); }   // bunting
     for (let i = 0; i < 9; i++) { const x = 14 + i * 21 + (i % 2) * 5, y = 8 + (i % 2) * 6; g.fillStyle = 'rgba(30,18,36,.85)'; g.beginPath(); g.arc(x, y, 5, 0, 7); g.fill(); g.fillRect(x - 6, y + 4, 12, 7); if ((Math.floor(tnow / 1700) + i) % 5 === 0) { g.fillStyle = '#ffd36b'; g.fillRect(x - 3, y - 1, 1, 1); g.fillRect(x + 2, y - 1, 1, 1); } }
@@ -2613,6 +2679,178 @@ function cineTick(now) {
   const c = WR.cine; if (!c) return;
   if (c.pan) { const k = Math.min(1, (now - c.pan.t0) / c.pan.ms), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; c.cam.x = c.pan.a.x + (c.pan.b.x - c.pan.a.x) * e; c.cam.y = c.pan.a.y + (c.pan.b.y - c.pan.a.y) * e; if (k >= 1) { const f = c.pan.then; c.pan = null; f && f(); } }
   const to = c.gloomTo || 0; c.gloom += (to - c.gloom) * .02;
+  if (c.actors) famCineTick(c, now);
+}
+
+// ===================== Families coming home: the Honeyfields (Part 2 of the connected world) =====================
+// Recipe for every family: a secret stat milestone -> next day, news arrives -> Wren builds, one stage per active real-life day
+// -> the first time you open the World after the house is done, a move-in cinematic -> the family lives in the village.
+const HF_ROOF = '#d69a3a', HF_IDS = ['mira', 'elias', 'tove'];
+const FAMQ = { mira: { name: 'Mira', gap: 3 } };       // family members who hand out real-life tasks (Mira: now and then, about bringing people together)
+NRLQ.mira = [['Invite someone over for fika', 3, 'CHA'], ['Cook a meal for someone you care about', 3, 'CHA'], ['Plan a get-together with friends', 3, 'CHA'],
+  ['Bring a neighbor or coworker something homemade', 3, 'CHA'], ['Eat a meal together with someone, no phones', 2, 'CHA'], ['Introduce two people who should know each other', 3, 'CHA']];
+MN.mira = 'Mira'; MN.elias = 'Elias'; MN.tove = 'Tove';
+function FS(k) { const ws = WS(); ws.fam = ws.fam || {}; return ws.fam[k] = ws.fam[k] || {}; }
+function famCheck() {                               // notes the day you first reach the secret milestone (Heart 9)
+  if (typeof S === 'undefined' || !S || !S.pts) return; const f = FS('hf');
+  if (f.hit == null && Lv('CHA') >= 9) { f.hit = dn(); save(); }
+}
+function famBuildStage() { const f = FS('hf'); if (f.build == null) return -1; return Math.min(3, new Set(S.log.filter(e => dn(e.t) > f.build).map(e => dn(e.t))).size); }
+function famStage() {                               // '' · news (Rose has a letter) · tellwren · build · ready (cinematic next) · home
+  const f = FS('hf');
+  if (f.home != null) return 'home';
+  if (f.build != null) return famBuildStage() >= 3 ? 'ready' : 'build';
+  if (f.letter != null) return 'tellwren';
+  if (f.hit != null && dn() > f.hit && NS('wren').home) return 'news';
+  return '';
+}
+const famMark = id => { const s = famStage(); return (id === 'rose' && s === 'news') || (id === 'wren' && s === 'tellwren') ? 'S!' : ''; };
+function hfSpots() { const h = hsh(dn(), 77); return { mira: [11, 14], elias: h % 3 === 1 ? [8, 23] : [14, 15], tove: [[17, 19], [25, 19], [28, 20], [12, 17]][h % 4] }; }
+const toveAtTent = () => { const t = hfSpots().tove; return t[0] === 28 && CIRC().arrived; };
+
+// ---- the story beats
+function roseLetter() {
+  dialog('rose', ['Oh! There you are, dear. You\'ll never guess what came in the post this morning!', 'A letter! From the Honeyfields... old Greta\'s grandchildren.',
+    'Greta was my dearest friend. She left when the Gloom crept into the valley, forty years ago. She never came back.',
+    'But word travels, you know. They say Hearthsvale feels warm again. And now her grandchildren want to come HOME!',
+    'They\'ll need a house, though... Would you tell Wren? If anyone can build one, it\'s her.', 'QUEST: Tell Wren about the Honeyfields'],
+  () => { FS('hf').letter = dn(); save(); worldHud(); });
+}
+function wrenStartsHF() {
+  dialog('wren', ['The Honeyfields? A whole family?!', 'Finally, a reason to fix up that old frame next to Orvel\'s tower!',
+    'Same deal as my house: every day you get something done out there in real life, I\'ll build a bit more.', 'Round windows this time. Orvel showed me the old drawings. Meet you at the site!'],
+  () => { FS('hf').build = dn(); save(); sfx('ok'); worldEntities(); worldHud(); });
+}
+function wrenBuildTalk() {
+  const k = famBuildStage();
+  if (k >= 3) return dialog('wren', ['It\'s done! Now we just wait for them to arrive.']);
+  dialog('wren', [['Good bones on this old frame. Come back after a good day out there and there\'ll be walls.', 'Walls are up! Rose already brought three pies "for the builders". There is one builder. Me.', 'The roof is on! One more good day out there and the Honeyfields can come home.'][k]], () => newcTaskTalk('wren'));
+}
+
+// ---- what the family says
+const HF_LINES = {
+  mira: ['Grandma kept a notebook for everything. So do I. Page one: "Make Hearthsvale feel like home again."', 'Hearthsvale used to have a summer feast. Long tables across the whole square! I want to bring it back.',
+    'Rose showed me Grandma\'s old recipe for honey bread. I cried a little. Then I ate four slices.', 'Elias has told Bjørn the same joke three times. Bjørn laughed every time. I think they\'re best friends now.',
+    'Tove! Not near the tent! ...She\'s near the tent again, isn\'t she?', 'Orvel gave me a box of Grandma\'s letters. She wrote to him every month for forty years.'],
+  elias: ['What do you call a sleeping bull? A bulldozer! HA! ...Tove didn\'t laugh either.', 'Wren and I are making benches for the square. She does the hard parts. I do the jokes.',
+    'Why don\'t skeletons fight each other? They don\'t have the guts! HAHA!', 'Kai almost smiled at one of my jokes today. ALMOST. I\'ll get him.',
+    'I carved Tove a little wooden dog. She says it looks like a potato. ...It does look like a potato.', 'I wood tell you a carpentry joke, but I\'m still working on it. HA! WOOD!'],
+  tove: ['Did you know Kai\'s bell is MAGIC? He told me. He doesn\'t lie. He doesn\'t even smile!', 'I want to be a carpenter like Wren. Or a wizard like Orvel. Or BOTH.',
+    'Finn showed me how to catch a fish. I caught a boot. It counts!', 'Bjørn can lift TWO of me. He showed me. Then Mom made him put me down.',
+    'Pip taught me a song. It goes "la la laaa". That\'s the whole song.', 'Rose gave me a cookie. And then another cookie. I love it here.']
+};
+const HF_REACT = {
+  restday: { mira: 'Everyone\'s so sleepy this week. I wrote "WAKE UP" in my notebook. Twice.', elias: 'Fell asleep in the middle of a joke today. The MIDDLE.', tove: 'I don\'t want a nap. I DON\'T. ...Maybe a small one.' },
+  social: { mira: 'Nobody answered when I knocked to invite them over. That\'s not like this village.', elias: 'Told a joke to the whole square. Nobody even looked up. That\'s a crime, friend.', tove: 'Nobody wants to play today. Everyone just walks past.' },
+  doom: { mira: 'I lost my place in my own notebook. Three times. That spiral gets in your head.', elias: 'Sanded the same plank for an hour. Didn\'t even notice.', tove: 'The man with the spinny thing looked at me. I covered my eyes. Like THIS.' },
+  takeaway: { mira: 'Someone left circus candy on our doorstep. Straight in the bin.', elias: 'Free sweets from the circus! I ate ONE. Okay, five. Don\'t tell Mira.', tove: 'Mom says the circus candy is bad. But it\'s SO shiny...' },
+  captain: { mira: 'Every page in my notebook says "tomorrow". I didn\'t write that.', elias: '"I\'ll fix the fence tomorrow," I said. Yesterday. And the day before.', tove: 'The clown says bedtime is tomorrow. I like the clown. ...Is that bad?' },
+  excuse: { mira: 'I had the perfect reason not to visit Rose today. That\'s exactly why I went anyway.', elias: 'I almost skipped work. Had a GREAT excuse too. Can\'t even remember it now.', tove: 'I told Mom I couldn\'t clean my room because of the circus. She didn\'t believe me.' }
+};
+const HF_RELIEF = { mira: 'It feels like summer again. Time to plan that feast!', elias: 'You did it! That deserves a joke. ...I\'ll think of one. HA!', tove: 'You beat the circus?! You\'re like a SUPERHERO!' };
+const HF_SOON = {                                    // while the house goes up
+  rose: 'The Honeyfields are coming home! I\'ve already started baking. Too early? It\'s never too early.', orvel: 'Greta Honeyfield wrote me every month for forty years. I kept every letter. Her grandchildren should have them.',
+  bjorn: 'A whole FAMILY moving in? More people to train! I did forty extra push-ups just thinking about it.', kai: 'A house is built one plank a day. So is everything worth having.',
+  pip: 'A family coming home! There\'s a song in that. A big one.', fisher: '...Honeyfield. I know that name. Greta came through Emberbrook once, when I was small. She gave me honey bread.'
+};
+const HF_HOME = {                                    // once they live here
+  rose: 'Mira has Greta\'s laugh. I hear it from across the square and have to sit down for a moment.', orvel: 'I gave Mira her grandmother\'s letters. Forty years of them. She read them all in one night.',
+  bjorn: 'Elias told me a joke today. I laughed so hard I dropped a weight on my foot. WORTH IT.', kai: 'The child, Tove, asked me if the bell is magic. I told her yes. It is not a lie. Not exactly.',
+  wren: 'Elias is handy with a plane. Terrible jokes, though. TERRIBLE.', pip: 'The Honeyfields came home! That\'s my favorite verse so far.', fisher: '...Tove caught a boot today. She was so proud. ...I was too.'
+};
+const famExtra = id => { const s = famStage(); return s === 'home' ? (HF_HOME[id] ? [HF_HOME[id]] : []) : s === 'build' || s === 'ready' ? (HF_SOON[id] ? [HF_SOON[id]] : []) : []; };
+function famSmall(id) { const n = weekDays(e => e.stat === 'CHA'); return n === 0 ? 'Grandma used to say: a village is just people who show up for each other.' : 'You\'ve been there for people ' + n + (n === 1 ? ' day' : ' days') + ' this week. Grandma would have liked you.'; }
+function famLine(id) {
+  const ws = WS(); ws.cday = ws.cday || {}; ws.lix = ws.lix || {};
+  const C = CIRC(), B = boss(), live = C.tentSeen && !circusGate();
+  if (live) {
+    const key = day() + (B.won ? 'w' : 'a') + B.b.id;
+    if (ws.cday[id] !== key) { const line = B.won ? (ws.cday[id + 'won'] === B.w ? null : HF_RELIEF[id]) : (HF_REACT[B.b.id] || {})[id];
+      if (line) { ws.cday[id] = key; if (B.won) ws.cday[id + 'won'] = B.w; save(); return [line]; } }
+  }
+  if (id === 'tove' && toveAtTent()) return B.won ? ['The tent is all quiet now. Was that YOU? Did you beat the scary circus?!'] : ['There\'s music coming from that tent... Mom says I\'m not allowed in there.', '...Just one little peek?'];
+  const pool = HF_LINES[id], i = ws.lix[id] = ((ws.lix[id] == null ? -1 : ws.lix[id]) + 1) % pool.length; save();
+  return [pool[i]];
+}
+function famTalk(id) {
+  if (id === 'mira' && newcTaskTalk('mira')) return;
+  dialog(id, famLine(id));
+}
+
+// ---- the move-in cinematic: the cart rolls in from the west road, the village says hello, Wren hands over the key
+function hfCinematic(after) {
+  const f = FS('hf'); WR.busy = 1; WR.cur = 'village'; Object.assign(WR.p, { x: 15.6, y: 16.9, dir: 3, moving: 0 }); WR.spirit = { x: 16.5, y: 17.3 }; WR.trail = [];
+  worldEntities(); worldHud(); musicFor('village');
+  const A = { cart: { cart: 1, x: -5.5, y: 16.55 }, elias: { id: 'elias', x: 0, y: 16.62 }, mira: { id: 'mira', x: 0, y: 16.7 }, tove: { id: 'tove', x: 0, y: 17.45 },
+    rose: { id: 'rose', x: 17.4, y: 18.7 }, wren: { id: 'wren', x: 16.4, y: 14.4 } };
+  WR.cine = { t0: performance.now(), gloom: 0, cam: { x: 12.5, y: 14.2 }, actors: Object.values(A), A, hide: ['rose', 'wren'], link: 1, family: 1 };
+  const wv = document.getElementById('wv'); ['top', 'bot'].forEach(k => { const d = document.createElement('div'); d.className = 'cbar ' + k; wv.appendChild(d); requestAnimationFrame(() => d.classList.add('on')); });
+  document.body.classList.add('cine');
+  const pan = (x, y, ms, then) => { const c = WR.cine, a = { x: c.cam.x, y: c.cam.y }; c.pan = { a, b: { x, y }, t0: performance.now(), ms, then }; };
+  const go = (a, x, y, sp, then) => { a.to = { x, y, sp, then }; };
+  const wait = (ms, fn) => setTimeout(() => { if (WR && WR.cine && WR.cine.family) fn(); }, ms);
+  const chain = (steps, done) => { const s = steps.shift(); if (!s) return done && done(); if (typeof s === 'function') return s(() => chain(steps, done)); dialog(s[0], s[1].slice(), () => chain(steps, done)); };
+  const dog = S.owned.spirit && S.equip.spirit;
+  wait(900, () => dialog(null, ['The new house by Orvel\'s tower stands finished, its round windows still dark.', 'Then, from the west road... the rattle of wooden wheels.'], () => {
+    pan(6.5, 15.8, 2200); go(A.cart, 6, 16.55, 1.9, () => {
+      WR.cine.link = 0; go(A.mira, 5.6, 17.7, 2, () => go(A.mira, 10.9, 16.3, 2)); go(A.tove, 14.7, 18, 3.2);
+      go(A.rose, 13.3, 16.75, 2.2); go(A.wren, 12.6, 15.5, 2.4);
+      pan(11.6, 16, 1800, () => wait(500, () => chain([
+        ['mira', ['Excuse me... is this Hearthsvale?', 'We\'re the Honeyfields! I\'m Mira, this is Elias, and the little whirlwind is Tove.']],
+        ['rose', ['Oh my stars... You have Greta\'s eyes, dear. You\'re her grandchildren!', 'Forty years... Don\'t mind me. These are happy tears.']],
+        ['mira', ['Grandma talked about Hearthsvale every single day. The bakery, the bell, the round windows...', 'She always said: "One day, someone will go home."']],
+        ['elias', ['Elias Honeyfield! Woodworker, husband, and the funniest man in three valleys.', 'Why did the carpenter go to the doctor? He had a splinter personality! HA!']],
+        ['wren', ['...He\'s going to be a lot, isn\'t he?']],
+        ['tove', [dog ? 'Is that your dog?! Does he bite? Can he come to my house? Do we HAVE a house?' : 'Is that a real wizard tower?! Do we live here now? Do we HAVE a house?']],
+        ['wren', ['You do, kid. Built it myself. Well... with a lot of help from out there.', 'Here. It\'s yours.']],
+        n => { WR.cine.key = performance.now(); sfx('key'); wait(1300, n); },
+        ['mira', ['A key. A real home...', 'Thank you. All of you.']],
+        ['me', ['Welcome home, Honeyfields.']]
+      ], () => {
+        pan(12.3, 15, 1600); go(A.mira, 12, 14.2, 1.8, () => { A.mira.fade = performance.now(); sfx('click'); });
+        wait(700, () => go(A.tove, 12, 14.2, 2.6, () => { A.tove.fade = performance.now(); }));
+        wait(1100, () => go(A.elias, 12, 14.2, 1.6, () => { A.elias.fade = performance.now(); A.cart.fade = performance.now(); }));
+        wait(5200, () => {
+          const site = WR.maps.village.props.find(q => q.site); if (site) { site.lit = 1; site.smoke = 1; } sfx('heart');
+          wait(1800, () => pan(WR.p.x, WR.p.y, 1200, () => hfEnd(after)));
+        });
+      })));
+    });
+  }));
+}
+function hfEnd(after) {
+  const f = FS('hf'); f.home = dn(); NS('mira').met = dn(); save();
+  document.querySelectorAll('#wv .cbar').forEach(d => { d.classList.remove('on'); setTimeout(() => d.remove(), 600); });
+  setTimeout(() => {
+    WR.cine = null; WR.busy = 0; document.body.classList.remove('cine'); musicFor('village'); worldEntities(); worldHud();
+    sfx('tier'); confetti(GOLD, 70, innerWidth / 2, innerHeight * .4, 12);
+    fxCard('', `<small class="tpk">NEW NEIGHBORS!</small><h3>THE HONEYFIELDS</h3><div class="rlport hfport"></div><p>Mira, Elias and Tove have moved in next to Orvel's tower.</p>`, 'WELCOME HOME!', () => after && after());
+    const port = document.querySelector('.fxtier .rlport'); if (port) HF_IDS.forEach(id => { const c = npcCanvas(id), big = document.createElement('canvas'); big.width = c.width * 3; big.height = c.height * 3; const g = big.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(c, 0, 0, big.width, big.height); port.appendChild(big); });
+  }, 700);
+}
+function famCineTick(c, now) {                      // actors walk toward their targets; the family walks alongside the cart
+  const dt = Math.min(.05, (now - (c.last || now)) / 1000); c.last = now;
+  c.actors.forEach(a => { const t = a.to; if (!t) return; const dx = t.x - a.x, dy = t.y - a.y, L = Math.hypot(dx, dy), st = t.sp * dt;
+    if (L <= st) { a.x = t.x; a.y = t.y; a.to = null; t.then && t.then(); } else { a.x += dx / L * st; a.y += dy / L * st; } });
+  const A = c.A;
+  if (c.link) { A.elias.x = A.cart.x + 3.6; A.mira.x = A.cart.x - .7; A.tove.x = A.cart.x + 5.6 + Math.sin(now / 400) * .6; A.tove.y = 17.45 + Math.cos(now / 300) * .15;
+    if (A.cart.to && (!c.cartT || now - c.cartT > 430)) { c.cartT = now; sfx('cart'); } }
+}
+function famDrawActors(g, draws, shadow, tnow) {
+  const c = WR.cine; if (!c || !c.actors) return;
+  c.actors.forEach(a => {
+    const al = a.fade ? Math.max(0, 1 - (tnow - a.fade) / 600) : 1; if (al <= 0) return;
+    const moving = !!a.to || (c.link && a.id), cv = a.cart ? cartCanvas(a.x * WT / 9) : npcCanvas(a.id), bob = !a.cart && moving ? Math.floor(tnow / 140) % 2 : 0;
+    const x = a.cart ? Math.round(a.x * WT) : Math.round(a.x * WT + 8 - cv.width / 2), y = Math.round((a.y + 1) * WT - cv.height) - bob;
+    if (al > .5) shadow(a.cart ? x + 26 : a.x * WT + 8, (a.y + 1) * WT - 2, a.cart ? 12 : cv.width / 2.6);
+    draws.push({ z: (a.y + 1) * WT, c: cv, x, y, alpha: al });
+  });
+}
+function famDrawKey(g, tnow) {                      // the key Wren hands to Mira
+  const c = WR.cine; if (!c || !c.key || tnow - c.key > 2600) return; const m = c.A.mira, x = Math.round(m.x * WT + 4), y = Math.round((m.y + 1) * WT - 50 + Math.sin(tnow / 200) * 1.5);
+  g.fillStyle = '#3b2416'; g.fillRect(x - 1, y - 1, 7, 7); g.fillRect(x + 5, y + 1, 8, 3); g.fillStyle = '#e8bf4f'; g.fillRect(x, y, 5, 5); g.fillRect(x + 5, y + 2, 7, 1); g.fillRect(x + 9, y + 3, 1, 1); g.fillRect(x + 11, y + 3, 1, 1);
+  g.fillStyle = '#3b2416'; g.fillRect(x + 2, y + 2, 1, 1); g.fillStyle = '#fff1a8'; g.fillRect(x, y, 2, 1);
+  const ph = Math.floor(tnow / 150) % 4, sp = [[-4, -3], [14, -2], [-3, 7], [15, 6]][ph]; g.fillStyle = '#ffffff'; g.fillRect(x + sp[0], y + sp[1] - 1, 1, 3); g.fillRect(x + sp[0] - 1, y + sp[1], 3, 1);
 }
 
 // ---- runtime
@@ -2678,6 +2916,11 @@ function worldEntities() {
     if (st >= 0) V.props.push(st < 3 ? { type: 'plot', stage: st, x: P.x, y: P.y, wrenHouse: 1 } : { type: 'house', w: 5, roof: '#4f8a5a', wren: 1, smoke: 1, x: P.x, y: P.y, wrenHouse: 1 });
     for (let j = 0; j < 3; j++) for (let i = 0; i < 5; i++) V.solid[P.y + j][P.x + i] = st >= 0 ? 1 : 0;
   }
+  if (WR.cur === 'village') {                                    // the old frame next to Orvel's tower: Wren's build site, then the Honeyfield house
+    const V = WR.maps.village, i = V.props.findIndex(q => q.site), fs = famStage(), k = famBuildStage();
+    if (i >= 0) { const was = V.props[i]; V.props[i] = Object.assign({ x: 10, y: 11, site: 1 }, fs === 'home' ? { type: 'house', w: 5, roof: HF_ROOF, honey: 1, lit: 1, smoke: 1 } : fs === 'ready' ? { type: 'house', w: 5, roof: HF_ROOF, honey: 1, lit: WR.cine ? was.lit : 0, smoke: WR.cine ? was.smoke : 0 } : fs === 'build' ? { type: 'plot', stage: [1, 2, 3][k], roof: HF_ROOF } : { type: 'plot', stage: 1 }); }
+    if (fs === 'home') { const sp = hfSpots(); HF_IDS.forEach(id => E.push({ id, npc: 1, x: sp[id][0], y: sp[id][1] })); }
+  }
   WR.ents = E;
   const M = WR.maps[WR.cur]; M.solidE = {};
   E.forEach(e => { if (e.npc || e.solid) M.solidE[Math.floor(e.x) + ',' + Math.floor(e.y)] = 1; });
@@ -2724,6 +2967,7 @@ function worldTick(now) {
     if (side && fr !== WR.lastFr && (fr === 0 || fr === 2)) (WR.dust = WR.dust || []).push({ x: p.x - (p.dir === 2 ? .35 : -.35), y: p.y + .38, t: 0 });
     WR.lastFr = fr; if (WR.trail.length > 40) WR.trail.shift();
     worldGates(M);
+    if (WR.cur === 'village' && CIRC().arrived && S.owned.spirit && S.equip.spirit && Math.hypot(WR.spirit.x - 27, WR.spirit.y - 22.6) < 2.6 && (!WR.growl || performance.now() - WR.growl > 15000)) { WR.growl = performance.now(); sfx('growl'); }
     if (WR.cur === 'forest' && p.x < 9 && p.y > 16 && !WS().gift.glade) { NS('wren'); WS().gift.glade = 1; checkUnlocks(); save(); sfx('tier'); setTimeout(() => giftCard('NEW PLACE', 'Firefly glade', `<svg class="cpic" viewBox="0 0 44 44" shape-rendering="crispEdges">${runs(placeBg('glade'))}</svg>`, 'WREN\'S SECRET SPOT'), 200); }
     let w = M.warps.find(w => w.x === Math.floor(p.x) && w.y === Math.floor(p.y + .1));
     if (w && circusGate() && w.to !== 'village' && !(w.to === 'tent' && circusStage() === 'tent')) { p.x = px0; p.y = py0; w = null; if (!WR.gateSaid || performance.now() - WR.gateSaid > 4000) { WR.gateSaid = performance.now(); dialog('me', [gateLine()]); } }
@@ -2734,6 +2978,8 @@ function worldTick(now) {
   // refresh the hero if gear/levels changed (e.g. after a reward)
   const hk = JSON.stringify([gear(), Lv('STR'), Lv('INT'), Lv('CHA')]); if (hk !== WR.heroKey) { WR.heroKey = hk; WR.hero = heroCanvas(); WR.frames = {}; }
   if (WR.cine) cineTick(now);
+  if (WR.cur === 'village' && !WR.cine && famStage() === 'build' && Math.hypot(p.x - 14.5, p.y - 14.5) < 6 && (!WR.hamT || now - WR.hamT > 6500)) { WR.hamT = now; [0, 380, 760].forEach(ms => setTimeout(() => sfx('hammer'), ms)); }   // Wren hammering at the site
+  const lk = !!worldLocked(); if (lk !== WR.lk) { WR.lk = lk; document.body.classList.toggle('wlock', lk); }
   worldNear(); worldDraw(); WR.raf = requestAnimationFrame(worldTick);
 }
 function worldWarp(w) {
@@ -2755,16 +3001,19 @@ function worldNear() {
   WR.ents.forEach(e => { const d = Math.hypot(e.x + .5 - fx, e.y + .5 - fy) * .7 + Math.hypot(e.x + .5 - p.x, e.y + .6 - p.y) * .3; if (d < bd) { bd = d; best = e; } });
   if (WR.cur === 'tower' && Math.hypot(5.5 - p.x, 3.7 - p.y) < 1.3 && !best) best = { id: 'table' };
   if (WR.cur === 'village' && Math.hypot(23 - p.x, 15.2 - p.y) < 1.4 && !best) best = { id: 'board' };
+  if (WR.cur === 'village' && Math.hypot(12.5 - p.x, 14.4 - p.y) < 1.6 && !best && !['home', 'ready'].includes(famStage())) best = { id: 'site' };
   if (WR.cur === 'village' && CIRC().arrived && Math.hypot(27 - p.x, 23.2 - p.y) < 2.3 && !best) best = { id: 'wagon' };
   WR.near = best;
   const b = document.getElementById('wact'); if (!b) return;
-  const lab = !best ? '' : best.act ? (() => { const B = actState(); return B.pending ? 'HIT IT' : B.staggered ? 'FINISH IT' : 'LOOK'; })() : best.id === 'board' || best.id === 'wagon' ? 'LOOK' : best.npc ? 'TALK' : best.id === 'boulder' ? 'PUSH' : best.id === 'runedoor' ? 'READ' : best.id === 'bell' ? 'RING' : best.pick ? 'TAKE' : 'LOOK';
+  const lab = !best ? '' : best.act ? (() => { const B = actState(); return B.pending ? 'HIT IT' : B.staggered ? 'FINISH IT' : 'LOOK'; })() : best.id === 'board' || best.id === 'wagon' || best.id === 'site' ? 'LOOK' : best.npc ? 'TALK' : best.id === 'boulder' ? 'PUSH' : best.id === 'runedoor' ? 'READ' : best.id === 'bell' ? 'RING' : best.pick ? 'TAKE' : 'LOOK';
   if (b.textContent !== lab) b.textContent = lab; b.hidden = !best || !!WR.dlg;
 }
 function worldAct() {
   const e = WR.near; if (!e || WR.dlg || WR.busy) return; const ws = WS(), f = ws.f;
   if (e.npc) return talk(e.id);
   if (e.id === 'wagon') return checkWagon();
+  if (e.id === 'site' && !circusGate() && famStage() === 'build') return dialog(null, ['Wren\'s building site. Fresh planks, sawdust, and a pencil sketch of round windows.', 'A note is pinned to a beam: "FOR THE HONEYFIELDS".']);
+  if (e.id === 'site' && !circusGate()) return dialog(null, ['An old wooden frame. Someone started rebuilding this house long ago, then stopped.', 'The beams are grey and dusty, but still standing.'].concat(NS('wren').met != null ? ['Wren would know what to do with this.'] : []));
   if (circusGate()) return dialog('me', [gateLine()]);
   if (e.id === 'boulder') {
     if (f.boulder) return dialog(null, ['The boulder rests to the side now.']);
@@ -2787,6 +3036,62 @@ function worldAct() {
   if (e.id === 'feather') { NS('pip').feather = 1; save(); sfx('ok'); worldEntities(); worldHud(); return dialog(null, ['A long blue feather, caught on a branch.', 'Pip will want this back next time he\'s in town.']); }
   if (e.id === 'table') return dialog(null, ['Old Orvel\'s desk. Star charts, scribbled notes... and a cold cup of tea.']);
 }
+// ===================== Hearthsvale: the villagers' voices (see the Hearthsvale World Bible) =====================
+// Everyday lines with personality, reactions to this week's circus act, and a relieved line once it's beaten.
+const LORE = {
+  bjorn: ['Kai hasn\'t smiled since the day I met him. I\'m WORKING on it.', 'Rose\'s cookies are my one weakness. Okay, two. Rose\'s pies too.',
+    'This dumbbell was my father\'s. He said: lift something heavy every day, even if it\'s just your spirits.', 'Finn pretends he doesn\'t like visits. He LOVES visits.',
+    'The gym is the oldest tradition in Hearthsvale. Kai says the bell is. Kai is WRONG.', 'That carpenter, Wren? Strong arms. I like her already.'],
+  orvel: ['Rose says my tea is "a crime". Hmm. It\'s merely... seasoned.', 'Four friends built Hearthsvale around the old well. The tower was the fourth tradition. Or the third? Hmm.',
+    'I visited Emberbrook once, years ago. ...Let\'s talk about something else.', 'Kai\'s bell has rung every morning for forty years. It still startles me. Every. Single. Morning.',
+    'Bjørn asked me to read to him once. He was asleep by page two. Snoring like thunder.', 'That bard Pip keeps asking me for old stories. I have so many. Too many, perhaps.'],
+  rose: ['Have you checked on Finn lately, dear? He won\'t say it, but he gets lonely.', 'Orvel and his tea... One day I\'ll sneak a proper cup into that tower.',
+    'Bjørn ate eleven cookies yesterday. Eleven! Then he went for a run, bless him.', 'My grandmother baked in this very bakery. The ovens remember her, I think.',
+    'Wren says she\'ll fix up the old houses. Oh, it would be lovely to have neighbors again.', 'That Pip sings for his supper. I pretend to complain. I don\'t.'],
+  kai: ['The river does not rest. Neither do we.', 'Bjørn says I never smile. I smile on the inside.', 'My master rang this bell for forty years. Now I do.',
+    'Orvel is wiser than he looks. Do not tell him I said so.', 'Pip plays music before dawn. Before the bell. It is... a test of patience.',
+    'Every morning, the bell. Every morning, the village wakes. That is the whole secret.'],
+  wren: ['That old frame next to Orvel\'s tower? Someone started rebuilding it ages ago. I\'ve got plans for it.', 'Bjørn helped me carry beams today. Showed off the whole time. Useful, though.',
+    'Orvel told me what the old houses looked like. Round windows! Can you believe it?', 'Every village I\'ve rebuilt, I wished I\'d arrived sooner. Not this time.', 'Rose pays me in pie. Best deal I\'ve ever made.'],
+  pip: ['Every village that beats them gets a song. Hearthsvale\'s is coming along nicely!', 'I\'ve seen Señor Mañana\'s shadow three times. Always smiling. Always.',
+    'Kai glared at me for practicing before dawn. Art waits for no bell!', 'Rose feeds me. Orvel lends me stories. Bjørn... tried to teach me push-ups.',
+    'I know a song from Emberbrook. I played it for Finn once. He went very quiet.']
+};
+const FINN = {
+  shy: [['...', 'The fish aren\'t biting today.'], ['...You again.'], ['...', 'Quiet is good. Quiet is safe.']],
+  warm: ['...Rose\'s cookies are the best thing that happened to me this year. Don\'t tell anyone.', 'I grew up somewhere else. A place called Emberbrook. It\'s gone now.',
+    '...Bjørn came by again. Talks too loud. Scares the fish. ...I don\'t mind.', 'In Emberbrook, the colors went first. Then the voices. Then the people.',
+    'That bard sang a song from my old village. ...I had to walk away for a bit.', '...Thanks for coming by. Really.']
+};
+const ACT_REACT = {
+  restday: { bjorn: 'My arms feel like porridge. That lullaby is getting into my MUSCLES!', orvel: 'The Somnambulist... I keep yawning over my books. Not a good sign.', rose: 'Half the village slept through breakfast. My rolls went cold, dear.', kai: 'Her song says rest. The bell says rise. Listen to the bell.', wren: 'My hammer feels twice as heavy today. Funny how that works.', pip: 'I started a new song today and fell asleep on the second verse. Rude.', fisher: '...Even the fish are sleepy. Don\'t listen to that humming.' },
+  social: { bjorn: 'Nobody showed up to train today. NOBODY. Something\'s wrong.', orvel: 'Rose didn\'t come by with tea... Hmm. Strange how quiet it gets.', rose: 'Nobody\'s come by for a chat all day. It\'s that Puppeteer, I just know it.', kai: 'The strings he cuts can be tied again. One knot at a time.', wren: 'Folks walk right past each other this week. Gives me the creeps.', pip: 'I played on the square for an hour. Not one person stopped. Not one!', fisher: '...I\'ve seen this before. People stop knocking. Then they stop answering.' },
+  doom: { bjorn: 'I caught myself staring at nothing for twenty minutes. TWENTY.', orvel: 'I read the same line nine times today. Don\'t look into that spiral, friend.', rose: 'I forgot the sugar in a whole batch of cookies. My head is in a fog.', kai: 'A still mind is good. An empty mind is not the same thing.', wren: 'Measured a plank three times and still cut it wrong. Ugh.', pip: 'I forgot the words to my own song. That has NEVER happened.', fisher: '...He spins and spins. Look at the water instead. It\'s honest.' },
+  takeaway: { bjorn: 'Someone left a box of sweets at the gym. I did NOT eat them. ...Most of them.', orvel: 'Free pastries on my doorstep. From the circus. I fed them to the crows.', rose: 'Nobody bakes anymore, they just eat that circus candy. It breaks my heart.', kai: 'A meal you make yourself feeds more than the stomach.', wren: 'My workbench is covered in candy wrappers. Not mine. I think.', pip: 'Endless dessert sounds like a dream. That\'s exactly the problem, isn\'t it?', fisher: '...Back home, the sweets came first. Then nobody cooked again.' },
+  captain: { bjorn: 'I said I\'d train "later" three times today. LATER. Me!', orvel: 'I\'ve meant to do something all week. I just can\'t remember what. Hmm.', rose: 'Everyone keeps saying "tomorrow, Rose, tomorrow". Tomorrow never comes, dear.', kai: 'Tomorrow is a story. Today is real.', wren: 'Somebody keeps winding the clock back. Every day feels like the same day.', pip: 'Tick, tock... I\'ll write a song about him. Tomorrow. Wait. No. NOW.', fisher: '...Emberbrook said "tomorrow" too. For years.' },
+  excuse: { bjorn: 'I had a PERFECT reason to skip training. That\'s how I knew something was wrong.', orvel: 'Every excuse sounds so reasonable this week. That\'s his trick, you know.', rose: 'Everyone has a lovely reason why they couldn\'t come by. Too lovely.', kai: 'A good excuse is still an excuse.', wren: 'Caught myself explaining to a hammer why I couldn\'t work. Out loud.', pip: 'I almost talked myself out of performing today. Very convincing, that mirror.', fisher: '...Don\'t look in his mirror. You\'ll see someone who stopped trying.' }
+};
+const ACT_RELIEF = { bjorn: 'You knocked that act FLAT! The air feels lighter. Let\'s TRAIN!', orvel: 'The music has stopped, for now. Well done, dear friend. Well done.', rose: 'The colors are back on the east side. I\'m baking something special tonight.', kai: 'The tent is quiet. Rest well. Monday will come.', wren: 'Tent\'s gone quiet. Back to building, then!', pip: 'Another verse for your song! The village that would not sit still!', fisher: '...It\'s quieter now. Thank you.' };
+function chatterLine(id) {                          // one extra line per conversation: this week's act (once a day), otherwise an everyday line
+  const ws = WS(); ws.cday = ws.cday || {}; ws.lix = ws.lix || {};
+  const C = CIRC(), B = boss(), live = C.tentSeen && !circusGate();
+  if (live) {
+    const key = day() + (B.won ? 'w' : 'a') + B.b.id;
+    if (ws.cday[id] !== key) {
+      const line = B.won ? (ws.cday[id + 'won'] === B.w ? null : ACT_RELIEF[id]) : (ACT_REACT[B.b.id] || {})[id];
+      if (line) { ws.cday[id] = key; if (B.won) ws.cday[id + 'won'] = B.w; save(); return [line]; }
+    }
+  }
+  ws.ltog = ws.ltog || {}; ws.ltog[id] = !ws.ltog[id]; const pool = LORE[id] && LORE[id].concat(famExtra(id)); if (!pool || !ws.ltog[id]) return [];
+  const i = ws.lix[id] = ((ws.lix[id] == null ? hsh(id.length, 7) : ws.lix[id]) + 1) % pool.length; save();
+  return [pool[i]];
+}
+function finnTalk() {                               // the fisherman opens up a little after Rose's cookies
+  const ws = WS(); ws.lix = ws.lix || {};
+  if (wq('rose') < 3) { const k = ws.lix.finnShy = ((ws.lix.finnShy || 0) + 1) % FINN.shy.length; save(); return dialog('fisher', FINN.shy[k].slice()); }
+  const pool = FINN.warm.concat(famExtra('fisher')), k = ws.lix.finn = ((ws.lix.finn == null ? -1 : ws.lix.finn) + 1) % pool.length; save(); return dialog('fisher', [pool[k]]);
+}
+
 // ---- mentor story quests only show up once you can actually do them
 const storyReady = id => !!WQ[id] && Lv(WQ[id].stat) >= WQ[id].req;
 const storyOpen = id => wq(id) === 0 && storyReady(id) && didToday();       // a story quest waiting to be offered
@@ -2803,12 +3108,14 @@ const HINT = {
   kai: 'Master Kai looked up at the shrine and said your name. Strange, isn\'t it?'
 };
 function extraLines(id) {                          // once a day per person: a teaser (mentor, not ready yet) or a hint about someone else's story quest
-  const ws = WS(); ws.tdays = ws.tdays || {}; if (ws.tdays[id] === day()) return [];
-  let out = [];
-  if (TEASE[id] && wq(id) === 0 && !storyReady(id)) out = [TEASE[id]];
-  else if (!(WQ[id] && storyOpen(id))) { const other = Object.keys(WQ).find(k => k !== id && storyOpen(k)); if (other) out = [HINT[other]]; }
-  if (out.length) { ws.tdays[id] = day(); save(); }
-  return out;
+  if (NEWC[id] && NS(id).met == null) return [];          // newcomers introduce themselves first
+  const ws = WS(); ws.tdays = ws.tdays || {}; let out = [];
+  if (ws.tdays[id] !== day()) {
+    if (TEASE[id] && wq(id) === 0 && !storyReady(id)) out = [TEASE[id]];
+    else if (!(WQ[id] && storyOpen(id))) { const other = Object.keys(WQ).find(k => k !== id && storyOpen(k)); if (other) out = [HINT[other]]; }
+    if (out.length) { ws.tdays[id] = day(); save(); }
+  }
+  return out.length ? out : HF_IDS.includes(id) ? [] : chatterLine(id);
 }
 function talk(id) {
   if (circusStage() === 'wagon') return dialog(id, [id === 'orvel' ? 'Go on, see it for yourself. But don\'t get too close to those bars.' : 'Are you checking out the wagon?']);
@@ -2817,9 +3124,12 @@ function talk(id) {
     if (id === 'orvel') return CIRC().legend ? orvelWeekly() : orvelLegend();
     return dialog(id, CIRC().legend ? ['The caravan is back...', 'Orvel should know something about this.'] : ['Did you see that creepy wagon?', 'Orvel should know something about this. He knows all the old stories.']);
   }
+  if (id === 'rose' && famStage() === 'news') return roseLetter();          // a family is coming home: the story beats come first
+  if (id === 'wren' && famStage() === 'tellwren') return wrenStartsHF();
   WR.pre = { id, lines: extraLines(id) }; try { return talkInner(id); } finally { WR.pre = null; }
 }
 function talkInner(id) {
+  if (HF_IDS.includes(id)) return famTalk(id);
   if (NEWC[id]) return talkNew(id);
   const ws = WS(), s = wq(id), Q = WQ[id];
   if (WQ[id] && s !== 2) {                   // real-life quests come before story chatter, story hand-ins come first of all
@@ -2835,7 +3145,7 @@ function talkInner(id) {
     }
   }
   if (id === 'fisher') {
-    if (wq('rose') !== 1) return dialog('fisher', ['...', 'The fish aren\'t biting today.']);
+    if (wq('rose') !== 1) return finnTalk();
     if (Lv('CHA') < WQ.rose.req) return dialog('fisher', ['...What do you want?', 'He turns away. Maybe a warmer heart would reach him.']);
     ws.q.rose = 2; save(); worldHud();
     return dialog('fisher', ['Cookies? From Rose? For... me?', 'Nobody has done something like that for me in years.', 'Thank you. Truly. Tell her I said hi.']);
@@ -2865,17 +3175,17 @@ function talkInner(id) {
   return dialog(id, [mentorSmallTalk(id)]);
 }
 function rlAccept(id, off) {
-  const ws = WS(), t = { id: S.next++, name: off[0], stat: NEWC[id] ? off[2] : WQ[id].stat, pts: 0, once: true, mentor: id, reward: off[1] };
-  S.tasks.push(t); ws.rl[id] = t.id; ws.rlDay[id] = NEWC[id] ? dn() : day(); save(); sfx('ok');
+  const ws = WS(), t = { id: S.next++, name: off[0], stat: NEWC[id] || FAMQ[id] ? off[2] : WQ[id].stat, pts: 0, once: true, mentor: id, reward: off[1] };
+  S.tasks.push(t); ws.rl[id] = t.id; ws.rlDay[id] = NEWC[id] || FAMQ[id] ? dn() : day(); save(); sfx('ok');
   dialog(id, ['Wonderful! I\'ve put it in your quests.', 'Off you go!']);
 }
 function rlReport(id, t) {
   const ws = WS(), st = t.stat, lv0 = {}; Object.keys(NAMES).forEach(k => lv0[k] = Lv(k));
   const a = gain(st, t.reward), b = gain(st, 1);
-  S.tasks = S.tasks.filter(x => x !== t); ws.rl[id] = null; ws.rlLast[id] = t.name; if (NEWC[id]) { frBonus(id, 4); ws.rlDay[id] = dn(); } checkTrials(); checkUnlocks(); save();
+  S.tasks = S.tasks.filter(x => x !== t); ws.rl[id] = null; ws.rlLast[id] = t.name; if (NEWC[id]) frBonus(id, 4); if (NEWC[id] || FAMQ[id]) ws.rlDay[id] = dn(); checkTrials(); checkUnlocks(); save();
   const ups = Object.keys(NAMES).filter(k => Lv(k) > lv0[k]), nm = NAMES[st][0] + NAMES[st].slice(1).toLowerCase();
-  const thanks = { rose: 'Oh, that warms my heart, dear!', bjorn: 'THAT\'S what I\'m talking about! Strong!', orvel: 'Marvelous! A sharper mind every day!', kai: 'Good. Small steps build mountains.', wren: 'Nice work! See? You\'re a builder too.', pip: 'Bravo! That one\'s going in a song.' }[id];
-  dialog(id, [thanks, NEWC[id] ? 'Give me a couple of days and I\'ll think of something new.' : 'Come back tomorrow for a new task.'], () => {
+  const thanks = { rose: 'Oh, that warms my heart, dear!', bjorn: 'THAT\'S what I\'m talking about! Strong!', orvel: 'Marvelous! A sharper mind every day!', kai: 'Good. Small steps build mountains.', wren: 'Nice work! See? You\'re a builder too.', pip: 'Bravo! That one\'s going in a song.', mira: 'Wonderful! That\'s exactly what Grandma meant by "show up for each other".' }[id];
+  dialog(id, [thanks, NEWC[id] ? 'Give me a couple of days and I\'ll think of something new.' : FAMQ[id] ? 'I\'ll have something new on my list in a few days.' : 'Come back tomorrow for a new task.'], () => {
     sfx('lvl');
     fxCard('', `<small class="tpk">REAL-LIFE QUEST DONE!</small><h3>${esc(t.name)}</h3>${npcCanvas(id) ? '<div class="rlport"></div>' : ''}<p class="lbl">FROM ${MN[id].toUpperCase()}</p><p>${a || b ? '+' + (a + b) + ' ' + nm : 'Your ' + nm + ' trial is open, so no new points right now.'}</p>`, 'AWESOME!', () => { if (ups.length && fxOn()) levelBanner(ups); });
     const port = document.querySelector('.fxtier .rlport'); if (port) { const c = npcCanvas(id), big = document.createElement('canvas'); big.width = c.width * 3; big.height = c.height * 3; const g = big.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(c, 0, 0, big.width, big.height); port.appendChild(big); }
@@ -2905,7 +3215,7 @@ function showDlg() {
   const box = document.getElementById('wdlg'), d = WR.dlg; if (!box || !d) return;
   const port = box.querySelector('.wport'); port.innerHTML = '';
   if (d.who) { const c = d.who === 'me' ? heroCanvas() : npcCanvas(d.who), big = document.createElement('canvas'); big.width = c.width * 3; big.height = c.height * 3; const g = big.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(c, 0, 0, big.width, big.height); port.appendChild(big); port.hidden = false; } else port.hidden = true;
-  box.querySelector('b').textContent = d.who ? ({ bjorn: 'BIG BJØRN', orvel: 'OLD ORVEL', rose: 'GRANNY ROSE', kai: 'MASTER KAI', fisher: 'FISHERMAN', wren: 'WREN', pip: 'PIP THE BARD', me: 'YOU' }[d.who]) : '';
+  box.querySelector('b').textContent = d.who ? ({ bjorn: 'BIG BJØRN', orvel: 'OLD ORVEL', rose: 'GRANNY ROSE', kai: 'MASTER KAI', fisher: 'FINN', wren: 'WREN', pip: 'PIP THE BARD', me: 'YOU', mira: 'MIRA', elias: 'ELIAS', tove: 'TOVE' }[d.who]) : '';
   const hz = box.querySelector('.whearts'), fh = d.who && typeof frHearts === 'function' ? frHearts(d.who) : null;
   hz.innerHTML = fh ? Array.from({ length: fh.max }, (_, i) => heartSvg(i < fh.n, d.popHeart && i === fh.n - 1)).join('') : ''; d.popHeart = 0;
   const t = d.lines[0], pe = box.querySelector('p'), quest = t.startsWith('QUEST:'); box.classList.toggle('quest', quest || t.startsWith('"')); box.hidden = false;
@@ -2925,7 +3235,8 @@ function worldHud() {
   const act = Object.keys(WQ).find(id => wq(id) === 1 || wq(id) === 2), nw = NS('wren'), np = NS('pip');
   const ng = nw.ask && nw.met == null ? (nw.box ? 'Bring the toolbox back to Wren' : 'Find Wren\'s toolbox in Whisperwood') : np.ask && !np.featherBack ? (np.feather ? 'Bring the feather to Pip' : 'Find Pip\'s blue feather in Whisperwood') : '';
   const st = circusStage(), cg = st === 'tent' ? 'Go inside the tent' : st === 'wagon' ? 'Check out the wagon' : st ? (CIRC().legend ? 'Talk to Orvel about the caravan' : 'Ask Orvel about the strange wagon') : '';
-  q.textContent = cg ? '► ' + cg : act ? '► ' + (wq(act) === 1 ? WQ[act].goal : WQ[act].back) : ng ? '► ' + ng : '';
+  const fg = famStage() === 'tellwren' ? 'Tell Wren about the Honeyfields' : '';
+  q.textContent = cg ? '► ' + cg : fg ? '► ' + fg : act ? '► ' + (wq(act) === 1 ? WQ[act].goal : WQ[act].back) : ng ? '► ' + ng : '';
 }
 function worldShake() { const cv = WR.cv; cv.animate && cv.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(-4px,2px)' }, { transform: 'translate(4px,-2px)' }, { transform: 'translate(0,0)' }], { duration: 300 }); }
 function bellSound() { sfx('bellRing'); }
@@ -2955,6 +3266,7 @@ function worldDraw() {
     draws.push({ z: y + a.c.height + oy, c: art.c, x, y }); });
   const tnow = performance.now();
   WR.ents.forEach(e => {
+    if (WR.cine && WR.cine.hide && WR.cine.hide.includes(e.id)) return;
     const c = e.act ? actCanvas(boss().b.id, Math.floor(tnow / 520) % 2) : e.npc ? npcCanvas(e.id) : itemCanvas(e.obj), bob = e.pick ? Math.round(Math.sin(tnow / 300) * 1.5) : 0;
     let x = Math.round(e.x * WT + 8 - c.width / 2), y = Math.round((e.y + 1) * WT - c.height - (e.lift || 0)) + bob;
     if (e.act) {                                                   // the act: hit flashes and shakes, staggered wobble, the finishing spin
@@ -2970,17 +3282,20 @@ function worldDraw() {
     if (!e.noShadow && !e.flat) shadow(e.x * WT + 8, (e.y + 1) * WT - 2, c.width / 2.6);
     draws.push({ z: e.flat ? (e.y + 1) * WT - 20 : (e.y + 1) * WT, c, x, y, e });
   });
-  const st = Math.min(3, tierOf('DIS') + 1), hasDog = S.owned.spirit && S.equip.spirit;
+  famDrawActors(g, draws, shadow, tnow);
+  const st = Math.min(3, tierOf('DIS') + 1), hasDog = S.owned.spirit && S.equip.spirit && WR.cur !== 'tent';
   if (hasDog) { const c = spiritCanvas(st), sx = WR.spirit.x * WT - c.width / 2, sy = WR.spirit.y * WT + 6 - c.height; shadow(WR.spirit.x * WT, WR.spirit.y * WT + 5, c.width / 2.4); draws.push({ z: WR.spirit.y * WT + 6, c, x: Math.round(sx), y: Math.round(sy), flip: WR.spirit.x > p.x }); }
   const side = p.dir >= 2, pose = p.dir === 0 ? (p.moving ? 'back' + (Math.floor(p.t * 7) % 2) : 'back') : !p.moving ? '' : side ? 'run' + (Math.floor(p.t * 12) % 4) : 'walk' + (Math.floor(p.t * 7) % 2);
   WR.frames = WR.frames || {}; const hc = pose ? (WR.frames[pose] || (WR.frames[pose] = heroCanvas(pose))) : WR.hero, hb = /run[13]/.test(pose) ? 1 : 0, flipH = p.moving && p.dir === 3;
   (WR.dust || []).forEach(d => { d.t += 1 / 60; const a = Math.max(0, 1 - d.t / .4), r = 1.5 + d.t * 7; g.fillStyle = `rgba(240,230,210,${a * .7})`; g.beginPath(); g.arc(d.x * WT, d.y * WT, r, 0, 7); g.fill(); }); WR.dust = (WR.dust || []).filter(d => d.t < .4);
   shadow(p.x * WT, p.y * WT + 6, hc.width / 2.8);
   draws.push({ z: p.y * WT + 6, c: hc, x: Math.round(p.x * WT - hc.width / 2), y: Math.round(p.y * WT + 7 - hc.height - hb), flip: flipH });
-  draws.sort((a, b) => a.z - b.z).forEach(d => { if (d.clipH != null) { if (d.clipH > 0) g.drawImage(d.c, 0, d.c.height - d.clipH, d.c.width, d.clipH, d.x, d.y, d.c.width, d.clipH); return; } if (d.flip) { g.save(); g.translate(d.x + d.c.width, d.y); g.scale(-1, 1); g.drawImage(d.c, 0, 0); g.restore(); } else g.drawImage(d.c, d.x, d.y); });
+  draws.sort((a, b) => a.z - b.z).forEach(d => { if (d.alpha != null && d.alpha < 1) { g.globalAlpha = d.alpha; g.drawImage(d.c, d.x, d.y); g.globalAlpha = 1; return; } if (d.clipH != null) { if (d.clipH > 0) g.drawImage(d.c, 0, d.c.height - d.clipH, d.c.width, d.clipH, d.x, d.y, d.c.width, d.clipH); return; } if (d.flip) { g.save(); g.translate(d.x + d.c.width, d.y); g.scale(-1, 1); g.drawImage(d.c, 0, 0); g.restore(); } else g.drawImage(d.c, d.x, d.y); });
   // quest markers over mentors
-  WR.ents.forEach(e => { if (WR.cine || !e.npc || !(WQ[e.id] || NEWC[e.id])) return; let mark;
-    if (circusGate() && NEWC[e.id]) mark = '';
+  WR.ents.forEach(e => { if (WR.cine || !e.npc || !(WQ[e.id] || NEWC[e.id] || FAMQ[e.id])) return; let mark;
+    if (!circusGate() && famMark(e.id)) mark = famMark(e.id);
+    else if (FAMQ[e.id]) { const rt = rlTask(e.id); mark = circusGate() ? '' : rt && rt.done ? '?' : nrlOffer(e.id) ? '!' : ''; }
+    else if (circusGate() && NEWC[e.id]) mark = '';
     else if (NEWC[e.id]) { const n = NS(e.id), rt = rlTask(e.id); mark = (rt && rt.done) || (e.id === 'wren' && n.box && n.met == null) || (e.id === 'pip' && n.feather && !n.featherBack) ? '?' : (n.met == null && e.id === 'wren') || (n.met != null && frEarned(e.id) > (WS().seen[e.id] || 0)) || nrlOffer(e.id) || (e.id === 'wren' && wrenStage() >= 3 && !n.home) ? '!' : ''; }
     else if (circusGate()) mark = e.id === 'orvel' && circusStage() === 'orvel' ? '!' : '';
     else { const s = wq(e.id), rt = rlTask(e.id); mark = s === 2 ? 'S?' : storyOpen(e.id) ? 'S!' : (rt && rt.done) ? '?' : rlOffer(e.id) ? '!' : ''; }
@@ -3007,7 +3322,7 @@ function worldDraw() {
     if (M.tent && !boss().won) { const gr = g.createRadialGradient(6.5 * WT, 4.5 * WT, 4, 6.5 * WT, 4.5 * WT, 60); gr.addColorStop(0, 'rgba(255,236,170,.22)'); gr.addColorStop(1, 'rgba(255,236,170,0)'); g.fillStyle = gr; g.fillRect(0, 0, M.w * WT, M.h * WT); }
     M.props.filter(q => q.type === 'crystal').forEach(q => { const gr = g.createRadialGradient(q.x * WT + 8, q.y * WT + 8, 1, q.x * WT + 8, q.y * WT + 8, 15); gr.addColorStop(0, 'rgba(127,215,255,.4)'); gr.addColorStop(1, 'rgba(127,215,255,0)'); g.fillStyle = gr; g.fillRect(q.x * WT - 8, q.y * WT - 8, 32, 32); });
   }
-  circusDraw(g, performance.now());
+  circusDraw(g, performance.now()); famDrawKey(g, tnow);
   if (WR.cine && WR.cine.gloom > .005) { g.fillStyle = `rgba(28,16,40,${WR.cine.gloom})`; g.fillRect(cx - 2, cy - 2, vw + 4, vh + 4); }
 }
 
