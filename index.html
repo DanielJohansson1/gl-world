@@ -287,7 +287,11 @@ const ITEMS=[
 {id:'turban',slot:'head',name:"Hypnotist's turban",how:'Left behind by The Hypnotist',cond:()=>beat('doom'),ic:'<rect x="2" y="5" width="12" height="6" fill="#e8bf4f"/><rect x="4" y="3" width="8" height="2" fill="#e8bf4f"/><rect x="2" y="10" width="12" height="1" fill="#b8860b"/><rect x="4" y="6" width="1" height="1" fill="#b8860b"/><rect x="10" y="8" width="1" height="1" fill="#b8860b"/><rect x="7" y="5" width="3" height="3" fill="#c23b2c"/><rect x="7" y="5" width="1" height="1" fill="#ec8a6c"/>'},
 {id:'clown',slot:'head',name:'Clown nose and ruff',how:'Left behind by The Clockwork Clown',cond:()=>beat('captain'),ic:'<rect x="6" y="2" width="4" height="4" fill="#c23b2c"/><rect x="6" y="2" width="1" height="1" fill="#ec8a6c"/><rect x="1" y="9" width="14" height="3" fill="#fffaf0"/><rect x="1" y="12" width="2" height="1" fill="#fffaf0"/><rect x="5" y="12" width="2" height="1" fill="#fffaf0"/><rect x="9" y="12" width="2" height="1" fill="#fffaf0"/><rect x="13" y="12" width="2" height="1" fill="#fffaf0"/><rect x="4" y="10" width="1" height="1" fill="#e2d9c5"/><rect x="8" y="10" width="1" height="1" fill="#e2d9c5"/><rect x="12" y="10" width="1" height="1" fill="#e2d9c5"/>'},
 {id:'tophat',slot:'head',name:"Magician's top hat",how:'Left behind by The Mirror Magician',cond:()=>beat('excuse'),ic:'<rect x="4" y="1" width="8" height="9" fill="#1e1e24"/><rect x="4" y="7" width="8" height="2" fill="#c23b2c"/><rect x="1" y="10" width="14" height="2" fill="#1e1e24"/><rect x="5" y="2" width="1" height="3" fill="#3b3f5c"/>'},
-{id:'tank',slot:'torso',name:'Gym tank top',how:"Reward from Big Bjørn's quest",cond:()=>wq('bjorn')>=3,ic:'<rect x="4" y="3" width="2" height="3" fill="#9aa5b1"/><rect x="10" y="3" width="2" height="3" fill="#9aa5b1"/><rect x="3" y="6" width="10" height="8" fill="#9aa5b1"/><rect x="6" y="3" width="4" height="2" fill="#f3c4a2"/><rect x="3" y="9" width="10" height="1" fill="#c23b2c"/><rect x="3" y="13" width="10" height="1" fill="#6d7884"/>'}
+{id:'tank',slot:'torso',name:'Gym tank top',how:"Reward from Big Bjørn's quest",cond:()=>wq('bjorn')>=3,ic:'<rect x="4" y="3" width="2" height="3" fill="#9aa5b1"/><rect x="10" y="3" width="2" height="3" fill="#9aa5b1"/><rect x="3" y="6" width="10" height="8" fill="#9aa5b1"/><rect x="6" y="3" width="4" height="2" fill="#f3c4a2"/><rect x="3" y="9" width="10" height="1" fill="#c23b2c"/><rect x="3" y="13" width="10" height="1" fill="#6d7884"/>'},
+{id:'belt',slot:'torso',name:"Bjørn's lifting belt",how:"Reward from Big Bjørn's goal: trained 8 times",cond:()=>mgK('bjorn')>=1,ic:'<rect x="1" y="6" width="14" height="5" fill="#7a4c2a"/><rect x="1" y="6" width="14" height="1" fill="#9a6638"/><rect x="1" y="10" width="14" height="1" fill="#4e2f1a"/><rect x="6" y="5" width="4" height="7" fill="#e8bf4f"/><rect x="7" y="7" width="2" height="3" fill="#7a4c2a"/><rect x="6" y="5" width="1" height="1" fill="#fff1a8"/><rect x="3" y="8" width="1" height="1" fill="#9a6638"/><rect x="12" y="8" width="1" height="1" fill="#9a6638"/>'},
+{id:'monocle',slot:'head',name:"Orvel's monocle",how:"Reward from Old Orvel's goal: read on 7 days",cond:()=>mgK('orvel')>=1,ic:'<rect x="3" y="2" width="6" height="1" fill="#d4a63a"/><rect x="3" y="9" width="6" height="1" fill="#d4a63a"/><rect x="2" y="3" width="1" height="6" fill="#d4a63a"/><rect x="9" y="3" width="1" height="6" fill="#d4a63a"/><rect x="3" y="3" width="6" height="6" fill="#cfe9f7"/><rect x="4" y="4" width="2" height="1" fill="#ffffff"/><rect x="4" y="5" width="1" height="1" fill="#ffffff"/><rect x="9" y="2" width="1" height="1" fill="#fff1a8"/><rect x="10" y="10" width="1" height="1" fill="#e8bf4f"/><rect x="11" y="12" width="1" height="1" fill="#e8bf4f"/><rect x="12" y="14" width="1" height="1" fill="#e8bf4f"/>'},
+{id:'apron',slot:'torso',name:"Rose's apron",how:"Reward from Granny Rose's goal: kind words on 5 days",cond:()=>mgK('rose')>=1,ic:'<rect x="5" y="1" width="1" height="3" fill="#f08ca8"/><rect x="10" y="1" width="1" height="3" fill="#f08ca8"/><rect x="5" y="3" width="6" height="5" fill="#f08ca8"/><rect x="5" y="3" width="6" height="1" fill="#fffaf0"/><rect x="1" y="7" width="14" height="1" fill="#e5607e"/><rect x="3" y="8" width="10" height="6" fill="#f08ca8"/><rect x="11" y="8" width="2" height="6" fill="#e5607e"/><rect x="3" y="14" width="10" height="1" fill="#fffaf0"/><rect x="6" y="9" width="1" height="1" fill="#fffaf0"/><rect x="9" y="9" width="1" height="1" fill="#fffaf0"/><rect x="6" y="10" width="4" height="1" fill="#fffaf0"/><rect x="7" y="11" width="2" height="1" fill="#fffaf0"/>'},
+{id:'kasa',slot:'head',name:"Kai's straw hat",how:"Reward from Master Kai's goal: showed up on 10 days",cond:()=>mgK('kai')>=1,ic:'<rect x="7" y="3" width="2" height="1" fill="#e3c27a"/><rect x="6" y="4" width="4" height="1" fill="#e3c27a"/><rect x="5" y="5" width="6" height="1" fill="#e3c27a"/><rect x="4" y="6" width="8" height="1" fill="#e3c27a"/><rect x="3" y="7" width="10" height="1" fill="#8c2a1f"/><rect x="1" y="8" width="14" height="2" fill="#e3c27a"/><rect x="1" y="10" width="14" height="1" fill="#b8924a"/><rect x="9" y="4" width="1" height="3" fill="#b8924a"/><rect x="11" y="6" width="1" height="1" fill="#b8924a"/><rect x="13" y="8" width="2" height="2" fill="#b8924a"/><rect x="1" y="8" width="1" height="1" fill="#f4dc9c"/><rect x="5" y="5" width="1" height="1" fill="#f4dc9c"/><rect x="4" y="9" width="1" height="1" fill="#b8924a"/><rect x="8" y="9" width="1" height="1" fill="#b8924a"/>'},
 ];
 const SLOTS=20;
 function beat(id){return Object.values(S.bossWon||{}).includes(id)}
@@ -319,7 +323,11 @@ const QUIRKS=[
 {id:'shuffle',name:'Shuffle dance',how:'Reached Heart level 8',key:'shuffleL',cond:()=>Lv('CHA')>=8,f:[['shuffleL',230],['shuffleR',230],['shuffleL',230],['shuffleR',230]]},
 {id:'spell',name:'Spellcast',how:"Reward from Old Orvel's quest",key:'spell',cond:()=>wq('orvel')>=3,f:[['spell',450],['spell2',450],['spell',450]]},
 {id:'zen',name:'Meditate',how:"Reward from Master Kai's quest",key:'zen',cond:()=>wq('kai')>=3,f:[['zen',1600]]},
-{id:'whistle',name:'Whistle',how:'Learned from a traveling friend',key:'whistle',cond:()=>!!(S.world&&S.world.gift&&S.world.gift.whistle),f:[['whistle',450],['whistle2',450],['whistle',450],['whistle2',450]]}];
+{id:'whistle',name:'Whistle',how:'Learned from a traveling friend',key:'whistle',cond:()=>!!(S.world&&S.world.gift&&S.world.gift.whistle),f:[['whistle',450],['whistle2',450],['whistle',450],['whistle2',450]]},
+{id:'curl',name:'Dumbbell curls',how:"Reward from Big Bjørn's goal: 4 trainings in one week",key:'curl',cond:()=>mgK('bjorn')>=2,f:[['curl',400],['curl2',400],['curl',400],['curl2',400]]},
+{id:'book',name:'Read a book',how:"Reward from Old Orvel's goal: learned something on 10 days",key:'read',cond:()=>mgK('orvel')>=2,f:[['read',900],['read2',300],['read',900]]},
+{id:'kiss',name:'Blow a kiss',how:"Reward from Granny Rose's goal: finished 3 of her tasks",key:'kiss',cond:()=>mgK('rose')>=2,f:[['kiss',500],['kiss2',350],['kiss3',650]]},
+{id:'kata',name:'Kata',how:"Reward from Master Kai's goal: food prep 3 times",key:'kata',cond:()=>mgK('kai')>=2,f:[['kata',350],['',150],['kata2',350],['',150],['kata',400]]}];
 function checkQuirks(){const n=[];QUIRKS.forEach(q=>{const k='q_'+q.id;if(!S.owned[k]&&q.cond()){S.owned[k]=Date.now();if(q.id==='blink')S.qon.blink=1;else{S.qon[q.id]=0;S.fresh[k]=1;n.push(k)}}});return n}
 let playing=0;
 function playQuirk(q){if(playing)return;playing=1;let i=0;const show=p=>document.querySelectorAll('svg.sprite').forEach(e=>{e.outerHTML=sprite(p)});
@@ -1122,6 +1130,16 @@ function charLayers(str, int, cha, gear, pose) {
       rect(body, ox, shirtTop, AW + 3, 2, 's'); rect(body, ox + 1, shirtTop - 1, AW + 1, 1, 's'); put(body, ox + 2, shirtTop - 1, 'K');
       rect(body, fx, shirtTop - 5, AW, 5, 's'); rect(body, fx, shirtTop - 6, AW, 2, 'S');
       rect(body, ox, shirtTop + 1, AW + 3, 1, 'S');
+    } else if (kind === 'curlUp' || kind === 'fist') {                 // forearm up beside the shoulder: curling a dumbbell, or a hand up for a kiss
+      const fx = sx + 1;
+      rect(body, sx, shirtTop + 2, AW + 1, 2, 's'); rect(body, fx, shirtTop - 1, AW, 4, 's'); rect(body, fx + AW - 1, shirtTop - 1, 1, 4, 'S');
+      rect(body, fx - 1, shirtTop - 4, AW + 2, 3, 's'); rect(body, fx - 1, shirtTop - 2, AW + 2, 1, 'S');
+      if (kind === 'curlUp') dumbbell(fx - 1, fx + AW, shirtTop - 3);
+    } else if (kind === 'punch') {                                     // Kai's kata: arm straight out to the side, fist closed
+      const len = side > 0 ? 8 : Math.min(8, tL - 5), ah = Math.min(3, AW), ax = side > 0 ? tR + 2 : tL - 1 - len;
+      rect(body, ax, shirtTop + 1, len, ah, 's'); rect(body, ax, shirtTop + ah, len, 1, 'S');
+      const fx = side > 0 ? ax + len : ax - 3; rect(body, fx, shirtTop, 3, ah + 2, 's'); rect(body, fx, shirtTop + ah + 1, 3, 1, 'S'); put(body, side > 0 ? fx + 2 : fx, shirtTop, 'K');
+      [shirtTop, shirtTop + 2, shirtTop + 4].forEach((y, i) => { for (let k = 0; k < 2 + (i & 1); k++) put(body, side > 0 ? ax + 1 + k : ax + len - 2 - k, y - 1 - (i === 0 ? 1 : 0) + (i === 2 ? 2 : 0), 'n'); });
     } else if (kind === 'thumb') {                                     // thumbs up in front of the chest
       const fx = sx + 1;                                               // forearm up beside the shoulder
       rect(body, sx, shirtTop + 2, AW + 1, 2, 's'); rect(body, fx, shirtTop - 1, AW, 4, 's'); rect(body, fx + AW - 1, shirtTop - 1, 1, 4, 'S');
@@ -1129,8 +1147,36 @@ function charLayers(str, int, cha, gear, pose) {
       rect(body, fx - 1, shirtTop - 7, 2, 3, 's'); put(body, fx, shirtTop - 7, 'K');                         // thumb
     }
   };
-  const armPose = { spell: [null, 'up'], spell2: [null, 'up'], wave1: [null, 'wave1'], wave2: [null, 'wave2'], stretch: ['up', 'up'], flex: ['flex', 'flex'], thumb: [null, 'thumb'], shuffleL: ['up', null], shuffleR: [null, 'up'] }[pose] || [null, null];
+  const dumbbell = (x0, x1, y) => {                                 // grey bar through the fist, dark plates on both ends
+    put(body, x0 - 1, y, 'J'); put(body, x1 + 1, y, 'J');
+    [x0 - 3, x1 + 2].forEach(x => { rect(body, x, y - 2, 2, 5, 'O'); put(body, x, y - 2, 'D'); put(body, x, y - 1, 'D'); });
+  };
+  const armPose = { curl: ['curlUp', null], curl2: [null, 'curlUp'], kiss: ['fist', null], kiss2: ['wave1', null], kiss3: ['wave1', null], kata: [null, 'punch'], kata2: ['punch', null], spell: [null, 'up'], spell2: [null, 'up'], wave1: [null, 'wave1'], wave2: [null, 'wave2'], stretch: ['up', 'up'], flex: ['flex', 'flex'], thumb: [null, 'thumb'], shuffleL: ['up', null], shuffleR: [null, 'up'] }[pose] || [null, null];
   [-1, 1].forEach((side, i) => { const k = armPose[i]; if (k) raised(side, k); else (naked || tank ? nArm : arm)(side); });
+  if (pose === 'curl' || pose === 'curl2') { const sx = pose === 'curl' ? tR + 2 : tL - AW - 1; dumbbell(sx, sx + AW - 1, shirtTop + 4); }
+  if (torso === 'belt') {                                             // Bjørn's lifting belt: thick leather with a gold buckle
+    rect(body, tL, shirtTop + 3, TW, 3, 'f'); rect(body, tL, shirtTop + 3, TW, 1, '#9a6638'); rect(body, tL, shirtTop + 5, TW, 1, 'F');
+    if (bk) { for (let x = tL + 1; x < tR; x += 2) put(body, x, shirtTop + 4, '#9a6638'); }
+    else { rect(body, CX - 2, shirtTop + 3, 4, 3, 'y'); rect(body, CX - 1, shirtTop + 4, 2, 1, 'f'); put(body, CX - 2, shirtTop + 3, 'Y'); put(body, CX + 1, shirtTop + 5, 'u'); }
+  }
+  if (torso === 'apron') {                                            // Rose's apron: pink, with a cream heart on the pocket
+    if (bk) { rect(body, tL, shirtTop + 4, TW, 1, 'P'); rect(body, CX - 4, shirtTop + 3, 3, 3, 'P'); rect(body, CX + 1, shirtTop + 3, 3, 3, 'P'); rect(body, CX - 1, shirtTop + 4, 2, 1, 'k'); put(body, CX - 3, shirtTop + 6, 'P'); put(body, CX + 2, shirtTop + 6, 'P'); }
+    else {
+      put(body, CX - 4, shirtTop, 'P'); put(body, CX + 3, shirtTop, 'P');
+      rect(body, CX - 4, shirtTop + 1, 8, 5, 'P'); rect(body, CX + 2, shirtTop + 1, 2, 5, 'k'); rect(body, CX - 4, shirtTop + 1, 8, 1, 'n');
+      rect(body, tL, shirtTop + 4, TW, 1, 'k');
+      rect(body, CX - 6, pantsTop, 12, 4, 'P'); rect(body, CX + 4, pantsTop, 2, 4, 'k'); rect(body, CX - 6, pantsTop + 3, 12, 1, 'n');
+      const y = pantsTop; put(body, CX - 2, y, 'n'); put(body, CX + 1, y, 'n'); rect(body, CX - 2, y + 1, 4, 1, 'n'); rect(body, CX - 1, y + 2, 2, 1, 'n');
+    }
+  }
+  if ((pose === 'read' || pose === 'read2') && !bk) {                 // an open book held up in front of the chest
+    const x0 = tL - 1, w = TW + 2, y0 = shirtTop + 1;
+    rect(body, x0, y0, w, 6, 'I'); rect(body, x0, y0 + 5, w, 1, 'A');
+    rect(body, x0 + 1, y0, w - 2, 5, 'n'); rect(body, CX - 1, y0, 2, 5, 'N');
+    [y0 + 1, y0 + 3].forEach(y => { rect(body, x0 + 2, y, CX - x0 - 4, 1, 'D'); rect(body, CX + 2, y, x0 + w - CX - 4, 1, 'D'); });
+    if (pose === 'read2') { rect(body, CX + 1, y0 - 2, Math.floor(w / 2) - 3, 2, 'n'); put(body, CX + Math.floor(w / 2) - 2, y0 - 2, 'N'); rect(body, CX + 2, y0 + 1, x0 + w - CX - 4, 1, 'n'); }
+    rect(body, x0 - 1, y0 + 3, 2, 2, 's'); rect(body, x0 + w - 1, y0 + 3, 2, 2, 's'); put(body, x0 - 1, y0 + 4, 'S'); put(body, x0 + w, y0 + 4, 'S');
+  }
   if (run === 0 || run === 2) [-1, 1].forEach(side => {           // hands swing opposite to the legs
     const sx = side < 0 ? tL - AW - 2 : tR + 1, d = ((side > 0) === (run === 0) ? -1 : 1) * 2, px = [];
     for (let y = shirtTop + 2; y <= shirtTop + 6; y++) for (let x = sx; x <= sx + AW + 1; x++) if (body[y] && body[y][x] && 'sSK'.includes(body[y][x])) { px.push([x, y, body[y][x]]); body[y][x] = null; }
@@ -1230,6 +1276,10 @@ function charLayers(str, int, cha, gear, pose) {
   }
   if (pose === 'zen') { [[hL - 4, top + 4], [hR + 4, top + 2], [hL - 2, top - 2], [hR + 2, top + 8]].forEach(([x, y]) => put(body, x, y, 'B')); }
   if (pose === 'wink') shut(ex2);
+  if (pose === 'read' || pose === 'read2') { shut(ex1); shut(ex2); }
+  if (/^kiss/.test(pose)) { shut(ex2); [CX - 2, CX - 1, CX, CX + 1].forEach(x => { put(body, x, my, 's'); put(body, x, my + 1, 's'); }); put(body, CX - 1, my, 'm'); put(body, CX, my, 'm'); put(body, CX - 1, my + 1, 'm'); put(body, CX, my + 1, 'm'); }
+  if (pose === 'kata' || pose === 'kata2') { [ex1, ex2].forEach((x, i) => { put(body, x + (i ? 0 : 1), ey - 2, 'H'); put(body, x + (i ? 1 : 0), ey - 1, 'H'); }); put(body, CX - 2, my + 1, 'm'); put(body, CX + 1, my + 1, 'm'); }
+  if (pose === 'curl' || pose === 'curl2') { put(body, CX - 2, my + 1, 'm'); put(body, CX + 1, my + 1, 'm'); put(body, hL - 2, top + 4, 'B'); put(body, hL - 2, top + 5, 'B'); put(body, hL - 3, top + 5, 'B'); }
   if (pose === 'breath') { [CX - 2, CX - 1, CX, CX + 1].forEach(x => put(body, x, my, 's')); put(body, CX - 1, my + 1, 's'); put(body, CX, my + 1, 's'); put(body, CX - 1, my, 'm'); put(body, CX, my, 'm'); }
   if (pose === 'flex' || pose === 'jump') { put(body, CX - 2, my + 1, 'm'); put(body, CX + 1, my + 1, 'm'); }
   }
@@ -1362,6 +1412,24 @@ function charLayers(str, int, cha, gear, pose) {
     for (let x = tL - 2; x <= tR + 2; x++) { put(body, x, cy - 1, 'n'); put(body, x, cy, (x - tL) % 3 === 0 ? 'N' : 'n'); put(body, x, cy + 1, (x - tL) % 3 === 1 ? 'R' : 'n'); if ((x - tL) % 3 === 1) put(body, x, cy + 2, 'R'); }
     if (!bk) { rect(body, CX - 1 + fs, ey + 2, 2, 2, 'R'); put(body, CX - 1 + fs, ey + 2, 'r'); }
   }
+  if (head === 'monocle' && !bk) {                                    // Orvel's monocle: gold ring over the right eye, chain to the collar
+    [[ex2, ey - 1], [ex2 + 1, ey - 1], [ex2 - 1, ey], [ex2 - 1, ey + 1], [ex2 + 2, ey], [ex2 + 2, ey + 1], [ex2, ey + 2], [ex2 + 1, ey + 2]].forEach(([x, y]) => put(body, x, y, 'G'));
+    put(body, ex2 + 2, ey - 1, 'Y');
+    [[ex2 + 3, ey + 3], [hR, ey + 5], [hR - 1, shirtTop], [hR - 2, shirtTop + 1]].forEach(([x, y]) => put(body, x, y, 'y'));
+  } else if (head === 'monocle') put(body, hR, ey, 'G');
+  if (head === 'kasa') {                                              // Kai's straw hat: a wide woven cone
+    clearTop(top + 1);
+    const st = '#e3c27a', sd = '#b8924a', lt = '#f4dc9c';
+    const rows = [HW + 8, HW + 4, HW, HW - 4, HW - 8, 2];
+    rows.forEach((w, i) => { if (w < 2) return; const y = top + 1 - i, x0 = CX - w / 2; rect(body, x0, y, w, 1, st); rect(body, x0 + w - 2, y, 2, 1, sd); put(body, x0, y, lt);
+      for (let x = x0 + 2 + (i % 2) * 2; x < x0 + w - 3; x += 4) put(body, x, y, sd); });
+    rect(body, CX - (HW + 4) / 2, top, HW + 4, 1, '#8c2a1f'); put(body, CX - (HW + 4) / 2, top, '#b8493a');
+    rect(body, CX - (HW + 6) / 2, top + 2, HW + 6, 1, sd);
+  }
+  if ((pose === 'kiss2' || pose === 'kiss3') && !bk) {               // a little heart floats away
+    const big = pose === 'kiss3', hx = big ? hL - 12 : hL - 9, hy = big ? top - 2 : top + 3;
+    (big ? ['.kk.kk.', 'kPkkkkk', 'kkkkkkk', '.kkkkk.', '..kkk..', '...k...'] : ['.k.k.', 'kPkkk', '.kkk.', '..k..']).forEach((row, j) => [...row].forEach((c, i) => { if (c !== '.') put(body, hx + i, hy + j, c); }));
+  }
   if (pose === 'wink' && !bk) { put(body, ex2 + 3, ey - 2, 'Y'); put(body, ex2 + 4, ey - 3, 'y'); put(body, ex2 + 4, ey - 1, 'y'); put(body, ex2 + 5, ey - 2, 'y'); }
   if (pose === 'flex') { put(body, hR + 2, top + 3, 'B'); put(body, hR + 2, top + 4, 'B'); put(body, hR + 3, top + 4, 'B'); }
   if (pose === 'bulb') {
@@ -1474,7 +1542,7 @@ const bottom=open.filter(t=>(t.daily||t.weekly||t.id==2)&&fin(t));
 const trHead=trs.length?`<button class="task trhead" onclick="openTr=!openTr;render()" aria-expanded="${openTr}"><svg class="arw" viewBox="0 0 6 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="0" width="2" height="8"/><rect x="2" y="1" width="2" height="6"/><rect x="4" y="3" width="2" height="2"/></svg><div class="n">TRAINING<small${q?' style="color:'+['','#2f7a1f','#1f5fa8','#8a6200'][q]+'"':''}>${tn}x this week</small></div><span class="chk trsum" style="background:${['#d9c9a3','#8fcf6a','#4fb0e0','#f0c030'][q]}">${tn}</span></button>${openTr?trs.map(row).join(''):''}`:'';
 const sn=sides.filter(t=>!fin(t)).length;
 const sdHead=sides.length?`<button class="task trhead" onclick="openSide=!openSide;render()" aria-expanded="${openSide}"><svg class="arw" viewBox="0 0 6 8" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="0" width="2" height="8"/><rect x="2" y="1" width="2" height="6"/><rect x="4" y="3" width="2" height="2"/></svg><div class="n">SIDE QUESTS<small>for later</small></div><span class="chk trsum" style="background:#d9c9a3">${sn}</span></button>${openSide?sides.map(t=>row(t).replace('class="task','class="task sub')).join(''):''}`:'';
-const tl=(top.map(row).join('')+trHead+own.map(row).join('')+sdHead+bottom.map(row).join(''))||'<p class="empty">No open quests. Add one in TASKS.</p>';
+const tl=(top.map(row).join('')+trHead+own.map(row).join('')+mgRows()+sdHead+bottom.map(row).join(''))||'<p class="empty">No open quests. Add one in TASKS.</p>';
 return`<h1>GRINDLIFE${COG}</h1><div class="box hero"><div class="spr">${sprite()}<div id="say" class="say" aria-live="polite"></div></div><div class="stats">${stats}</div></div>
 <p>${Object.keys(S.fresh).length?'<button id="wbtn" class="glow" onclick="go(\'wardrobe\')"><i class="spk"></i>WARDROBE<i class="spk"></i></button>':'<button id="wbtn" onclick="go(\'wardrobe\')">WARDROBE</button>'}</p><h2>QUESTS</h2><div class="box">${tl}</div>
 <p><button onclick="undo()" ${S.log.length?'':'disabled'}>UNDO LAST</button></p>${bossCard()}${suggCard()}${trialCard()}${bossIntroCard()}`}
@@ -2119,7 +2187,7 @@ function heroCanvas(pose) {
   body.forEach((row, y) => row.forEach((col, x) => { if (col) { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); } }));
   const c = document.createElement('canvas'); c.width = x1 - x0 + 1; c.height = y1 - y0 + 1; const g = c.getContext('2d');
   body.forEach((row, y) => row.forEach((col, x) => { if (col) { g.fillStyle = col; g.fillRect(x - x0, y - y0, 1, 1); } }));
-  return c;
+  c.x0 = x0 + (d.dx || 0); c.y0 = y0 + (d.dy || 0); return c;
 }
 
 // ===================== Grindlife World — engine + Phase 1 quests =====================
@@ -2129,7 +2197,51 @@ const WQ = {   // chapter 1 of each mentor: what to do, which stat gates it, wha
   rose: { name: 'Granny Rose', stat: 'CHA', req: 3, goal: 'Bring Rose\'s cookies to the fisherman', back: 'Tell Rose the cookies arrived', reward: 'garden' },
   kai: { name: 'Master Kai', stat: 'DIS', req: 7, goal: 'Climb to the shrine and ring the bell', back: 'Tell Kai you rang the bell', reward: 'q_zen' }
 };
-function WS() { S.world = S.world || { q: {}, f: {}, pos: null }; S.world.rl = S.world.rl || {}; S.world.rlDay = S.world.rlDay || {}; S.world.rlLast = S.world.rlLast || {}; return S.world; }
+function WS() { S.world = S.world || { q: {}, f: {}, pos: null }; S.world.rl = S.world.rl || {}; S.world.rlDay = S.world.rlDay || {}; S.world.rlLast = S.world.rlLast || {}; S.world.mg = S.world.mg || {}; return S.world; }
+// ---- mentor goals (chapter 2): skill goals over several real-life days. Only what you do after accepting counts.
+const since = (at, f) => S.log.filter(e => e.t >= at && f(e)), daysOf = L => new Set(L.map(e => day(e.t))).size;
+const MG = {   // req = hidden stat level before the second goal is offered
+  bjorn: [{ goal: 'Train 8 times', n: 8, prog: at => since(at, e => TRAIN.includes(e.id)).length, reward: 'belt' },
+    { goal: 'Do 4 trainings in one week', n: 4, req: 8, prog: at => { const c = {}; since(at, e => TRAIN.includes(e.id)).forEach(e => c[wk(e.t)] = (c[wk(e.t)] || 0) + 1); return Math.max(0, ...Object.values(c)); }, reward: 'q_curl' }],
+  orvel: [{ goal: 'Read on 7 different days', n: 7, prog: at => daysOf(since(at, e => e.id == 2)), reward: 'monocle' },
+    { goal: 'Learn something on 10 days', n: 10, req: 9, prog: at => daysOf(since(at, e => e.id == 2 || e.id == 1000)), reward: 'q_book' }],
+  rose: [{ goal: 'Compliment someone on 5 days', n: 5, prog: at => daysOf(since(at, e => e.id == 1004)), reward: 'apron' },
+    { goal: 'Finish 3 of my real-life tasks', n: 3, req: 6, prog: () => mgS('rose').rl || 0, reward: 'q_kiss' }],
+  kai: [{ goal: 'Show up on 10 days', n: 10, prog: at => daysOf(since(at, () => true)), reward: 'kasa' },
+    { goal: 'Food prep 3 times', n: 3, req: 10, prog: at => since(at, e => e.id == 1005).length, reward: 'q_kata' }]
+};
+const MG_TXT = {
+  bjorn: [['You found my dumbbell. Now let\'s build those muscles for real!', 'EIGHT sessions! Here, my old lifting belt. Wear it with pride!'], ['You\'ve gotten strong, friend. Ready for a real test?', 'Four in one week! Let me show you my favorite curl.']],
+  orvel: [['A sharp mind needs feeding, dear friend. Little and often!', 'Seven days of reading! Take my spare monocle. Everything looks wiser through it.'], ['You read like a true scholar now. Shall we go further?', 'Ten days of learning! You deserve a proper reading pose.']],
+  rose: [['Kind words are like warm bread, sweetheart. Share them around.', 'Five days of kind words! I sewed you an apron, dear.'], ['Your heart has grown so much. Will you help me with a few more of my tasks?', 'You did all three! Here, a little way to send your love along.']],
+  kai: [['The climb taught you to show up. Now show up again, and again.', 'Ten days. The mountain noticed. This hat kept the sun off me for thirty years.'], ['A calm week starts in the kitchen. Prepare, and you are free.', 'Prepared, and free. Now I will teach you my kata.']]
+};
+const MG_CHEER = { bjorn: 'Keep pushing!', orvel: 'Splendid progress!', rose: 'You\'re doing wonderfully, dear.', kai: 'Step by step.' };
+const mgS = id => { const m = WS().mg; return m[id] = m[id] || { k: 0 }; };
+const mgK = id => (S.world && S.world.mg && S.world.mg[id] && S.world.mg[id].k) || 0;     // goals handed in
+const mgCur = id => MG[id] && MG[id][mgK(id)];
+const mgActive = id => !!(mgCur(id) && mgS(id).at);
+const mgProg = id => { const g = mgCur(id); return mgActive(id) ? Math.min(g.n, g.prog(mgS(id).at)) : 0; };
+const mgDone = id => mgActive(id) && mgProg(id) >= mgCur(id).n;
+const mgReady = id => { const g = mgCur(id), m = MG[id] && mgS(id); return !!g && wq(id) === 3 && !m.at && m.last !== day() && (!g.req || Lv(WQ[id].stat) >= g.req); };
+function mgOffer(id) {
+  const g = mgCur(id), t = MG_TXT[id][mgK(id)];
+  return dialog(id, [t[0], `GOAL: ${g.goal}. I'll count what you do from today.`], null,
+    [{ label: 'ACCEPT', fn: () => { const m = mgS(id); m.at = Date.now(); m.rl = 0; save(); sfx('ok'); worldHud(); dialog(id, ['Wonderful! It\'s in your quests. I\'ll keep count.']); } },
+     { label: 'MAYBE LATER', fn: () => dialog(id, ['No rush. I\'ll be right here.']) }]);
+}
+function mgHandIn(id) {
+  const k = mgK(id), g = MG[id][k], m = mgS(id); m.k = k + 1; m.at = null; m.last = day(); save(); checkUnlocks(); save(); worldHud();
+  dialog(id, [MG_TXT[id][k][1]], () => {
+    const r = rewardInfo(g.reward); sfx('tier'); confetti(GOLD, 90, innerWidth / 2, innerHeight * .4, 13);
+    fxCard('', `<small class="tpk">GOAL REACHED!</small><h3>${esc(g.goal)}</h3>${r.pic}<p class="lbl">NEW ${r.kind}</p><p>${r.name}</p>${MG[id][k + 1] ? '<p class="lbl">MORE TO COME</p>' : ''}`, 'AWESOME!', null);
+  });
+}
+const mgRemind = id => dialog(id, [`${mgCur(id).goal}: ${mgProg(id)} of ${mgCur(id).n}. ${MG_CHEER[id]}`]);
+function mgRows() {
+  return Object.keys(MG).filter(mgActive).map(id => { const g = mgCur(id), n = mgProg(id), ok = n >= g.n;
+    return `<div class="task mq${ok ? ' rep' : ''}"><div class="n">${esc(g.goal)}<small>${ok ? 'Goal reached! Tell ' + MN[id] : 'goal from ' + MN[id]}</small></div><small class="mtag">${n}/${g.n}</small></div>`; }).join('');
+}
 // ---- real-life quests: one new task per mentor per day, only while you don't already have one from them
 const MN = { bjorn: 'Bjørn', orvel: 'Orvel', rose: 'Rose', kai: 'Kai', wren: 'Wren', pip: 'Pip' };
 const RLQ = {
@@ -2157,8 +2269,9 @@ function mentorSmallTalk(id) {
   return '';
 }
 // ---- quest rewards are normal Grindlife unlocks (they show up in the wardrobe like everything else)
-function questRewardInfo(id) {
-  const r = WQ[id].reward, it = ITEMS.find(i => i.id === r), pl = PLACES.find(p => p.id === r), qu = QUIRKS.find(q => 'q_' + q.id === r);
+function questRewardInfo(id) { return rewardInfo(WQ[id].reward); }
+function rewardInfo(r) {
+  const it = ITEMS.find(i => i.id === r), pl = PLACES.find(p => p.id === r), qu = QUIRKS.find(q => 'q_' + q.id === r);
   return it ? { kind: 'GEAR', name: it.name, pic: `<svg class="cpic" viewBox="0 0 16 16" shape-rendering="crispEdges">${it.ic}</svg>` }
     : pl ? { kind: 'PLACE', name: pl.name, pic: `<svg class="cpic" viewBox="0 0 44 44" shape-rendering="crispEdges">${runs(placeBg(pl.id))}</svg>` }
       : { kind: 'QUIRK', name: qu.name, pic: (() => { const d = charLayers(Lv('STR'), Lv('INT'), Lv('CHA'), gear(), qu.key); return `<svg class="cpic" viewBox="0 0 44 44" shape-rendering="crispEdges"><g transform="translate(${d.dx} ${d.dy})">${runs(d.layers.body)}</g></svg>`; })() };
@@ -3164,10 +3277,11 @@ function talkInner(id) {
     return dialog('kai', ['I heard the bell. But I did not hear your steps on the stairs.', 'The bell is not the lesson. The climb is. Come back when your legs are ready.', 'QUEST: ' + WQ.kai.goal]);
   }
   if (s === 2) {                                       // 1. story quest hand-in
-    ws.q[id] = 3; save(); checkUnlocks(); save(); worldHud(); worldEntities();
+    ws.q[id] = 3; mgS(id).last = day(); save(); checkUnlocks(); save(); worldHud(); worldEntities();
     const done = { bjorn: ['MY LUCKY DUMBBELL! You legend!', 'Here, take my old training top. You\'ve earned it.'], orvel: ['My glasses! Oh, now I can see you! You\'re taller than I thought.', 'Let me teach you a little spell as thanks.'], rose: ['He smiled? Oh, that makes my whole week.', 'You have a good heart. My garden is always open to you.'], kai: ['I heard the bell.', 'You showed up, step by step. Sit with me a moment. I will teach you to be still.'] }[id];
     return dialog(id, done, () => questReward(id));
   }
+  if (Q && mgDone(id)) return mgHandIn(id);            // 1b. mentor goal hand-in
   if (s === 0 && storyOpen(id)) {                      // 2. story quest offer
     const intro = {
       bjorn: ['HEY! My lucky dumbbell rolled into the cave, and now a boulder blocks the way.', 'You look strong enough now. Think you can push it?'],
@@ -3178,12 +3292,14 @@ function talkInner(id) {
     ws.q[id] = 1; if (id === 'rose') ws.f.cookies = 1; save(); worldHud();
     return dialog(id, intro.concat(['QUEST: ' + Q.goal]));
   }
+  if (Q && mgReady(id)) return mgOffer(id);           // 2b. mentor goal offer
   const t = Q && rlTask(id);
   if (t && t.done) return rlReport(id, t);             // 3. real-life quest report
   const off = Q && rlOffer(id);
   if (off) return dialog(id, [`I have a real-life task for you: "${off[0]}"`, `Do it, then come back and tell me. +${off[1] + 1} ${NAMES[Q.stat][0] + NAMES[Q.stat].slice(1).toLowerCase()}.`], null,   // 4. real-life quest offer
     [{ label: 'ACCEPT', fn: () => rlAccept(id, off) }, { label: 'MAYBE LATER', fn: () => dialog(id, ['No rush. I\'ll be right here.']) }]);
   if (s === 1) return dialog(id, [{ bjorn: 'The dumbbell is in the cave past the boulder. You got this!', orvel: 'My glasses... somewhere on my desk, I think. Probably.', rose: 'The fisherman sits by the pond, dear. Go on!', kai: 'The bell waits at the top.' }[id]]);   // 5. reminders
+  if (Q && mgActive(id) && onceToday('mg' + id)) return mgRemind(id);   // goal progress, once a day
   if (t) return dialog(id, [`Have you done it yet? "${t.name}"`, 'Check it off in your quests when you have, then come tell me.'], null,
     [{ label: "I'M ON IT", fn: () => {} }, { label: 'DROP IT', fn: () => { S.tasks = S.tasks.filter(x => x !== t); ws.rl[id] = null; ws.rlDay[id] = day(); save(); dialog(id, ['No worries. There\'s always tomorrow.']); } }]);
   if (s === 0 && storyReady(id) && !didToday()) return dialog(id, ['Come back after you\'ve done something in real life today. Then we\'ll talk adventure.']);
@@ -3197,7 +3313,7 @@ function rlAccept(id, off) {
 function rlReport(id, t) {
   const ws = WS(), st = t.stat, lv0 = {}; Object.keys(NAMES).forEach(k => lv0[k] = Lv(k));
   const a = gain(st, t.reward), b = gain(st, 1);
-  S.tasks = S.tasks.filter(x => x !== t); ws.rl[id] = null; ws.rlLast[id] = t.name; if (NEWC[id]) frBonus(id, 4); if (NEWC[id] || FAMQ[id]) ws.rlDay[id] = dn(); checkTrials(); checkUnlocks(); save();
+  S.tasks = S.tasks.filter(x => x !== t); ws.rl[id] = null; ws.rlLast[id] = t.name; if (id === 'rose' && mgActive('rose') && mgK('rose') === 1) mgS('rose').rl = (mgS('rose').rl || 0) + 1; if (NEWC[id]) frBonus(id, 4); if (NEWC[id] || FAMQ[id]) ws.rlDay[id] = dn(); checkTrials(); checkUnlocks(); save();
   const ups = Object.keys(NAMES).filter(k => Lv(k) > lv0[k]), nm = NAMES[st][0] + NAMES[st].slice(1).toLowerCase();
   const thanks = { rose: 'Oh, that warms my heart, dear!', bjorn: 'THAT\'S what I\'m talking about! Strong!', orvel: 'Marvelous! A sharper mind every day!', kai: 'Good. Small steps build mountains.', wren: 'Nice work! See? You\'re a builder too.', pip: 'Bravo! That one\'s going in a song.', mira: 'Wonderful! That\'s exactly what Grandma meant by "show up for each other".' }[id];
   const next = NEWC[id] ? 'NEW TASK IN A COUPLE OF DAYS' : FAMQ[id] ? 'NEW TASK IN A FEW DAYS' : 'NEW TASK TOMORROW';
@@ -3257,7 +3373,8 @@ function worldHud() {
   const ng = nw.ask && nw.met == null ? (nw.box ? 'Bring the toolbox back to Wren' : 'Find Wren\'s toolbox in Whisperwood') : np.ask && !np.featherBack ? (np.feather ? 'Bring the feather to Pip' : 'Find Pip\'s blue feather in Whisperwood') : '';
   const st = circusStage(), cg = st === 'tent' ? 'Go inside the tent' : st === 'wagon' ? 'Check out the wagon' : st ? (CIRC().legend ? 'Talk to Orvel about the caravan' : 'Ask Orvel about the strange wagon') : '';
   const fg = famStage() === 'tellwren' ? 'Tell Wren about the Honeyfields' : '';
-  q.textContent = cg ? '► ' + cg : fg ? '► ' + fg : act ? '► ' + (wq(act) === 1 ? WQ[act].goal : WQ[act].back) : ng ? '► ' + ng : '';
+  const gi = Object.keys(MG).find(mgDone) || Object.keys(MG).find(mgActive), gg = gi ? (mgDone(gi) ? 'Tell ' + MN[gi] + ' you reached the goal' : mgCur(gi).goal + ' (' + mgProg(gi) + '/' + mgCur(gi).n + ')') : '';
+  q.textContent = cg ? '► ' + cg : fg ? '► ' + fg : act ? '► ' + (wq(act) === 1 ? WQ[act].goal : WQ[act].back) : ng ? '► ' + ng : gg ? '► ' + gg : '';
 }
 function worldShake() { const cv = WR.cv; cv.animate && cv.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(-4px,2px)' }, { transform: 'translate(4px,-2px)' }, { transform: 'translate(0,0)' }], { duration: 300 }); }
 function bellSound() { sfx('bellRing'); }
@@ -3306,11 +3423,17 @@ function worldDraw() {
   famDrawActors(g, draws, shadow, tnow);
   const st = Math.min(3, tierOf('DIS') + 1), hasDog = S.owned.spirit && S.equip.spirit && WR.cur !== 'tent';
   if (hasDog) { const c = spiritCanvas(st), sx = WR.spirit.x * WT - c.width / 2, sy = WR.spirit.y * WT + 6 - c.height; shadow(WR.spirit.x * WT, WR.spirit.y * WT + 5, c.width / 2.4); draws.push({ z: WR.spirit.y * WT + 6, c, x: Math.round(sx), y: Math.round(sy), flip: WR.spirit.x > p.x }); }
+  if (p.moving || WR.dlg || WR.cine || p.dir === 0 || !S.settings.anim) { WR.idleAt = tnow; WR.qk = null; }   // standing still: your switched-on quirks play now and then
+  else if (WR.idleAt == null) WR.idleAt = tnow;
+  else if (!WR.qk && tnow - WR.idleAt > 4000) { const on = QUIRKS.filter(q => S.owned['q_' + q.id] && S.qon[q.id]); if (on.length) WR.qk = { q: on[Math.floor(Math.random() * on.length)], t0: tnow }; else WR.idleAt = tnow; }
+  let qpose = null; if (WR.qk) { let acc = 0; const el = tnow - WR.qk.t0; for (const [pz, ms] of WR.qk.q.f) { if (el < acc + ms) { qpose = pz; break; } acc += ms; } if (qpose == null) { WR.qk = null; WR.idleAt = tnow + 4000 + Math.random() * 4000; } }
   const side = p.dir >= 2, pose = p.dir === 0 ? (p.moving ? 'back' + (Math.floor(p.t * 7) % 2) : 'back') : !p.moving ? '' : side ? 'run' + (Math.floor(p.t * 12) % 4) : 'walk' + (Math.floor(p.t * 7) % 2);
   WR.frames = WR.frames || {}; const hc = pose ? (WR.frames[pose] || (WR.frames[pose] = heroCanvas(pose))) : WR.hero, hb = /run[13]/.test(pose) ? 1 : 0, flipH = p.moving && p.dir === 3;
   (WR.dust || []).forEach(d => { d.t += 1 / 60; const a = Math.max(0, 1 - d.t / .4), r = 1.5 + d.t * 7; g.fillStyle = `rgba(240,230,210,${a * .7})`; g.beginPath(); g.arc(d.x * WT, d.y * WT, r, 0, 7); g.fill(); }); WR.dust = (WR.dust || []).filter(d => d.t < .4);
   shadow(p.x * WT, p.y * WT + 6, hc.width / 2.8);
-  draws.push({ z: p.y * WT + 6, c: hc, x: Math.round(p.x * WT - hc.width / 2), y: Math.round(p.y * WT + 7 - hc.height - hb), flip: flipH });
+  if (qpose) { const qc = WR.frames['q:' + qpose] || (WR.frames['q:' + qpose] = heroCanvas(qpose)), h0 = WR.hero;   // keep the body where the idle frame stands
+    draws.push({ z: p.y * WT + 6, c: qc, x: Math.round(p.x * WT - h0.width / 2) - h0.x0 + qc.x0, y: Math.round(p.y * WT + 7 - h0.height) - h0.y0 + qc.y0 }); }
+  else draws.push({ z: p.y * WT + 6, c: hc, x: Math.round(p.x * WT - hc.width / 2), y: Math.round(p.y * WT + 7 - hc.height - hb), flip: flipH });
   draws.sort((a, b) => a.z - b.z).forEach(d => { if (d.alpha != null && d.alpha < 1) { g.globalAlpha = d.alpha; g.drawImage(d.c, d.x, d.y); g.globalAlpha = 1; return; } if (d.clipH != null) { if (d.clipH > 0) g.drawImage(d.c, 0, d.c.height - d.clipH, d.c.width, d.clipH, d.x, d.y, d.c.width, d.clipH); return; } if (d.flip) { g.save(); g.translate(d.x + d.c.width, d.y); g.scale(-1, 1); g.drawImage(d.c, 0, 0); g.restore(); } else g.drawImage(d.c, d.x, d.y); });
   // quest markers over mentors
   WR.ents.forEach(e => { if (WR.cine || !e.npc || !(WQ[e.id] || NEWC[e.id] || FAMQ[e.id])) return; let mark;
@@ -3319,7 +3442,7 @@ function worldDraw() {
     else if (circusGate() && NEWC[e.id]) mark = '';
     else if (NEWC[e.id]) { const n = NS(e.id), rt = rlTask(e.id); mark = (rt && rt.done) || (e.id === 'wren' && n.box && n.met == null) || (e.id === 'pip' && n.feather && !n.featherBack) ? '?' : (n.met == null && e.id === 'wren') || (n.met != null && frEarned(e.id) > (WS().seen[e.id] || 0)) || nrlOffer(e.id) || (e.id === 'wren' && wrenStage() >= 3 && !n.home) ? '!' : ''; }
     else if (circusGate()) mark = e.id === 'orvel' && circusStage() === 'orvel' ? '!' : '';
-    else { const s = wq(e.id), rt = rlTask(e.id); mark = s === 2 ? 'S?' : storyOpen(e.id) ? 'S!' : (rt && rt.done) ? '?' : rlOffer(e.id) ? '!' : ''; }
+    else { const s = wq(e.id), rt = rlTask(e.id); mark = s === 2 || mgDone(e.id) ? 'S?' : storyOpen(e.id) || mgReady(e.id) ? 'S!' : (rt && rt.done) ? '?' : rlOffer(e.id) ? '!' : ''; }
     if (!mark) return;
     if (mark[0] === 'S') { storyBadge(g, e.x * WT + 8, (e.y + 1) * WT - 46 + Math.round(Math.sin(tnow / 250) * 2), mark[1], tnow); return; } const x = e.x * WT + 8, y = (e.y + 1) * WT - 40 + Math.round(Math.sin(tnow / 250) * 1.5);
     g.fillStyle = '#3b2416'; g.fillRect(x - 4, y - 1, 8, 11); g.fillStyle = mark === '?' ? '#7fd7ff' : '#ffd36b'; g.fillRect(x - 3, y, 6, 9); g.fillStyle = '#3b2416'; if (mark === '!') { g.fillRect(x - 1, y + 1, 2, 4); g.fillRect(x - 1, y + 6, 2, 2); } else { g.fillRect(x - 2, y + 1, 4, 1); g.fillRect(x + 1, y + 2, 1, 2); g.fillRect(x - 1, y + 4, 2, 1); g.fillRect(x - 1, y + 6, 2, 2); } });
