@@ -156,7 +156,9 @@ body.inworld main{max-width:none;padding:0}
 #wc{width:100%;height:100%;display:block;image-rendering:pixelated;touch-action:none}
 #whud{position:absolute;left:8px;right:8px;top:8px;display:flex;flex-direction:column;gap:6px;pointer-events:none}
 #whud b{align-self:flex-start;background:rgba(59,36,22,.85);color:var(--hd);padding:5px 8px;font-size:9px;font-weight:normal;border:2px solid var(--fg)}
-#wquest{align-self:flex-start;background:rgba(242,217,161,.95);color:var(--fg);padding:6px 8px;font-size:8px;line-height:1.6;border:2px solid var(--fg);max-width:85%}#wquest:empty{display:none}
+#wquest{pointer-events:auto;cursor:pointer;align-self:flex-start;background:rgba(242,217,161,.95);color:var(--fg);padding:6px 8px;font-size:8px;line-height:1.6;border:2px solid var(--fg);max-width:85%}#wquest:empty{display:none}#wquest i{font-style:normal;background:var(--fg);color:var(--hd);padding:1px 4px;margin-left:6px}
+.qlog .card{max-width:340px;align-items:stretch;text-align:left;max-height:80vh;overflow-y:auto}.qlog .tpk{text-align:center}.qlog .qh{margin-top:8px;font-size:8px;color:#b8860b}
+.qlog .qrow{border-bottom:2px dashed #c9b48a;padding:6px 2px;font-size:9px;line-height:1.7}.qlog .qrow small{display:block;color:var(--mid);font-size:8px}.qlog .qrow.ok small{color:#2f7a1f}.qlog .empty{text-align:center;font-size:9px}
 #wjoy{position:fixed;width:84px;height:84px;margin:-42px 0 0 -42px;border:3px solid rgba(255,255,255,.55);border-radius:50%;background:rgba(0,0,0,.15);pointer-events:none;z-index:5}
 #wjoy i{position:absolute;left:24px;top:24px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.75);border:3px solid rgba(59,36,22,.6)}
 #wact{position:absolute;right:14px;bottom:18px;min-width:84px;padding:14px 10px;font-size:11px;background:#ffd36b;border:4px solid var(--fg);box-shadow:3px 3px 0 var(--fg);z-index:4}
@@ -325,7 +327,7 @@ const QUIRKS=[
 {id:'zen',name:'Meditate',how:"Reward from Master Kai's quest",key:'zen',cond:()=>wq('kai')>=3,f:[['zen',1600]]},
 {id:'whistle',name:'Whistle',how:'Learned from a traveling friend',key:'whistle',cond:()=>!!(S.world&&S.world.gift&&S.world.gift.whistle),f:[['whistle',450],['whistle2',450],['whistle',450],['whistle2',450]]},
 {id:'curl',name:'Dumbbell curls',how:"Reward from Big Bjørn's goal: 4 trainings in one week",key:'curl',cond:()=>mgK('bjorn')>=2,f:[['curl',400],['curl2',400],['curl',400],['curl2',400]]},
-{id:'book',name:'Read a book',how:"Reward from Old Orvel's goal: learned something on 10 days",key:'read',cond:()=>mgK('orvel')>=2,f:[['read',900],['read2',300],['read',900]]},
+{id:'book',name:'Read a book',how:"Reward from Old Orvel's goal: learned something on 7 different days",key:'read',cond:()=>mgK('orvel')>=2,f:[['read',900],['read2',300],['read',900]]},
 {id:'kiss',name:'Blow a kiss',how:"Reward from Granny Rose's goal: finished 3 of her tasks",key:'kiss',cond:()=>mgK('rose')>=2,f:[['kiss',500],['kiss2',350],['kiss3',650]]},
 {id:'kata',name:'Kata',how:"Reward from Master Kai's goal: food prep 3 times",key:'kata',cond:()=>mgK('kai')>=2,f:[['kata',350],['',150],['kata2',350],['',150],['kata',400]]}];
 function checkQuirks(){const n=[];QUIRKS.forEach(q=>{const k='q_'+q.id;if(!S.owned[k]&&q.cond()){S.owned[k]=Date.now();if(q.id==='blink')S.qon.blink=1;else{S.qon[q.id]=0;S.fresh[k]=1;n.push(k)}}});return n}
@@ -2204,7 +2206,7 @@ const MG = {   // req = hidden stat level before the second goal is offered
   bjorn: [{ goal: 'Train 8 times', n: 8, prog: at => since(at, e => TRAIN.includes(e.id)).length, reward: 'belt' },
     { goal: 'Do 4 trainings in one week', n: 4, req: 8, prog: at => { const c = {}; since(at, e => TRAIN.includes(e.id)).forEach(e => c[wk(e.t)] = (c[wk(e.t)] || 0) + 1); return Math.max(0, ...Object.values(c)); }, reward: 'q_curl' }],
   orvel: [{ goal: 'Read on 7 different days', n: 7, prog: at => daysOf(since(at, e => e.id == 2)), reward: 'monocle' },
-    { goal: 'Learn something on 10 days', n: 10, req: 9, prog: at => daysOf(since(at, e => e.id == 2 || e.id == 1000)), reward: 'q_book' }],
+    { goal: 'Learn something on 7 different days (any INT task)', n: 7, req: 9, prog: at => daysOf(since(at, e => e.stat === 'INT')), reward: 'q_book' }],
   rose: [{ goal: 'Compliment someone on 5 days', n: 5, prog: at => daysOf(since(at, e => e.id == 1004)), reward: 'apron' },
     { goal: 'Finish 3 of my real-life tasks', n: 3, req: 6, prog: () => mgS('rose').rl || 0, reward: 'q_kiss' }],
   kai: [{ goal: 'Show up on 10 days', n: 10, prog: at => daysOf(since(at, () => true)), reward: 'kasa' },
@@ -2212,7 +2214,7 @@ const MG = {   // req = hidden stat level before the second goal is offered
 };
 const MG_TXT = {
   bjorn: [['You found my dumbbell. Now let\'s build those muscles for real!', 'EIGHT sessions! Here, my old lifting belt. Wear it with pride!'], ['You\'ve gotten strong, friend. Ready for a real test?', 'Four in one week! Let me show you my favorite curl.']],
-  orvel: [['A sharp mind needs feeding, dear friend. Little and often!', 'Seven days of reading! Take my spare monocle. Everything looks wiser through it.'], ['You read like a true scholar now. Shall we go further?', 'Ten days of learning! You deserve a proper reading pose.']],
+  orvel: [['A sharp mind needs feeding, dear friend. Little and often!', 'Seven days of reading! Take my spare monocle. Everything looks wiser through it.'], ['You read like a true scholar now. Shall we go further?', 'Seven days of learning! You deserve a proper reading pose.']],
   rose: [['Kind words are like warm bread, sweetheart. Share them around.', 'Five days of kind words! I sewed you an apron, dear.'], ['Your heart has grown so much. Will you help me with a few more of my tasks?', 'You did all three! Here, a little way to send your love along.']],
   kai: [['The climb taught you to show up. Now show up again, and again.', 'Ten days. The mountain noticed. This hat kept the sun off me for thirty years.'], ['A calm week starts in the kitchen. Prepare, and you are free.', 'Prepared, and free. Now I will teach you my kata.']]
 };
@@ -3093,6 +3095,7 @@ function worldTick(now) {
   if (WR.cine) cineTick(now);
   if (WR.cur === 'village' && !WR.cine && famStage() === 'build' && Math.hypot(p.x - 14.5, p.y - 14.5) < 6 && (!WR.hamT || now - WR.hamT > 6500)) { WR.hamT = now; [0, 380, 760].forEach(ms => setTimeout(() => sfx('hammer'), ms)); }   // Wren hammering at the site
   const lk = !!worldLocked(); if (lk !== WR.lk) { WR.lk = lk; document.body.classList.toggle('wlock', lk); }
+  if (!WR.hudT || now - WR.hudT > 1000) { WR.hudT = now; worldHud(); }   // quests change from dialogs and choices: keep the bar current
   worldNear(); worldDraw(); WR.raf = requestAnimationFrame(worldTick);
 }
 function worldWarp(w) {
@@ -3366,15 +3369,30 @@ function heartHelp(next) {                    // the friendship card: once after
   fxCard('fxheart', `<small class="tpk">FRIENDSHIP</small><div class="hrow">${heartSvg(1)}${heartSvg(1)}${heartSvg(0)}</div><p>Friends notice what you do in real life.</p><p>Each friend cares about one of your stats. Every day you work on it, you grow closer.</p><p>Their tasks help too.</p>`, 'GOT IT', next, 'heart');
 }
 function dlgNext() { if (WR.typing && WR.typing.busy()) { WR.typing(); return; } const d = WR.dlg; if (!d) return; if (d.choices && d.lines.length === 1) return; d.lines.shift(); if (d.lines.length) return showDlg(); WR.dlg = null; document.getElementById('wdlg').hidden = true; if (d.helpHeart) return setTimeout(() => heartHelp(d.then), 150); if (d.then) setTimeout(d.then, 150); }
+// ---- quest log: only quests from the world (story quests, mentor goals, real-life tasks villagers gave you)
+function questLog() {
+  const L = [], nw = NS('wren'), np = NS('pip'), st = circusStage(), add = (sec, name, sub, ok) => L.push({ sec, name, sub, ok });
+  if (st) add('STORY', st === 'tent' ? 'Go inside the tent' : st === 'wagon' ? 'Check out the wagon' : CIRC().legend ? 'Talk to Orvel about the caravan' : 'Ask Orvel about the strange wagon', 'Circus Mañana');
+  if (famStage() === 'tellwren') add('STORY', 'Tell Wren about the Honeyfields', 'From Rose');
+  Object.keys(WQ).forEach(id => { const s = wq(id); if (s === 1 || s === 2) add('STORY', s === 1 ? WQ[id].goal : WQ[id].back, s === 2 ? 'Ready! Go see ' + MN[id] : 'From ' + MN[id], s === 2); });
+  if (nw.ask && nw.met == null) add('STORY', nw.box ? 'Bring the toolbox back to Wren' : 'Find Wren\'s toolbox in Whisperwood', nw.box ? 'Ready! Go see Wren' : 'From Wren', !!nw.box);
+  if (np.ask && !np.featherBack) add('STORY', np.feather ? 'Bring the feather to Pip' : 'Find Pip\'s blue feather in Whisperwood', np.feather ? 'Ready! Go see Pip' : 'From Pip', !!np.feather);
+  Object.keys(MG).filter(mgActive).forEach(id => { const g = mgCur(id), n = mgProg(id), ok = n >= g.n; add('GOALS', g.goal, ok ? 'Goal reached! Tell ' + MN[id] : 'From ' + MN[id] + ' · ' + n + '/' + g.n, ok); });
+  S.tasks.filter(t => t.mentor).forEach(t => add('REAL-LIFE TASKS', t.name, t.done ? 'Done! Report to ' + MN[t.mentor] : 'From ' + MN[t.mentor] + ' · check it off in your quests', !!t.done));
+  return L;
+}
+function openQuestLog() {
+  if (!WR || WR.dlg || WR.cine) return; sfx('click');
+  const L = questLog(); let sec = '', h = '';
+  L.forEach(q => { if (q.sec !== sec) { sec = q.sec; h += `<p class="qh">${sec}</p>`; } h += `<div class="qrow${q.ok ? ' ok' : ''}">${esc(q.name)}<small>${esc(q.sub)}</small></div>`; });
+  fxCard('qlog', `<small class="tpk">QUEST LOG</small>${h || '<p class="empty">No quests right now.</p>'}`, 'CLOSE', null);
+}
 function worldHud() {
   const a = document.getElementById('warea'), q = document.getElementById('wquest'); if (!a) return;
   a.textContent = { village: 'VILLAGE', tower: "ORVEL'S TOWER", cave: 'THE CAVE', forest: 'WHISPERWOOD', tent: 'CIRCUS MAÑANA' }[WR.cur];
-  const act = Object.keys(WQ).find(id => wq(id) === 1 || wq(id) === 2), nw = NS('wren'), np = NS('pip');
-  const ng = nw.ask && nw.met == null ? (nw.box ? 'Bring the toolbox back to Wren' : 'Find Wren\'s toolbox in Whisperwood') : np.ask && !np.featherBack ? (np.feather ? 'Bring the feather to Pip' : 'Find Pip\'s blue feather in Whisperwood') : '';
-  const st = circusStage(), cg = st === 'tent' ? 'Go inside the tent' : st === 'wagon' ? 'Check out the wagon' : st ? (CIRC().legend ? 'Talk to Orvel about the caravan' : 'Ask Orvel about the strange wagon') : '';
-  const fg = famStage() === 'tellwren' ? 'Tell Wren about the Honeyfields' : '';
-  const gi = Object.keys(MG).find(mgDone) || Object.keys(MG).find(mgActive), gg = gi ? (mgDone(gi) ? 'Tell ' + MN[gi] + ' you reached the goal' : mgCur(gi).goal + ' (' + mgProg(gi) + '/' + mgCur(gi).n + ')') : '';
-  q.textContent = cg ? '► ' + cg : fg ? '► ' + fg : act ? '► ' + (wq(act) === 1 ? WQ[act].goal : WQ[act].back) : ng ? '► ' + ng : gg ? '► ' + gg : '';
+  const L = questLog(), top = L.find(x => x.ok) || L[0];       // something ready to hand in shows first
+  const html = top ? '► ' + esc(top.ok ? top.sub : top.sec === 'GOALS' ? top.name + ' (' + top.sub.split(' · ')[1] + ')' : top.name) + (L.length > 1 ? `<i>+${L.length - 1}</i>` : '') : '';
+  if (q.dataset.h !== html) { q.dataset.h = html; q.innerHTML = html; } q.onclick = openQuestLog;
 }
 function worldShake() { const cv = WR.cv; cv.animate && cv.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(-4px,2px)' }, { transform: 'translate(4px,-2px)' }, { transform: 'translate(0,0)' }], { duration: 300 }); }
 function bellSound() { sfx('bellRing'); }
