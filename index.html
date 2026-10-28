@@ -172,7 +172,7 @@ body.wlock nav button{pointer-events:none;opacity:.45}
 .pbig{width:144px;height:auto;image-rendering:pixelated;display:block;margin:4px auto}.gtent{width:168px;height:auto;image-rendering:pixelated;display:block;margin:6px auto}.wglove{width:56px;image-rendering:pixelated;display:block;margin:10px auto;animation:wflash2 .8s steps(2) infinite}
 .pgal .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}.pgal .pcell{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}.pgal .pcell b{font-size:6px;font-weight:normal;text-align:center}.pgal .pcell small{font-size:7px;color:var(--mid)}
 .pgal .pimg{width:100%;max-width:72px;image-rendering:pixelated}.pgal .pcell.none .pq{display:grid;place-items:center;width:100%;max-width:72px;aspect-ratio:48/66;background:#3a3348;color:#8a8478;border:3px dashed #8a8478;font-size:16px}
-#wdlg .whead{display:flex;align-items:center;gap:8px;min-height:12px}#wdlg .whearts{display:flex;gap:2px}#wdlg .whearts svg{width:12px;height:11px}#wdlg .whearts svg.pop{animation:hpop .5s steps(4)}
+#wdlg .whead{display:flex;align-items:center;gap:8px;min-height:12px}#wdlg .whearts{display:flex;gap:2px;padding:6px;margin:-6px;cursor:pointer}.fxtier.fxheart .tpk{color:#c2445f}.fxheart .hrow{display:flex;gap:8px;justify-content:center;margin:6px 0 10px}.fxheart .hrow svg{width:35px;height:30px}.fxheart p{line-height:1.8}#wdlg .whearts svg{width:12px;height:11px}#wdlg .whearts svg.pop{animation:hpop .5s steps(4)}
 @keyframes hpop{0%{transform:scale(1)}40%{transform:scale(1.8)}100%{transform:scale(1)}}
 #wdlg .wch{display:flex;gap:8px;flex-wrap:wrap}#wdlg .wch button{flex:1;min-width:100px;padding:10px 6px;font-size:9px}#wdlg .wch button:first-child{background:#ffd36b}
 .task.mq .n small{color:#8a5a2a}.task.mq{border-left:4px solid #e0a64e;padding-left:8px}.task.mq.rep .n small{color:#2f7a1f}.task.mq.rep{background:#eef7d8}
@@ -590,7 +590,7 @@ ${pic}<small>${kind}</small><h3>${it.name}</h3><p class="lbl">HOW YOU GOT IT</p>
 <button onclick="infoId=null;render()">CLOSE</button></div></div>`}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(editId!=null||ideaDraft!=null||trialK)){editId=null;ideaDraft=null;trialK=null;render();return}if(e.key==='Escape'&&bossIntro){bossIntroClose();return}if(e.key==='Escape'&&suggOpen){suggAnswer(0);return}if(e.key==='Escape'&&(infoId||bossOpen)){infoId=null;bossOpen=0;render()}});
 function wardrobe(){
-const tiles=Array.from({length:SLOTS},(_,k)=>{const i=ITEMS[k];
+const tiles=Array.from({length:Math.ceil(Math.max(SLOTS,ITEMS.length)/2)*2},(_,k)=>{const i=ITEMS[k];   // grows with ITEMS, so new gear never falls off the grid
 if(i&&S.owned[i.id]){const on=S.equip[i.id],f=S.fresh[i.id];return`<div class="tw"><button class="tile" onclick="wear('${i.id}')" aria-pressed="${!!on}">${f?'<i class="spk" style="position:absolute;top:8px;right:10px"></i>':''}<svg viewBox="0 0 16 16" shape-rendering="crispEdges">${i.ic}</svg><span>${i.name}</span><small>${i.slot==='head'?'HEAD':i.slot==='pet'?'PET':'SHIRT'} · ${f?'NEW!':i.slot==='pet'?(on?'WITH YOU':'AT HOME'):(on?'WORN':'TAP TO WEAR')}</small></button>${ib('g:'+i.id,i.name)}</div>`}
 return`<div class="tile locked" aria-label="Locked item"><b>?</b></div>`}).join('');
 const pt=PLACES.map(p=>{if(!S.owned[p.id])return`<div class="tile locked" aria-label="Locked place"><b>?</b></div>`;
@@ -830,7 +830,8 @@ ${sec('DISCIPLINE',['+2 Discipline on any day you finish a quest.','Missing a da
 ${sec('WEEKLY BONUS',['Finish 4 quests for the same stat in one week (Mon–Sun).','You get +10 in that stat and +5 Discipline.'])}
 ${sec('CIRCUS MAÑANA',['Every Monday a new act takes the stage in the big top on the east side of the village.','Real tasks hurt it. Walk into the tent to see your hits land.','When it drops to 0, finish it before Sunday night for a reward and its poster.'])}
 ${sec('TRIALS',['Every 10 levels a stat reaches a trial and stops gaining points.','Tap the trial under the bar to see what it asks.','Pass it within 7 days to reach the next tier. You can\'t fail.'])}
-${sec('WORLD',['Drag anywhere on the screen to walk. Tap the yellow button to talk or use things.','Mentors give quests on days you\'ve done at least one real task.','Your real levels open new paths, and quest rewards show up in your wardrobe.','New faces may find their way to the village. Friends notice what you do in real life, and friendship never goes down.'])}
+${sec('WORLD',['Drag anywhere on the screen to walk. Tap the yellow button to talk or use things.','Mentors give quests on days you\'ve done at least one real task.','Your real levels open new paths, and quest rewards show up in your wardrobe.','New faces may find their way to the village.'])}
+${sec('FRIENDSHIP',['Friends notice what you do in real life.','Each friend cares about one of your stats. Every day you work on it, you grow closer.','Their tasks help too.','Friendship never goes down.'])}
 ${sec('SECRETS',['Keep growing to unlock new gear, places and quirks.'])}
 </div>`}
 function settings(){const o=k=>S.settings[k]?'ON':'OFF';
@@ -2231,13 +2232,13 @@ function heartUp(id) {                        // show the next earned heart (one
   return true;
 }
 function portIn(id) { const port = document.querySelector('.fxtier .rlport'); if (port) { const c = npcCanvas(id), big = document.createElement('canvas'); big.width = c.width * 3; big.height = c.height * 3; const g = big.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(c, 0, 0, big.width, big.height); port.appendChild(big); } }
-function newcTaskTalk(id) {                   // their real-life task: report, offer, or remind
+function newcTaskTalk(id, noRemind) {         // their real-life task: report, offer, or remind
   const ws = WS(), t = rlTask(id);
   if (t && t.done) { rlReport(id, t); return true; }
   const off = nrlOffer(id);
-  if (off) { dialog(id, [FAMQ[id] ? famSmall(id) : newcSmallTalk(id), id === 'wren' ? 'Oh! I have an idea for you. Out there, in your real life:' : id === 'mira' ? 'There\'s something on my list for you. Out there, in your real life:' : 'Here\'s a little challenge, from one artist to another:', '"' + off[0] + '"', `Do it, then come tell me. +${off[1] + 1} ${NAMES[off[2]][0] + NAMES[off[2]].slice(1).toLowerCase()}.`], null,
+  if (off) { dialog(id, [(id === 'wren' ? 'Oh! I have an idea for you, out in real life: ' : id === 'mira' ? 'There\'s something on my list for you, out in real life: ' : 'A little challenge, from one artist to another: ') + '"' + off[0] + '"', `Do it, then come tell me. +${off[1] + 1} ${NAMES[off[2]][0] + NAMES[off[2]].slice(1).toLowerCase()}.`], null,
       [{ label: 'ACCEPT', fn: () => rlAccept(id, off) }, { label: 'MAYBE LATER', fn: () => dialog(id, ['Sure thing. No rush.']) }]); return true; }
-  if (t) { dialog(id, ['How\'s it going with this one?', '"' + t.name + '"', 'Check it off in your quests when it\'s done, then come tell me.'], null,
+  if (t && !noRemind) { dialog(id, ['How\'s it going with this one? "' + t.name + '"', 'Check it off in your quests when it\'s done, then come tell me.'], null,
       [{ label: "I'M ON IT", fn: () => {} }, { label: 'DROP IT', fn: () => { S.tasks = S.tasks.filter(x => x !== t); ws.rl[id] = null; ws.rlDay[id] = dn(); save(); dialog(id, ['No worries at all.']); } }]); return true; }
   return false;
 }
@@ -2250,29 +2251,27 @@ function talkNew(id) {
       return dialog('wren', ['MY TOOLBOX! You found it!', 'Thank you, friend. Really.'], () => { heartUp('wren'); const go = () => wrenAsk(); const d = WR.dlg; if (d) d.then = go; else go(); }); }
     if (n.moved == null) {                     // still camping in the woods: hearts and her tasks work here too
       if (Lv('CHA') >= 5) return wrenAsk(true);
-      if (heartUp(id)) return;
-      if (newcTaskTalk(id)) return;
+      if (newcTaskTalk(id, 1)) return; if (heartUp(id)) return; if (newcTaskTalk(id)) return;
       return dialog('wren', ['I\'m still thinking about your village. When it feels a bit warmer, I\'ll come.']);
     }
-    if (n.home && (famStage() === 'build' || famStage() === 'ready')) { if (heartUp(id)) return; return wrenBuildTalk(); }   // building for the Honeyfields
+    if (n.home && (famStage() === 'build' || famStage() === 'ready')) { if (newcTaskTalk(id, 1)) return; if (heartUp(id)) return; if (newcTaskTalk(id)) return; return wrenBuildTalk(); }   // building for the Honeyfields
     const st = wrenStage();
     if (st < 3) {
-      if (heartUp(id)) return;
-      return dialog('wren', [['This is the spot! Every day you get something done out there in real life, I\'ll build a bit more. One step a day. Deal?', 'The frame is up! Your hard work is contagious, you know.', 'Walls are up! One more good day and it\'s done.'][st]], () => newcTaskTalk(id));
+      if (newcTaskTalk(id, 1)) return; if (heartUp(id)) return; if (newcTaskTalk(id)) return;
+      if (!onceToday('wrenbuild')) return dialog('wren', smallTalk('wren', newcSmallTalk('wren')));
+      return dialog('wren', [['This is the spot! Every day you get something done out there in real life, I\'ll build a bit more. One step a day. Deal?', 'The frame is up! Your hard work is contagious, you know.', 'Walls are up! One more good day and it\'s done.'][st]]);
     }
     if (!n.home) { n.home = 1; frBonus('wren', 2); save(); return dialog('wren', ['It\'s done! My very own home.', 'Thank you, neighbor. Come by anytime.'], () => { sfx('tier'); confetti(GOLD, 60, innerWidth / 2, innerHeight * .4, 11); }); }
-    if (heartUp(id)) return;
-    if (newcTaskTalk(id)) return;
-    return dialog('wren', [newcSmallTalk('wren')]);
+    if (newcTaskTalk(id, 1)) return; if (heartUp(id)) return; if (newcTaskTalk(id)) return;
+    return dialog('wren', smallTalk('wren', newcSmallTalk('wren')));
   }
   // Pip
   if (n.met == null) { n.met = dn(); frBonus('pip', 2); save(); pipTune(); worldHud();
     return dialog('pip', ['La la laaa! Oh, an audience!', 'I\'m Pip, a wandering bard. I go from village to village, collecting stories for my songs.', 'Your village has a nice ring to it. I\'ll swing by now and then!'], () => { heartUp('pip'); }); }
   pipTune();
   if (n.feather && !n.featherBack) { n.featherBack = 1; frBonus('pip', 2); save(); worldHud(); return dialog('pip', ['My feather! Now I look like a proper bard again.', 'I owe you a song. Or better... a lesson. Soon!']); }
-  if (heartUp(id)) return;
-  if (newcTaskTalk(id)) return;
-  return dialog('pip', [newcSmallTalk('pip')]);
+  if (newcTaskTalk(id, 1)) return; if (heartUp(id)) return; if (newcTaskTalk(id)) return;
+  return dialog('pip', smallTalk('pip', newcSmallTalk('pip')));
 }
 function wrenAsk(again) {
   const n = NS('wren');
@@ -2691,9 +2690,9 @@ NRLQ.mira = [['Invite someone over for fika', 3, 'CHA'], ['Cook a meal for someo
   ['Bring a neighbor or coworker something homemade', 3, 'CHA'], ['Eat a meal together with someone, no phones', 2, 'CHA'], ['Introduce two people who should know each other', 3, 'CHA']];
 MN.mira = 'Mira'; MN.elias = 'Elias'; MN.tove = 'Tove';
 function FS(k) { const ws = WS(); ws.fam = ws.fam || {}; return ws.fam[k] = ws.fam[k] || {}; }
-function famCheck() {                               // notes the day you first reach the secret milestone (Heart 9)
+function famCheck() {                               // notes the day you first reach the secret milestone (Heart 6)
   if (typeof S === 'undefined' || !S || !S.pts) return; const f = FS('hf');
-  if (f.hit == null && Lv('CHA') >= 9) { f.hit = dn(); save(); }
+  if (f.hit == null && Lv('CHA') >= 6) { f.hit = dn(); save(); }
 }
 function famBuildStage() { const f = FS('hf'); if (f.build == null) return -1; return Math.min(3, new Set(S.log.filter(e => dn(e.t) > f.build).map(e => dn(e.t))).size); }
 function famStage() {                               // '' · news (Rose has a letter) · tellwren · build · ready (cinematic next) · home
@@ -2723,8 +2722,9 @@ function wrenStartsHF() {
 }
 function wrenBuildTalk() {
   const k = famBuildStage();
+  if (!onceToday('wrenbuild')) return dialog('wren', smallTalk('wren', newcSmallTalk('wren')));
   if (k >= 3) return dialog('wren', ['It\'s done! Now we just wait for them to arrive.']);
-  dialog('wren', [['Good bones on this old frame. Come back after a good day out there and there\'ll be walls.', 'Walls are up! Rose already brought three pies "for the builders". There is one builder. Me.', 'The roof is on! One more good day out there and the Honeyfields can come home.'][k]], () => newcTaskTalk('wren'));
+  dialog('wren', [['Good bones on this old frame. Come back after a good day out there and there\'ll be walls.', 'Walls are up! Rose already brought three pies "for the builders". There is one builder. Me.', 'The roof is on! One more good day out there and the Honeyfields can come home.'][k]]);
 }
 
 // ---- what the family says
@@ -2774,7 +2774,7 @@ function famLine(id) {
 }
 function famTalk(id) {
   if (id === 'mira' && newcTaskTalk('mira')) return;
-  dialog(id, famLine(id));
+  dialog(id, smallTalk(id, id === 'mira' ? famSmall(id) : null));
 }
 
 // ---- the move-in cinematic: the cart rolls in from the west road, the village says hello, Wren hands over the key
@@ -3072,17 +3072,17 @@ const ACT_REACT = {
   excuse: { bjorn: 'I had a PERFECT reason to skip training. That\'s how I knew something was wrong.', orvel: 'Every excuse sounds so reasonable this week. That\'s his trick, you know.', rose: 'Everyone has a lovely reason why they couldn\'t come by. Too lovely.', kai: 'A good excuse is still an excuse.', wren: 'Caught myself explaining to a hammer why I couldn\'t work. Out loud.', pip: 'I almost talked myself out of performing today. Very convincing, that mirror.', fisher: '...Don\'t look in his mirror. You\'ll see someone who stopped trying.' }
 };
 const ACT_RELIEF = { bjorn: 'You knocked that act FLAT! The air feels lighter. Let\'s TRAIN!', orvel: 'The music has stopped, for now. Well done, dear friend. Well done.', rose: 'The colors are back on the east side. I\'m baking something special tonight.', kai: 'The tent is quiet. Rest well. Monday will come.', wren: 'Tent\'s gone quiet. Back to building, then!', pip: 'Another verse for your song! The village that would not sit still!', fisher: '...It\'s quieter now. Thank you.' };
-function chatterLine(id) {                          // one extra line per conversation: this week's act (once a day), otherwise an everyday line
-  const ws = WS(); ws.cday = ws.cday || {}; ws.lix = ws.lix || {};
-  const C = CIRC(), B = boss(), live = C.tentSeen && !circusGate();
-  if (live) {
-    const key = day() + (B.won ? 'w' : 'a') + B.b.id;
-    if (ws.cday[id] !== key) {
-      const line = B.won ? (ws.cday[id + 'won'] === B.w ? null : ACT_RELIEF[id]) : (ACT_REACT[B.b.id] || {})[id];
-      if (line) { ws.cday[id] = key; if (B.won) ws.cday[id + 'won'] = B.w; save(); return [line]; }
-    }
-  }
-  ws.ltog = ws.ltog || {}; ws.ltog[id] = !ws.ltog[id]; const pool = LORE[id] && LORE[id].concat(famExtra(id)); if (!pool || !ws.ltog[id]) return [];
+function actLine(id) {                              // this week's act (or the relief after a win), once a day per person
+  const ws = WS(); ws.cday = ws.cday || {};
+  const C = CIRC(), B = boss(), live = C.tentSeen && !circusGate(); if (!live) return null;
+  const key = day() + (B.won ? 'w' : 'a') + B.b.id; if (ws.cday[id] === key) return null;
+  const line = B.won ? (ws.cday[id + 'won'] === B.w ? null : ACT_RELIEF[id]) : (ACT_REACT[B.b.id] || {})[id];
+  if (line) { ws.cday[id] = key; if (B.won) ws.cday[id + 'won'] = B.w; save(); }
+  return line;
+}
+function chatterLine(id) {                          // an everyday line: village gossip
+  const ws = WS(); ws.lix = ws.lix || {};
+  const pool = LORE[id] && LORE[id].concat(famExtra(id)); if (!pool) return [];
   const i = ws.lix[id] = ((ws.lix[id] == null ? hsh(id.length, 7) : ws.lix[id]) + 1) % pool.length; save();
   return [pool[i]];
 }
@@ -3108,14 +3108,35 @@ const HINT = {
   kai: 'Master Kai looked up at the shrine and said your name. Strange, isn\'t it?'
 };
 function extraLines(id) {                          // once a day per person: a teaser (mentor, not ready yet) or a hint about someone else's story quest
-  if (NEWC[id] && NS(id).met == null) return [];          // newcomers introduce themselves first
   const ws = WS(); ws.tdays = ws.tdays || {}; let out = [];
   if (ws.tdays[id] !== day()) {
     if (TEASE[id] && wq(id) === 0 && !storyReady(id)) out = [TEASE[id]];
     else if (!(WQ[id] && storyOpen(id))) { const other = Object.keys(WQ).find(k => k !== id && storyOpen(k)); if (other) out = [HINT[other]]; }
     if (out.length) { ws.tdays[id] = day(); save(); }
   }
-  return out.length ? out : HF_IDS.includes(id) ? [] : chatterLine(id);
+  return out;
+}
+const onceToday = key => { const ws = WS(); ws.tdays = ws.tdays || {}; if (ws.tdays[key] === day()) return false; ws.tdays[key] = day(); save(); return true; };
+const BUSY = {                                     // from the third chat of the day (quests still go through)
+  bjorn: ['Can\'t chat now, friend. These weights won\'t lift themselves!', 'Back to the bench! Talk tomorrow, friend.'],
+  orvel: ['Hmm? Oh, it\'s you again. Forgive me, my books are calling.', 'These star charts won\'t read themselves, dear friend. Tomorrow!'],
+  rose: ['Oh, my bread is in the oven, dear! Come see me tomorrow.', 'Shoo, sweetheart. These cookies won\'t bake themselves.'],
+  kai: ['Enough words for today.', 'The steps need sweeping. Go. Do something real.'],
+  wren: ['Gotta get back to work. These planks won\'t cut themselves!', 'Hammer\'s calling. Talk tomorrow, neighbor!'],
+  pip: ['I\'ve got a song to finish, friend. It won\'t write itself!', 'Shh! I almost had the perfect rhyme... Later!'],
+  mira: ['Sorry! I still have half a page of my list to get through today.', 'Tomorrow, okay? Grandma\'s letters won\'t sort themselves.'],
+  elias: ['Can\'t talk! I\'m saving my best joke for tomorrow.', 'Wren needs me. Well. Wren says she doesn\'t. But she does.'],
+  tove: ['I\'m BUSY. I\'m a knight today.', 'Shhh! I\'m hiding from Mom.']
+};
+function smallTalk(id, own) {                      // one line: busy (3rd chat today+), a teaser or hint, this week's act, rarely your week (own), otherwise gossip
+  const ws = WS(); ws.tn = ws.tn || {}; const d = day();
+  const n = ws.tn[id] && ws.tn[id].d === d ? ++ws.tn[id].n : (ws.tn[id] = { d, n: 1 }).n; save();
+  if (n >= 3 && BUSY[id]) return [BUSY[id][n % 2]];
+  const ex = extraLines(id); if (ex.length) return ex;
+  if (HF_IDS.includes(id)) return own && Math.random() < .1 ? [own] : famLine(id);
+  const act = actLine(id); if (act) return [act];
+  if (own && Math.random() < .1) return [own];
+  return chatterLine(id);
 }
 function talk(id) {
   if (circusStage() === 'wagon') return dialog(id, [id === 'orvel' ? 'Go on, see it for yourself. But don\'t get too close to those bars.' : 'Are you checking out the wagon?']);
@@ -3126,58 +3147,52 @@ function talk(id) {
   }
   if (id === 'rose' && famStage() === 'news') return roseLetter();          // a family is coming home: the story beats come first
   if (id === 'wren' && famStage() === 'tellwren') return wrenStartsHF();
-  WR.pre = { id, lines: extraLines(id) }; try { return talkInner(id); } finally { WR.pre = null; }
+  return talkInner(id);
 }
 function talkInner(id) {
   if (HF_IDS.includes(id)) return famTalk(id);
   if (NEWC[id]) return talkNew(id);
   const ws = WS(), s = wq(id), Q = WQ[id];
-  if (WQ[id] && s !== 2) {                   // real-life quests come before story chatter, story hand-ins come first of all
-    const t = rlTask(id);
-    if (t && t.done) return rlReport(id, t);
-    if (!(s === 0 && storyOpen(id))) {
-      const off = rlOffer(id), st = WQ[id].stat;
-      if (off) return dialog(id, [mentorSmallTalk(id), 'I have a task for you. Not here... out there, in your real life:', '"' + off[0] + '"', `Do it, then come back and tell me. +${off[1] + 1} ${NAMES[st][0] + NAMES[st].slice(1).toLowerCase()}.`], null,
-        [{ label: 'ACCEPT', fn: () => rlAccept(id, off) }, { label: 'MAYBE LATER', fn: () => dialog(id, ['No rush. I\'ll be right here.']) }]);
-      if (t) return dialog(id, ['Have you done it yet?', '"' + t.name + '"', 'Check it off in your quests when you have, then come tell me.'], null,
-        [{ label: "I'M ON IT", fn: () => {} }, { label: 'DROP IT', fn: () => { S.tasks = S.tasks.filter(x => x !== t); ws.rl[id] = null; ws.rlDay[id] = day(); save(); dialog(id, ['No worries. There\'s always tomorrow.']); } }]);
-      if (s !== 1 && ws.rlDay[id] === day()) return dialog(id, [mentorSmallTalk(id), 'Come back tomorrow. I\'ll have a new task for you.']);
-    }
-  }
   if (id === 'fisher') {
     if (wq('rose') !== 1) return finnTalk();
     if (Lv('CHA') < WQ.rose.req) return dialog('fisher', ['...What do you want?', 'He turns away. Maybe a warmer heart would reach him.']);
     ws.q.rose = 2; save(); worldHud();
     return dialog('fisher', ['Cookies? From Rose? For... me?', 'Nobody has done something like that for me in years.', 'Thank you. Truly. Tell her I said hi.']);
   }
-  if (s === 0) {
-    if (!storyReady(id)) return dialog(id, [mentorSmallTalk(id)]);
-    if (!didToday()) return dialog(id, [mentorSmallTalk(id), 'Come back after you\'ve done something in real life today. Then we\'ll talk adventure.']);
-    const intro = {
-      bjorn: ['HEY! You look strong! ...Well, getting there.', 'My lucky dumbbell rolled into the cave, and now a boulder blocks the way.', 'You look strong enough now. Think you can push it?'],
-      orvel: ['Oh! A visitor! Have you seen my glasses? No? Hmm...', 'I left them in my tower, but I sealed the door with runes. And I can\'t read the runes without my glasses!', 'If you can read them, you\'ll find my glasses inside, dear friend.'],
-      rose: ['Hello, sweetheart! Would you do an old lady a favor?', 'The fisherman by the pond is always so lonely. I baked him some cookies.', 'He\'s shy, though. But you have the warmest heart in the village. He\'ll open up to you.'],
-      kai: ['...', 'At the top of these stairs hangs the morning bell.', 'You are ready now. Climb them and ring it.']
-    }[id];
-    ws.q[id] = 1; if (id === 'rose') ws.f.cookies = 1; save(); worldHud();
-    return dialog(id, intro.concat(['QUEST: ' + Q.goal]));
-  }
-  if (s === 1) return dialog(id, [{ bjorn: 'The dumbbell is in the cave past the boulder. You got this!', orvel: 'My glasses... somewhere on my desk, I think. Probably.', rose: 'The fisherman sits by the pond, dear. Go on!', kai: 'The bell waits at the top.' }[id]]);
   if (s === 2 && id === 'kai' && ws.f.kaiCheat) {      // rang the bell without the discipline for the stairs: Kai knows
     ws.q.kai = 1; ws.f.kaiCheat = 0; save(); worldHud();
-    return dialog('kai', ['I heard the bell.', 'But I did not hear your steps on the stairs.', 'You found another way up. Clever. But the bell is not the lesson. The climb is.', 'Come back when your legs are ready, and take the stairs.', 'QUEST: ' + WQ.kai.goal]);
+    return dialog('kai', ['I heard the bell. But I did not hear your steps on the stairs.', 'The bell is not the lesson. The climb is. Come back when your legs are ready.', 'QUEST: ' + WQ.kai.goal]);
   }
-  if (s === 2) {
+  if (s === 2) {                                       // 1. story quest hand-in
     ws.q[id] = 3; save(); checkUnlocks(); save(); worldHud(); worldEntities();
     const done = { bjorn: ['MY LUCKY DUMBBELL! You legend!', 'Here, take my old training top. You\'ve earned it.'], orvel: ['My glasses! Oh, now I can see you! You\'re taller than I thought.', 'Let me teach you a little spell as thanks.'], rose: ['He smiled? Oh, that makes my whole week.', 'You have a good heart. My garden is always open to you.'], kai: ['I heard the bell.', 'You showed up, step by step. Sit with me a moment. I will teach you to be still.'] }[id];
     return dialog(id, done, () => questReward(id));
   }
-  return dialog(id, [mentorSmallTalk(id)]);
+  if (s === 0 && storyOpen(id)) {                      // 2. story quest offer
+    const intro = {
+      bjorn: ['HEY! My lucky dumbbell rolled into the cave, and now a boulder blocks the way.', 'You look strong enough now. Think you can push it?'],
+      orvel: ['Oh! I sealed my tower door with runes, but my glasses are inside. And I can\'t read runes without my glasses!', 'If you can read them, you\'ll find my glasses inside, dear friend.'],
+      rose: ['Hello, sweetheart! The fisherman by the pond is always so lonely. I baked him some cookies.', 'He\'s shy, but you have the warmest heart in the village. Would you bring them to him?'],
+      kai: ['At the top of these stairs hangs the morning bell.', 'You are ready now. Climb them and ring it.']
+    }[id];
+    ws.q[id] = 1; if (id === 'rose') ws.f.cookies = 1; save(); worldHud();
+    return dialog(id, intro.concat(['QUEST: ' + Q.goal]));
+  }
+  const t = Q && rlTask(id);
+  if (t && t.done) return rlReport(id, t);             // 3. real-life quest report
+  const off = Q && rlOffer(id);
+  if (off) return dialog(id, [`I have a real-life task for you: "${off[0]}"`, `Do it, then come back and tell me. +${off[1] + 1} ${NAMES[Q.stat][0] + NAMES[Q.stat].slice(1).toLowerCase()}.`], null,   // 4. real-life quest offer
+    [{ label: 'ACCEPT', fn: () => rlAccept(id, off) }, { label: 'MAYBE LATER', fn: () => dialog(id, ['No rush. I\'ll be right here.']) }]);
+  if (s === 1) return dialog(id, [{ bjorn: 'The dumbbell is in the cave past the boulder. You got this!', orvel: 'My glasses... somewhere on my desk, I think. Probably.', rose: 'The fisherman sits by the pond, dear. Go on!', kai: 'The bell waits at the top.' }[id]]);   // 5. reminders
+  if (t) return dialog(id, [`Have you done it yet? "${t.name}"`, 'Check it off in your quests when you have, then come tell me.'], null,
+    [{ label: "I'M ON IT", fn: () => {} }, { label: 'DROP IT', fn: () => { S.tasks = S.tasks.filter(x => x !== t); ws.rl[id] = null; ws.rlDay[id] = day(); save(); dialog(id, ['No worries. There\'s always tomorrow.']); } }]);
+  if (s === 0 && storyReady(id) && !didToday()) return dialog(id, ['Come back after you\'ve done something in real life today. Then we\'ll talk adventure.']);
+  return dialog(id, smallTalk(id, mentorSmallTalk(id)));
 }
 function rlAccept(id, off) {
   const ws = WS(), t = { id: S.next++, name: off[0], stat: NEWC[id] || FAMQ[id] ? off[2] : WQ[id].stat, pts: 0, once: true, mentor: id, reward: off[1] };
   S.tasks.push(t); ws.rl[id] = t.id; ws.rlDay[id] = NEWC[id] || FAMQ[id] ? dn() : day(); save(); sfx('ok');
-  dialog(id, ['Wonderful! I\'ve put it in your quests.', 'Off you go!']);
+  dialog(id, ['Wonderful! It\'s in your quests now. Off you go!']);
 }
 function rlReport(id, t) {
   const ws = WS(), st = t.stat, lv0 = {}; Object.keys(NAMES).forEach(k => lv0[k] = Lv(k));
@@ -3185,9 +3200,10 @@ function rlReport(id, t) {
   S.tasks = S.tasks.filter(x => x !== t); ws.rl[id] = null; ws.rlLast[id] = t.name; if (NEWC[id]) frBonus(id, 4); if (NEWC[id] || FAMQ[id]) ws.rlDay[id] = dn(); checkTrials(); checkUnlocks(); save();
   const ups = Object.keys(NAMES).filter(k => Lv(k) > lv0[k]), nm = NAMES[st][0] + NAMES[st].slice(1).toLowerCase();
   const thanks = { rose: 'Oh, that warms my heart, dear!', bjorn: 'THAT\'S what I\'m talking about! Strong!', orvel: 'Marvelous! A sharper mind every day!', kai: 'Good. Small steps build mountains.', wren: 'Nice work! See? You\'re a builder too.', pip: 'Bravo! That one\'s going in a song.', mira: 'Wonderful! That\'s exactly what Grandma meant by "show up for each other".' }[id];
-  dialog(id, [thanks, NEWC[id] ? 'Give me a couple of days and I\'ll think of something new.' : FAMQ[id] ? 'I\'ll have something new on my list in a few days.' : 'Come back tomorrow for a new task.'], () => {
+  const next = NEWC[id] ? 'NEW TASK IN A COUPLE OF DAYS' : FAMQ[id] ? 'NEW TASK IN A FEW DAYS' : 'NEW TASK TOMORROW';
+  dialog(id, [thanks], () => {
     sfx('lvl');
-    fxCard('', `<small class="tpk">REAL-LIFE QUEST DONE!</small><h3>${esc(t.name)}</h3>${npcCanvas(id) ? '<div class="rlport"></div>' : ''}<p class="lbl">FROM ${MN[id].toUpperCase()}</p><p>${a || b ? '+' + (a + b) + ' ' + nm : 'Your ' + nm + ' trial is open, so no new points right now.'}</p>`, 'AWESOME!', () => { if (ups.length && fxOn()) levelBanner(ups); });
+    fxCard('', `<small class="tpk">REAL-LIFE QUEST DONE!</small><h3>${esc(t.name)}</h3>${npcCanvas(id) ? '<div class="rlport"></div>' : ''}<p class="lbl">FROM ${MN[id].toUpperCase()}</p><p>${a || b ? '+' + (a + b) + ' ' + nm : 'Your ' + nm + ' trial is open, so no new points right now.'}</p><p class="lbl">${next}</p>`, 'AWESOME!', () => { if (ups.length && fxOn()) levelBanner(ups); });
     const port = document.querySelector('.fxtier .rlport'); if (port) { const c = npcCanvas(id), big = document.createElement('canvas'); big.width = c.width * 3; big.height = c.height * 3; const g = big.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(c, 0, 0, big.width, big.height); port.appendChild(big); }
   });
 }
@@ -3208,7 +3224,6 @@ function storyBadge(g, x, y, ch, tnow) {
 }
 // ---- dialog box
 function dialog(who, lines, then, choices) {
-  if (WR.pre && WR.pre.id === who && WR.pre.lines.length) { lines = WR.pre.lines.concat(lines); WR.pre = null; }
   WR.dlg = { who, lines: lines.slice(), then, choices }; WR.joy = null; const j = document.getElementById('wjoy'); if (j) j.hidden = true; showDlg();
 }
 function showDlg() {
@@ -3218,17 +3233,23 @@ function showDlg() {
   box.querySelector('b').textContent = d.who ? ({ bjorn: 'BIG BJØRN', orvel: 'OLD ORVEL', rose: 'GRANNY ROSE', kai: 'MASTER KAI', fisher: 'FINN', wren: 'WREN', pip: 'PIP THE BARD', me: 'YOU', mira: 'MIRA', elias: 'ELIAS', tove: 'TOVE' }[d.who]) : '';
   const hz = box.querySelector('.whearts'), fh = d.who && typeof frHearts === 'function' ? frHearts(d.who) : null;
   hz.innerHTML = fh ? Array.from({ length: fh.max }, (_, i) => heartSvg(i < fh.n, d.popHeart && i === fh.n - 1)).join('') : ''; d.popHeart = 0;
+  if (fh && fh.n > 0 && !(WS().f || {}).heartHelp) d.helpHeart = 1;   // first heart (or an old save that has hearts): explain friendship when this talk ends
+  hz.onclick = fh ? ev => { ev.stopPropagation(); heartHelp(); } : null;
   const t = d.lines[0], pe = box.querySelector('p'), quest = t.startsWith('QUEST:'); box.classList.toggle('quest', quest || t.startsWith('"')); box.hidden = false;
   const ch = box.querySelector('.wch'); ch.innerHTML = ''; const last = d.lines.length === 1 && d.choices, tap = box.querySelector('small'); tap.hidden = true;
   if (WR.typing) WR.typing.cancel();
   const done = () => { WR.typing = null; tap.hidden = !!last; if (quest) sfx('ok'); if (last) addChoices(); };
   WR.typing = SND.speak(quest ? null : d.who, t, s => { pe.textContent = s; }, done);
   if (!d.who && !quest) sfx('tick');
-  function addChoices() { d.choices.forEach(c => { const bt = document.createElement('button'); bt.textContent = c.label; bt.onclick = ev => { ev.stopPropagation(); WR.dlg = null; box.hidden = true; c.fn(); }; ch.appendChild(bt); }); }
+  function addChoices() { d.choices.forEach(c => { const bt = document.createElement('button'); bt.textContent = c.label; bt.onclick = ev => { ev.stopPropagation(); WR.dlg = null; box.hidden = true; if (d.helpHeart) heartHelp(c.fn); else c.fn(); }; ch.appendChild(bt); }); }
   document.getElementById('wact').hidden = true;
 }
 const heartSvg = (on, pop) => `<svg viewBox="0 0 7 6" shape-rendering="crispEdges"${pop ? ' class="pop"' : ''}><path fill="#3b2416" d="M1 0h2v1h1V0h2v1h1v2H6v1H5v1H4v1H3V5H2V4H1V3H0V1h1z"/><path fill="${on ? '#e5607e' : '#e4d6bd'}" d="M1 1h2v1h1V1h2v2H5v1H4v1H3V4H2V3H1z"/>${on ? '<rect x="1" y="1" width="1" height="1" fill="#ffc2cf"/>' : ''}</svg>`;
-function dlgNext() { if (WR.typing && WR.typing.busy()) { WR.typing(); return; } const d = WR.dlg; if (!d) return; if (d.choices && d.lines.length === 1) return; d.lines.shift(); if (d.lines.length) return showDlg(); WR.dlg = null; document.getElementById('wdlg').hidden = true; if (d.then) setTimeout(d.then, 150); }
+function heartHelp(next) {                    // the friendship card: once after your first heart, and any time you tap the hearts
+  const ws = WS(); ws.f = ws.f || {}; ws.f.heartHelp = 1; save();
+  fxCard('fxheart', `<small class="tpk">FRIENDSHIP</small><div class="hrow">${heartSvg(1)}${heartSvg(1)}${heartSvg(0)}</div><p>Friends notice what you do in real life.</p><p>Each friend cares about one of your stats. Every day you work on it, you grow closer.</p><p>Their tasks help too.</p>`, 'GOT IT', next, 'heart');
+}
+function dlgNext() { if (WR.typing && WR.typing.busy()) { WR.typing(); return; } const d = WR.dlg; if (!d) return; if (d.choices && d.lines.length === 1) return; d.lines.shift(); if (d.lines.length) return showDlg(); WR.dlg = null; document.getElementById('wdlg').hidden = true; if (d.helpHeart) return setTimeout(() => heartHelp(d.then), 150); if (d.then) setTimeout(d.then, 150); }
 function worldHud() {
   const a = document.getElementById('warea'), q = document.getElementById('wquest'); if (!a) return;
   a.textContent = { village: 'VILLAGE', tower: "ORVEL'S TOWER", cave: 'THE CAVE', forest: 'WHISPERWOOD', tent: 'CIRCUS MAÑANA' }[WR.cur];
