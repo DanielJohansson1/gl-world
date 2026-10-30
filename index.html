@@ -208,6 +208,7 @@ body.wlock nav button{pointer-events:none;opacity:.45}
 @keyframes shake{0%,100%{transform:none}25%{transform:translate(-4px,2px)}50%{transform:translate(4px,-2px)}75%{transform:translate(-2px,-2px)}}
 .card.bossin{border-color:#3b0d0a;box-shadow:inset 0 0 0 3px #b3261e,0 0 0 3px #b3261e,3px 3px 0 rgba(0,0,0,.35);animation:bdrop .4s steps(5)}
 .card.bossin .bnew{color:#b3261e;font-size:10px}
+.actin .bnew{color:#7a4a8a;font-size:10px}.actin h3{margin:6px 0 4px}
 @keyframes bdrop{from{transform:translateY(-70px);opacity:0}to{transform:none;opacity:1}}
 .noanim .warnbar,.noanim .warn .tap,.noanim .bossin{animation:none}
 @media (prefers-reduced-motion:reduce){.warnbar,.warn .tap,.bossin{animation:none}}
@@ -715,6 +716,7 @@ const SND = (() => {
     key() { const t = now(); bell('sfx', mtof(93), t, .5, .05); bell('sfx', mtof(96), t + .09, .6, .045); bell('sfx', mtof(100), t + .18, .9, .04); },
     beep() { const t = now(); [0, .16].forEach(d => note('sfx', 1320, t + d, .09, { type: 'square', vol: .025, cut: 2400 })); },   // Ziggy's crate: a happy little machine beep
     whirr() { const t = now(); note('sfx', 110, t, 1.4, { type: 'square', vol: .03, a: .2, slide: 3.2, slideT: 1.2, cut: 900, vib: 30, vibD: 8 }); bell('sfx', mtof(88), t + 1.2, .8, .05); bell('sfx', mtof(95), t + 1.32, 1, .045); },   // the workshop powers up
+    reveal() { const t = now(); [[81, 0], [80, .34], [77, .68], [74, 1.02], [73, 1.36]].forEach(([m, d]) => { bell('sfx', mtof(m), t + d, 1.5, .04); bell('sfx', mtof(m) * .992, t + d, 1.2, .012); }); [62, 65, 68].forEach((m, k) => bell('sfx', mtof(m), t + 1.8 + k * .05, 2.6, .026)); note('sfx', mtof(38), t + 1.7, 3, { type: 'sine', vol: .05, a: .4, vib: 3, vibD: 3 }); },   // the weekly act: a quiet, slightly out-of-tune music box creeping down in a minor key
     bellRing() { const t = now(); bell('sfx', mtof(64), t, 3.2, .11); bell('sfx', mtof(71), t + .02, 2.6, .05); }
   };
   const quiet = () => typeof S !== 'undefined' && S && S.settings && !S.settings.sound;   // the game's SOUND switch
@@ -2989,13 +2991,19 @@ function bossCheck() {
   if (S.bossSeen === wk()) return; S.bossSeen = wk(); S.bossDay = day(); save();
   fxCard('fxgloom', `<small class="tpk">MONDAY GLOOMS...</small>${bigCanvasImg(tentCanvas(boss().b.id), 2, 'gtent')}<p>A new act is threatening the village.</p><p class="lbl">Visit the World to face it.</p>`, 'OK', null, 'open');
 }
-function circusReveal(then) {                       // "Señor Mañana presents..." card with this week's act
-  WR.busy = 1; const B = actState(), A = B.A; bossTheme();
+const actWin = id => ({                             // the reveal card's one plain line: how to beat this week's act
+  restday: 'Defeat her by doing Strength tasks in the real world.',
+  social: 'Defeat him by doing Heart tasks in the real world.',
+  doom: 'Defeat him by doing Intellect tasks in the real world.',
+  takeaway: 'Defeat him by doing ' + sn('routine', 'your weekly routine') + ' and your own tasks in the real world.',
+  captain: 'Defeat him by doing any task in the real world. Tasks before noon hit twice as hard.',
+  excuse: 'Defeat him by doing any task in the real world. Your own tasks hit twice as hard.' })[id] || '';
+function circusReveal(then) {                       // "Señor Mañana presents..." card with this week's act: kept calm and quiet (players may be on a bus), with a creepy music-box sting
+  WR.busy = 1; const B = actState(), A = B.A; SND.duck(4); sfx('reveal');
   const r = document.createElement('div'); r.className = 'ovl'; r.setAttribute('role', 'dialog'); r.setAttribute('aria-modal', 'true');
-  r.innerHTML = `<div class="box card bossin"><small class="bnew">SEÑOR MAÑANA PRESENTS</small>${posterImg(B.b.id, 'pbig')}<h3>${A.name.toUpperCase()}</h3><p class="creed">"${A.creed}"</p><p>${A.line}</p>
-<span class="hpbar big"><i style="width:${Math.round(B.shown / B.b.hp * 100)}%"></i></span><p>${B.shown} / ${B.b.hp} HP</p><p class="lbl">WHAT HURTS IT</p><p>${B.b.long}</p><button>BRING IT ON!</button></div>`;
+  r.innerHTML = `<div class="box card actin"><small class="bnew">Señor Mañana presents...</small>${posterImg(B.b.id, 'pbig')}<h3>${A.name}</h3><p>${actWin(B.b.id)}</p><button>BRING IT ON!</button></div>`;
   document.body.appendChild(r);
-  const close = () => { r.remove(); bossThemeStop(); WR.busy = 0; then && then(); };
+  const close = () => { r.remove(); WR.busy = 0; then && then(); };
   r.querySelector('button').onclick = close; r.onclick = e => { if (e.target === r) close(); };
 }
 function circusWarn(then) {                         // later Mondays: a new act takes the stage
