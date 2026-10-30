@@ -391,25 +391,6 @@ const BOSSES=[
 function weekNo(d){const x=new Date(d||Date.now());x.setHours(12,0,0,0);x.setDate(x.getDate()-((x.getDay()+6)%7));return Math.round(x.getTime()/6048e5)}
 function boss(){const b=BOSSES[((weekNo()%BOSSES.length)+BOSSES.length)%BOSSES.length],w=wk();
 const dealt=S.log.filter(e=>wk(e.t)===w).reduce((a,e)=>a+b.dmg(e),0);return{b,w,dealt,left:Math.max(0,b.hp-dealt),won:!!(S.bossWon&&S.bossWon[w])}}
-// "A boss approaches!": first app open each week, warning first, then the boss card with an 8-bit theme
-let bossIntro=0,bossNotes=[];
-function bnote(f,d,t,type,vol){if(!S.settings.sound)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain(),a=AC.currentTime+t;o.type=type||'square';o.frequency.value=f;g.gain.setValueAtTime(vol||.04,a);g.gain.setValueAtTime(0,a+d);o.connect(g);g.connect(AC.destination);o.start(a);o.stop(a+d+.02);bossNotes.push(o)}catch(e){}}
-function bossTheme(){bossThemeStop();SND.duck(11);const st=.15,bar=st*8,BASS=[[82.41,82.41,164.81,82.41,82.41,164.81,82.41,87.31],[82.41,82.41,164.81,82.41,82.41,164.81,82.41,98],[87.31,87.31,174.61,87.31,98,98,196,98],[116.54,116.54,233.08,116.54,123.47,123.47,246.94,123.47]],
-LEAD=[[[329.63,.6],[392,.3],[369.99,.3]],[[349.23,.9],[329.63,.3]],[[392,.3],[466.16,.3],[493.88,.6]],[[659.26,.6],[622.25,.3],[587.33,.3]]];
-bnote(82.41,.5,0,'sawtooth',.06);bnote(41.2,.5,0,'square',.05);                       // opening hit
-for(let rep=0;rep<2;rep++){const o=.6+rep*bar*4;BASS.forEach((b,i)=>b.forEach((f,j)=>bnote(f,st*.8,o+i*bar+j*st,'triangle',.09)));
-LEAD.forEach((l,i)=>{let t=o+i*bar;l.forEach(([f,d])=>{bnote(f,d*.9,t,'square',.035);t+=d})})}
-bnote(82.41,.8,.6+bar*8,'sawtooth',.05)}
-function bossThemeStop(){bossNotes.forEach(o=>{try{o.stop()}catch(e){}});bossNotes=[]}
-function bossReveal(){bossIntro=2;render();bossTheme()}
-function bossIntroClose(){bossIntro=0;bossThemeStop();render()}
-function bossIntroCard(){if(!bossIntro)return'';const {b}=boss();
-if(bossIntro===1)return`<div class="ovl warn" onclick="bossReveal()" role="dialog" aria-modal="true" aria-label="A boss approaches"><div class="warnbar">⚠ WARNING ⚠<br>A BOSS APPROACHES</div><p class="tap">TAP TO FACE IT</p></div>`;
-return`<div class="ovl" onclick="if(event.target===this)bossIntroClose()"><div class="box card bossin" role="dialog" aria-modal="true" aria-label="${b.name}">
-<small class="bnew">A NEW BOSS HAS ARRIVED!</small>${bossSvg(b.id,'cpic bbig')}<h3>${b.name}</h3>
-<span class="hpbar big"><i style="width:100%"></i></span><p>${b.hp} / ${b.hp} HP</p>
-<p class="lbl">WHAT HURTS IT</p><p>${b.long}</p>
-<button onclick="bossIntroClose()">BRING IT ON!</button></div></div>`}
 function bossSvg(id,cls){const d=BOSS_SPR[id];return`<svg class="${cls}" viewBox="0 0 32 32" shape-rendering="crispEdges" aria-hidden="true">${runs(d.r.map(r=>[...r].map(ch=>ch==='.'?null:d.p['abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'.indexOf(ch)])))}</svg>`}
 const rwText=rw=>Object.keys(rw).length===4?'+'+rw.STR+' to all stats':Object.keys(rw).map(k=>'+'+rw[k]+' '+NAMES[k][0]+NAMES[k].slice(1).toLowerCase()).join(', ');
 function bossStrip(){const {b,left,won}=boss(),dl=7-((new Date().getDay()+6)%7);
@@ -626,7 +607,7 @@ const kind=t==='g'?(it.slot==='pet'?'PET':'GEAR'):t==='p'?'PLACE':'QUIRK';
 return`<div class="ovl" onclick="if(event.target===this){infoId=null;render()}"><div class="box card" role="dialog" aria-modal="true" aria-label="${it.name}">
 ${pic}<small>${kind}</small><h3>${it.name}</h3><p class="lbl">HOW YOU GOT IT</p><p>${it.how}</p>${date?`<p class="lbl">UNLOCKED</p><p>${date}</p>`:''}
 <button onclick="infoId=null;render()">CLOSE</button></div></div>`}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(editId!=null||ideaDraft!=null||trialK||addOpen||trPick)){editId=null;ideaDraft=null;trialK=null;addOpen=false;trPick=false;render();return}if(e.key==='Escape'&&bossIntro){bossIntroClose();return}if(e.key==='Escape'&&suggOpen){suggAnswer(0);return}if(e.key==='Escape'&&(infoId||bossOpen)){infoId=null;bossOpen=0;render()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(editId!=null||ideaDraft!=null||trialK||addOpen||trPick)){editId=null;ideaDraft=null;trialK=null;addOpen=false;trPick=false;render();return}if(e.key==='Escape'&&suggOpen){suggAnswer(0);return}if(e.key==='Escape'&&(infoId||bossOpen)){infoId=null;bossOpen=0;render()}});
 function wardrobe(){
 const tiles=Array.from({length:Math.ceil(Math.max(SLOTS,ITEMS.length)/2)*2},(_,k)=>{const i=ITEMS[k];   // grows with ITEMS, so new gear never falls off the grid
 if(i&&S.owned[i.id]){const on=S.equip[i.id],f=S.fresh[i.id];return`<div class="tw"><button class="tile" onclick="wear('${i.id}')" aria-pressed="${!!on}">${f?'<i class="spk" style="position:absolute;top:8px;right:10px"></i>':''}<svg viewBox="0 0 16 16" shape-rendering="crispEdges">${i.ic}</svg><span>${i.name}</span><small>${i.slot==='head'?'HEAD':i.slot==='pet'?'PET':'SHIRT'} · ${f?'NEW!':i.slot==='pet'?(on?'WITH YOU':'AT HOME'):(on?'WORN':'TAP TO WEAR')}</small></button>${ib('g:'+i.id,i.name)}</div>`}
@@ -643,7 +624,6 @@ return`${infoCard()}<h1>ME</h1><div class="box hero">${heroInner()}</div>
 <div class="tabs"><button aria-pressed="${wtab==='gear'}" onclick="wtab='gear';render()">GEAR${fresh(ITEMS.map(i=>i.id))}</button><button aria-pressed="${wtab==='places'}" onclick="wtab='places';render()">PLACES${fresh(PLACES.map(p=>p.id))}</button><button aria-pressed="${wtab==='quirks'}" onclick="wtab='quirks';render()">QUIRKS${fresh(QUIRKS.map(q=>'q_'+q.id))}</button></div>
 <div class="grid">${wtab==='gear'?tiles:wtab==='places'?pt:qt}</div>${trialCard()}`}
 
-let AC;
 // ===================== Grindlife sound engine: soft sounds, cozy music, character voices =====================
 // Everything is made live with WebAudio (no audio files). Three buses: sfx, music, voices, all with a touch of room reverb.
 const SND = (() => {
@@ -974,7 +954,7 @@ function addTask(name,stat,pts,once,side){name=(name||'').trim();if(!name)return
 const t={id:S.next++,name,stat,pts:snapPts(pts),once:once==1||once==4,daily:once==2,weekly:once==3};S.tasks.push(t);save();render()}
 function del(id){S.tasks=S.tasks.filter(t=>t.id!=id);save();render()}
 const worldLocked=()=>view==='world'&&WR&&(WR.cine||WR.replay||(WR.finish&&performance.now()-WR.finish<1500));
-function go(v){if(worldLocked())return;if(view==='world'&&v!=='world')worldStop();if(bossIntro){bossIntro=0;bossThemeStop()}loadPend=null;view=v==='wardrobe'||v==='tasks'?(v==='tasks'?'home':'me'):v;infoId=null;bossOpen=0;editId=null;delArm=0;ideaDraft=null;trialK=null;addOpen=false;trPick=false;editMode=false;render()}
+function go(v){if(worldLocked())return;if(view==='world'&&v!=='world')worldStop();loadPend=null;view=v==='wardrobe'||v==='tasks'?(v==='tasks'?'home':'me'):v;infoId=null;bossOpen=0;editId=null;delArm=0;ideaDraft=null;trialK=null;addOpen=false;trPick=false;editMode=false;render()}
 // Grindlife character generator: returns pixel layers for given stat levels.
 // Golden retriever pet: three growth stages, drawn facing the character (left).
 // A fur, a shade, l light cream, x dark (eye/nose), T tongue, c collar, j tag
@@ -1577,7 +1557,7 @@ STR:{say:'Your muscles are getting restless.',l:[['Go for a long walk',2],['Stre
 INT:{say:'Your brain is hungry for something new.',l:[['Learn something new',4],['Watch a documentary',3],['Listen to a podcast',2],['Write in a journal',2],['Visit a museum',4],['Try a new recipe',3],['Do a puzzle',2]]},
 DIS:{say:'Your discipline could use a boost.',l:[['Plan the week',3],['Clean your room',3],['Go to bed on time',3],['Clear your inbox',3],['Wake up early',3],['No phone for an hour',3],["Do a chore you've put off",4]]}};
 let suggOpen=null;
-function suggCheck(){if(opOn()||suggOpen||bossIntro||S.bossDay===day()||view!=='home'||bossOpen||infoId||trialK||editId!=null||ideaDraft!=null||addOpen||trPick||editMode)return;const sg=S.sugg=S.sugg||{at:0,seen:{}};
+function suggCheck(){if(opOn()||suggOpen||S.bossDay===day()||view!=='home'||bossOpen||infoId||trialK||editId!=null||ideaDraft!=null||addOpen||trPick||editMode)return;const sg=S.sugg=S.sugg||{at:0,seen:{}};
 const d0=new Date();d0.setHours(0,0,0,0);const last=new Date(sg.at||0);last.setHours(0,0,0,0);if(d0-last<2*864e5-36e5)return;
 const from=Date.now()-7*864e5,g={};Object.keys(NAMES).forEach(k=>g[k]=0);S.log.forEach(e=>{if(e.t>from&&g[e.stat]!=null)g[e.stat]+=e.pts});
 let order=Object.keys(NAMES).sort((a,b)=>g[a]-g[b]||lvl(S.pts[a]).l-lvl(S.pts[b]).l);
@@ -1593,7 +1573,7 @@ return`<div class="ovl" onclick="if(event.target===this)suggAnswer(0)"><div clas
 <svg class="cpic" viewBox="0 0 44 44" shape-rendering="crispEdges"><g transform="translate(${d.dx} ${d.dy})">${runs(d.layers.body)}</g></svg>
 <small>QUEST IDEA</small><p>${o.say||IDEAS[o.k].say}</p><p class="lbl">HOW ABOUT</p><h3>${esc(o.n)}</h3><small class="sgpts">+${snapPts(o.p)} ${NAMES[o.k]} · ONE-TIME</small>
 <button onclick="suggAnswer(1)">ADD TASK</button><button class="ghost" onclick="suggAnswer(0)">NOT NOW</button></div></div>`}
-document.addEventListener('visibilitychange',()=>{if(!document.hidden){bossCheck();suggCheck()}else bossThemeStop()});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){bossCheck();suggCheck()}});
 // the big portrait with stat bars and trials: lives on the ME page
 function heroInner(){
 const stats=Object.keys(NAMES).map(k=>{const raw=lvl(S.pts[k]),T=tierOf(k),L=Lv(k),f=L-10*T,tr=atTrial(k),pr=trialProg(k);
@@ -1633,7 +1613,7 @@ const drop=openWQ&&wn?`<div class="box">${wqs.map(mrow).join('')+mgRows()}</div>
 return`<h1>GRINDLIFE${COG}</h1>${strip()}${S.petScene?`<div class="box opwait"><small class="tpk">SOMEONE IS FOLLOWING YOU...</small><p>A golden puppy keeps peeking at you from behind the trees in the village.</p><button onclick="go('world')">GO TO THE WORLD</button></div>`:''}<h2>QUESTS</h2>
 <div class="bar"><button class="add" onclick="addOpen=true;render()" ${editMode?'disabled':''}>+ ADD</button><button onclick="editMode=!editMode;render()" aria-pressed="${editMode}">${editMode?'DONE':'EDIT'}</button><button onclick="undo()" ${S.log.length&&!editMode?'':'disabled'}>UNDO</button></div>
 <div class="box">${tl||'<p class="empty">No open quests. Tap + ADD to make one.</p>'}</div>${tiles?`<div class="tiles">${tiles}</div>`:''}${drop}
-${bossCard()}${suggCard()}${addCard()}${editCard()}${trainCard()}${bossIntroCard()}`}
+${bossCard()}${suggCard()}${addCard()}${editCard()}${trainCard()}`}
 const trialTxt=k=>k==='INT'?sn('learn','Learn')+' on 5 different days within 7 days.':TRIAL_TXT[k];
 const TRIAL_TXT={STR:'Do 4 trainings within 7 days.',CHA:'Finish a Heart quest on 5 different days within 7 days.',DIS:'Finish at least one quest on 6 different days within 7 days.'};
 function trialCard(){const k=trialK;if(!k||!atTrial(k))return'';const [a,b]=trialProg(k),from=trialFrom(k);let boxes;
@@ -3005,13 +2985,6 @@ function circusReveal(then) {                       // "Señor Mañana presents.
   document.body.appendChild(r);
   const close = () => { r.remove(); WR.busy = 0; then && then(); };
   r.querySelector('button').onclick = close; r.onclick = e => { if (e.target === r) close(); };
-}
-function circusWarn(then) {                         // later Mondays: a new act takes the stage
-  WR.busy = 1;
-  const o = document.createElement('div'); o.className = 'ovl warn'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true');
-  o.innerHTML = `<div class="warnbar">⚠ WARNING ⚠<br>A NEW ACT<br>TAKES THE STAGE</div>${bigCanvasImg(gloveCanvas(1), 4, 'wglove')}<p class="tap">TAP TO FACE IT</p>`;
-  document.body.appendChild(o); sfx('open');
-  o.onclick = () => { o.remove(); circusReveal(then); };
 }
 // Until you've talked to Orvel about the caravan (the first time, and every Monday), nothing else happens in the village.
 const circusStage = () => { const C = CIRC(); return C.arrived && C.briefed !== wk() ? 'orvel' : C.legend && !C.wagon ? 'wagon' : C.legend && !C.tentSeen ? 'tent' : ''; };   // the first time: Orvel, then the wagon, then inside the tent   // the first time, you also go look at the wagon
