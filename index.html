@@ -1752,7 +1752,7 @@ function buildVillage() {
   M.warps.push({ x: 35, y: 15, to: 'cave', tx: 6, ty: 8 }, { x: 5, y: 15, to: 'tower', tx: 5, ty: 7 });
   M.warps.push({ x: 0, y: 16, to: 'forest', tx: 28, ty: 11 }, { x: 0, y: 17, to: 'forest', tx: 28, ty: 12 });
   M.plot = { x: 3, y: 19 };
-  M.warps.push({ x: 33, y: 23, to: 'tent', tx: 6, ty: 9 });
+  M.warps.push({ x: 32, y: 23, to: 'tent', tx: 6, ty: 9 }, { x: 33, y: 23, to: 'tent', tx: 6, ty: 9 });   // a 2-tile wide door
   prop('board', 22, 14); block(22, 14, 2, 1);
   prop('lamp', 40, 14); block(40, 14, 1, 1); prop('bench', 46, 13); block(46, 13, 1, 1);
   // the south lane (added for Ferro): the south road carries on past the garden to a new street under the pond
@@ -2896,9 +2896,9 @@ function tentCanvas(id, quiet) {
     for (let y = 7; y < 40; y++) { const hw = 8 + (y - 6) * 1.42, l = 56 - hw, sx = l + (hw * 2) * (k / 7), w = (hw * 2) / 14; R(Math.round(sx), y, Math.max(1, Math.round(w)), 1, c1); }
   }
   R(9, 39, W - 18, 3, shadeHex(c1, -35)); for (let x = 10; x < W - 10; x += 6) { R(x, 42, 4, 3, quiet ? '#a8a296' : '#e8bf4f'); }   // scalloped trim
-  R(44, 66, 24, 33, '#2a1a14');                                                                 // entrance
-  if (quiet) { R(44, 66, 12, 33, c1); R(56, 66, 12, 33, shadeHex(c1, -15)); R(55, 66, 2, 33, '#2a1a14'); }
-  else { R(42, 64, 8, 35, c1); R(62, 64, 8, 35, c1); R(47, 78, 3, 3, '#e8bf4f'); R(62, 78, 3, 3, '#e8bf4f'); g.fillStyle = 'rgba(255,200,90,.35)'; g.fillRect(50, 70, 12, 29); }
+  R(38, 62, 36, 37, '#2a1a14'); R(38, 61, 36, 2, '#e8bf4f');                                     // entrance (wide, with a gold arch)
+  if (quiet) { R(38, 63, 18, 36, c1); R(56, 63, 18, 36, shadeHex(c1, -15)); R(55, 63, 2, 36, '#2a1a14'); }
+  else { R(36, 60, 8, 39, c1); R(68, 60, 8, 39, c1); R(41, 76, 3, 3, '#e8bf4f'); R(68, 76, 3, 3, '#e8bf4f'); g.fillStyle = 'rgba(255,200,90,.38)'; g.fillRect(44, 66, 24, 33); }
   R(57, 1, 10, 6, quiet ? '#8a8478' : A.c2); R(57, 1, 10, 1, '#ffffff');                        // pennant
   if (!quiet) { R(14, 52, 18, 24, '#3b2416'); R(15, 53, 16, 22, A.c1); R(16, 54, 14, 20, '#f6ead0'); const s = actCanvas(id, 0); g.drawImage(s, 0, 0, 48, 64, 17, 55, 12, 16); R(16, 71, 14, 2, A.c1); }   // poster on the tent
   return c;
@@ -3077,8 +3077,9 @@ function circusDraw(g, tnow) {
     const arr = WR.arrive ? (tnow - WR.arrive) / 1000 : 99, fogA = Math.max(0, Math.min(1, (arr - 6.5) / 2));   // fog and chimney smoke only once the wagon has stopped
     if (!B.won && fogA > 0) for (let i = 0; i < 9; i++) { const t = tnow / 1000 + i * 2.1, x = (33 + Math.sin(t * .23 + i) * 4.2) * WT, y = (22.4 + Math.cos(t * .17 + i * 1.3) * 2) * WT; g.fillStyle = `rgba(190,185,200,${.13 * fogA})`; g.beginPath(); g.ellipse(x, y, 30, 12, 0, 0, 7); g.fill(); }
     const wx = 25 * WT + 52 + 6, wy = 22 * WT - 48; if (arr > 6.5) for (let i = 0; i < 4; i++) { const t = ((tnow / 1600) + i / 4) % 1; g.fillStyle = `rgba(120,80,150,${(1 - t) * .45})`; g.beginPath(); g.arc(wx + t * 8 + Math.sin(t * 6 + i) * 2, wy - t * 20, 2 + t * 4, 0, 7); g.fill(); }
-    if (circusStage() === 'tent') { const x = 33 * WT + 8, y = 21 * WT - 50 + Math.round(Math.sin(tnow / 250) * 1.5); g.fillStyle = '#3b2416'; g.fillRect(x - 4, y - 1, 8, 11); g.fillStyle = '#ffd36b'; g.fillRect(x - 3, y, 6, 9); g.fillStyle = '#3b2416'; g.fillRect(x - 1, y + 1, 2, 4); g.fillRect(x - 1, y + 6, 2, 2); }
-    if (circusStage() === 'wagon') { const x = 27 * WT, y = 22 * WT - 58 + Math.round(Math.sin(tnow / 250) * 1.5); g.fillStyle = '#3b2416'; g.fillRect(x - 4, y - 1, 8, 11); g.fillStyle = '#ffd36b'; g.fillRect(x - 3, y, 6, 9); g.fillStyle = '#3b2416'; g.fillRect(x - 1, y + 1, 2, 4); g.fillRect(x - 1, y + 6, 2, 2); }
+    if (circusStage() === 'tent') { const x = 33 * WT, y = 21 * WT - 50 + Math.round(Math.sin(tnow / 250) * 1.5); g.fillStyle = '#3b2416'; g.fillRect(x - 4, y - 1, 8, 11); g.fillStyle = '#ffd36b'; g.fillRect(x - 3, y, 6, 9); g.fillStyle = '#3b2416'; g.fillRect(x - 1, y + 1, 2, 4); g.fillRect(x - 1, y + 6, 2, 2); }
+    if (circusStage() === 'wagon') { const x = 27 * WT, y = 22 * WT - 6 + Math.round(Math.sin(tnow / 250) * 2), R = (a, b, w, h) => g.fillRect(x + a * 2, y + b * 2, w * 2, h * 2);   // big, in front of the wagon between the wheels
+      g.fillStyle = '#3b2416'; R(-4, -1, 8, 11); g.fillStyle = '#ffd36b'; R(-3, 0, 6, 9); g.fillStyle = '#3b2416'; R(-1, 1, 2, 4); R(-1, 6, 2, 2); }
     if (!B.won && !(WR.arrive && tnow - WR.arrive < 10000) && (Math.floor(tnow / 1000) % 9 < 2 || (WR.cine && WR.cine.gloves && tnow - WR.cine.gloves < 3000))) { const gl = gloveCanvas(Math.floor(tnow / 250) % 2); g.drawImage(gl, 33 * WT + 1, 21 * WT + 26); }
   }
   if (WR.growl && performance.now() - WR.growl < 1600 && WR.cur === 'village') { const x = WR.spirit.x * WT, y = WR.spirit.y * WT - 26 + Math.sin(tnow / 60); g.font = "7px 'Press Start 2P', monospace"; g.textAlign = 'center'; g.fillStyle = '#1f1a27'; g.fillText('grr', x + 1, y + 1); g.fillStyle = '#fffaf0'; g.fillText('grr', x, y); }
@@ -3711,7 +3712,7 @@ function worldEntities() {
   if (WR.cur === 'village') {                                    // Circus Mañana: tent + wagon (after it has arrived), the poster board
     const V = WR.maps.village, on = !!CIRC().arrived, B = boss(); V.props = V.props.filter(q => !q.circ);
     if (on) V.props.push({ type: 'bigtop', act: B.b.id, quiet: B.won ? 1 : 0, x: 30, y: 21, circ: 1 }, { type: 'wagon', x: 25, y: 22, circ: 1 });
-    for (let j = 0; j < 3; j++) for (let i = 0; i < 6; i++) V.solid[21 + j][30 + i] = on && !(i === 3 && j === 2) ? 1 : 0;
+    for (let j = 0; j < 3; j++) for (let i = 0; i < 6; i++) V.solid[21 + j][30 + i] = on && !((i === 2 || i === 3) && j === 2) ? 1 : 0;
     for (let i = 0; i < 4; i++) V.solid[22][25 + i] = on ? 1 : 0;
     const bd = V.props.find(q => q.type === 'board'); if (bd) bd.got = [...new Set(Object.values(S.bossWon || {}))];
   }
