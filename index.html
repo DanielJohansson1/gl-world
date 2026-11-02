@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grindlife World</title>
+<title>Hearthsvale</title>
 <meta name="theme-color" content="#285c34">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="GL World">
+<meta name="apple-mobile-web-app-title" content="Hearthsvale">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -244,7 +244,7 @@ nav button[aria-current="true"]{background:var(--panel);color:var(--fg)}
 <main id="app"></main>
 <nav><button id="t-home" onclick="go('home')">HOME</button><button id="t-world" onclick="go('world')">WORLD</button><button id="t-me" onclick="go('me')">ME</button></nav>
 <script>
-const KEY='grindlife-world-v1';   // own save slot: never touches the main Grindlife app
+const KEY='grindlife-world-v1';   // save slot keeps its old Grindlife name on purpose: renaming it would lose saves
 const NAMES={STR:'STRENGTH',INT:'INTELLECT',CHA:'HEART',DIS:'DISCIPLINE'},SHORT={STR:'STR',INT:'INT',CHA:'HRT',DIS:'DIS'};
 const SUGG=[['Stretch 15 min','STR',2],['Walk 30 min','STR',3],['Read 20 pages','INT',3],['Learn something new','INT',4],['Call a friend','CHA',3],['Plan the week','DIS',3,1]];
 const COG=`<button class="cog" onclick="go('settings')" aria-label="Settings"><svg viewBox="0 0 9 9" shape-rendering="crispEdges"><rect x="2" y="2" width="5" height="5"/><rect x="4" y="0" width="1" height="2"/><rect x="4" y="7" width="1" height="2"/><rect x="0" y="4" width="2" height="1"/><rect x="7" y="4" width="2" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="1" y="7" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/><rect x="3" y="3" width="3" height="3" style="fill:var(--bg)"/></svg></button>`;
@@ -624,7 +624,7 @@ return`${infoCard()}<h1>ME</h1><div class="box hero">${heroInner()}</div>
 <div class="tabs"><button aria-pressed="${wtab==='gear'}" onclick="wtab='gear';render()">GEAR${fresh(ITEMS.map(i=>i.id))}</button><button aria-pressed="${wtab==='places'}" onclick="wtab='places';render()">PLACES${fresh(PLACES.map(p=>p.id))}</button><button aria-pressed="${wtab==='quirks'}" onclick="wtab='quirks';render()">QUIRKS${fresh(QUIRKS.map(q=>'q_'+q.id))}</button></div>
 <div class="grid">${wtab==='gear'?tiles:wtab==='places'?pt:qt}</div>${trialCard()}`}
 
-// ===================== Grindlife sound engine: soft sounds, cozy music, character voices =====================
+// ===================== Hearthsvale sound engine: soft sounds, cozy music, character voices =====================
 // Everything is made live with WebAudio (no audio files). Three buses: sfx, music, voices, all with a touch of room reverb.
 const SND = (() => {
   let ac = null, master, verb, buses = {}, track = null, musicOn = false, startedAt = 0;
@@ -879,11 +879,11 @@ ${loadPend?`<div class="bkconf"><p>Backup from ${new Date(loadPend.at).toLocaleD
 // ---- backup: a file saved to the phone's Downloads, loaded back with the file picker
 let loadPend=null;
 function ago(t){const d=Math.floor((new Date().setHours(0,0,0,0)-new Date(t).setHours(0,0,0,0))/864e5);return d<=0?'today':d===1?'yesterday':d+' days ago'}
-function saveBackup(){S.lastBackup=Date.now();save();const d=new Date(),name='grindlife-backup-'+d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+'.json';
+function saveBackup(){S.lastBackup=Date.now();save();const d=new Date(),name='hearthsvale-backup-'+d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+'.json';
 const blob=new Blob([JSON.stringify({app:'grindlife',v:1,at:Date.now(),data:S})],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();
 setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);render();toast('Backup saved to Downloads')}
 function readBackup(inp){const f=inp.files&&inp.files[0];inp.value='';if(!f)return;const r=new FileReader();
-r.onload=()=>{try{const o=JSON.parse(r.result),d=o&&o.data;if(!o||o.app!=='grindlife'||!d||!d.pts||!Array.isArray(d.tasks)||!Array.isArray(d.log))throw 0;loadPend={at:o.at||Date.now(),data:d};render()}catch(e){toast('That is not a Grindlife backup')}};
+r.onload=()=>{try{const o=JSON.parse(r.result),d=o&&o.data;if(!o||o.app!=='grindlife'||!d||!d.pts||!Array.isArray(d.tasks)||!Array.isArray(d.log))throw 0;loadPend={at:o.at||Date.now(),data:d};render()}catch(e){toast('That is not a Hearthsvale backup')}};
 r.onerror=()=>toast('Could not read that file');r.readAsText(f)}
 function applyBackup(){if(!loadPend)return;S=loadPend.data;loadPend=null;ensure();save();render();toast('Backup loaded!');sfx('lvl')}
 function done(id){const t=S.tasks.find(t=>t.id==id);if(!t||t.done||finished(t))return;const p0={...S.pts},lv0={};Object.keys(NAMES).forEach(k=>lv0[k]=Lv(k));
@@ -956,7 +956,7 @@ const t={id:S.next++,name,stat,pts:snapPts(pts),once:once==1||once==4,daily:once
 function del(id){S.tasks=S.tasks.filter(t=>t.id!=id);save();render()}
 const worldLocked=()=>view==='world'&&WR&&(WR.cine||WR.replay||(WR.finish&&performance.now()-WR.finish<1500));
 function go(v){if(worldLocked())return;if(view==='world'&&v!=='world')worldStop();loadPend=null;view=v==='wardrobe'||v==='tasks'?(v==='tasks'?'home':'me'):v;infoId=null;bossOpen=0;editId=null;delArm=0;ideaDraft=null;trialK=null;addOpen=false;trPick=false;editMode=false;render()}
-// Grindlife character generator: returns pixel layers for given stat levels.
+// Hearthsvale character generator: returns pixel layers for given stat levels.
 // Golden retriever pet: three growth stages, drawn facing the character (left).
 // A fur, a shade, l light cream, x dark (eye/nose), T tongue, c collar, j tag
 var PET_MAPS = {
@@ -1593,7 +1593,7 @@ return`<div class="task r s-${t.stat}${dn&&!editMode?' d':''}"><div class="n">${
 function mrow(t){return`<div class="task mq${t.done?' rep':''}"><div class="n">${esc(t.name)}<small>${t.done?'Done! Report to '+MN[t.mentor]:'from '+MN[t.mentor]+' · +'+(t.reward+1)+' '+SHORT[t.stat]+' when you report'}</small></div><button class="chk" ${t.done?'disabled':''} onclick="done(${t.id})" aria-label="Complete ${esc(t.name)}">✔</button></div>`}
 const secH=h=>`<div class="sec">${esc(h)}</div>`;
 function home(){
-if(opOn())return`<h1>GRINDLIFE${COG}</h1><div class="box opwait"><small class="tpk">WELCOME TO HEARTHSVALE</small><p>Ferro is waiting for you in the World.</p><button onclick="go('world')">GO</button></div>`;
+if(opOn())return`<h1>HEARTHSVALE${COG}</h1><div class="box opwait"><small class="tpk">WELCOME TO HEARTHSVALE</small><p>${opHomeHint()}</p><button onclick="go('world')">GO</button></div>`;
 const w=wk(),trs=coreOf('train'),tn=S.log.filter(e=>isTr(e.id)&&wk(e.t)===w).length,ord=t=>CSLOT_ORDER.indexOf(t.slot);
 const core=S.tasks.filter(t=>t.perm&&t.slot!=='train').sort((a,b)=>ord(a)-ord(b)),mine=S.tasks.filter(t=>!t.perm&&!t.mentor&&!t.done);
 const groups=list=>list.length?secH('MY TASKS')+list.map(t=>trow(t)).join(''):'';   // edit mode only
@@ -1611,7 +1611,7 @@ if(doneL.length)tl+=`<button class="donebar" onclick="openDone=!openDone;render(
 const wqs=S.tasks.filter(t=>t.mentor),gls=Object.keys(MG).filter(mgActive),wn=wqs.length+gls.length,wr=wqs.filter(t=>t.done).length+gls.filter(id=>mgProg(id)>=mgCur(id).n).length;
 const tiles=(wn?`<button class="tl${wr?' g':''}" onclick="openWQ=!openWQ;render()" aria-expanded="${openWQ}"><b>WORLD</b>${wr?wr+' ready!':wn+' from the village'}</button>`:'');
 const drop=openWQ&&wn?`<div class="box">${wqs.map(mrow).join('')+mgRows()}</div>`:'';
-return`<h1>GRINDLIFE${COG}</h1>${strip()}${S.petScene?`<div class="box opwait"><small class="tpk">SOMEONE IS FOLLOWING YOU...</small><p>A golden puppy keeps peeking at you from behind the trees in the village.</p><button onclick="go('world')">GO TO THE WORLD</button></div>`:''}<h2>QUESTS</h2>
+return`<h1>HEARTHSVALE${COG}</h1>${strip()}${S.petScene?`<div class="box opwait"><small class="tpk">SOMEONE IS FOLLOWING YOU...</small><p>A golden puppy keeps peeking at you from behind the trees in the village.</p><button onclick="go('world')">GO TO THE WORLD</button></div>`:''}<h2>QUESTS</h2>
 <div class="bar"><button class="add" onclick="addOpen=true;render()" ${editMode?'disabled':''}>+ ADD</button><button onclick="editMode=!editMode;render()" aria-pressed="${editMode}">${editMode?'DONE':'EDIT'}</button><button onclick="undo()" ${S.log.length&&!editMode?'':'disabled'}>UNDO</button></div>
 <div class="box">${tl||'<p class="empty">No open quests. Tap + ADD to make one.</p>'}</div>${tiles?`<div class="tiles">${tiles}</div>`:''}${drop}
 ${bossCard()}${suggCard()}${addCard()}${editCard()}${trainCard()}`}
@@ -1680,7 +1680,7 @@ document.body.classList.toggle('inworld',view==='world');if(view==='world')world
 document.body.classList.toggle('noanim',!S.settings.anim);
 ['home','world','me'].forEach(v=>document.getElementById('t-'+v).setAttribute('aria-current',v===view));document.getElementById('t-me').innerHTML=Object.keys(S.fresh||{}).length?'<i class="spk"></i>ME<i class="spk"></i>':'ME'}
 // ================= WORLD =================
-// ===================== Grindlife World — art v2 =====================
+// ===================== Hearthsvale — art v2 =====================
 // Ground is painted pixel by pixel once; props (trees, houses, tower...) and characters are
 // separate sprites drawn in depth order, so you can walk behind trees and roofs.
 const WT = 16;
@@ -2637,7 +2637,7 @@ function heroCanvas(pose) {
   c.x0 = x0 + (d.dx || 0); c.y0 = y0 + (d.dy || 0); return c;
 }
 
-// ===================== Grindlife World — engine + Phase 1 quests =====================
+// ===================== Hearthsvale — engine + Phase 1 quests =====================
 const WQ = {   // chapter 1 of each mentor: what to do, which stat gates it, what it gives
   bjorn: { name: 'Big Bjørn', stat: 'STR', req: 5, goal: 'Find Bjørn\'s lucky dumbbell in the cave', back: 'Bring the dumbbell back to Bjørn', reward: 'tank' },
   orvel: { name: 'Old Orvel', stat: 'INT', req: 6, goal: 'Find Orvel\'s glasses in his tower', back: 'Bring the glasses back to Orvel', reward: 'q_spell' },
@@ -2715,7 +2715,7 @@ function mentorSmallTalk(id) {
   if (id === 'kai') { const n = weekDays(() => true); return n === 0 ? 'A new week. Every path starts with one step.' : n + (n === 1 ? ' day' : ' days') + ' of showing up this week. The mountain notices.'; }
   return '';
 }
-// ---- quest rewards are normal Grindlife unlocks (they show up in the wardrobe like everything else)
+// ---- quest rewards are normal unlocks (they show up in the wardrobe like everything else)
 function questRewardInfo(id) { return rewardInfo(WQ[id].reward); }
 function rewardInfo(r) {
   const it = ITEMS.find(i => i.id === r), pl = PLACES.find(p => p.id === r), qu = QUIRKS.find(q => 'q_' + q.id === r);
@@ -3622,6 +3622,7 @@ function nameAsk() {                                 // once, after the update t
 // and pick your own core tasks with each one. After the fourth, the circus rolls in. Saves that already had tasks never see it.
 const opOn = () => !!(S.opening && !S.opening.done);
 const opSt = () => opOn() ? S.opening.st : '';
+const opHomeHint = () => { const st = opSt(); if (st === 'meet') { const n = OP_M.filter(m => S.opening.met[m]).length; return 'Meet the four keepers of Hearthsvale in the World. ' + n + ' of 4 met.'; } if (st === 'circus') return 'Something is happening in the village. Go to the World.'; return 'Go to the World to start your story.'; };   // Home's hint during the opening (you haven't met Ferro yet at the start)
 const petName = () => S.petName || 'Spirit';
 const OP_M = ['bjorn', 'orvel', 'rose', 'kai'];
 const OP_WHERE = { bjorn: 'Bjørn at the gym', orvel: 'Orvel by his tower', rose: 'Rose at the bakery', kai: 'Kai below the shrine stairs' };
@@ -3720,11 +3721,11 @@ function pickCard(id, then) {
       if (s.includes(t)) s.splice(s.indexOf(t), 1); else if (max === 1) s.splice(0, 1, t); else if (s.length < max) s.push(t); else { toast('Pick up to ' + max); return; }
       sfx('click'); draw(); });
     o.querySelectorAll('[data-own]').forEach(b => b.onclick = () => { const gi = +b.dataset.own, w = document.createElement('div'); w.className = 'ownin';
-      w.innerHTML = `<input maxlength="40" autocomplete="off" placeholder="Your own" aria-label="Your own task"><button>OK</button>`; b.replaceWith(w);
+      w.innerHTML = `<input maxlength="40" autocomplete="off" placeholder="Your own" aria-label="Your own task"><button>OK</button>`; b.replaceWith(w); o.querySelector('.sl-done').disabled = true;   // finish (OK) or clear your own task first
       const inp = w.querySelector('input'), add = () => { const t = inp.value.replace(/\s+/g, ' ').trim().slice(0, 40); if (!t) return draw();
         if (!opts[gi].includes(t)) opts[gi].push(t); const s = sel[gi], max = P.g[gi].max; if (!s.includes(t)) { if (max === 1) s.splice(0, 1, t); else if (s.length < max) s.push(t); else toast('Pick up to ' + max); } sfx('ok'); draw(); };
       w.querySelector('button').onclick = add; inp.onkeydown = e => { if (e.key === 'Enter') add(); }; inp.focus(); });
-    o.querySelector('.sl-done').onclick = () => { if (!sel.every(s => s.length)) return;
+    o.querySelector('.sl-done').onclick = () => { if (!sel.every(s => s.length) || o.querySelector('.ownin')) return;
       S.slotOf = S.slotOf || {};
       P.g.forEach((g, gi) => sel[gi].forEach((name, k) => { const slot = g.slot === 'learn' && k ? 'learn2' : g.slot, cs = CSLOT[slot];
         const t = { id: S.next++, name, slot, perm: true, stat: cs.stat, pts: cs.pts, once: false, daily: !!cs.daily, weekly: !!cs.weekly }; S.tasks.push(t); S.slotOf[t.id] = slot; }));
@@ -4071,6 +4072,9 @@ function worldWarp(w) {
 // stepping onto the steep stairs needs Discipline
 function worldGates(M) {
   if (WR.cur !== 'village') return; const p = WR.p, tx = Math.floor(p.x), ty = Math.floor(p.y);
+  if (opOn() && p.x < 1.1 && p.y > 15 && p.y < 19) {   // the opening: stay in the village until the keepers are met
+    p.x = 1.3; if (!WR.fgSaid || performance.now() - WR.fgSaid > 3000) { WR.fgSaid = performance.now(); dialog(null, ['The forest can wait. First, meet the four keepers of Hearthsvale.']); }
+  }
   if (p.y < 8 && p.x > 12 && p.x < 28 && wq('kai') === 0) {
     p.y = 8.25; if (!WR.kaiSaid || performance.now() - WR.kaiSaid > 3000) { WR.kaiSaid = performance.now(); dialog('kai', ['The way to the shrine is not open to everyone.', 'When you are ready, I will tell you.']); }
   }
@@ -4174,9 +4178,17 @@ function actLine(id) {                              // this week's act (or the r
   if (line) { ws.cday[id] = key; if (B.won) ws.cday[id + 'won'] = B.w; save(); }
   return line;
 }
+// gossip about the old frame by Orvel's tower changes once Wren starts building the Honeyfields' house there
+const LORE_LATER = {
+  wren: { at: 0, build: 'That old frame next to Orvel\'s tower? Not so old anymore. Keep having good days out there and it\'ll be a home again.',
+    home: 'The Honeyfields\' house was just an old frame when I got here. Now there\'s laughing coming out of it. Best sound there is.' },
+  rose: { at: 4, home: 'Neighbors again, after all these years! Wren did that. I could cry, dear. I mostly bake instead.' }
+};
+const loreNow = id => { const pool = LORE[id] && LORE[id].slice(), L = LORE_LATER[id]; if (!pool || !L) return pool; const s = famStage();
+  const v = s === 'home' ? L.home : s === 'build' || s === 'ready' ? L.build : null; if (v) pool[L.at] = v; return pool; };
 function chatterLine(id) {                          // an everyday line: village gossip
   const ws = WS(); ws.lix = ws.lix || {};
-  const pool = LORE[id] && LORE[id].concat(famExtra(id)); if (!pool) return [];
+  const pool = LORE[id] && loreNow(id).concat(famExtra(id)); if (!pool) return [];
   const i = ws.lix[id] = ((ws.lix[id] == null ? hsh(id.length, 7) : ws.lix[id]) + 1) % pool.length; save();
   return [pool[i]];
 }
