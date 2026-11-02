@@ -2815,11 +2815,7 @@ function talkNew(id) {
     if (n.met == null && !n.box) return dialog('wren', ['Any luck? It\'s a red toolbox. I think I dropped it up the north-west trail.']);
     if (n.met == null) { n.met = dn(); frBonus('wren', 2); save(); worldEntities(); worldHud();
       return dialog('wren', ['MY TOOLBOX! You found it!', 'Thank you, friend. Really.'], () => { heartUp('wren'); const go = () => wrenAsk(); const d = WR.dlg; if (d) d.then = go; else go(); }); }
-    if (n.moved == null) {                     // still camping in the woods: hearts and her tasks work here too
-      if (Lv('CHA') >= 5) return wrenAsk(true);
-      if (newcTaskTalk(id, 1)) return; if (heartUp(id)) return; if (newcTaskTalk(id)) return;
-      return dialog('wren', ['I\'m still thinking about your village. When it feels a bit warmer, I\'ll come.']);
-    }
+    if (n.moved == null) return wrenAsk(true);   // toolbox back but not moved yet (old waiting saves, or the app closed mid-scene): move in now
     if (n.home && ['build', 'ready'].includes(zgStage())) { if (newcTaskTalk(id, 1)) return; if (heartUp(id)) return; if (newcTaskTalk(id)) return; return wrenBuildTalkZG(); }   // building Ziggy's workshop
     if (n.home && (famStage() === 'build' || famStage() === 'ready')) { if (newcTaskTalk(id, 1)) return; if (heartUp(id)) return; if (newcTaskTalk(id)) return; return wrenBuildTalk(); }   // building for the Honeyfields
     const st = wrenStage();
@@ -2840,12 +2836,9 @@ function talkNew(id) {
   if (newcTaskTalk(id, 1)) return; if (heartUp(id)) return; if (newcTaskTalk(id)) return;
   return dialog('pip', smallTalk('pip', newcSmallTalk('pip')));
 }
-function wrenAsk(again) {
-  const n = NS('wren');
-  if (Lv('CHA') >= 5) return dialog('wren', [again ? 'You know... your village feels warmer lately. Is that spot by the forest road still free?' : 'Hey... is there room in your village? I\'d love to build a little house there.'],
+function wrenAsk(again) {   // since 2026-11-02 no Heart check: she moves in right after you bring back her toolbox
+  return dialog('wren', [again ? 'Hey, you\'re back! Is that spot by the forest road still free?' : 'Hey... is there room in your village? I\'d love to build a little house there.'],
     () => dialog('me', [again ? 'It is! Come on, I\'ll show you.' : 'There\'s a free spot by the forest road. Come on, I\'ll show you!'], wrenMoveIn));
-  n.wait = 1; save();
-  return dialog('wren', [again ? 'I\'m still thinking about your village. Soon, I hope.' : 'Hey... is there room in your village? I\'d love to build a house there someday.', 'I\'ll wait a little. When your village feels a bit warmer, I\'ll come.']);
 }
 
 // ---- Wren's move-in: you walk her from the forest to the clearing by the forest road, she stakes out her plot
@@ -4466,7 +4459,7 @@ function worldDraw() {
     else if (!circusGate() && famMark(e.id)) mark = famMark(e.id);
     else if (FAMQ[e.id]) { const rt = rlTask(e.id); mark = circusGate() ? '' : rt && rt.done ? '?' : nrlOffer(e.id) ? '!' : ''; }
     else if (circusGate() && NEWC[e.id]) mark = '';
-    else if (NEWC[e.id]) { const n = NS(e.id), rt = rlTask(e.id); mark = (rt && rt.done) || (e.id === 'wren' && n.box && n.met == null) || (e.id === 'pip' && n.feather && !n.featherBack) ? '?' : (n.met == null && e.id === 'wren') || nrlOffer(e.id) || (e.id === 'wren' && wrenStage() >= 3 && !n.home) ? '!' : n.met != null && frEarned(e.id) > (WS().seen[e.id] || 0) ? 'H' : ''; }   // H = a friendship heart is waiting (not a quest)
+    else if (NEWC[e.id]) { const n = NS(e.id), rt = rlTask(e.id); mark = (rt && rt.done) || (e.id === 'wren' && n.box && n.met == null) || (e.id === 'pip' && n.feather && !n.featherBack) ? '?' : (e.id === 'wren' && n.moved == null) || nrlOffer(e.id) || (e.id === 'wren' && wrenStage() >= 3 && !n.home) ? '!' : n.met != null && frEarned(e.id) > (WS().seen[e.id] || 0) ? 'H' : ''; }   // H = a friendship heart is waiting (not a quest)
     else if (circusGate()) mark = e.id === 'orvel' && circusStage() === 'orvel' ? '!' : '';
     else { const s = wq(e.id), rt = rlTask(e.id); mark = s === 2 || mgDone(e.id) ? 'S?' : storyOpen(e.id) || mgReady(e.id) ? 'S!' : (rt && rt.done) ? '?' : rlOffer(e.id) ? '!' : ''; }
     if (!mark) return;
