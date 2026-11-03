@@ -666,7 +666,7 @@ const SND = (() => {
 
   // ---------------- sound effects ----------------
   const PENTA = [72, 74, 76, 79, 81, 84];
-  let lastTap = -1;
+  let lastTap = -1, flyK = 0;
   const FX = {
     tap() {                                           // checking a task: a soft wooden "pop", a different note each time
       let i; do { i = Math.floor(Math.random() * PENTA.length); } while (i === lastTap); lastTap = i;
@@ -698,6 +698,9 @@ const SND = (() => {
     whirr() { const t = now(); note('sfx', 110, t, 1.4, { type: 'square', vol: .03, a: .2, slide: 3.2, slideT: 1.2, cut: 900, vib: 30, vibD: 8 }); bell('sfx', mtof(88), t + 1.2, .8, .05); bell('sfx', mtof(95), t + 1.32, 1, .045); },   // the workshop powers up
     lullaby() { const t = now(); [[72, 0], [76, .5], [79, 1], [76, 1.5], [74, 2.1], [71, 2.6], [72, 3.3]].forEach(([m, d]) => { bell('sfx', mtof(m), t + d, 1.8, .028); bell('sfx', mtof(m) * 2, t + d, .8, .006); }); [48, 55].forEach((m, k) => note('sfx', mtof(m), t + k * 1.6, 2.4, { type: 'sine', vol: .022, a: .6 })); },   // the nap: a soft music box lullaby in C major over a warm low hum
     reveal() { const t = now(); [[81, 0], [80, .34], [77, .68], [74, 1.02], [73, 1.36]].forEach(([m, d]) => { bell('sfx', mtof(m), t + d, 1.5, .04); bell('sfx', mtof(m) * .992, t + d, 1.2, .012); }); [62, 65, 68].forEach((m, k) => bell('sfx', mtof(m), t + 1.8 + k * .05, 2.6, .026)); note('sfx', mtof(38), t + 1.7, 3, { type: 'sine', vol: .05, a: .4, vib: 3, vibD: 3 }); },   // the weekly act: a quiet, slightly out-of-tune music box creeping down in a minor key
+    rustle() { const t = now(); for (let k = 0; k < 16; k++) note('sfx', 1600 + Math.random() * 2800, t + k * .03 + Math.random() * .02, .05, { type: 'square', vol: .011, cut: 4200, slide: .5 }); note('sfx', 240, t, .3, { type: 'triangle', vol: .045, slide: .6, cut: 600 }); },   // Wren pulls the hedge aside
+    fly() { const t = now(), m = [79, 81, 84, 86, 88, 91, 93, 96, 98, 100, 103][flyK++ % 11]; bell('sfx', mtof(m), t, 1.6, .04); },   // a firefly lights up (each one a step higher)
+    flyReset() { flyK = 0; },
     bellRing() { const t = now(); bell('sfx', mtof(64), t, 3.2, .11); bell('sfx', mtof(71), t + .02, 2.6, .05); }
   };
   const quiet = () => typeof S !== 'undefined' && S && S.settings && !S.settings.sound;   // the game's SOUND switch
@@ -2781,6 +2784,7 @@ function heartMark(g, x, y) {                 // pink heart with a light border 
   HEART_PX.forEach((row, j) => [...row].forEach((c, i) => { if (c !== '.') { g.fillStyle = C[c]; g.fillRect(x - 5 + i, y - 5 + j, 1, 1); } }));
 }
 function heartUp(id) {                        // show the next earned heart (one per conversation)
+  if (id === 'wren' && gladeWait()) { gladeAsk(true); return true; }   // Heart 4 shown but the glade walk didn't finish (app closed mid-scene)
   const ws = WS(), seen = ws.seen[id] || 0; if (frEarned(id) <= seen) return false;
   const k = seen + 1; ws.seen[id] = k; save(); sfx('heart');
   const say = (lines, then) => { dialog(id, lines, then); WR.dlg.popHeart = 1; showDlg(); };
@@ -2788,7 +2792,7 @@ function heartUp(id) {                        // show the next earned heart (one
     if (k === 1) say(['You know what? I think we\'re going to be good friends.']);
     if (k === 2) say(['I\'ve seen you putting in the work lately.', 'Honestly? You\'re alright. I\'m glad I found your village.']);
     if (k === 3) say(['Here. I made you something. Well... sewed. Don\'t look too closely at the stitches.'], () => { ws.gift.bandana = 1; checkUnlocks(); save(); giftCard('NEW GEAR', "Wren's bandana", itemPic('bandana'), 'A GIFT FROM WREN'); });
-    if (k === 4) say(['Want to see a secret?', 'Behind the hedge on the south trail in Whisperwood, there\'s a little glade.', 'I cut a path through for you. Go take a look!'], () => { ws.f.glade = 1; save(); worldHud(); });
+    if (k === 4) { gladeAsk(); WR.dlg.popHeart = 1; showDlg(); }   // since 2026-11-02 Wren walks you to the glade herself (gladeScene)
     if (k === 5) say(['You know what, neighbor? You\'re my best friend around here.', 'I\'ll come say hi around the village sometimes.'], () => { sfx('tier'); confetti(GOLD, 70, innerWidth / 2, innerHeight * .4, 12); fxCard('', `<small class="tpk">BEST FRIENDS!</small><h3>WREN</h3><div class="rlport"></div><p>She'll pop up around the village now and then.</p>`, 'AWESOME!', null); portIn('wren'); });
   } else {
     if (k === 1) say(['Consider us friends, friend! Bards never forget a kind face.']);
@@ -2883,6 +2887,82 @@ function wrenMoveEnd() {
     sfx('tier'); confetti(GOLD, 60, innerWidth / 2, innerHeight * .4, 11);
     fxCard('', `<small class="tpk">NEW NEIGHBOR!</small><h3>WREN</h3><div class="rlport"></div><p>Wren moved to the village. Her house goes up one step for every day you get something done in real life.</p>`, 'WELCOME!', null); portIn('wren');
   }, 700);
+}
+
+// ---- Wren's glade (Heart 4, 2026-11-02): she walks you to her secret spot in Whisperwood and the fireflies come out
+const GLADE_FLIES = [[3, 17], [6, 18], [4, 20], [7, 16], [2, 19], [5, 17], [7, 21], [4.2, 16.1], [2.4, 17.2], [6.2, 19.4], [1.8, 16.4]];   // the first 7 are the glade's own M.flies, so they carry on after the scene
+function gladeWait() { const ws = WS(); return (ws.seen.wren || 0) >= 4 && !(ws.f || {}).glade && !ws.gift.glade; }
+function gladeOpen() { const h = dnHour(); return h >= 20.5 || h < 5; }   // the fireflies are out: Wren only takes you after 20:30 (DJ, 2026-11-03)
+function gladeAsk(again) {
+  if (!gladeOpen()) { WS().gladeTold = dn(); save(); return dialog('wren', [again ? 'Not yet! Come find me tonight after 20:30. Trust me, it\'s worth the wait.' : 'Come find me tonight after 20:30. I want to show you something magical in the woods.']); }
+  dialog('wren', [again ? 'Hey! Ready to see that secret now? Come on, follow me!' : 'Want to see a secret? Come on, follow me!'], null, [{ label: 'LEAD THE WAY!', fn: gladeScene }]);
+}
+function gladeScene() {
+  const wv = document.getElementById('wv'), fade = document.createElement('div'); fade.className = 'wfade'; wv.appendChild(fade);
+  WR.busy = 1; WR.cine = { t0: performance.now(), gloom: 0, cam: { x: WR.p.x, y: WR.p.y }, actors: [], A: {}, glade: 1, dusk: dayLight().light, duskTo: dayLight().light, leaves: [], flies: [] };   // starts as dark as the real clock says
+  ['top', 'bot'].forEach(k => { const d = document.createElement('div'); d.className = 'cbar ' + k; wv.appendChild(d); requestAnimationFrame(() => d.classList.add('on')); });
+  document.body.classList.add('cine'); requestAnimationFrame(() => fade.classList.add('on'));
+  const c = WR.cine, wait = (ms, fn) => setTimeout(() => { if (WR && WR.cine === c) fn(); }, ms);
+  const pan = (x, y, ms, then) => { c.pan = { a: { x: c.cam.x, y: c.cam.y }, b: { x, y }, t0: performance.now(), ms, then }; };
+  const go = (a, x, y, sp, then) => { a.to = { x, y, sp, then }; };
+  const light = i => { const [x, y] = GLADE_FLIES[i]; c.flies.push({ x, y, t0: performance.now() }); sfx('fly'); };
+  wait(800, () => dialog(null, ['Wren leads you into Whisperwood, down the south trail.'], () => {
+    WR.cur = 'forest'; const M = WR.maps.forest; Object.assign(WR.p, { x: 12.6, y: 13.4, dir: 1, moving: 0 }); WR.spirit = { x: 12.6, y: 12.6 }; WR.trail = [];
+    worldEntities(); worldHud(); musicFor('forest'); sfx('flyReset');
+    const [gx, gy] = M.thicketGap, gap = M.props.find(q => q.type === 'thicket' && q.x === gx && q.y === gy);
+    M.solid[gy][gx] = 1; if (gap) gap.hidden = false;                                   // the hedge is still closed when you arrive
+    const W = { id: 'wren', x: 12.6, y: 14.6 }; c.actors = [W]; c.A = { wren: W }; c.cam = { x: 11.2, y: 16.6 };
+    fade.classList.remove('on');
+    wait(500, () => {
+      go(W, 12.6, 18.05, 2.2, () => go(W, 10.25, 18.05, 2.2, () => wait(300, () => dialog('wren', ['It\'s right behind this hedge. Hold on...'], () => {
+        W.ham = performance.now(); sfx('rustle');
+        for (let i = 0; i < 18; i++) c.leaves.push({ x: 9.5 + (Math.random() - .5) * .6, y: 18.3 + (Math.random() - .5) * .8, vx: (Math.random() - .5) * 2.4, vy: -.6 - Math.random() * 1.2, t0: performance.now() + Math.random() * 120, col: ['#3f8f3a', '#5cb04f', '#2f6a34', '#7cc556'][i % 4] });
+        wait(380, () => { W.ham = performance.now(); sfx('rustle'); if (gap) gap.hidden = true; M.solid[gy][gx] = 0; });
+        wait(1100, () => dialog('wren', ['There we go!'], () => {
+          pan(5.6, 18.6, 3000);
+          go(W, 8.6, 18.1, 2, () => go(W, 7.2, 17.0, 2, () => go(W, 4.7, 16.8, 2)));
+          wait(500, () => { c.me = { x: 9.4, y: 18.3, sp: 2, then: () => { c.me = { x: 7.3, y: 17.35, sp: 2, dir: 3, then: () => {
+            c.duskTo = 1;
+            wait(1700, () => dialog('wren', ['Here it is. Nobody else knows about this place.', 'My first week out here, I sat right on this spot all evening. I was ready to pack up and leave.'], () => {
+              light(0); dialog('wren', ['Then the fireflies came out. One...'], () => {
+                light(1); dialog('wren', ['...then another...'], () => {
+                  for (let i = 2; i < GLADE_FLIES.length; i++) wait((i - 2) * 420, () => light(i));
+                  wait((GLADE_FLIES.length - 2) * 420 + 1400, () => dialog('wren', ['Not one of them is bright on its own. But all together? Look at that.', 'Same with the little things you do every day. One by one, they add up to something beautiful.'],
+                    () => dialog('me', ['It\'s beautiful, Wren. Thanks for showing me.'],
+                      () => dialog('wren', ['Come here whenever you need a quiet moment. It\'s your spot now too.'], gladeEnd))));
+                });
+              });
+            }));
+          } }; } }; });
+        }));
+      }))));
+    });
+  }));
+}
+function gladeEnd() {
+  const c = WR.cine, ws = WS(); ws.f.glade = 1; ws.gift.glade = 1; NS('wren'); checkUnlocks(); save();   // set only at the end, so closing mid-scene lets Wren ask again
+  const W = c && c.A.wren; if (W) W.to = { x: 9.6, y: 18.2, sp: 2.2, then: () => { W.fade = performance.now(); } };
+  c.end = 1; wait2(1500, () => { c.duskTo = dayLight().light; c.duskK = .04; });   // back to the real clock's light: day lifts, evening and night stay dark
+  document.querySelectorAll('#wv .cbar, #wv .wfade').forEach(d => { d.classList.remove('on'); setTimeout(() => d.remove(), 700); });
+  function wait2(ms, fn) { setTimeout(() => { if (WR && WR.cine === c) fn(); }, ms); }
+  setTimeout(() => {
+    if (WR.cine === c) { WR.cine = null; WR.busy = 0; } document.body.classList.remove('cine'); worldEntities(); worldHud();
+    giftCard('NEW PLACE', 'Firefly glade', `<svg class="cpic" viewBox="0 0 44 44" shape-rendering="crispEdges">${runs(placeBg('glade'))}</svg>`, 'WREN\'S SECRET SPOT');
+  }, 2600);
+}
+function gladeDraw(g, cx, cy, vw, vh, tnow) {
+  const c = WR.cine;
+  c.leaves.forEach(l => { const k = (tnow - l.t0) / 1000; if (k < 0 || k > 1.5) return; const x = (l.x + l.vx * k) * WT, y = (l.y + l.vy * k + 1.6 * k * k) * WT;
+    g.globalAlpha = Math.max(0, 1 - k / 1.5); g.fillStyle = l.col; g.fillRect(Math.round(x), Math.round(y), 3, 2); g.fillRect(Math.round(x) + 1, Math.round(y) - 1, 1, 1); g.globalAlpha = 1; });
+  c.dusk += ((c.duskTo || 0) - c.dusk) * (c.duskK || .012);
+  if (c.dusk > .005) { g.fillStyle = `rgba(14,20,56,${c.dusk * .6})`; g.fillRect(cx - 2, cy - 2, vw + 4, vh + 4); }
+  c.flies.forEach((f, i) => {
+    const age = (tnow - f.t0) / 1000, t = tnow / 1000 + i * 1.7, x = f.x * WT + Math.sin(t * .9 + i) * 10, y = f.y * WT + Math.cos(t * .7 + i * 2) * 7;
+    const a = Math.min(1, age / .5) * (.65 + .35 * Math.sin(t * 3 + i)) * (c.end ? Math.max(dayLight().flies, Math.min(1, c.dusk * 1.5)) : 1), pop = age < .6 ? 1 + (1 - age / .6) * 1.4 : 1, r = (8 + c.dusk * 6) * pop;
+    g.save(); g.globalCompositeOperation = 'lighter'; const gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, `rgba(255,236,130,${a * (.25 + c.dusk * .3)})`); gr.addColorStop(1, 'rgba(255,236,130,0)');
+    g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2); g.restore();
+    g.fillStyle = `rgba(255,252,200,${.5 + a * .5})`; g.fillRect(Math.round(x), Math.round(y), 1, 1); if (c.dusk > .5) { g.fillStyle = `rgba(255,248,170,${a * .7})`; g.fillRect(Math.round(x) - 1, Math.round(y), 3, 1); g.fillRect(Math.round(x), Math.round(y) - 1, 1, 3); }
+  });
 }
 
 // ===================== Circus Mañana: art =====================
@@ -4040,7 +4120,7 @@ function worldTick(now) {
     WR.lastFr = fr; if (WR.trail.length > 40) WR.trail.shift();
     worldGates(M);
     if (WR.cur === 'village' && CIRC().arrived && S.owned.spirit && S.equip.spirit && Math.hypot(WR.spirit.x - 27, WR.spirit.y - 22.6) < 2.6 && (!WR.growl || performance.now() - WR.growl > 15000)) { WR.growl = performance.now(); sfx('growl'); }
-    if (WR.cur === 'forest' && p.x < 9 && p.y > 16 && !WS().gift.glade) { NS('wren'); WS().gift.glade = 1; checkUnlocks(); save(); sfx('tier'); setTimeout(() => giftCard('NEW PLACE', 'Firefly glade', `<svg class="cpic" viewBox="0 0 44 44" shape-rendering="crispEdges">${runs(placeBg('glade'))}</svg>`, 'WREN\'S SECRET SPOT'), 200); }
+    if (WR.cur === 'forest' && !WR.cine && p.x < 9 && p.y > 16 && !WS().gift.glade) { NS('wren'); WS().gift.glade = 1; checkUnlocks(); save(); sfx('tier'); setTimeout(() => giftCard('NEW PLACE', 'Firefly glade', `<svg class="cpic" viewBox="0 0 44 44" shape-rendering="crispEdges">${runs(placeBg('glade'))}</svg>`, 'WREN\'S SECRET SPOT'), 200); }
     let w = M.warps.find(w => w.x === Math.floor(p.x) && w.y === Math.floor(p.y + .1));
     if (w && circusGate() && w.to !== 'village' && !(w.to === 'tent' && circusStage() === 'tent')) { p.x = px0; p.y = py0; w = null; if (!WR.gateSaid || performance.now() - WR.gateSaid > 4000) { WR.gateSaid = performance.now(); dialog('me', [gateLine()]); } }
     if (w && w.to === 'rose' && !WS().f.roseRoom) { p.x = px0; p.y = py0; w = null; if (!WR.doorSaid || performance.now() - WR.doorSaid > 4000) { WR.doorSaid = performance.now(); dialog(null, ['The bakery door is closed. Rose is usually right outside.']); } }
@@ -4394,6 +4474,53 @@ function worldHud() {
 }
 function worldShake() { const cv = WR.cv; cv.animate && cv.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(-4px,2px)' }, { transform: 'translate(4px,-2px)' }, { transform: 'translate(0,0)' }], { duration: 300 }); }
 function bellSound() { sfx('bellRing'); }
+
+// ---- day and night (follows the real clock): morning, day, evening, night
+// keyframes: [hour, r, g, b, tint alpha, light (lamps/windows), flies]
+const DN_KEYS = [[0, 14, 22, 70, .62, 1, 1], [4.5, 14, 22, 70, .62, 1, 1], [6, 120, 90, 150, .3, .6, .2], [7, 255, 170, 130, .12, 0, 0], [8, 0, 0, 0, 0, 0, 0], [16.5, 0, 0, 0, 0, 0, 0], [17.5, 255, 150, 60, .14, .2, .3], [18.5, 200, 90, 90, .26, .6, .8], [19.5, 70, 40, 110, .4, .9, 1], [21, 14, 22, 70, .62, 1, 1], [24, 14, 22, 70, .62, 1, 1]];
+let DN_TEST = null;                                     // a test copy can set an hour here
+function dnHour() { if (DN_TEST != null) return DN_TEST; const d = new Date(); return d.getHours() + d.getMinutes() / 60; }
+function dayLight(h) { h = h == null ? dnHour() : h; let i = 0; while (i < DN_KEYS.length - 2 && DN_KEYS[i + 1][0] <= h) i++;
+  const A = DN_KEYS[i], B = DN_KEYS[i + 1], k = B[0] > A[0] ? Math.min(1, (h - A[0]) / (B[0] - A[0])) : 0, m = j => A[j] + (B[j] - A[j]) * k;
+  const wa = A[4] || 0, wb = B[4] || 0, w = wa + wb ? (wa * (1 - k)) / ((wa * (1 - k)) + (wb * k) || 1) : .5;   // colour follows whichever end is visible
+  const col = A[4] && B[4] ? [m(1), m(2), m(3)] : A[4] ? A.slice(1, 4) : B.slice(1, 4);
+  return { r: col[0] | 0, g: col[1] | 0, b: col[2] | 0, a: m(4), light: m(5), flies: m(6) };
+}
+const DN_OUT = { village: 1, forest: 1, shrine: 1 };
+function dnLights(M) {                                  // [x, y, radius, kind] in world pixels; kind w = window glow
+  const L = [], cur = WR.cur;
+  M.props.forEach(q => { if (q.hidden) return;
+    if (q.type === 'lamp') L.push([q.x * WT + 8, q.y * WT - 15, 42, 'l']);
+    if (q.type === 'slantern') L.push([q.x * WT + 6, q.y * WT - 2, 30, 'l']);
+    if (q.type === 'fire' && NS('wren').moved == null) L.push([q.x * WT + 8, q.y * WT + 4, 56, 'l']);
+    if (q.type === 'house' && (!q.honey || q.lit)) { const mid = Math.floor(q.w / 2); for (let i = 0; i < q.w; i++) { if (i === mid) continue; L.push([q.x * WT - 3 + i * 16 + 11, q.y * WT - 14 + 41, 24, 'w']); } }
+    if (q.type === 'salon') L.push([(q.x + 2.5) * WT, (q.y + 1.6) * WT, 40, 'w']);
+    if (q.type === 'zwork' && q.lit) L.push([(q.x + 2.5) * WT, (q.y + 1.5) * WT, 40, 'b']);
+    if (q.type === 'tower') [[60, 0], [100, 0]].forEach(([dx]) => L.push([q.x * WT - 4 + dx + 1, q.y * WT - 10 + 67, 22, 'w']));
+    if (q.type === 'bigtop') L.push([(q.x + 3) * WT, (q.y + 1.5) * WT, 60, 'r']);
+  });
+  return L;
+}
+function dnDraw(g, cx, cy, vw, vh, tnow) {
+  if (!DN_OUT[WR.cur] || (WR.cine && (WR.cine.night || WR.cine.glade))) return;
+  const D0 = dayLight(); if (D0.a < .005) return;
+  const M = WR.maps[WR.cur], p = WR.p, L = dnLights(M), lt = D0.light;
+  const D = WR.dnc || (WR.dnc = document.createElement('canvas')); if (D.width !== Math.ceil(vw) + 4) { D.width = Math.ceil(vw) + 4; D.height = Math.ceil(vh) + 4; }
+  const d = D.getContext('2d'); d.globalCompositeOperation = 'source-over'; d.clearRect(0, 0, D.width, D.height);
+  d.fillStyle = `rgba(${D0.r},${D0.g},${D0.b},${D0.a})`; d.fillRect(0, 0, D.width, D.height);
+  if (lt > .02) { d.globalCompositeOperation = 'destination-out';
+    const cut = (x, y, r, s) => { const gr = d.createRadialGradient(x - cx + 2, y - cy + 2, 1, x - cx + 2, y - cy + 2, r); gr.addColorStop(0, `rgba(0,0,0,${s})`); gr.addColorStop(1, 'rgba(0,0,0,0)'); d.fillStyle = gr; d.fillRect(x - cx + 2 - r, y - cy + 2 - r, r * 2, r * 2); };
+    cut(p.x * WT, p.y * WT - 4, 46, .55 * lt);                           // you can always see yourself
+    L.forEach(([x, y, r, k]) => cut(x, y + (k === 'l' ? 14 : 4), r * 1.3, (k === 'w' ? .45 : .8) * lt));
+  }
+  g.drawImage(D, cx - 2, cy - 2);
+  if (lt > .02) { g.save(); g.globalCompositeOperation = 'lighter';
+    L.forEach(([x, y, r, k]) => { const fl = 1 + Math.sin(tnow / 380 + x) * .04, col = k === 'b' ? '120,190,255' : k === 'r' ? '255,110,80' : '255,190,100', gr = g.createRadialGradient(x, y, 1, x, y, r * fl);
+      gr.addColorStop(0, `rgba(${col},${(k === 'w' ? .38 : .5) * lt})`); gr.addColorStop(1, `rgba(${col},0)`); g.fillStyle = gr; g.fillRect(x - r * 1.1, y - r * 1.1, r * 2.2, r * 2.2); });
+    g.restore();
+    L.forEach(([x, y, r, k]) => { if (k !== 'w') return; g.fillStyle = `rgba(255,214,120,${.55 * lt})`; g.fillRect(Math.round(x) - 5, Math.round(y) - 4, 10, 8); });   // warm light in the windows
+  }
+}
 // ---- drawing
 function worldDraw() {
   const g = WR.g, cv = WR.cv, sc = WR.sc, M = WR.maps[WR.cur], p = WR.p;
@@ -4459,7 +4586,7 @@ function worldDraw() {
     else if (!circusGate() && famMark(e.id)) mark = famMark(e.id);
     else if (FAMQ[e.id]) { const rt = rlTask(e.id); mark = circusGate() ? '' : rt && rt.done ? '?' : nrlOffer(e.id) ? '!' : ''; }
     else if (circusGate() && NEWC[e.id]) mark = '';
-    else if (NEWC[e.id]) { const n = NS(e.id), rt = rlTask(e.id); mark = (rt && rt.done) || (e.id === 'wren' && n.box && n.met == null) || (e.id === 'pip' && n.feather && !n.featherBack) ? '?' : (e.id === 'wren' && n.moved == null) || nrlOffer(e.id) || (e.id === 'wren' && wrenStage() >= 3 && !n.home) ? '!' : n.met != null && frEarned(e.id) > (WS().seen[e.id] || 0) ? 'H' : ''; }   // H = a friendship heart is waiting (not a quest)
+    else if (NEWC[e.id]) { const n = NS(e.id), rt = rlTask(e.id); mark = (rt && rt.done) || (e.id === 'wren' && n.box && n.met == null) || (e.id === 'pip' && n.feather && !n.featherBack) ? '?' : (e.id === 'wren' && n.moved == null) || nrlOffer(e.id) || (e.id === 'wren' && wrenStage() >= 3 && !n.home) ? '!' : n.met != null && (frEarned(e.id) > (WS().seen[e.id] || 0) || (e.id === 'wren' && gladeWait() && (gladeOpen() || WS().gladeTold !== dn()))) ? 'H' : ''; }   // H = a friendship heart is waiting (not a quest)
     else if (circusGate()) mark = e.id === 'orvel' && circusStage() === 'orvel' ? '!' : '';
     else { const s = wq(e.id), rt = rlTask(e.id); mark = s === 2 || mgDone(e.id) ? 'S?' : storyOpen(e.id) || mgReady(e.id) ? 'S!' : (rt && rt.done) ? '?' : rlOffer(e.id) ? '!' : ''; }
     if (!mark) return;
@@ -4473,7 +4600,7 @@ function worldDraw() {
     if (q.hidden) return;
     if (q.smoke) { const a0 = propCanvas(q), bx = q.x * WT - a0.ax + a0.c.width - 14 + 3, by = q.y * WT - a0.ay; for (let i = 0; i < 4; i++) { const t = ((tnow / 1400) + i / 4) % 1, r = 2 + t * 4; g.fillStyle = `rgba(235,235,235,${(1 - t) * .6})`; g.beginPath(); g.arc(bx + Math.sin(t * 5 + i) * 3 + t * 6, by - 2 - t * 22, r, 0, 7); g.fill(); } }
   });
-  if (M.flies) M.flies.forEach(([fx, fy], i) => { if (M.flyOff && M.flyOff()) return; const t = tnow / 1000 + i * 1.7, x = fx * WT + Math.sin(t * .9 + i) * 10, y = fy * WT + Math.cos(t * .7 + i * 2) * 7, a = .5 + .5 * Math.sin(t * 3 + i); g.fillStyle = `rgba(255,246,160,${a * .35})`; g.fillRect(x - 2, y - 2, 5, 5); g.fillStyle = `rgba(255,250,200,${.4 + a * .6})`; g.fillRect(x, y, 1, 1); });
+  
   // sparkle on things you can pick up
   WR.ents.forEach(e => { if (!e.pick) return; const ph = Math.floor(tnow / 180) % 4, x = e.x * WT + 8 + [-6, 5, -3, 7][ph], y = (e.y + 1) * WT - 14 - (e.lift || 0) + [-2, -6, -9, -4][ph]; g.fillStyle = '#fff6b0'; g.fillRect(x, y - 1, 1, 3); g.fillRect(x - 1, y, 3, 1); });
   // darkness: the cave is lit only around you and by its crystals; the tower is softly dim
@@ -4487,11 +4614,16 @@ function worldDraw() {
     M.props.filter(q => q.type === 'crystal').forEach(q => { const gr = g.createRadialGradient(q.x * WT + 8, q.y * WT + 8, 1, q.x * WT + 8, q.y * WT + 8, 15); gr.addColorStop(0, 'rgba(127,215,255,.4)'); gr.addColorStop(1, 'rgba(127,215,255,0)'); g.fillStyle = gr; g.fillRect(q.x * WT - 8, q.y * WT - 8, 32, 32); });
   }
   circusDraw(g, performance.now()); famDrawKey(g, tnow);
+  dnDraw(g, cx, cy, vw, vh, tnow);
+  { const fl = dayLight().flies; if (M.flies && fl > .02 && !(WR.cine && WR.cine.glade)) M.flies.forEach(([fx, fy], i) => { const t = tnow / 1000 + i * 1.7, x = fx * WT + Math.sin(t * .9 + i) * 10, y = fy * WT + Math.cos(t * .7 + i * 2) * 7, a = (.65 + .35 * Math.sin(t * 3 + i)) * fl, r = 12;   // fireflies: evening and night only
+    g.save(); g.globalCompositeOperation = 'lighter'; const gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, `rgba(255,236,130,${a * .5})`); gr.addColorStop(1, 'rgba(255,236,130,0)'); g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2); g.restore();
+    g.fillStyle = `rgba(255,252,200,${.5 + a * .5})`; g.fillRect(Math.round(x), Math.round(y), 1, 1); g.fillStyle = `rgba(255,248,170,${a * .7})`; g.fillRect(Math.round(x) - 1, Math.round(y), 3, 1); g.fillRect(Math.round(x), Math.round(y) - 1, 1, 3); }); }
   if (WR.cine && WR.cine.night) {                     // the opening's night street: dark blue, one warm window at Ferro's
     g.fillStyle = 'rgba(12,16,44,.68)'; g.fillRect(cx - 2, cy - 2, vw + 4, vh + 4);
     const wx = (SALON_AT.x + 2.5) * WT, wy = (SALON_AT.y + 1.6) * WT, fl = 1 + Math.sin(tnow / 400) * .04; g.save(); g.globalCompositeOperation = 'lighter';
     const gr = g.createRadialGradient(wx, wy, 2, wx, wy, 46 * fl); gr.addColorStop(0, 'rgba(255,190,110,.55)'); gr.addColorStop(.4, 'rgba(255,150,90,.22)'); gr.addColorStop(1, 'rgba(255,140,80,0)'); g.fillStyle = gr; g.fillRect(wx - 50, wy - 50, 100, 100); g.restore();
   }
+  if (WR.cine && WR.cine.glade) gladeDraw(g, cx, cy, vw, vh, tnow);
   restDraw(g, cx, cy, vw, vh, tnow);
   if (WR.cine && WR.cine.gloom > .005) { g.fillStyle = `rgba(28,16,40,${WR.cine.gloom})`; g.fillRect(cx - 2, cy - 2, vw + 4, vh + 4); }
 }
