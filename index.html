@@ -322,6 +322,8 @@ const ITEMS=[
 {id:'monocle',slot:'head',name:"Orvel's monocle",how:"Reward from Old Orvel's goal: read on 7 days",cond:()=>mgK('orvel')>=1,ic:'<rect x="3" y="2" width="6" height="1" fill="#d4a63a"/><rect x="3" y="9" width="6" height="1" fill="#d4a63a"/><rect x="2" y="3" width="1" height="6" fill="#d4a63a"/><rect x="9" y="3" width="1" height="6" fill="#d4a63a"/><rect x="3" y="3" width="6" height="6" fill="#cfe9f7"/><rect x="4" y="4" width="2" height="1" fill="#ffffff"/><rect x="4" y="5" width="1" height="1" fill="#ffffff"/><rect x="9" y="2" width="1" height="1" fill="#fff1a8"/><rect x="10" y="10" width="1" height="1" fill="#e8bf4f"/><rect x="11" y="12" width="1" height="1" fill="#e8bf4f"/><rect x="12" y="14" width="1" height="1" fill="#e8bf4f"/>'},
 {id:'apron',slot:'torso',name:"Rose's apron",how:"Reward from Granny Rose's goal: kind words on 5 days",cond:()=>mgK('rose')>=1,ic:'<rect x="5" y="1" width="1" height="3" fill="#f08ca8"/><rect x="10" y="1" width="1" height="3" fill="#f08ca8"/><rect x="5" y="3" width="6" height="5" fill="#f08ca8"/><rect x="5" y="3" width="6" height="1" fill="#fffaf0"/><rect x="1" y="7" width="14" height="1" fill="#e5607e"/><rect x="3" y="8" width="10" height="6" fill="#f08ca8"/><rect x="11" y="8" width="2" height="6" fill="#e5607e"/><rect x="3" y="14" width="10" height="1" fill="#fffaf0"/><rect x="6" y="9" width="1" height="1" fill="#fffaf0"/><rect x="9" y="9" width="1" height="1" fill="#fffaf0"/><rect x="6" y="10" width="4" height="1" fill="#fffaf0"/><rect x="7" y="11" width="2" height="1" fill="#fffaf0"/>'},
 {id:'kasa',slot:'head',name:"Kai's straw hat",how:"Reward from Master Kai's goal: showed up on 10 days",cond:()=>mgK('kai')>=1,ic:'<rect x="7" y="3" width="2" height="1" fill="#e3c27a"/><rect x="6" y="4" width="4" height="1" fill="#e3c27a"/><rect x="5" y="5" width="6" height="1" fill="#e3c27a"/><rect x="4" y="6" width="8" height="1" fill="#e3c27a"/><rect x="3" y="7" width="10" height="1" fill="#8c2a1f"/><rect x="1" y="8" width="14" height="2" fill="#e3c27a"/><rect x="1" y="10" width="14" height="1" fill="#b8924a"/><rect x="9" y="4" width="1" height="3" fill="#b8924a"/><rect x="11" y="6" width="1" height="1" fill="#b8924a"/><rect x="13" y="8" width="2" height="2" fill="#b8924a"/><rect x="1" y="8" width="1" height="1" fill="#f4dc9c"/><rect x="5" y="5" width="1" height="1" fill="#f4dc9c"/><rect x="4" y="9" width="1" height="1" fill="#b8924a"/><rect x="8" y="9" width="1" height="1" fill="#b8924a"/>'},
+{id:'lantern',slot:'keep',name:"Mother's lantern",how:'A gift from Finn. His mother worked late by its light.',cond:()=>!!(S.world&&S.world.gift&&S.world.gift.lantern),ic:'<rect x="6" y="1" width="4" height="1" fill="#3b2416"/><rect x="5" y="2" width="1" height="2" fill="#3b2416"/><rect x="10" y="2" width="1" height="2" fill="#3b2416"/><rect x="4" y="4" width="8" height="2" fill="#4e2f1a"/><rect x="5" y="4" width="6" height="1" fill="#7a4c2a"/><rect x="4" y="6" width="1" height="7" fill="#4e2f1a"/><rect x="11" y="6" width="1" height="7" fill="#4e2f1a"/><rect x="5" y="6" width="6" height="7" fill="#ffe7a0"/><rect x="6" y="7" width="2" height="4" fill="#fff6d0"/><rect x="8" y="9" width="2" height="3" fill="#ffb84a"/><rect x="8" y="11" width="2" height="1" fill="#e8762a"/><rect x="7" y="6" width="1" height="7" fill="#4e2f1a"/><rect x="4" y="13" width="8" height="2" fill="#4e2f1a"/><rect x="5" y="13" width="6" height="1" fill="#7a4c2a"/><rect x="3" y="15" width="10" height="1" fill="#3b2416"/>'},
+{id:'fmap',slot:'keep',name:'Map to Emberbrook',how:'A gift from Finn. His mother drew the way back, past Whisperwood.',cond:()=>!!(S.world&&S.world.gift&&S.world.gift.finnmap),ic:'<rect x="1" y="3" width="14" height="11" fill="#b98a52"/><rect x="2" y="4" width="12" height="9" fill="#ecd9a8"/><rect x="6" y="4" width="1" height="9" fill="#d9c08a"/><rect x="10" y="4" width="1" height="9" fill="#d9c08a"/><rect x="2" y="8" width="3" height="4" fill="#5c9e45"/><rect x="3" y="9" width="1" height="2" fill="#3a7a2a"/><rect x="11" y="5" width="3" height="2" fill="#6fb4dd"/><rect x="11" y="9" width="3" height="3" fill="#8a8f96"/><rect x="12" y="10" width="1" height="1" fill="#6d7178"/><rect x="4" y="6" width="1" height="1" fill="#c23b2c"/><rect x="6" y="7" width="1" height="1" fill="#c23b2c"/><rect x="8" y="8" width="1" height="1" fill="#c23b2c"/><rect x="10" y="9" width="1" height="1" fill="#c23b2c"/><rect x="12" y="8" width="1" height="1" fill="#c23b2c"/><rect x="11" y="7" width="1" height="1" fill="#c23b2c"/><rect x="13" y="7" width="1" height="1" fill="#c23b2c"/><rect x="12" y="6" width="1" height="1" fill="#c23b2c"/>'}
 ];
 const SLOTS=20;
 function beat(id){return Object.values(S.bossWon||{}).includes(id)}
@@ -353,6 +355,7 @@ const QUIRKS=[
 {id:'shuffle',name:'Shuffle dance',how:'Reached Heart level 8',key:'shuffleL',cond:()=>Lv('CHA')>=8,f:[['shuffleL',230],['shuffleR',230],['shuffleL',230],['shuffleR',230]]},
 {id:'spell',name:'Spellcast',how:"Reward from Old Orvel's quest",key:'spell',cond:()=>wq('orvel')>=3,f:[['spell',450],['spell2',450],['spell',450]]},
 {id:'zen',name:'Meditate',how:"Reward from Master Kai's quest",key:'zen',cond:()=>wq('kai')>=3,f:[['zen',1600]]},
+{id:'fishing',name:'Fishing',how:'A gift from a quiet friend',key:'fish',cond:()=>!!(S.world&&S.world.gift&&S.world.gift.fishing),f:[['fish',1100],['fish2',300],['fish',500],['fish2',300],['fish3',1200]]},
 {id:'whistle',name:'Whistle',how:'Learned from a traveling friend',key:'whistle',cond:()=>!!(S.world&&S.world.gift&&S.world.gift.whistle),f:[['whistle',450],['whistle2',450],['whistle',450],['whistle2',450]]},
 {id:'curl',name:'Dumbbell curls',how:"Reward from Big Bjørn's goal: 4 trainings in one week",key:'curl',cond:()=>mgK('bjorn')>=2,f:[['curl',400],['curl2',400],['curl',400],['curl2',400]]},
 {id:'book',name:'Read a book',how:"Reward from Old Orvel's goal: learned something on 7 different days",key:'read',cond:()=>mgK('orvel')>=2,f:[['read',900],['read2',300],['read',900]]},
@@ -593,8 +596,9 @@ function placeBg(id) {
 }
 
 
-function gear(){const o={head:null,torso:null,pet:0,look:S.look};ITEMS.forEach(i=>{if(S.owned&&S.owned[i.id]&&S.equip&&S.equip[i.id])o[i.slot]=i.id});if(o.pet)o.pet=Math.min(3,tierOf('DIS')+1);o.tiers={STR:tierOf('STR'),INT:tierOf('INT'),CHA:tierOf('CHA'),DIS:tierOf('DIS')};return o}
-function wear(id){const it=ITEMS.find(i=>i.id==id);if(!it||!S.owned[id])return;if(id==='spirit'&&S.petScene)return toast('Someone is waiting for you in the World...');let on;if(S.fresh[id]){delete S.fresh[id];on=1}else on=S.equip[id]?0:1;if(on)ITEMS.forEach(i=>{if(i.slot===it.slot)S.equip[i.id]=0});S.equip[id]=on;save();render();sfx('click');pop()}
+function gear(){const o={head:null,torso:null,pet:0,look:S.look};ITEMS.forEach(i=>{if(i.slot!=='keep'&&S.owned&&S.owned[i.id]&&S.equip&&S.equip[i.id])o[i.slot]=i.id});if(o.pet)o.pet=Math.min(3,tierOf('DIS')+1);o.tiers={STR:tierOf('STR'),INT:tierOf('INT'),CHA:tierOf('CHA'),DIS:tierOf('DIS')};return o}
+function wear(id){const it=ITEMS.find(i=>i.id==id);if(!it||!S.owned[id])return;if(it.slot==='keep'){delete S.fresh[id];save();infoId='g:'+id;render();sfx('click');return}   // keepsakes are looked at, not worn
+if(id==='spirit'&&S.petScene)return toast('Someone is waiting for you in the World...');let on;if(S.fresh[id]){delete S.fresh[id];on=1}else on=S.equip[id]?0:1;if(on)ITEMS.forEach(i=>{if(i.slot===it.slot)S.equip[i.id]=0});S.equip[id]=on;save();render();sfx('click');pop()}
 let infoId=null;
 const ib=(k,n)=>`<button class="ib" onclick="infoId='${k}';render()" aria-label="How you got ${n}">i</button>`;
 function infoCard(){if(!infoId)return'';const [t,id]=infoId.split(':');
@@ -603,14 +607,14 @@ const ts=S.owned[t==='q'?'q_'+id:id],date=ts>1?new Date(ts).toLocaleDateString('
 let pic;if(t==='g')pic=`<svg class="cpic" viewBox="0 0 16 16" shape-rendering="crispEdges">${it.ic}</svg>`;
 else if(t==='p')pic=`<svg class="cpic" viewBox="0 0 44 44" shape-rendering="crispEdges">${runs(id==='meadow'?charLayers(0,0,0,{}).layers.bg:placeBg(id))}</svg>`;
 else{const d=charLayers(Lv('STR'),Lv('INT'),Lv('CHA'),gear(),it.key);pic=`<svg class="cpic" viewBox="0 0 44 44" shape-rendering="crispEdges"><g transform="translate(${d.dx} ${d.dy})">${runs(d.layers.body)}</g></svg>`}
-const kind=t==='g'?(it.slot==='pet'?'PET':'GEAR'):t==='p'?'PLACE':'QUIRK';
+const kind=t==='g'?(it.slot==='pet'?'PET':it.slot==='keep'?'KEEPSAKE':'GEAR'):t==='p'?'PLACE':'QUIRK';
 return`<div class="ovl" onclick="if(event.target===this){infoId=null;render()}"><div class="box card" role="dialog" aria-modal="true" aria-label="${it.name}">
 ${pic}<small>${kind}</small><h3>${it.name}</h3><p class="lbl">HOW YOU GOT IT</p><p>${it.how}</p>${date?`<p class="lbl">UNLOCKED</p><p>${date}</p>`:''}
 <button onclick="infoId=null;render()">CLOSE</button></div></div>`}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(editId!=null||ideaDraft!=null||trialK||addOpen||trPick)){editId=null;ideaDraft=null;trialK=null;addOpen=false;trPick=false;render();return}if(e.key==='Escape'&&suggOpen){suggAnswer(0);return}if(e.key==='Escape'&&(infoId||bossOpen)){infoId=null;bossOpen=0;render()}});
 function wardrobe(){
 const tiles=Array.from({length:Math.ceil(Math.max(SLOTS,ITEMS.length)/2)*2},(_,k)=>{const i=ITEMS[k];   // grows with ITEMS, so new gear never falls off the grid
-if(i&&S.owned[i.id]){const on=S.equip[i.id],f=S.fresh[i.id];return`<div class="tw"><button class="tile" onclick="wear('${i.id}')" aria-pressed="${!!on}">${f?'<i class="spk" style="position:absolute;top:8px;right:10px"></i>':''}<svg viewBox="0 0 16 16" shape-rendering="crispEdges">${i.ic}</svg><span>${i.name}</span><small>${i.slot==='head'?'HEAD':i.slot==='pet'?'PET':'SHIRT'} · ${f?'NEW!':i.slot==='pet'?(on?'WITH YOU':'AT HOME'):(on?'WORN':'TAP TO WEAR')}</small></button>${ib('g:'+i.id,i.name)}</div>`}
+if(i&&S.owned[i.id]){const on=S.equip[i.id],f=S.fresh[i.id];return`<div class="tw"><button class="tile" onclick="wear('${i.id}')" aria-pressed="${!!on}">${f?'<i class="spk" style="position:absolute;top:8px;right:10px"></i>':''}<svg viewBox="0 0 16 16" shape-rendering="crispEdges">${i.ic}</svg><span>${i.name}</span><small>${i.slot==='head'?'HEAD':i.slot==='pet'?'PET':i.slot==='keep'?'KEEPSAKE':'SHIRT'} · ${f?'NEW!':i.slot==='pet'?(on?'WITH YOU':'AT HOME'):i.slot==='keep'?'TAP TO LOOK':(on?'WORN':'TAP TO WEAR')}</small></button>${ib('g:'+i.id,i.name)}</div>`}
 return`<div class="tile locked" aria-label="Locked item"><b>?</b></div>`}).join('');
 const pt=PLACES.map(p=>{if(!S.owned[p.id])return`<div class="tile locked" aria-label="Locked place"><b>?</b></div>`;
 const f=S.fresh[p.id],on=(S.place||'meadow')===p.id,bg=p.id==='meadow'?charLayers(0,0,0,{}).layers.bg:placeBg(p.id);
@@ -1166,6 +1170,10 @@ function charLayers(str, int, cha, gear, pose) {
       rect(body, ax, shirtTop + 1, len, ah, 's'); rect(body, ax, shirtTop + ah, len, 1, 'S');
       const fx = side > 0 ? ax + len : ax - 3; rect(body, fx, shirtTop, 3, ah + 2, 's'); rect(body, fx, shirtTop + ah + 1, 3, 1, 'S'); put(body, side > 0 ? fx + 2 : fx, shirtTop, 'K');
       [shirtTop, shirtTop + 2, shirtTop + 4].forEach((y, i) => { for (let k = 0; k < 2 + (i & 1); k++) put(body, side > 0 ? ax + 1 + k : ax + len - 2 - k, y - 1 - (i === 0 ? 1 : 0) + (i === 2 ? 2 : 0), 'n'); });
+    } else if (kind === 'rod') {                                       // Finn's fishing: fist up in front of the shoulder, holding the rod
+      const fx = sx + 1;
+      rect(body, sx, shirtTop + 2, AW + 1, 2, 's'); rect(body, fx, shirtTop - 1, AW, 4, 's'); rect(body, fx + AW - 1, shirtTop - 1, 1, 4, 'S');
+      rect(body, fx - 1, shirtTop - 4, AW + 2, 3, 's'); rect(body, fx - 1, shirtTop - 2, AW + 2, 1, 'S');
     } else if (kind === 'thumb') {                                     // thumbs up in front of the chest
       const fx = sx + 1;                                               // forearm up beside the shoulder
       rect(body, sx, shirtTop + 2, AW + 1, 2, 's'); rect(body, fx, shirtTop - 1, AW, 4, 's'); rect(body, fx + AW - 1, shirtTop - 1, 1, 4, 'S');
@@ -1177,9 +1185,23 @@ function charLayers(str, int, cha, gear, pose) {
     put(body, x0 - 1, y, 'J'); put(body, x1 + 1, y, 'J');
     [x0 - 3, x1 + 2].forEach(x => { rect(body, x, y - 2, 2, 5, 'O'); put(body, x, y - 2, 'D'); put(body, x, y - 1, 'D'); });
   };
-  const armPose = { curl: ['curlUp', null], curl2: [null, 'curlUp'], kiss: ['fist', null], kiss2: ['wave1', null], kiss3: ['wave1', null], kata: [null, 'punch'], kata2: ['punch', null], spell: [null, 'up'], spell2: [null, 'up'], wave1: [null, 'wave1'], wave2: [null, 'wave2'], stretch: ['up', 'up'], flex: ['flex', 'flex'], thumb: [null, 'thumb'], shuffleL: ['up', null], shuffleR: [null, 'up'] }[pose] || [null, null];
+  const armPose = { curl: ['curlUp', null], curl2: [null, 'curlUp'], kiss: ['fist', null], kiss2: ['wave1', null], kiss3: ['wave1', null], kata: [null, 'punch'], kata2: ['punch', null], spell: [null, 'up'], spell2: [null, 'up'], wave1: [null, 'wave1'], wave2: [null, 'wave2'], stretch: ['up', 'up'], flex: ['flex', 'flex'], thumb: [null, 'thumb'], fish: [null, 'rod'], fish2: [null, 'rod'], fish3: [null, 'rod'], shuffleL: ['up', null], shuffleR: [null, 'up'] }[pose] || [null, null];
   [-1, 1].forEach((side, i) => { const k = armPose[i]; if (k) raised(side, k); else (naked || tank ? nArm : arm)(side); });
   if (pose === 'curl' || pose === 'curl2') { const sx = pose === 'curl' ? tR + 2 : tL - AW - 1; dumbbell(sx, sx + AW - 1, shirtTop + 4); }
+  if (/^fish/.test(pose)) {                                          // Finn's old rod: rod from the fist, line, red-and-white bobber (fish2: it dips, fish3: a little fish)
+    const fx = tR + 3, fy = shirtTop - 3, tx = W - 4, ty = pose === 'fish3' ? top - 2 : top + 1;
+    const ln = (x0, y0, x1, y1, c) => { const n = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0)) || 1; for (let i = 0; i <= n; i++) put(body, Math.round(x0 + (x1 - x0) * i / n), Math.round(y0 + (y1 - y0) * i / n), c); };
+    ln(fx - 2, fy + 3, tx, ty, '#7a4c2a'); ln(fx - 1, fy + 3, tx, ty + 1, '#4e2f1a'); put(body, fx - 2, fy + 3, '#3b2416'); put(body, fx - 3, fy + 4, '#3b2416');
+    const by = pose === 'fish3' ? ty + 9 : pose === 'fish2' ? FB : FB - 2;
+    ln(tx, ty + 1, tx, by - 1, '#d8e2ea');
+    if (pose === 'fish3') {                                          // a small silver fish wriggling on the line
+      rect(body, tx - 1, by, 3, 5, '#8fb3cf'); put(body, tx, by + 1, '#e8f2fa'); put(body, tx - 1, by + 5, '#5d7f9c'); put(body, tx + 1, by + 5, '#5d7f9c'); put(body, tx, by + 2, '#2a2230');
+      [[tx - 4, by - 2], [tx + 2, by - 4], [tx - 3, by + 3]].forEach(([x, y]) => put(body, x, y, '#bfe4ff'));
+    } else {
+      rect(body, tx - 1, by, 2, 1, '#c23b2c'); rect(body, tx - 1, by + 1, 2, 1, '#f7f4ee');
+      if (pose === 'fish2') { [[tx - 3, by - 1], [tx + 1, by - 2], [tx - 2, by - 3]].forEach(([x, y]) => put(body, x, y, '#bfe4ff')); }
+    }
+  }
   if (torso === 'belt') {                                             // Bjørn's lifting belt: thick leather with a gold buckle
     rect(body, tL, shirtTop + 3, TW, 3, 'f'); rect(body, tL, shirtTop + 3, TW, 1, '#9a6638'); rect(body, tL, shirtTop + 5, TW, 1, 'F');
     if (bk) { for (let x = tL + 1; x < tR; x += 2) put(body, x, shirtTop + 4, '#9a6638'); }
@@ -1335,7 +1357,7 @@ function charLayers(str, int, cha, gear, pose) {
   if (pose === 'kata' || pose === 'kata2') { [ex1, ex2].forEach((x, i) => { put(body, x + (i ? 0 : 1), ey - 2, 'H'); put(body, x + (i ? 1 : 0), ey - 1, 'H'); }); put(body, CX - 2, my + 1, 'm'); put(body, CX + 1, my + 1, 'm'); }
   if (pose === 'curl' || pose === 'curl2') { put(body, CX - 2, my + 1, 'm'); put(body, CX + 1, my + 1, 'm'); put(body, hL - 2, top + 4, 'B'); put(body, hL - 2, top + 5, 'B'); put(body, hL - 3, top + 5, 'B'); }
   if (pose === 'breath') { [CX - 2, CX - 1, CX, CX + 1].forEach(x => put(body, x, my, 's')); put(body, CX - 1, my + 1, 's'); put(body, CX, my + 1, 's'); put(body, CX - 1, my, 'm'); put(body, CX, my, 'm'); }
-  if (pose === 'flex' || pose === 'jump') { put(body, CX - 2, my + 1, 'm'); put(body, CX + 1, my + 1, 'm'); }
+  if (pose === 'flex' || pose === 'jump' || pose === 'fish3') { put(body, CX - 2, my + 1, 'm'); put(body, CX + 1, my + 1, 'm'); }
   }
 
   // ---- wizard hat (gear)
@@ -2598,7 +2620,7 @@ const NPC_LOOK = {
   orvel: { top: '#6a44ad', hat: '#5a38a0', wizard: 1, beard: '#f4f1ea', longBeard: 1, robe: 1, sleeves: 1, staff: 1, acc: '#7fd7ff', star: 1 },
   rose: { top: '#f08ca8', bottom: '#f08ca8', hair: '#c9c4d6', hairStyle: 'bun', apron: 1, acc: '#fffaf0', glasses: 1, robe: 1 },
   kai: { top: '#e8873a', hairStyle: 'bald', robe: 1, sleeves: 1, sash: 1, acc: '#c23b2c', closedEyes: 1 },
-  fisher: { top: '#5c9e45', bottom: '#4a5774', cap: 1, hat: '#3d6fb5', hairStyle: 'short', hair: '#6b4423', rod: 1 },
+  fisher: { top: '#5c9e45', bottom: '#4a5774', cap: 1, hat: '#3d6fb5', hairStyle: 'short', hair: '#c8502a', rod: 1 },   // red like his mother's (2026-11-04); only a few tufts show under the cap
   mira: { top: '#e8a93a', hair: '#7a4128', hairStyle: 'long', robe: 1, sleeves: 1, book: 1, flower: 1, brows: '#5a2a18' },
   elias: { top: '#5a8a4a', bottom: '#6b4a2a', hair: '#7a4a28', hairStyle: 'short', beard: '#7a4a28', big: 1, plaid: 1, happy: 1 },
   tove: { kid: 1, top: '#7fbfe8', bottom: '#3d6fb5', hair: '#d8913a', hairStyle: 'short', pigtails: 1, freckles: 1 },
@@ -2606,7 +2628,13 @@ const NPC_LOOK = {
   pip: { top: '#3d6fb5', bottom: '#c23b2c', hair: '#e8c35a', hairStyle: 'short', sleeves: 1, feathercap: 1, hat: '#2f7a45', lute: 1 }
 };
 const NPC_ART = {};
-function npcCanvas(id) { return NPC_ART[id] || (NPC_ART[id] = id === 'ziggy' ? ziggyCanvas() : id === 'ferro' ? ferroCanvas() : drawFace(chibi(NPC_LOOK[id]), NPC_LOOK[id])); }
+function finnBare() { return !!((S.world && S.world.f && S.world.f.finnHat) || (typeof WR !== 'undefined' && WR && WR.cine && WR.cine.hatOff)); }
+function finnBareCanvas() {                       // Finn without his cap: messy red hair
+  const o = Object.assign({}, NPC_LOOK.fisher, { cap: 0 }), c = drawFace(chibi(o), o), g = c.getContext('2d'), H = [o.hair, shadeHex(o.hair, 35), shadeHex(o.hair, -40)];
+  [[10,3,0],[11,2,0],[12,3,1],[14,2,0],[15,2,1],[15,1,0],[17,3,0],[18,2,0],[20,4,0],[21,5,0],[8,5,0],[7,6,0],[22,7,0],[11,8,2],[12,8,0],[13,9,0],[16,8,0],[17,9,2],[19,8,0],[9,8,0],[10,9,2]].forEach(([x, y, k]) => { g.fillStyle = H[k]; g.fillRect(x, y, 1, 1); });
+  return c;
+}
+function npcCanvas(id) { if (id === 'fisher' && finnBare()) return NPC_ART.fisherBare || (NPC_ART.fisherBare = finnBareCanvas()); return NPC_ART[id] || (NPC_ART[id] = id === 'ziggy' ? ziggyCanvas() : id === 'ferro' ? ferroCanvas() : drawFace(chibi(NPC_LOOK[id]), NPC_LOOK[id])); }
 function itemCanvas(kind) {
   const k = 'item_' + kind; if (PROP_ART[k]) return PROP_ART[k].c;
   let c;
@@ -2693,7 +2721,7 @@ function mgRows() {
     return `<div class="task mq${ok ? ' rep' : ''}"><div class="n">${esc(g.goal)}<small>${ok ? 'Goal reached! Tell ' + MN[id] : 'goal from ' + MN[id]}</small></div><small class="mtag">${n}/${g.n}</small></div>`; }).join('');
 }
 // ---- real-life quests: one new task per mentor per day, only while you don't already have one from them
-const MN = { bjorn: 'Bjørn', orvel: 'Orvel', rose: 'Rose', kai: 'Kai', wren: 'Wren', pip: 'Pip' };
+const MN = { bjorn: 'Bjørn', orvel: 'Orvel', rose: 'Rose', kai: 'Kai', wren: 'Wren', pip: 'Pip', fisher: 'Finn' };
 const RLQ = {
   rose: [['Tell someone you love them', 3], ['Call a family member', 3], ['Compliment a stranger', 3], ['Write a thank-you message', 3], ['Help someone without being asked', 3], ['Ask a friend how they\'re really doing', 3]],
   bjorn: [['50 push-ups through the day', 3], ['Take the stairs all day', 2], ['Hold a 1-minute plank', 2], ['Stretch for 10 minutes', 2], ['Try a new exercise', 3], ['Go for a long walk', 3]],
@@ -2732,17 +2760,19 @@ function rewardInfo(r) {
 // plus their own real-life tasks. Talking is where you see it. It never goes down.
 const NEWC = {
   wren: { name: 'Wren', stat: 'DIS', hearts: [2, 8, 15, 24, 35] },
-  pip: { name: 'Pip', stat: 'CHA', hearts: [2, 7, 14] }
+  pip: { name: 'Pip', stat: 'CHA', hearts: [2, 7, 14] },
+  fisher: { name: 'Finn', stat: null, hearts: [3, 8, 14, 21, 30] }   // Finn's story (2026-11-04): any real-life day counts, he only cares that you keep showing up
 };
 const NRLQ = {
   wren: [['Fix something that\'s been broken', 3, 'DIS'], ['Make something with your hands', 3, 'INT'], ['Help someone carry or move something', 3, 'CHA'], ['Sort out that one messy drawer', 2, 'DIS'], ['Put something back where it belongs, all day', 2, 'DIS'], ['Build or assemble something', 3, 'INT']],
+  fisher: [['Spend 10 minutes outside without your phone', 2, 'DIS'], ['Sit by some water, or just look at the sky for a while', 2, 'CHA'], ['Call someone from your hometown or your family', 3, 'CHA'], ['Cook something you ate as a kid', 3, 'CHA'], ['Take a slow walk somewhere you\'ve never been', 3, 'STR'], ['Write down one memory you never want to forget', 2, 'INT']],
   pip: [['Share a favorite song with a friend', 3, 'CHA'], ['Listen to a whole album, start to finish', 2, 'INT'], ['Sing or dance to a song you love', 2, 'CHA'], ['Write a short poem', 3, 'INT'], ['Send someone a song that reminds you of them', 3, 'CHA'], ['Hum a tune while you do the dishes', 2, 'CHA']]
 };
 const dn = t => { const x = new Date(t || Date.now()); x.setHours(12, 0, 0, 0); return Math.floor(x.getTime() / 864e5); };
 function NS(id) { const ws = WS(); ws.n = ws.n || {}; ws.fb = ws.fb || {}; ws.seen = ws.seen || {}; ws.gift = ws.gift || {}; return ws.n[id] = ws.n[id] || {}; }
 function frPoints(id) {                       // real-life days in their stat since you met + bonuses (tasks, favors)
   const n = NS(id), ws = WS(); if (n.met == null) return 0;
-  const days = new Set(S.log.filter(e => e.stat === NEWC[id].stat && dn(e.t) >= n.met).map(e => dn(e.t))).size;
+  const days = new Set(S.log.filter(e => (!NEWC[id].stat || e.stat === NEWC[id].stat) && dn(e.t) >= n.met).map(e => dn(e.t))).size;
   return days + (ws.fb[id] || 0);
 }
 function frEarned(id) { const p = frPoints(id), H = NEWC[id].hearts; let k = H.filter(h => p >= h).length; if (id === 'pip' && !NS('pip').featherBack) k = Math.min(k, 2); return k; }
@@ -2763,8 +2793,9 @@ function pipHere() {                          // two random days every week
 }
 function nrlOffer(id) {
   const ws = WS(), n = NS(id); if (n.met == null || rlTask(id)) return null;
-  if (ws.rlDay[id] != null && dn() - ws.rlDay[id] < (FAMQ[id] ? FAMQ[id].gap : 2)) return null;
-  const pool = NRLQ[id], start = hsh(dn(), 90 + (id === 'pip' ? 1 : id === 'mira' ? 2 : id === 'ziggy' ? 3 : 0)) % pool.length;
+  if (id === 'fisher' && (ws.seen.fisher || 0) < 2) return null;   // Finn's tasks start at Heart 2
+  if (ws.rlDay[id] != null && dn() - ws.rlDay[id] < (FAMQ[id] ? FAMQ[id].gap : id === 'fisher' ? 3 : 2)) return null;
+  const pool = NRLQ[id], start = hsh(dn(), 90 + (id === 'pip' ? 1 : id === 'mira' ? 2 : id === 'ziggy' ? 3 : id === 'fisher' ? 4 : 0)) % pool.length;
   for (let i = 0; i < pool.length; i++) { const it = pool[(start + i) % pool.length]; if (it[0] !== ws.rlLast[id]) return it; }
   return pool[start];
 }
@@ -2785,6 +2816,7 @@ function heartMark(g, x, y) {                 // pink heart with a light border 
 }
 function heartUp(id) {                        // show the next earned heart (one per conversation)
   if (id === 'wren' && gladeWait()) { gladeAsk(true); return true; }   // Heart 4 shown but the glade walk didn't finish (app closed mid-scene)
+  if (id === 'fisher' && pondWait()) { pondAsk(true); return true; }   // Heart 5 shown but the pond scene didn't finish
   const ws = WS(), seen = ws.seen[id] || 0; if (frEarned(id) <= seen) return false;
   const k = seen + 1; ws.seen[id] = k; save(); sfx('heart');
   const say = (lines, then) => { dialog(id, lines, then); WR.dlg.popHeart = 1; showDlg(); };
@@ -2794,6 +2826,16 @@ function heartUp(id) {                        // show the next earned heart (one
     if (k === 3) say(['Here. I made you something. Well... sewed. Don\'t look too closely at the stitches.'], () => { ws.gift.bandana = 1; checkUnlocks(); save(); giftCard('NEW GEAR', "Wren's bandana", itemPic('bandana'), 'A GIFT FROM WREN'); });
     if (k === 4) { gladeAsk(); WR.dlg.popHeart = 1; showDlg(); }   // since 2026-11-02 Wren walks you to the glade herself (gladeScene)
     if (k === 5) say(['You know what, neighbor? You\'re my best friend around here.', 'I\'ll come say hi around the village sometimes.'], () => { sfx('tier'); confetti(GOLD, 70, innerWidth / 2, innerHeight * .4, 12); fxCard('', `<small class="tpk">BEST FRIENDS!</small><h3>WREN</h3><div class="rlport"></div><p>She'll pop up around the village now and then.</p>`, 'AWESOME!', null); portIn('wren'); });
+  } else if (id === 'fisher') {                // Finn's story (2026-11-04): one piece of Emberbrook per heart
+    if (k === 1) say(['...You came by again.', 'Most people stop coming, after a while. You didn\'t.', '...The fish like you. I think.']);
+    if (k === 2) say(['My mother was the smith in Emberbrook. Up before the sun, every single day.', 'Hardest worker I ever knew. If something was broken, she fixed it. If someone needed help, she was already there.', 'She\'d let me pump the bellows. I was terrible at it.']);
+    if (k === 3) say(['The circus didn\'t take Emberbrook all at once. It drained it. Slowly. A little more every week.', 'The colors went first. Then the voices. Then the people.', 'Here. My old rod. Fishing is how I stopped thinking about it. Maybe it\'ll help you too.'],
+      () => { ws.gift.fishing = 1; checkQuirks(); save(); const d = charLayers(Lv('STR'), Lv('INT'), Lv('CHA'), gear(), 'fish3'); giftCard('NEW QUIRK', 'Fishing', `<svg class="cpic" viewBox="0 0 44 44" shape-rendering="crispEdges">${runs(d.layers.body)}</svg>`, 'A GIFT FROM FINN'); });
+    if (k === 4) say(['My mother kept working long after everyone else had stopped. In the end, even she got tired.', 'The night we left, she carried this old lantern. The one she used to work late by.', 'At the river she looked back at the town, all grey. She cried. I never saw her cry, before or after.',
+      'We ended up in the big city down the river. She didn\'t sit still there either.', 'She joined the people who stand up to the circus and its fanatics. Wherever it raises its tent, they go and help the towns fight back. She\'s still out there, doing it.',
+      'I couldn\'t. I\'d seen enough. I just wanted somewhere quiet, so I came here.', 'She still writes. Every letter ends the same way: "Keep your light on, Finn."', 'Everyone always said I looked just like her. Same red hair.', '...I kept the lantern. Never lit it since. You keep it.'],
+      () => { ws.gift.lantern = 1; checkUnlocks(); save(); giftCard('NEW KEEPSAKE', "Mother's lantern", itemPic('lantern'), 'A GIFT FROM FINN'); });
+    if (k === 5) { pondAsk(); WR.dlg.popHeart = 1; showDlg(); }
   } else {
     if (k === 1) say(['Consider us friends, friend! Bards never forget a kind face.']);
     if (k === 2) say(['Hey, friend. Can I ask you a favor?', 'The wind stole the feather from my cap. I think it blew into Whisperwood, up the north-east trail.', 'QUEST: Find Pip\'s blue feather'], () => { NS('pip').ask = 1; save(); worldHud(); });
@@ -2806,7 +2848,7 @@ function newcTaskTalk(id, noRemind) {         // their real-life task: report, o
   const ws = WS(), t = rlTask(id);
   if (t && t.done) { rlReport(id, t); return true; }
   const off = nrlOffer(id);
-  if (off) { dialog(id, [(id === 'wren' ? 'Oh! I have an idea for you, out in real life: ' : id === 'mira' ? 'There\'s something on my list for you, out in real life: ' : id === 'ziggy' ? 'Okay, okay, I have a challenge for you, out in real life: ' : 'A little challenge, from one artist to another: ') + '"' + off[0] + '"', `Do it, then come tell me. +${off[1] + 1} ${NAMES[off[2]][0] + NAMES[off[2]].slice(1).toLowerCase()}.`], null,
+  if (off) { dialog(id, [(id === 'wren' ? 'Oh! I have an idea for you, out in real life: ' : id === 'mira' ? 'There\'s something on my list for you, out in real life: ' : id === 'ziggy' ? 'Okay, okay, I have a challenge for you, out in real life: ' : id === 'fisher' ? '...Got something for you. Out there, in real life: ' : 'A little challenge, from one artist to another: ') + '"' + off[0] + '"', `Do it, then come tell me. +${off[1] + 1} ${NAMES[off[2]][0] + NAMES[off[2]].slice(1).toLowerCase()}.`], null,
       [{ label: 'ACCEPT', fn: () => rlAccept(id, off) }, { label: 'MAYBE LATER', fn: () => dialog(id, ['Sure thing. No rush.']) }]); return true; }
   if (t && !noRemind) { dialog(id, ['How\'s it going with this one? "' + t.name + '"', 'Check it off in your quests when it\'s done, then come tell me.'], null,
       [{ label: "I'M ON IT", fn: () => {} }, { label: 'DROP IT', fn: () => { S.tasks = S.tasks.filter(x => x !== t); ws.rl[id] = null; ws.rlDay[id] = dn(); save(); dialog(id, ['No worries at all.']); } }]); return true; }
@@ -2832,6 +2874,7 @@ function talkNew(id) {
     if (newcTaskTalk(id, 1)) return; if (heartUp(id)) return; if (newcTaskTalk(id)) return;
     return dialog('wren', smallTalk('wren', newcSmallTalk('wren')));
   }
+  if (id === 'fisher') return finnFriendTalk();
   // Pip
   if (n.met == null) { n.met = dn(); frBonus('pip', 2); save(); pipTune(); worldHud();
     return dialog('pip', ['La la laaa! Oh, an audience!', 'I\'m Pip, a wandering bard. I go from village to village, collecting stories for my songs.', 'Your village has a nice ring to it. I\'ll swing by now and then!'], () => { heartUp('pip'); }); }
@@ -2963,6 +3006,48 @@ function gladeDraw(g, cx, cy, vw, vh, tnow) {
     g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2); g.restore();
     g.fillStyle = `rgba(255,252,200,${.5 + a * .5})`; g.fillRect(Math.round(x), Math.round(y), 1, 1); if (c.dusk > .5) { g.fillStyle = `rgba(255,248,170,${a * .7})`; g.fillRect(Math.round(x) - 1, Math.round(y), 3, 1); g.fillRect(Math.round(x), Math.round(y) - 1, 1, 3); }
   });
+}
+
+// ---- Finn's pond scene (Heart 5, 2026-11-04): he tells you the rest, takes off his hat and gives you his mother's map to Emberbrook
+function pondWait() { const ws = WS(); return (ws.seen.fisher || 0) >= 5 && !(ws.f || {}).finnHat; }
+function pondAsk(again) { dialog('fisher', [again ? '...Hey. Still got that minute? Sit with me.' : '...Got a minute? Sit with me.'], null, [{ label: 'SIT DOWN', fn: pondScene }]); }
+function pondScene() {
+  const wv = document.getElementById('wv');
+  WR.busy = 1; WR.cine = { t0: performance.now(), gloom: 0, cam: { x: WR.p.x, y: WR.p.y }, actors: [], A: {}, pond: 1 };
+  ['top', 'bot'].forEach(k => { const d = document.createElement('div'); d.className = 'cbar ' + k; wv.appendChild(d); requestAnimationFrame(() => d.classList.add('on')); });
+  document.body.classList.add('cine'); SND.stop(3);                                     // the music fades to just the water
+  const c = WR.cine, wait = (ms, fn) => setTimeout(() => { if (WR && WR.cine === c) fn(); }, ms);
+  const dog = !!(S.owned.spirit && S.equip.spirit);
+  c.pan = { a: { x: c.cam.x, y: c.cam.y }, b: { x: 10.6, y: 26.4 }, t0: performance.now(), ms: 1800 };
+  c.me = { x: 12.9, y: 27.35, sp: 2, dir: 3, then: () => {
+    if (dog) c.pupTo = { x: 11.1, y: 28.3, sp: 2.4 };
+    wait(dog ? 1300 : 900, () => dialog('fisher', (dog ? ['...Hey, buddy.'] : []).concat(['I\'ve never told anyone the whole thing. Not even Rose.', 'Week by week, the circus drained Emberbrook. People did a little less, then a little less. No one was angry. No one was sad. They just stopped.',
+      'I was so afraid of ending up like that, I stopped letting anyone in. Seemed safer.', 'Then Rose sent cookies. Bjørn kept scaring my fish. And you kept showing up. Every day, you kept showing up.', 'That\'s how you fight it, isn\'t it? Not with anything big. You just keep showing up.']),
+      () => dialog(null, ['Finn takes off his hat.'], () => {
+        c.hatOff = 1; sfx('fly'); for (let i = 0; i < 4; i++) (WR.dust = WR.dust || []).push({ x: 11.5 + (Math.random() - .5) * .9, y: 26.2 + (Math.random() - .5) * .4, t: Math.random() * .05, s: 1.4, life: .6 });
+        wait(1300, () => dialog('fisher', ['I wore this so nobody would see her in me. Figured I\'d let her down. ...Maybe I haven\'t.', '...Don\'t tell Ferro.'],
+          () => dialog('me', ['Your secret\'s safe with me, Finn.'],
+            () => dialog(null, ['He pulls a folded paper out of his hat.'],
+              () => dialog('fisher', ['My mother drew this. The way back to Emberbrook, past Whisperwood.', 'I\'ve never had the nerve to go back. ...Maybe someday. With a friend.', 'I think I\'ll write to my mother tonight. Tell her about you.'], pondEnd)))));
+      })));
+  } };
+}
+function pondEnd() {
+  const c = WR.cine, ws = WS(); ws.f.finnHat = 1; ws.gift.finnmap = 1; NS('fisher'); checkUnlocks(); save();   // set only at the end, so closing mid-scene lets Finn ask again
+  document.querySelectorAll('#wv .cbar').forEach(d => { d.classList.remove('on'); setTimeout(() => d.remove(), 700); });
+  setTimeout(() => {
+    if (WR.cine === c) { WR.cine = null; WR.busy = 0; } document.body.classList.remove('cine'); worldEntities(); worldHud(); musicFor(WR.cur);
+    sfx('tier'); confetti(GOLD, 70, innerWidth / 2, innerHeight * .4, 12);
+    fxCard('', `<small class="tpk">A GIFT FROM FINN</small>${itemPic('fmap')}<p class="lbl">NEW KEEPSAKE</p><p>Map to Emberbrook</p>`, 'AWESOME!', () => {
+      sfx('tier'); confetti(GOLD, 70, innerWidth / 2, innerHeight * .4, 12);
+      fxCard('', `<small class="tpk">BEST FRIENDS!</small><h3>FINN</h3><div class="rlport"></div><p>He's not hiding any more.</p>`, 'AWESOME!', null); portIn('fisher');
+    });
+  }, 900);
+}
+function fishSide() {                             // water right next to you, to the right (1) or the left (-1): the fishing quirk only plays there
+  if (!WR || !WR.maps || !WR.cur) return 0; const M = WR.maps[WR.cur], p = WR.p; if (!M || !M.g) return 0;
+  const tx = Math.floor(p.x), ty = Math.floor(p.y + .3), w = (x, y) => M.g[y] && M.g[y][x] === 'W';
+  if (w(tx + 1, ty) || w(tx + 2, ty) || w(tx + 1, ty + 1)) return 1; if (w(tx - 1, ty) || w(tx - 2, ty) || w(tx - 1, ty + 1)) return -1; return 0;
 }
 
 // ===================== Circus Mañana: art =====================
@@ -3452,7 +3537,8 @@ const HF_HOME = {                                    // once they live here
   wren: 'Elias is handy with a plane. Terrible jokes, though. TERRIBLE.', pip: 'The Honeyfields came home! That\'s my favorite verse so far.', fisher: '...Tove caught a boot today. She was so proud. ...I was too.'
 };
 const famExtra = id => { const s = famStage(), z = zgStage(); return (s === 'home' ? (HF_HOME[id] ? [HF_HOME[id]] : []) : s === 'build' || s === 'ready' ? (HF_SOON[id] ? [HF_SOON[id]] : []) : [])
-  .concat(z === 'home' ? (ZG_HOME[id] ? [ZG_HOME[id]] : []) : z === 'build' || z === 'ready' ? (ZG_SOON[id] ? [ZG_SOON[id]] : []) : []); };
+  .concat(z === 'home' ? (ZG_HOME[id] ? [ZG_HOME[id]] : []) : z === 'build' || z === 'ready' ? (ZG_SOON[id] ? [ZG_SOON[id]] : []) : [])
+  .concat(S.world && S.world.f && S.world.f.finnHat && typeof FINN_HOME !== 'undefined' && FINN_HOME[id] ? [FINN_HOME[id]] : []); };
 function famSmall(id) { const n = weekDays(e => e.stat === 'CHA'); return n === 0 ? 'Grandma used to say: a village is just people who show up for each other.' : 'You\'ve been there for people ' + n + (n === 1 ? ' day' : ' days') + ' this week. Grandma would have liked you.'; }
 function famLine(id) {
   const ws = WS(); ws.cday = ws.cday || {}; ws.lix = ws.lix || {};
@@ -4226,7 +4312,17 @@ const FINN = {
   shy: [['...', 'The fish aren\'t biting today.'], ['...You again.'], ['...', 'Quiet is good. Quiet is safe.']],
   warm: ['...Rose\'s cookies are the best thing that happened to me this year. Don\'t tell anyone.', 'I grew up somewhere else. A place called Emberbrook. It\'s gone now.',
     '...Bjørn came by again. Talks too loud. Scares the fish. ...I don\'t mind.', 'In Emberbrook, the colors went first. Then the voices. Then the people.',
-    'That bard sang a song from my old village. ...I had to walk away for a bit.', '...Thanks for coming by. Really.']
+    'That bard sang a song from my old village. ...I had to walk away for a bit.', '...Thanks for coming by. Really.'],
+  after: ['Wrote to my mother. First letter in years. ...It felt good.', 'Feels strange without the hat. Good strange.', 'Emberbrook... Not yet. But someday.',   // after the pond scene
+    '...Bjørn came by again. Talks too loud. Scares the fish. ...I don\'t mind.', 'Rose made me try her new rolls. Inside the bakery. With people. ...It was nice.', '...Thanks for coming by. Really.']
+};
+const FINN_HOME = {                                  // what the village says once Finn has taken off his hat
+  rose: 'Finn came into the bakery today. Inside! He bought a roll and said "good morning". I nearly dropped the tray, sweetheart.',
+  bjorn: 'Finn LAUGHED at one of my jokes. Out loud. I\'m framing that moment.',
+  ferro: 'I hear Finn took the hat off. And nobody called me?! Unforgivable. ...Is it red? Tell me it\'s red.',
+  pip: 'Finn asked me to play the Emberbrook song. He hummed along. Just a little.',
+  orvel: 'Emberbrook, hmm... I went there once, you know. If you ever go, take a lantern. And a friend.',
+  ziggy: 'Wait. Finn\'s mother is THAT smith? Everyone in the city knows her! Technically, she\'s a legend.'
 };
 const ACT_REACT = {
   restday: { bjorn: 'My arms feel like porridge. That lullaby is getting into my MUSCLES!', orvel: 'The Somnambulist... I keep yawning over my books. Not a good sign.', rose: 'Half the village slept through breakfast. My rolls went cold, dear.', kai: 'Her song says rest. The bell says rise. Listen to the bell.', wren: 'My hammer feels twice as heavy today. Funny how that works.', pip: 'I started a new song today and fell asleep on the second verse. Rude.', fisher: '...Even the fish are sleepy. Don\'t listen to that humming.' },
@@ -4265,10 +4361,22 @@ function chatterLine(id) {                          // an everyday line: village
   const i = ws.lix[id] = ((ws.lix[id] == null ? hsh(id.length, 7) : ws.lix[id]) + 1) % pool.length; save();
   return [pool[i]];
 }
+function finnFriendTalk() {                         // Finn's story (2026-11-04): cookies first, then hearts on any real-life day
+  const ws = WS(), n = NS('fisher');
+  if (wq('rose') === 1) {                            // Rose's cookies
+    if (Lv('CHA') < WQ.rose.req) return dialog('fisher', ['...What do you want?', 'He turns away. Maybe a warmer heart would reach him.']);
+    ws.q.rose = 2; save(); worldHud();
+    return dialog('fisher', ['Cookies? From Rose? For... me?', 'Nobody has done something like that for me in years.', 'Thank you. Truly. Tell her I said hi.']);
+  }
+  if (wq('rose') < 3) return finnTalk();
+  if (n.met == null) { n.met = dn(); save(); worldHud(); }   // he counts as a friend from the first talk after the cookies (old saves: from today)
+  if (newcTaskTalk('fisher', 1)) return; if (heartUp('fisher')) return; if (newcTaskTalk('fisher')) return;
+  return finnTalk();
+}
 function finnTalk() {                               // the fisherman opens up a little after Rose's cookies
   const ws = WS(); ws.lix = ws.lix || {};
   if (wq('rose') < 3) { const k = ws.lix.finnShy = ((ws.lix.finnShy || 0) + 1) % FINN.shy.length; save(); return dialog('fisher', FINN.shy[k].slice()); }
-  const pool = FINN.warm.concat(famExtra('fisher')), k = ws.lix.finn = ((ws.lix.finn == null ? -1 : ws.lix.finn) + 1) % pool.length; save(); return dialog('fisher', [pool[k]]);
+  const pool = (ws.f.finnHat ? FINN.after : FINN.warm).concat(famExtra('fisher')), k = ws.lix.finn = ((ws.lix.finn == null ? -1 : ws.lix.finn) + 1) % pool.length; save(); return dialog('fisher', [pool[k]]);
 }
 
 // ---- mentor story quests only show up once you can actually do them
@@ -4346,12 +4454,6 @@ function talkInner(id) {
   if (id === 'ferro') return ferroTalk();
   if (NEWC[id]) return talkNew(id);
   const ws = WS(), s = wq(id), Q = WQ[id];
-  if (id === 'fisher') {
-    if (wq('rose') !== 1) return finnTalk();
-    if (Lv('CHA') < WQ.rose.req) return dialog('fisher', ['...What do you want?', 'He turns away. Maybe a warmer heart would reach him.']);
-    ws.q.rose = 2; save(); worldHud();
-    return dialog('fisher', ['Cookies? From Rose? For... me?', 'Nobody has done something like that for me in years.', 'Thank you. Truly. Tell her I said hi.']);
-  }
   if (s === 2 && id === 'kai' && ws.f.kaiCheat) {      // rang the bell without the discipline for the stairs: Kai knows
     ws.q.kai = 1; ws.f.kaiCheat = 0; save(); worldHud();
     return dialog('kai', ['I heard the bell. But I did not hear your steps on the stairs.', 'The bell is not the lesson. The climb is. Come back when your legs are ready.', 'QUEST: ' + WQ.kai.goal]);
@@ -4388,14 +4490,14 @@ function talkInner(id) {
 function rlAccept(id, off) {
   const ws = WS(), t = { id: S.next++, name: off[0], stat: NEWC[id] || FAMQ[id] ? off[2] : WQ[id].stat, pts: 0, once: true, mentor: id, reward: off[1] };
   S.tasks.push(t); ws.rl[id] = t.id; ws.rlDay[id] = NEWC[id] || FAMQ[id] ? dn() : day(); save(); sfx('ok');
-  dialog(id, ['Wonderful! It\'s in your quests now. Off you go!']);
+  dialog(id, [id === 'fisher' ? '...Good. It\'s in your quests.' : 'Wonderful! It\'s in your quests now. Off you go!']);
 }
 function rlReport(id, t) {
   const ws = WS(), st = t.stat, lv0 = {}; Object.keys(NAMES).forEach(k => lv0[k] = Lv(k));
   const a = gain(st, t.reward), b = gain(st, 1);
   S.tasks = S.tasks.filter(x => x !== t); ws.rl[id] = null; ws.rlLast[id] = t.name; if (id === 'rose' && mgActive('rose') && mgK('rose') === 1) mgS('rose').rl = (mgS('rose').rl || 0) + 1; if (NEWC[id]) frBonus(id, 4); if (NEWC[id] || FAMQ[id]) ws.rlDay[id] = dn(); checkTrials(); checkUnlocks(); save();
   const ups = Object.keys(NAMES).filter(k => Lv(k) > lv0[k]), nm = NAMES[st][0] + NAMES[st].slice(1).toLowerCase();
-  const thanks = { rose: 'Oh, that warms my heart, dear!', bjorn: 'THAT\'S what I\'m talking about! Strong!', orvel: 'Marvelous! A sharper mind every day!', kai: 'Good. Small steps build mountains.', wren: 'Nice work! See? You\'re a builder too.', pip: 'Bravo! That one\'s going in a song.', mira: 'Wonderful! That\'s exactly what Grandma meant by "show up for each other".' }[id];
+  const thanks = { rose: 'Oh, that warms my heart, dear!', bjorn: 'THAT\'S what I\'m talking about! Strong!', orvel: 'Marvelous! A sharper mind every day!', kai: 'Good. Small steps build mountains.', wren: 'Nice work! See? You\'re a builder too.', pip: 'Bravo! That one\'s going in a song.', fisher: '...Nice. Really. Thanks for doing that.', mira: 'Wonderful! That\'s exactly what Grandma meant by "show up for each other".' }[id];
   const next = NEWC[id] ? 'NEW TASK IN A COUPLE OF DAYS' : FAMQ[id] ? 'NEW TASK IN A FEW DAYS' : 'NEW TASK TOMORROW';
   dialog(id, [thanks], () => {
     sfx('lvl');
@@ -4569,15 +4671,16 @@ function worldDraw() {
   if (hasDog) { const c = spiritCanvas(st), sx = WR.spirit.x * WT - c.width / 2, sy = WR.spirit.y * WT + 6 - c.height; shadow(WR.spirit.x * WT, WR.spirit.y * WT + 5, c.width / 2.4); draws.push({ z: WR.spirit.y * WT + 6, c, x: Math.round(sx), y: Math.round(sy), flip: WR.spirit.x > p.x }); }
   if (p.moving || WR.dlg || WR.cine || p.dir === 0 || !S.settings.anim) { WR.idleAt = tnow; WR.qk = null; }   // standing still: your switched-on quirks play now and then
   else if (WR.idleAt == null) WR.idleAt = tnow;
-  else if (!WR.qk && tnow - WR.idleAt > 4000) { const on = QUIRKS.filter(q => S.owned['q_' + q.id] && S.qon[q.id]); if (on.length) WR.qk = { q: on[Math.floor(Math.random() * on.length)], t0: tnow }; else WR.idleAt = tnow; }
-  let qpose = null; if (WR.qk) { let acc = 0; const el = tnow - WR.qk.t0; for (const [pz, ms] of WR.qk.q.f) { if (el < acc + ms) { qpose = pz; break; } acc += ms; } if (qpose == null) { WR.qk = null; WR.idleAt = tnow + 4000 + Math.random() * 4000; } }
+  else if (!WR.qk && tnow - WR.idleAt > 4000) { const wat = fishSide(), on = QUIRKS.filter(q => S.owned['q_' + q.id] && S.qon[q.id] && (q.id !== 'fishing' || wat)); if (on.length) WR.qk = { q: on[Math.floor(Math.random() * on.length)], t0: tnow }; else WR.idleAt = tnow; }
+  let qpose = null; if (WR.qk) { let acc = 0; const el = tnow - WR.qk.t0; for (const [pz, ms] of WR.qk.q.f) { if (el < acc + ms) { qpose = pz; break; } acc += ms; } if (qpose == null) { WR.qk = null; WR.idleAt = tnow + 4000 + Math.random() * 4000; } else if (WR.qk.q.id === 'fishing' && WR.qk.side == null) WR.qk.side = fishSide(); }
   const side = p.dir >= 2, pose = p.dir === 0 ? (p.moving ? 'back' + (Math.floor(p.t * 7) % 2) : 'back') : !p.moving ? '' : side ? 'run' + (Math.floor(p.t * 12) % 4) : 'walk' + (Math.floor(p.t * 7) % 2);
   WR.frames = WR.frames || {}; const hc = pose ? (WR.frames[pose] || (WR.frames[pose] = heroCanvas(pose))) : WR.hero, hb = /run[13]/.test(pose) ? 1 : 0, flipH = p.moving && p.dir === 3;
   (WR.dust || []).forEach(d => { d.t += 1 / 60; const a = Math.max(0, 1 - d.t / (d.life || .4)), r = (1.5 + Math.min(d.t, .4) * 7) * (d.s || 1); g.fillStyle = `rgba(240,230,210,${a * .7})`; g.beginPath(); g.arc(d.x * WT, d.y * WT, r, 0, 7); g.fill(); }); WR.dust = (WR.dust || []).filter(d => d.t < (d.life || .4));
   const nap = WR.cine && WR.cine.nap; if (nap) draws.push({ z: nap.y + 47, c: nap.head, x: nap.x, y: nap.y + 1 });
   if (!nap) shadow(p.x * WT, p.y * WT + 6, hc.width / 2.8);
   if (nap) {} else if (qpose) { const qc = WR.frames['q:' + qpose] || (WR.frames['q:' + qpose] = heroCanvas(qpose)), h0 = WR.hero;   // keep the body where the idle frame stands
-    draws.push({ z: p.y * WT + 6, c: qc, x: Math.round(p.x * WT - h0.width / 2) - h0.x0 + qc.x0, y: Math.round(p.y * WT + 7 - h0.height) - h0.y0 + qc.y0 }); }
+    const qx = Math.round(p.x * WT - h0.width / 2) - h0.x0 + qc.x0, fl = WR.qk && WR.qk.side === -1;   // fishing faces the water: mirror it when the pond is on the left
+    draws.push({ z: p.y * WT + 6, c: qc, x: fl ? Math.round(2 * p.x * WT) - qx - qc.width : qx, y: Math.round(p.y * WT + 7 - h0.height) - h0.y0 + qc.y0, flip: fl }); }
   else draws.push({ z: p.y * WT + 6, c: hc, x: Math.round(p.x * WT - hc.width / 2), y: Math.round(p.y * WT + 7 - hc.height - hb), flip: flipH });
   draws.sort((a, b) => a.z - b.z).forEach(d => { if (d.alpha != null && d.alpha < 1) { g.globalAlpha = d.alpha; g.drawImage(d.c, d.x, d.y); g.globalAlpha = 1; return; } if (d.clipH != null) { if (d.clipH > 0) g.drawImage(d.c, 0, d.c.height - d.clipH, d.c.width, d.clipH, d.x, d.y, d.c.width, d.clipH); return; } if (d.flip) { g.save(); g.translate(d.x + d.c.width, d.y); g.scale(-1, 1); g.drawImage(d.c, 0, 0); g.restore(); } else g.drawImage(d.c, d.x, d.y); });
   // quest markers over mentors
@@ -4586,7 +4689,7 @@ function worldDraw() {
     else if (!circusGate() && famMark(e.id)) mark = famMark(e.id);
     else if (FAMQ[e.id]) { const rt = rlTask(e.id); mark = circusGate() ? '' : rt && rt.done ? '?' : nrlOffer(e.id) ? '!' : ''; }
     else if (circusGate() && NEWC[e.id]) mark = '';
-    else if (NEWC[e.id]) { const n = NS(e.id), rt = rlTask(e.id); mark = (rt && rt.done) || (e.id === 'wren' && n.box && n.met == null) || (e.id === 'pip' && n.feather && !n.featherBack) ? '?' : (e.id === 'wren' && n.moved == null) || nrlOffer(e.id) || (e.id === 'wren' && wrenStage() >= 3 && !n.home) ? '!' : n.met != null && (frEarned(e.id) > (WS().seen[e.id] || 0) || (e.id === 'wren' && gladeWait() && (gladeOpen() || WS().gladeTold !== dn()))) ? 'H' : ''; }   // H = a friendship heart is waiting (not a quest)
+    else if (NEWC[e.id]) { const n = NS(e.id), rt = rlTask(e.id); mark = (rt && rt.done) || (e.id === 'wren' && n.box && n.met == null) || (e.id === 'pip' && n.feather && !n.featherBack) ? '?' : (e.id === 'wren' && n.moved == null) || nrlOffer(e.id) || (e.id === 'wren' && wrenStage() >= 3 && !n.home) ? '!' : n.met != null && (frEarned(e.id) > (WS().seen[e.id] || 0) || (e.id === 'wren' && gladeWait() && (gladeOpen() || WS().gladeTold !== dn())) || (e.id === 'fisher' && pondWait())) ? 'H' : ''; }   // H = a friendship heart is waiting (not a quest)
     else if (circusGate()) mark = e.id === 'orvel' && circusStage() === 'orvel' ? '!' : '';
     else { const s = wq(e.id), rt = rlTask(e.id); mark = s === 2 || mgDone(e.id) ? 'S?' : storyOpen(e.id) || mgReady(e.id) ? 'S!' : (rt && rt.done) ? '?' : rlOffer(e.id) ? '!' : ''; }
     if (!mark) return;
