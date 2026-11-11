@@ -2205,15 +2205,33 @@ const ZIG_LOOK = { top: '#3f8f8a', bottom: '#4a4f5a', hair: '#4a3020', hairStyle
 const ZIG_ROOF = '#3f8f8a';
 function ziggyCanvas(o) {
   o = Object.assign({}, ZIG_LOOK, o || {});
-  const c = drawFace(chibi(o), o), g = c.getContext('2d'), R = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); }, cx = 15, hy = 12;
+  const vw = o.view || '', st = o.step == null ? -1 : o.step, lift = vw === 'side' && (st === 1 || st === 3) ? 1 : 0;
+  const c = drawFace(chibi(o), o), g = c.getContext('2d'), R = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y - lift, w, h); }, cx = vw === 'side' ? 16 : 15, hy = 12;
+  const bird = (x, y, flip, fl) => {                            // Bolt, the clockwork bird. fl: wings up (a flap)
+    const X = (u, w) => flip ? x + 8 - u - w : x + u;
+    R(X(0, 6), y + 1, 6, 4, '#8a6200'); R(X(1, 4), y, 4, 4, '#e8bf4f'); R(X(4, 3), y - 1, 3, 3, '#e8bf4f'); R(X(7, 1), y, 1, 1, '#c8843c');
+    R(X(5, 1), y, 1, 1, '#c23b2c'); R(X(1, 2), y + 1, 2, 1, '#fff1a8'); R(X(-1, 2), y + 2, 2, 1, '#8a6200'); R(X(2, 1), y - 2, 1, 2, '#9aa5b1'); R(X(1, 3), y - 2, 3, 1, '#9aa5b1');
+    if (fl) { R(X(0, 3), y - 3, 3, 2, '#e8bf4f'); R(X(-1, 2), y - 4, 2, 1, '#fff1a8'); R(X(0, 3), y - 1, 3, 1, '#3b2416'); }
+  };
+  if (vw === 'back') {
+    [[cx - 6, hy - 9], [cx - 2, hy - 10], [cx + 2, hy - 10], [cx + 5, hy - 9]].forEach(([x, y]) => { R(x, y, 2, 2, '#4a3020'); R(x, y, 1, 1, '#6a4a32'); });
+    R(cx - 8, hy - 4, 16, 2, '#2e2218'); R(cx - 1, hy - 5, 3, 4, '#8a6200');                     // goggle strap + buckle
+    R(19, 27, 6, 5, '#5a3820'); R(20, 28, 4, 3, '#8a5a32');                                     // satchel on his other side now
+    bird(2, 15, 1, o.flap); return c;
+  }
+  if (vw === 'side') {
+    [[cx - 5, hy - 9], [cx - 1, hy - 10], [cx + 3, hy - 9]].forEach(([x, y]) => { R(x, y, 2, 2, '#4a3020'); R(x, y, 1, 1, '#6a4a32'); });
+    R(cx - 7, hy - 5, 10, 2, '#2e2218'); R(cx + 2, hy - 7, 7, 5, '#8a6200'); R(cx + 3, hy - 6, 5, 3, '#e8bf4f'); R(cx + 4, hy - 6, 3, 3, '#5fb8d8'); R(cx + 4, hy - 6, 1, 1, '#d9f6ff');
+    R(8, 27, 5, 5, '#5a3820'); R(9, 28, 3, 3, '#8a5a32');
+    bird(3, 16, 0, o.flap); return c;
+  }
   [[cx - 6, hy - 9], [cx - 2, hy - 10], [cx + 2, hy - 10], [cx + 5, hy - 9]].forEach(([x, y]) => { R(x, y, 2, 2, '#4a3020'); R(x, y, 1, 1, '#6a4a32'); });   // messy tufts
   R(cx - 9, hy - 5, 18, 2, '#2e2218');                                                  // goggle strap
-  [cx - 6, cx + 1].forEach(x => { R(x - 1, hy - 7, 7, 5, '#8a6200'); R(x, hy - 6, 5, 3, '#e8bf4f'); R(x + 1, hy - 6, 3, 3, '#5fb8d8'); R(x + 1, hy - 6, 1, 1, '#d9f6ff'); });   // brass goggles, blue lenses
+  const gy = o.gog ? hy - 1 : hy - 7;                                                   // goggles down over his eyes while he inspects something
+  [cx - 6, cx + 1].forEach(x => { R(x - 1, gy, 7, 5, '#8a6200'); R(x, gy + 1, 5, 3, '#e8bf4f'); R(x + 1, gy + 1, 3, 3, '#5fb8d8'); R(x + 1, gy + 1, 1, 1, '#d9f6ff'); });   // brass goggles, blue lenses
   R(5, 27, 6, 5, '#5a3820'); R(6, 28, 4, 3, '#8a5a32'); R(7, 28, 2, 1, '#e8bf4f');      // satchel
   R(20, 24, 2, 4, '#e8bf4f');                                                           // a pencil in the shirt pocket
-  // the clockwork bird on his right shoulder
-  R(22, 16, 6, 4, '#8a6200'); R(23, 15, 4, 4, '#e8bf4f'); R(26, 14, 3, 3, '#e8bf4f'); R(29, 15, 1, 1, '#c8843c');
-  R(27, 15, 1, 1, '#c23b2c'); R(23, 16, 2, 1, '#fff1a8'); R(21, 17, 2, 1, '#8a6200'); R(24, 13, 1, 2, '#9aa5b1'); R(23, 13, 3, 1, '#9aa5b1');   // eye, shine, tail, wind-up key
+  bird(22, 15 - (o.hop || 0), 0, o.flap);                                               // the clockwork bird on his right shoulder
   return c;
 }
 // his workshop: same 5x3 footprint as the other houses. lit = he lives there (blue glow, vane spins)
@@ -2309,58 +2327,119 @@ function cartCanvas(rot) {
 function shadeHex(h, amt) { const n = parseInt(h.slice(1), 16), f = v => Math.max(0, Math.min(255, v + amt)); return '#' + [f(n >> 16), f((n >> 8) & 255), f(n & 255)].map(v => v.toString(16).padStart(2, '0')).join(''); }
 
 // ---------------- characters (NPCs share the hero's chibi proportions) ----------------
+// o.view: '' front · 'back' · 'side' (facing right; mirror for left). o.step: walk frame (front/back 0-1, side 0-3).
+// o.arm: a special-idle pose: flex · pray · up · brow · face · scratch. o.hd: head nudge in px (+ down: a bow). o.ham: hammer 0 rest · 1 up · 2 down. o.tug: rod tug.
 function chibi(o) {
   const mats = { sk: ['#f3c4a2', '#ffe0c9', '#d99b7e'], hr: [o.hair || '#a2703c', shadeHex(o.hair || '#a2703c', 35), shadeHex(o.hair || '#a2703c', -40)], tp: [o.top, shadeHex(o.top, 35), shadeHex(o.top, -45)],
     bt: [o.bottom || '#4a5774', shadeHex(o.bottom || '#4a5774', 25), shadeHex(o.bottom || '#4a5774', -25)], sh: ['#7a4c2a', '#9a6a3a', '#4e2f1a'], ac: [o.acc || '#fffaf0', shadeHex(o.acc || '#fffaf0', 20), shadeHex(o.acc || '#fffaf0', -40)],
     ht: [o.hat || '#6a44ad', shadeHex(o.hat || '#6a44ad', 35), shadeHex(o.hat || '#6a44ad', -40)], bd: [o.beard || '#e8c35a', shadeHex(o.beard || '#e8c35a', 30), shadeHex(o.beard || '#e8c35a', -40)], st: ['#8a5a32', '#a8703f', '#5a3820'],
     bn: [o.bandana || '#4f9a48', shadeHex(o.bandana || '#4f9a48', 30), shadeHex(o.bandana || '#4f9a48', -40)], mt: ['#9aa5b1', '#cfd6de', '#5e6773'], lt: ['#c08850', '#dca870', '#8a5a32'], fe: ['#d6453a', '#f07060', '#a02a20'] };
-  const W = 30, H = 36, cx = 15, big = o.big;
+  const W = 30, H = 36, cx = 15, big = o.big, vw = o.view || '', back = vw === 'back', side = vw === 'side', st = o.step == null ? -1 : o.step;
   return matSprite(W, H, a => {
-    const hy = o.kid ? 16 : 12, hw = o.kid ? 7 : 8;                   // head centre / half width (kids: smaller, lower head)
-    if (o.staff) { a.rect(26, 6, 2, 29, 'st'); a.ell(27, 6, 2.5, 2.5, 'ac'); }
-    if (o.rod) { a.rect(25, 8, 1, 26, 'st'); for (let i = 0; i < 6; i++) a.px(25 - i, 8 - i, 'st'); }
+    const hy = (o.kid ? 16 : 12) + (o.hd || 0), hw = o.kid ? 7 : 8;   // head centre / half width (kids: smaller, lower head)
+    if (o.staff && !side) { a.rect(26, 6, 2, 29, 'st'); a.ell(27, 6, 2.5, 2.5, 'ac'); }
+    if (o.rod && !side) { if (o.tug) { a.rect(25, 10, 1, 24, 'st'); for (let i = 0; i < 6; i++) a.px(25 - i, 10 - Math.round(i * .6), 'st'); } else { a.rect(25, 8, 1, 26, 'st'); for (let i = 0; i < 6; i++) a.px(25 - i, 8 - i, 'st'); } }
     // body
-    const tw = big ? 14 : o.robe ? 12 : o.kid ? 8 : 10, ty = o.kid ? 23 : 21;
-    if (o.kid) { a.rect(cx - 4, ty, 8, 6, 'tp'); a.rect(cx - 3, 29, 6, 4, 'bt'); a.rect(cx - 4, 33, 3, 2, 'sh'); a.rect(cx + 1, 33, 3, 2, 'sh'); }
-    else if (o.robe) { for (let y = ty; y < 34; y++) { const ww = tw + Math.floor((y - ty) / 3); a.rect(cx - ww / 2, y, ww, 1, 'tp'); } }
-    else { a.rect(cx - tw / 2, ty, tw, 8, 'tp'); a.rect(cx - 4, 29, 8, 4, 'bt'); a.rect(cx - 5, 33, 4, 2, 'sh'); a.rect(cx + 1, 33, 4, 2, 'sh'); }
-    if (o.robe) { a.rect(cx - 5, 34, 4, 1, 'sh'); a.rect(cx + 1, 34, 4, 1, 'sh'); }
-    const aw = big ? 5 : o.kid ? 2 : 3, ax = cx - tw / 2 - aw, axr = cx + tw / 2, al = big ? 8 : o.kid ? 4 : 7;     // arms
-    a.rect(ax, ty + 1, aw, al, o.sleeves ? 'tp' : 'sk'); a.rect(axr, ty + 1, aw, al, o.sleeves ? 'tp' : 'sk');
-    a.rect(ax, ty + al, aw, 2, 'sk'); a.rect(axr, ty + al, aw, 2, 'sk');
-    if (big) { a.rect(ax - 1, ty + 2, 1, 4, 'sk'); a.rect(axr + aw, ty + 2, 1, 4, 'sk'); }
-    if (o.apron) { a.rect(cx - 4, ty + 2, 8, 9, 'ac'); }
-    if (o.sash) { for (let i = 0; i < 9; i++) a.px(cx - 4 + i, ty + 1 + Math.floor(i * 0.9), 'ac'); }
+    const tw0 = big ? 14 : o.robe ? 12 : o.kid ? 8 : 10, tw = side ? tw0 - 2 : tw0, ty = o.kid ? 23 : 21, lift = side && (st === 1 || st === 3) ? 1 : 0;
+    const legs = () => {                                         // pants + shoes; walking moves them
+      const lb = o.kid ? 29 : 29, lh = o.kid ? 4 : 4, sw = o.kid ? 3 : 4;
+      if (side) {
+        if (st === 0 || st === 2) { a.rect(cx - 4, lb, 8, 2, 'bt'); a.rect(cx + 1, lb + 2, 3, lh - 2, 'bt'); a.rect(cx - 4, lb + 2, 3, lh - 2, 'bt'); a.rect(cx + 2, 33, sw, 2, 'sh'); a.rect(cx - 5, 33, sw - 1, 2, 'sh'); }
+        else { a.rect(cx - 2, lb - lift, 5, lh, 'bt'); a.rect(cx - 1, 33 - lift, sw, 2, 'sh'); a.rect(cx - 3, 32 - lift, 3, 2, 'sh'); }
+        return;
+      }
+      const up0 = st === 0 ? 1 : 0, up1 = st === 1 ? 1 : 0;
+      if (o.kid) { a.rect(cx - 3, 29, 6, 4, 'bt'); a.rect(cx - 4, 33 - up0, 3, 2, 'sh'); a.rect(cx + 1, 33 - up1, 3, 2, 'sh'); }
+      else { a.rect(cx - 4, 29, 8, 4, 'bt'); a.rect(cx - 5, 33 - up0, 4, 2, 'sh'); a.rect(cx + 1, 33 - up1, 4, 2, 'sh'); }
+    };
+    if (o.robe) { for (let y = ty; y < 34; y++) { const ww = tw + Math.floor((y - ty) / 3); a.rect(cx - ww / 2, y - lift, ww, 1, 'tp'); } a.rect(cx - 5, 34 - (st === 0 ? 1 : 0), 4, 1, 'sh'); a.rect(cx + 1, 34 - (st === 1 ? 1 : 0), 4, 1, 'sh'); }
+    else { legs(); a.rect(cx - tw / 2, ty - lift, tw, o.kid ? 6 : 8, 'tp'); }
+    const aw = big ? 5 : o.kid ? 2 : 3, ax = cx - tw / 2 - aw, axr = cx + tw / 2, al = big ? 8 : o.kid ? 4 : 7, ak = o.sleeves ? 'tp' : 'sk';     // arms
+    const arm = (x, dy, isR) => { a.rect(x, ty + 1 + dy - lift, aw, al, ak); a.rect(x, ty + al + dy - lift, aw, 2, 'sk'); if (big) a.px(isR ? x + aw : x - 1, ty + 3 + dy - lift, 'sk'), a.rect(isR ? x + aw : x - 1, ty + 2 + dy - lift, 1, 4, 'sk'); };
+    if (side) {                                                   // one arm swinging along with the stride
+      const sx = cx - Math.floor(aw / 2) - 1, sw = st === 0 ? 2 : st === 2 ? -2 : 0;
+      a.rect(sx, ty + 1 - lift, aw, 4, ak); a.rect(sx, ty + 1 - lift, aw, 2, 'tp'); a.rect(sx + Math.sign(sw), ty + 5 - lift, aw, al - 4, ak); a.rect(sx + sw, ty + al - lift, aw, 2, 'sk');
+    } else {
+      const fd = !back && !side && st >= 0, dl = fd || back ? (st === 0 ? 1 : st === 1 ? -1 : 0) : 0;
+      // left arm (viewer's left)
+      if (o.arm === 'pray') { a.rect(ax + 1, ty + 1, aw, 5, ak); }
+      else if (o.arm !== 'up') arm(ax, dl, false);
+      // right arm
+      if (o.arm === 'pray') a.rect(axr - 1, ty + 1, aw, 4, ak);
+      else if (o.arm === 'up') {}
+      else if (o.arm === 'flex') { a.rect(axr, ty + 1, aw + 1, aw - 1, ak); a.ell(axr + 3, ty + 1, 3, 2.2, 'sk'); a.rect(axr + 1, ty - 6, aw - 1, 7, 'sk'); a.ell(axr + 3, ty - 6, 2.6, 2.2, 'sk'); }
+      else if (o.arm === 'brow') { a.rect(axr, hy + 4, aw, ty + 3 - hy - 4, ak); a.rect(cx + 1, hy - 3, axr + aw - cx - 1, 3, 'sk'); }
+      else if (o.arm === 'face') { a.rect(axr, ty + 1, aw, 3, ak); a.rect(axr - 2, ty - 2, aw, 4, ak); a.rect(cx + 2, hy + 1, 3, 3, 'sk'); }
+      else if (o.arm === 'scratch') { a.rect(axr, hy + 2, aw, ty + 3 - hy - 2, ak); a.rect(axr - 1, hy - 4, aw + 1, 6, 'sk'); }
+      else arm(axr, -dl, true);
+    }
+    if (o.apron && !back && !side) { a.rect(cx - 4, ty + 2, 8, 9, 'ac'); }
+    if (o.apron && side) { a.rect(cx + 2, ty + 2 - lift, 2, 9, 'ac'); }
+    if (o.sash && !side) { for (let i = 0; i < 9; i++) a.px(back ? cx + 4 - i : cx - 4 + i, ty + 1 + Math.floor(i * 0.9), 'ac'); }
+    if (o.sash && side) { a.rect(cx - 2, ty + 1 - lift, 2, 3, 'ac'); }
     // head
-    if (o.pigtails) [-1, 1].forEach(sd => { a.ell(cx + sd * (hw + 1.5), hy - 1, 2.4, 2.6, 'hr'); a.ell(cx + sd * (hw + 2.5), hy + 3, 2, 2.4, 'hr'); });
-    a.ell(cx, hy, hw, o.kid ? 7 : 8, 'sk'); if (!o.kid) a.rect(cx - 2, hy + 7, 4, 3, 'sk');
-    if (o.hairStyle === 'short') { a.ell(cx, hy - 4, hw + .5, 4.5, 'hr'); a.rect(cx - hw, hy - 3, 2, 4, 'hr'); a.rect(cx + hw - 2, hy - 3, 2, 4, 'hr'); }
-    if (o.hairStyle === 'bun') { a.ell(cx, hy - 4, hw + .5, 4.5, 'hr'); a.ell(cx, hy - 10, 3.5, 3, 'hr'); a.rect(cx - hw, hy - 3, 2, 6, 'hr'); a.rect(cx + hw - 2, hy - 3, 2, 6, 'hr'); }
-    if (o.hairStyle === 'long') { a.ell(cx, hy - 4, hw + .8, 4.8, 'hr'); a.rect(cx - hw - 1, hy - 3, 3, 14, 'hr'); a.rect(cx + hw - 2, hy - 3, 3, 14, 'hr'); }
-    if (o.hairStyle === 'bald') { a.rect(cx - hw + 1, hy + 1, 1, 3, 'sk'); }
-    if (o.tail) { a.ell(cx + hw + 1.5, hy + 1, 2.2, 3.5, 'hr'); a.ell(cx + hw + 2.5, hy + 5, 1.8, 2.5, 'hr'); }
-    if (o.bandana) { a.ell(cx, hy - 4.5, hw + .5, 4, 'bn'); a.rect(cx + hw - 1, hy - 3, 3, 2, 'bn'); a.rect(cx + hw + 1, hy - 1, 2, 2, 'bn'); }
-    if (o.feathercap) { a.ell(cx, hy - 4.5, hw + .3, 4.2, 'ht'); a.rect(cx - hw - 1, hy - 2, hw * 2 + 2, 2, 'ht'); for (let i = 0; i < 7; i++) a.rect(cx + 3 + i, hy - 6 - i * 1.2, 2, 2, 'fe'); }
-    if (o.hammer) { a.rect(25, 19, 2, 13, 'st'); a.rect(23, 16, 7, 4, 'mt'); }
-    if (o.lute) { a.ell(cx + 2, 28, 5.5, 4.5, 'lt'); for (let i = 0; i < 9; i++) a.rect(cx + 4 - i, 26 - i, 2, 2, 'st'); a.rect(cx - 7, 16, 3, 2, 'st'); }
-    if (o.hat === undefined && o.cap) {}
-    if (o.wizard) { a.rect(cx - hw - 3, hy - 5, hw * 2 + 6, 2, 'ht'); for (let y = 0; y < 12; y++) { const ww = Math.max(1, Math.round((12 - y) * .7)); a.rect(cx - ww + Math.round(y / 4), hy - 6 - y, ww * 2, 1, 'ht'); } }
-    if (o.cap) { a.ell(cx, hy - 4, hw, 4.5, 'ht'); a.rect(cx - hw - 2, hy - 2, hw * 2 + 3, 2, 'ht'); }
-    if (o.beard === undefined) {} else if (o.longBeard) { a.ell(cx, hy + 7, 6, 7, 'bd'); a.rect(cx - 6, hy + 2, 2, 5, 'bd'); a.rect(cx + 4, hy + 2, 2, 5, 'bd'); }
-    else { a.ell(cx, hy + 6, 6, 3, 'bd'); a.rect(cx - hw + 1, hy + 2, 2, 5, 'bd'); a.rect(cx + hw - 3, hy + 2, 2, 5, 'bd'); }
+    const hx = side ? cx + 1 : cx, hl = hy - lift;
+    if (o.pigtails) (side ? [-1] : [-1, 1]).forEach(sd => { a.ell(hx + sd * (hw + 1.5), hl - 1, 2.4, 2.6, 'hr'); a.ell(hx + sd * (hw + 2.5), hl + 3, 2, 2.4, 'hr'); });
+    a.ell(hx, hl, hw, o.kid ? 7 : 8, 'sk'); if (!o.kid) a.rect(cx - 2, hl + 7, 4, 3, 'sk');
+    if (side) a.px(hx + hw, hl + 2, 'sk');                      // a little nose
+    if (back) {                                                   // the back of the head: all hair
+      if (o.hairStyle !== 'bald') a.ell(hx, hl - 1, hw + .5, (o.kid ? 6.5 : 7.5), 'hr');
+      if (o.hairStyle === 'long') { a.rect(hx - hw, hl - 3, hw * 2, 11, 'hr'); a.ell(hx, hl + 8, hw - 1, 2, 'hr'); }
+    } else if (side) {                                            // profile: hair on top and down the back
+      if (o.hairStyle !== 'bald') { a.ell(hx, hl - 4, hw + .5, 4.5, 'hr'); a.ell(hx - 3, hl - 1, hw - 2.5, 6, 'hr'); a.rect(hx + hw - 3, hl - 3, 3, 2, 'hr'); }
+      if (o.hairStyle === 'long') a.rect(hx - hw - 1, hl - 2, 6, 13, 'hr');
+    } else {
+      if (o.hairStyle === 'short') { a.ell(cx, hl - 4, hw + .5, 4.5, 'hr'); a.rect(cx - hw, hl - 3, 2, 4, 'hr'); a.rect(cx + hw - 2, hl - 3, 2, 4, 'hr'); }
+      if (o.hairStyle === 'bun') { a.ell(cx, hl - 4, hw + .5, 4.5, 'hr'); a.ell(cx, hl - 10, 3.5, 3, 'hr'); a.rect(cx - hw, hl - 3, 2, 6, 'hr'); a.rect(cx + hw - 2, hl - 3, 2, 6, 'hr'); }
+      if (o.hairStyle === 'long') { a.ell(cx, hl - 4, hw + .8, 4.8, 'hr'); a.rect(cx - hw - 1, hl - 3, 3, 14, 'hr'); a.rect(cx + hw - 2, hl - 3, 3, 14, 'hr'); }
+      if (o.hairStyle === 'bald') { a.rect(cx - hw + 1, hl + 1, 1, 3, 'sk'); }
+    }
+    if (o.arm === 'pray') { a.rect(cx - 1, ty - 2, 3, 6, 'sk'); a.px(cx, ty - 3, 'sk'); for (let j = -2; j < 4; j++) { a.det(cx - 2, ty + j, '#3b2416'); a.det(cx + 2, ty + j, '#3b2416'); } a.det(cx - 1, ty - 3, '#3b2416'); a.det(cx + 1, ty - 3, '#3b2416'); a.det(cx, ty - 4, '#3b2416'); a.det(cx, ty - 1, '#d99b7e'); a.det(cx, ty, '#d99b7e'); a.det(cx, ty + 1, '#d99b7e'); for (let i = 0; i < 4; i++) { a.det(ax + aw + i, ty + 2 + i, '#3b2416'); a.det(axr - 1 - i, ty + 2 + i, '#3b2416'); } }
+    if (o.arm === 'up') [[ax - 1, -1], [axr + 1, 1]].forEach(([x, d]) => { a.rect(x, ty - 3, aw, 4, ak); a.rect(x + d, ty - 6, aw, 3, ak); a.rect(x + d, ty - 8, aw, 2, 'sk'); });
+    if (o.arm === 'scratch') { a.rect(axr - 2, hy - 6, 4, 4, 'sk'); }
+    if (o.tail && !side) { const tx = back ? hx - hw - 1.5 : hx + hw + 1.5; a.ell(tx, hl + 1, 2.2, 3.5, 'hr'); a.ell(back ? tx - 1 : tx + 1, hl + 5, 1.8, 2.5, 'hr'); }
+    if (o.bandana) { a.ell(hx, hl - 4.5, hw + .5, 4, 'bn'); a.rect(hx + hw - 1, hl - 3, 3, 2, 'bn'); a.rect(hx + hw + 1, hl - 1, 2, 2, 'bn'); }
+    if (o.feathercap) { a.ell(hx, hl - 4.5, hw + .3, 4.2, 'ht'); a.rect(hx - hw - 1, hl - 2, hw * 2 + 2, 2, 'ht'); for (let i = 0; i < 7; i++) a.rect(hx + 3 + i, hl - 6 - i * 1.2, 2, 2, 'fe'); }
+    if (o.hammer && !side) { const hd = o.ham === 1 ? -4 : o.ham === 2 ? 3 : 0; a.rect(25, 19 + hd, 2, 13, 'st'); a.rect(23, 16 + hd, 7, 4, 'mt'); }
+    if (o.lute && !back && !side) { a.ell(cx + 2, 28, 5.5, 4.5, 'lt'); for (let i = 0; i < 9; i++) a.rect(cx + 4 - i, 26 - i, 2, 2, 'st'); a.rect(cx - 7, 16, 3, 2, 'st'); }
+    if (o.wizard) { a.rect(hx - hw - 3, hl - 5, hw * 2 + 6, 2, 'ht'); for (let y = 0; y < 12; y++) { const ww = Math.max(1, Math.round((12 - y) * .7)); a.rect(hx - ww + Math.round(y / 4), hl - 6 - y, ww * 2, 1, 'ht'); } }
+    if (o.cap) { a.ell(hx, hl - 4, hw, 4.5, 'ht'); a.rect(side ? hx - 2 : hx - hw - 2, hl - 2, side ? hw + 5 : hw * 2 + 3, 2, 'ht'); }
+    if (o.beard !== undefined && !back) {
+      if (side) { a.ell(hx + 2, hl + 6, 5, 3, 'bd'); a.rect(hx - 3, hl + 1, 3, 5, 'bd'); }
+      else if (o.longBeard) { a.ell(cx, hl + 7, 6, 7, 'bd'); a.rect(cx - 6, hl + 2, 2, 5, 'bd'); a.rect(cx + 4, hl + 2, 2, 5, 'bd'); }
+      else { a.ell(cx, hl + 6, 6, 3, 'bd'); a.rect(cx - hw + 1, hl + 2, 2, 5, 'bd'); a.rect(cx + hw - 3, hl + 2, 2, 5, 'bd'); }
+    }
+    if (o.beard !== undefined && back && !o.longBeard) { a.rect(cx - hw, hl + 2, 1, 4, 'bd'); a.rect(cx + hw - 1, hl + 2, 1, 4, 'bd'); }
   }, mats);
 }
 function drawFace(c, o) {   // eyes, blush, mouth, glasses as crisp details on top
-  const g = c.getContext('2d'), R = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); }, cx = 15, hy = o.kid ? 16 : 12;
-  if (o.plaid) { for (let x = 9; x < 22; x += 4) R(x, 21, 1, 8, 'rgba(20,30,10,.28)'); [23, 26].forEach(y => R(8, y, 14, 1, 'rgba(20,30,10,.28)')); for (let x = 11; x < 22; x += 4) R(x, 21, 1, 8, 'rgba(255,240,200,.14)'); }
+  const g = c.getContext('2d'), R = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); }, vw = o.view || '', st = o.step == null ? -1 : o.step;
+  const lift = vw === 'side' && (st === 1 || st === 3) ? 1 : 0, cx = vw === 'side' ? 16 : 15, hy = (o.kid ? 16 : 12) + (o.hd || 0) - lift;
+  if (o.plaid) { for (let x = 9; x < 22; x += 4) R(x, 21 - lift, 1, 8, 'rgba(20,30,10,.28)'); [23, 26].forEach(y => R(8, y - lift, 14, 1, 'rgba(20,30,10,.28)')); for (let x = 11; x < 22; x += 4) R(x, 21 - lift, 1, 8, 'rgba(255,240,200,.14)'); }
+  if (vw === 'back') return c;
+  if (vw === 'side') {                                          // profile: one eye near the front of the face
+    if (o.happy) { R(cx + 2, hy + 1, 1, 1, '#2a2230'); R(cx + 3, hy, 1, 1, '#2a2230'); R(cx + 4, hy + 1, 1, 1, '#2a2230'); }
+    else if (o.closedEyes) R(cx + 2, hy + 1, 3, 1, '#2a2230');
+    else { R(cx + 3, hy, 2, 3, '#2a2230'); R(cx + 3, hy, 1, 1, '#fff'); }
+    if (!o.longBeard) R(cx + 4, hy + 3, 2, 1, '#ef9b8f');
+    if (!o.beard && !o.happy) R(cx + 6, hy + 4, 1, 1, '#a5433b');
+    if (o.happy) { R(cx + 5, hy + 4, 2, 2, '#7a2a24'); }
+    if (o.glasses) { g.strokeStyle = '#8a6200'; g.lineWidth = 1; g.strokeRect(cx + 1.5, hy - .5, 5, 4); R(cx - 4, hy + 1, 6, 1, '#8a6200'); }
+    if (o.brows) R(cx + 2, hy - 2, 4, 1, o.brows);
+    if (o.freckles) { R(cx + 4, hy + 2, 1, 1, '#c8843c'); R(cx + 6, hy + 2, 1, 1, '#c8843c'); }
+    return c;
+  }
   if (o.happy) { [[-5, 1], [-4, 0], [-3, 1], [2, 1], [3, 0], [4, 1]].forEach(([u, v]) => R(cx + u, hy + v, 1, 1, '#2a2230')); R(cx - 2, hy + 4, 4, 2, '#7a2a24'); R(cx - 1, hy + 5, 2, 1, '#e5607e'); }
-  else if (o.closedEyes) { R(cx - 5, hy + 1, 3, 1, '#2a2230'); R(cx + 2, hy + 1, 3, 1, '#2a2230'); }
+  else if (o.closedEyes || o.shut) { R(cx - 5, hy + 1, 3, 1, '#2a2230'); R(cx + 2, hy + 1, 3, 1, '#2a2230'); }
   else { R(cx - 4, hy, 2, 3, '#2a2230'); R(cx + 2, hy, 2, 3, '#2a2230'); R(cx - 4, hy, 1, 1, '#fff'); R(cx + 2, hy, 1, 1, '#fff'); }
   if (!o.beard || !o.longBeard) { R(cx - 6, hy + 3, 2, 1, '#ef9b8f'); R(cx + 4, hy + 3, 2, 1, '#ef9b8f'); }
-  if (!o.longBeard && !o.happy) { R(cx - 1, hy + 4, 2, 1, '#a5433b'); }
+  if (o.open) { R(cx - 1, hy + 4, 3, 2, '#7a2a24'); R(cx, hy + 5, 1, 1, '#e5607e'); }
+  else if (!o.longBeard && !o.happy) { R(cx - 1, hy + 4, 2, 1, '#a5433b'); }
   if (o.flower) { R(cx - 9, hy - 6, 3, 3, '#f08ca8'); R(cx - 8, hy - 7, 1, 5, '#f08ca8'); R(cx - 10, hy - 5, 5, 1, '#f08ca8'); R(cx - 8, hy - 5, 1, 1, '#ffd36b'); }
-  if (o.book) { R(20, 24, 7, 8, '#3b2416'); R(21, 25, 5, 6, '#fffaf0'); R(21, 25, 1, 6, '#c23b2c'); [26.5, 28.5].forEach(y => R(23, Math.floor(y), 2, 1, '#8a8478')); }
-  if (o.glasses) { g.strokeStyle = '#8a6200'; g.lineWidth = 1; g.strokeRect(cx - 5.5, hy - .5, 4, 4); g.strokeRect(cx + 1.5, hy - .5, 4, 4); R(cx - 1, hy + 1, 2, 1, '#8a6200'); }
+  if (o.book) { R(20, 24, 7, 8, '#3b2416'); R(21, 25, 5, 6, '#fffaf0'); R(21, 25, 1, 6, '#c23b2c'); [26.5, 28.5].forEach(y => R(23, Math.floor(y), 2, 1, '#8a8478'));
+    if (o.page != null) { const px = [25, 23, 21][o.page]; R(px, 24, 2, 7, '#ffffff'); R(px, 24, 1, 7, '#e2d9c5'); } }
+  if (o.glasses) { g.strokeStyle = '#8a6200'; g.lineWidth = 1; g.strokeRect(cx - 5.5, hy - .5, 4, 4); g.strokeRect(cx + 1.5, hy - .5, 4, 4); R(cx - 1, hy + 1, 2, 1, '#8a6200');
+    if (o.glint) { R(cx - 5, hy, 2, 1, '#ffffff'); R(cx + 2, hy, 2, 1, '#ffffff'); R(cx - 4, hy + 1, 1, 1, '#ffffff'); R(cx + 3, hy + 1, 1, 1, '#ffffff'); } }
   if (o.brows) { R(cx - 5, hy - 2, 3, 1, o.brows); R(cx + 2, hy - 2, 3, 1, o.brows); }
   if (o.star) { R(cx + 2, 1, 2, 2, '#ffd36b'); }
   if (o.bandana) { [[cx - 5, hy - 6], [cx + 1, hy - 7], [cx + 4, hy - 4], [cx - 2, hy - 3]].forEach(([x, y]) => R(x, y, 1, 1, '#fffaf0')); }
@@ -2390,7 +2469,8 @@ function ferroCanvas(o) {
   R(cx - 2, 21, 4, 2, '#f06aa8'); R(cx - 1, 23, 2, 3, '#f06aa8'); R(cx, 23, 1, 3, '#c2447e');
   R(cx - 5, 24, 1, 1, '#e8bf4f'); R(cx + 4, 24, 1, 1, '#e8bf4f'); R(cx + 4, 27, 1, 1, '#e8bf4f');   // gold buttons
   // silver scissors held up in his right hand, with a sparkle
-  for (let i = 0; i < 7; i++) { R(22 + Math.round(i * .5), 18 - i, 1, 1, '#3b2416'); R(26 - Math.round(i * .5), 18 - i, 1, 1, '#3b2416'); R(23 + Math.round(i * .5), 18 - i, 1, 1, '#dfe6ee'); R(25 - Math.round(i * .5), 18 - i, 1, 1, '#9aa5b1'); }
+  if (o.snip) for (let i = 0; i < 7; i++) { R(23, 18 - i, 1, 1, '#3b2416'); R(25, 18 - i, 1, 1, '#3b2416'); R(24, 18 - i, 1, 1, i % 2 ? '#dfe6ee' : '#9aa5b1'); }   // snip! the blades snap shut
+  else for (let i = 0; i < 7; i++) { R(22 + Math.round(i * .5), 18 - i, 1, 1, '#3b2416'); R(26 - Math.round(i * .5), 18 - i, 1, 1, '#3b2416'); R(23 + Math.round(i * .5), 18 - i, 1, 1, '#dfe6ee'); R(25 - Math.round(i * .5), 18 - i, 1, 1, '#9aa5b1'); }
   R(24, 17, 1, 2, '#e8bf4f');                                                                  // pivot
   [[20, 19], [25, 19]].forEach(([x, y]) => { R(x, y, 4, 4, '#3b2416'); R(x + 1, y + 1, 2, 2, '#e8bf4f'); R(x + 1, y + 1, 1, 1, '#fff1a8'); });   // gold ring handles
   [[28, 9], [19, 8]].forEach(([x, y], i) => { R(x, y - 1, 1, 3, i ? '#fff1a8' : '#ffffff'); R(x - 1, y, 3, 1, i ? '#fff1a8' : '#ffffff'); });
@@ -2635,6 +2715,142 @@ function finnBareCanvas() {                       // Finn without his cap: messy
   return c;
 }
 function npcCanvas(id) { if (id === 'fisher' && finnBare()) return NPC_ART.fisherBare || (NPC_ART.fisherBare = finnBareCanvas()); return NPC_ART[id] || (NPC_ART[id] = id === 'ziggy' ? ziggyCanvas() : id === 'ferro' ? ferroCanvas() : drawFace(chibi(NPC_LOOK[id]), NPC_LOOK[id])); }
+// ---- NPC idles: everyone breathes, and every ~20 s plays a move of their own (NPC_IDLE). Frames are cached by id + pose.
+const NPC_FR = {};
+function npcPose(id, p) {                          // the NPC's art in a pose: p = { view, step, arm, hd, ham, tug, flap, hop, gog, page, glint, open, shut, snip }
+  const k = id + (finnBare() && id === 'fisher' ? 'B' : '') + JSON.stringify(p); if (NPC_FR[k]) return NPC_FR[k];
+  let c;
+  if (id === 'ziggy') c = ziggyCanvas(p);
+  else if (id === 'ferro') c = ferroCanvas({ snip: p.snip });
+  else if (id === 'fisher' && finnBare()) { const o = Object.assign({}, NPC_LOOK.fisher, { cap: 0 }, p); c = drawFace(chibi(o), o); if (!p.view) { const g = c.getContext('2d'), H = [o.hair, shadeHex(o.hair, 35), shadeHex(o.hair, -40)];
+      [[10,3,0],[11,2,0],[12,3,1],[14,2,0],[15,2,1],[15,1,0],[17,3,0],[18,2,0],[20,4,0],[21,5,0],[8,5,0],[7,6,0],[22,7,0],[11,8,2],[12,8,0],[13,9,0],[16,8,0],[17,9,2],[19,8,0],[9,8,0],[10,9,2]].forEach(([x, y, k]) => { g.fillStyle = H[k]; g.fillRect(x, y, 1, 1); }); } }
+  else { const o = Object.assign({}, NPC_LOOK[id], p); c = drawFace(chibi(o), o); }
+  return NPC_FR[k] = c;
+}
+function breathe(c) {                              // the chest rises a pixel: everything above the hips moves up, the feet stay put
+  if (c.br) return c.br; const b = document.createElement('canvas'); b.width = c.width; b.height = c.height; const g = b.getContext('2d'), s = c.height - 8;
+  g.drawImage(c, 0, s, c.width, c.height - s, 0, s, c.width, c.height - s); g.drawImage(c, 0, 1, c.width, s - 1, 0, 0, c.width, s - 1); g.drawImage(c, 0, s - 1, c.width, 1, 0, s - 1, c.width, 1);
+  return c.br = b;
+}
+// each move: frames [pose, ms], optional fx(g, x, y, t) drawn on top (x, y = the sprite's top-left; t = ms into the move)
+const NPC_IDLE = {
+  bjorn: { br: 3400, f: [[{ arm: 'flex' }, 1500]], fx: (g, x, y, t) => sparkle(g, x + 27, y + 12, t, 1500) },
+  orvel: { br: 3200, f: [[{}, 2000]], fx: (g, x, y, t) => { const k = Math.sin(Math.min(1, t / 2000) * Math.PI); g.fillStyle = `rgba(127,215,255,${k * .55})`; g.beginPath(); g.arc(x + 27, y + 6, 4 + k * 2, 0, 7); g.fill(); starUp(g, x + 27, y + 2, t / 2000); } },
+  rose: { br: 3000, f: [[{ arm: 'face' }, 450], [{ arm: 'face', glint: 1 }, 300], [{ glint: 1 }, 250], [{}, 500]] },
+  kai: { br: 4200, f: [[{ arm: 'pray' }, 400], [{ arm: 'pray', hd: 1 }, 1200], [{ arm: 'pray' }, 400]] },
+  fisher: { br: 3000, f: [[{ tug: 1 }, 220], [{}, 200], [{ tug: 1 }, 220], [{}, 860]], bare: [[{ arm: 'scratch' }, 300], [{ arm: 'scratch', hd: 1 }, 300], [{ arm: 'scratch' }, 300], [{ arm: 'scratch', hd: 1 }, 300], [{}, 300]] },
+  wren: { br: 2800, f: [[{ ham: 1 }, 260], [{ ham: 2 }, 300], [{ ham: 1 }, 260], [{ ham: 2 }, 400], [{}, 300]], fx: (g, x, y, t) => { [560, 1080].forEach(t0 => { const a = (t - t0) / 380; if (a > 0 && a < 1) { g.fillStyle = `rgba(222,190,140,${(1 - a) * .9})`; [[-3, 0], [3, -1], [0, -2]].forEach(([u, v]) => { g.beginPath(); g.arc(x + 26 + u * (1 + a * 2), y + 35 + v * (1 + a * 2), 1.2 + a, 0, 7); g.fill(); }); } }); } },
+  pip: { br: 2600, f: [[{ shut: 1 }, 2000]], fx: (g, x, y, t) => { noteUp(g, x + 22, y + 18, t / 1400); noteUp(g, x + 12, y + 16, (t - 600) / 1400); } },
+  mira: { br: 3000, f: [[{ page: 0 }, 200], [{ page: 1 }, 200], [{ page: 2 }, 200], [{ shut: 1 }, 400], [{}, 500]] },
+  elias: { br: 3600, f: [[{ hd: -1 }, 250], [{}, 250], [{ hd: -1 }, 250], [{}, 250], [{ hd: -1 }, 250], [{}, 250], [{ hd: -1 }, 250], [{}, 250]], shake: 1, fx: (g, x, y, t) => haText(g, x + 25, y + 4, t / 2000) },
+  tove: { br: 2200, f: [[{ arm: 'up', open: 1 }, 1000]], hop: 1000 },
+  ziggy: { br: 2600, f: [[{ flap: 1, hop: 1 }, 150], [{ hop: 2 }, 150], [{ flap: 1, hop: 2 }, 150], [{ hop: 1 }, 150], [{ flap: 1, hop: 1 }, 150], [{}, 1250]] },
+  ferro: { br: 3000, f: [[{ snip: 1 }, 180], [{}, 180], [{ snip: 1 }, 180], [{}, 960]], fx: (g, x, y, t) => sparkle(g, x + 24, y + 9, t, 1500) }
+};
+function sparkle(g, x, y, t, T) { const k = Math.sin(Math.min(1, t / T) * Math.PI), r = Math.round(1 + k * 2); g.fillStyle = `rgba(255,250,220,${k})`; g.fillRect(x, y - r, 1, r * 2 + 1); g.fillRect(x - r, y, r * 2 + 1, 1); }
+function starUp(g, x, y, a) { if (a <= 0 || a >= 1) return; const yy = Math.round(y - a * 14); g.fillStyle = `rgba(255,211,107,${1 - a * a})`; g.fillRect(x - 1, yy, 3, 1); g.fillRect(x, yy - 1, 1, 3); }
+function noteUp(g, x, y, a) { if (a <= 0 || a >= 1) return; const xx = Math.round(x + Math.sin(a * 6) * 2), yy = Math.round(y - a * 14); g.fillStyle = `rgba(59,36,22,${1 - a})`; g.fillRect(xx, yy, 2, 2); g.fillRect(xx + 1, yy - 4, 1, 4); g.fillRect(xx + 2, yy - 4, 2, 1); }
+function haText(g, x, y, a) { if (a <= .05 || a >= .9) return; const yy = Math.round(y - a * 5); g.fillStyle = '#3b2416'; [[0,0],[0,1],[0,2],[0,3],[1,2],[2,2],[2,3],[4,1],[5,1],[4,2],[6,2],[4,3],[5,3],[6,3],[6,1],[8,0],[8,1],[8,3]].forEach(([u, v]) => g.fillRect(x + u, yy + v, 1, 1)); }
+// what an NPC looks like right now. e: the entity (keeps its own idle clock). Returns { c, dx, dy, fx }
+function npcFrame(e, tnow) {
+  const id = e.id, I = NPC_IDLE[id];
+  if (!I || !S.settings.anim) return { c: npcCanvas(id), dx: 0, dy: 0 };
+  if (e.walk) return { c: npcPose(id, e.walk.p), dx: 0, dy: e.walk.bob || 0, flip: e.walk.flip };
+  const A = NPC_ANIM[id] = NPC_ANIM[id] || { ph: Math.random() * 4000, next: tnow + (NPC_FAST ? 500 + Math.random() * 3000 : 6000 + Math.random() * 14000) };
+  const quiet = WR.cine || (WR.dlg && WR.dlg.who === id) || e.noIdle;
+  if (A.pose && !quiet && tnow >= A.pose.t0 && tnow < A.pose.until) return { c: npcPose(id, A.pose.p), dx: 0, dy: 0 };   // a walker's stop: Elias peers into the woods, Ziggy inspects
+  if (!A.t0 && !quiet && tnow > A.next) A.t0 = tnow;
+  if (A.t0) {
+    const fr = id === 'fisher' && finnBare() ? I.bare : I.f, el = tnow - A.t0; let acc = 0, p = null;
+    for (const [pz, ms] of fr) { if (el < acc + ms) { p = pz; break; } acc += ms; }
+    if (p && !quiet) { const dy = I.hop ? -Math.round(Math.sin(Math.min(1, el / I.hop) * Math.PI) * 4) : 0, dx = I.shake ? (Math.floor(el / 125) % 2 ? 1 : 0) : 0;
+      return { c: npcPose(id, p), dx, dy, fx: I.fx ? (g, x, y) => I.fx(g, x, y, el) : null }; }
+    A.t0 = 0; A.next = tnow + (NPC_FAST ? 2500 + Math.random() * 3000 : 16000 + Math.random() * 8000);
+  }
+  const base = npcCanvas(id), up = ((tnow + A.ph) % I.br) < I.br * .45;
+  return { c: up ? breathe(base) : base, dx: 0, dy: 0 };
+}
+const NPC_ANIM = {};
+let NPC_FAST = 0;                                  // test copies: idles every few seconds
+// ---- walkers: Tove, Elias and Ziggy walk around the village between their spots (7:00-20:00), then stand by their door.
+// They stop when you come close or talk, never walk into you, and with Animations off they stand at today's spot like everyone else.
+const WALK = {
+  tove: { sp: 2.6, rate: 9, skip: 1, home: [12, 14], spots: [[12, 14], [17, 18], [23, 15], [21, 25], [24, 26], [10, 30], [9, 24], [29, 14], [23, 20], [16, 15], [18, 31]], stop: [3000, 8000] },
+  elias: { sp: 1.5, rate: 6, home: [14, 15], spots: [[14, 15], [2, 15], [9, 24], [11, 19], [2, 18]], stop: [5000, 10000], woods: [[2, 15], [2, 18]] },
+  ziggy: { sp: 2.1, rate: 8, home: [44, 15], spots: [[44, 15], [18, 18], [15, 14], [24, 21], [30, 12], [9, 16], [24, 24], [40, 15], [33, 16]], stop: [4000, 9000] }
+};
+function walkOn() { return WR && WR.cur === 'village' && S.settings.anim; }
+function walkDay() { const h = dnHour(); return h >= 7 && h < 20; }
+function walkerAt(id, x, y) {                        // where a walker stands now (falls back to today's spot)
+  if (!S.settings.anim) return [x, y];
+  WR.walkers = WR.walkers || {}; const W = WR.walkers[id] || (WR.walkers[id] = { x, y, st: 'wait', until: performance.now() + 2000 + Math.random() * 6000, path: [], t: 0 });
+  return [W.x, W.y];
+}
+function walkPath(M, id, sx, sy, tx, ty) {           // cheapest tile path: roads and the square cost less than grass, so they keep to the roads
+  const N = M.w * M.h, key = (x, y) => y * M.w + x, own = sx + ',' + sy, cost = new Float32Array(N).fill(1e9), prev = new Int32Array(N).fill(-1), done = new Uint8Array(N);
+  const free = (x, y) => x >= 0 && y >= 0 && x < M.w && y < M.h && !M.solid[y][x] && !(M.solidE && M.solidE[x + ',' + y] && (x + ',' + y) !== own);
+  const step = (x, y) => 'PSG'.includes((M.g[y] || '')[x]) ? 1 : 2.4, open = [key(sx, sy)]; cost[key(sx, sy)] = 0;
+  while (open.length) {
+    let bi = 0; for (let i = 1; i < open.length; i++) if (cost[open[i]] < cost[open[bi]]) bi = i;
+    const k = open.splice(bi, 1)[0]; if (done[k]) continue; done[k] = 1; const x = k % M.w, y = (k - x) / M.w; if (x === tx && y === ty) break;
+    for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { const nx = x + dx, ny = y + dy; if (!free(nx, ny)) continue; const nk = key(nx, ny), c = cost[k] + step(nx, ny) + (prev[k] >= 0 && (prev[k] - k) !== (k - nk) ? .3 : 0);   // a small cost per turn: straighter paths
+      if (c < cost[nk]) { cost[nk] = c; prev[nk] = k; open.push(nk); } }
+  }
+  if (!done[key(tx, ty)]) return null;
+  const P = []; for (let k = key(tx, ty); k !== -1; k = prev[k]) P.unshift([k % M.w, Math.floor(k / M.w)]);
+  return P.filter((p, i) => i === 0 || i === P.length - 1 || !((P[i - 1][0] === p[0] && P[i + 1][0] === p[0]) || (P[i - 1][1] === p[1] && P[i + 1][1] === p[1]))).slice(1);   // corners only
+}
+function walkTick(dt, tnow) {
+  if (!walkOn() || !WR.walkers) return; const M = WR.maps.village, p = WR.p;
+  Object.keys(WR.walkers).forEach(id => {
+    const W = WR.walkers[id], C = WALK[id], e = WR.ents.find(q => q.id === id); if (!e) return;
+    const dd = Math.hypot(W.x + .5 - p.x, W.y + .6 - p.y), busy = WR.cine || WR.dlg || WR.busy;
+    if (dd > 3) W.nearT = 0; else if (dd < 2 && !busy) W.nearT = (W.nearT || 0) + dt;
+    const near = dd < 2 && W.nearT < 5;                            // they stop for you, but don't wait forever if you just stand there
+    if (near || busy) W.hold = tnow + (busy ? 3000 : 600);         // and wait a bit after a talk
+    if (W.hold && tnow < W.hold) { W.moving = 0; e.walk = null; return; }
+    if (W.st === 'wait') {
+      e.walk = null; W.moving = 0; if (tnow < W.until) return;
+      const day = walkDay(), at = s => Math.round(W.x) === s[0] && Math.round(W.y) === s[1];
+      if (!day && at(C.home)) { W.until = tnow + 5000; return; }
+      const opts = day ? C.spots.filter(s => !at(s)) : [C.home], to = opts[Math.floor(Math.random() * opts.length)];
+      const path = walkPath(M, id, Math.round(W.x), Math.round(W.y), to[0], to[1]); if (!path || !path.length) { W.until = tnow + 3000; return; }
+      Object.assign(W, { st: 'walk', path, to });
+    }
+    const n = W.path[0]; if (!n) { W.st = 'wait'; return; }
+    const dx = n[0] - W.x, dy = n[1] - W.y, L = Math.hypot(dx, dy), st = C.sp * dt;
+    const ah = Math.min(1, L) / (L || 1);                                     // the spot just ahead of them
+    if (Math.hypot(W.x + dx * ah + .5 - p.x, W.y + dy * ah + .6 - p.y) < .95) { W.moving = 0; e.walk = null; W.blockT = (W.blockT || 0) + dt;   // you're in the way: wait, then go around
+      if (W.blockT > 2) { W.blockT = 0; const pk = Math.floor(p.x) + ',' + Math.floor(p.y), had = M.solidE[pk]; M.solidE[pk] = 1; const P = walkPath(M, id, Math.round(W.x), Math.round(W.y), W.to[0], W.to[1]); if (!had) delete M.solidE[pk];
+        if (P && P.length) W.path = P; else { W.st = 'wait'; W.until = tnow + 2000; } } return; }
+    W.blockT = 0;
+    W.dir = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 2 : 3) : dy < 0 ? 0 : 1; W.t += dt; W.moving = 1;
+    if (L <= st) { W.x = n[0]; W.y = n[1]; W.path.shift(); if (!W.path.length) {                    // arrived: stand and look around
+        W.st = 'wait'; W.moving = 0; W.until = tnow + C.stop[0] + Math.random() * (C.stop[1] - C.stop[0]);
+        const wood = C.woods && C.woods.some(s => s[0] === n[0] && s[1] === n[1]), home = n[0] === C.home[0] && n[1] === C.home[1];
+        if (wood) { W.until += 4000; NPC_ANIM[id] = Object.assign(NPC_ANIM[id] || {}, { pose: { p: { arm: 'brow' }, t0: tnow + 500, until: tnow + 4500 } }); }
+        else if (id === 'ziggy' && !home) NPC_ANIM.ziggy = Object.assign(NPC_ANIM.ziggy || {}, { pose: { p: { gog: 1 }, t0: tnow + 400, until: tnow + 3200 } });
+        else if (id === 'tove' && Math.random() < .4) { const A = NPC_ANIM.tove = NPC_ANIM.tove || { ph: 0 }; A.next = tnow + 600; }
+        e.walk = null; } }
+    else { W.x += dx / L * st; W.y += dy / L * st; }
+    if (W.moving) {
+      const side = W.dir >= 2, f = side ? Math.floor(W.t * C.rate * 1.6) % 4 : Math.floor(W.t * C.rate) % 2;
+      e.walk = { p: W.dir === 0 ? { view: 'back', step: f } : W.dir === 1 ? { step: f } : { view: 'side', step: f }, flip: W.dir === 3, bob: !side && f && C.skip ? 1 : 0 };
+      if (side && C.rate > 0 && (f === 0 || f === 2) && f !== W.lf && id !== 'tove') (WR.dust = WR.dust || []).push({ x: W.x + .5 - (W.dir === 2 ? .3 : -.3), y: W.y + .9, t: 0, s: .7 }); W.lf = f;
+    }
+    e.x = W.x; e.y = W.y;
+  });
+  M.solidE = {}; WR.ents.forEach(e => { if (e.npc || e.solid) M.solidE[Math.round(e.x) + ',' + Math.round(e.y)] = 1; });
+}
+// cinematics: these people walk with real steps instead of bobbing along
+const CINE_WALK = ['wren', 'tove', 'elias', 'ziggy', 'mira'];
+function cineWalk(a, tnow) {
+  const dx = a.x - (a.px == null ? a.x : a.px), dy = a.y - (a.py == null ? a.y : a.py); a.px = a.x; a.py = a.y;
+  a.vx = (a.vx || 0) * .9 + dx; a.vy = (a.vy || 0) * .9 + dy;            // smoothed, so a little skip doesn't flip her around every frame
+  if (Math.hypot(a.vx, a.vy) > .02) a.dir = Math.abs(a.vx) > Math.abs(a.vy) ? (a.vx > 0 ? 2 : 3) : a.vy < 0 ? 0 : 1;
+  const d = a.dir == null ? 1 : a.dir, r = (WALK[a.id] || { rate: 7 }).rate, side = d >= 2, t = tnow / 1000, f = side ? Math.floor(t * r * 1.6) % 4 : Math.floor(t * r) % 2;
+  return { c: npcPose(a.id, d === 0 ? { view: 'back', step: f } : d === 1 ? { step: f } : { view: 'side', step: f }), flip: d === 3, bob: !side && f ? 1 : 0 };
+}
 function itemCanvas(kind) {
   const k = 'item_' + kind; if (PROP_ART[k]) return PROP_ART[k].c;
   let c;
@@ -3621,10 +3837,10 @@ function famDrawActors(g, draws, shadow, tnow) {
   const c = WR.cine; if (!c || !c.actors) return;
   c.actors.forEach(a => {
     const al = a.fade ? Math.max(0, 1 - (tnow - a.fade) / 600) : 1; if (al <= 0) return;
-    const moving = !!a.to || (c.link && a.id), cv = a.cart ? (a.zcart ? zcartCanvas(a.x * WT / 9) : cartCanvas(a.x * WT / 9)) : a.crate ? zcrateCanvas(c.beep && Math.floor(tnow / 160) % 2 ? 1 : 0) : npcCanvas(a.id), bob = !a.cart && moving ? Math.floor(tnow / 140) % 2 : a.ham && tnow - a.ham < 150 ? -1 : 0;
+    const moving = !!a.to || (c.link && a.id), wk = moving && !a.cart && !a.crate && CINE_WALK.includes(a.id) && S.settings.anim ? cineWalk(a, tnow) : null, cv = a.cart ? (a.zcart ? zcartCanvas(a.x * WT / 9) : cartCanvas(a.x * WT / 9)) : a.crate ? zcrateCanvas(c.beep && Math.floor(tnow / 160) % 2 ? 1 : 0) : wk ? wk.c : npcCanvas(a.id), bob = wk ? wk.bob : !a.cart && moving ? Math.floor(tnow / 140) % 2 : a.ham && tnow - a.ham < 150 ? -1 : 0;
     const x = a.cart ? Math.round(a.x * WT) : Math.round(a.x * WT + 8 - cv.width / 2), y = Math.round((a.y + 1) * WT - cv.height) - bob - Math.round((a.lift || 0) * WT);
     if (al > .5) shadow(a.cart ? x + 26 : a.x * WT + 8, (a.y + 1) * WT - 2, a.cart ? 12 : a.crate ? 5 : cv.width / 2.6);
-    draws.push({ z: (a.y + 1) * WT, c: cv, x, y, alpha: al });
+    draws.push({ z: (a.y + 1) * WT, c: cv, x, y, alpha: al, flip: wk && wk.flip });
   });
 }
 function famDrawKey(g, tnow) {                      // the key Wren hands to Mira
@@ -4150,14 +4366,14 @@ function worldEntities() {
   if (WR.cur === 'village') {                                    // the old frame next to Orvel's tower: Wren's build site, then the Honeyfield house
     const V = WR.maps.village, i = V.props.findIndex(q => q.site), fs = famStage(), k = famBuildStage();
     if (i >= 0) { const was = V.props[i]; V.props[i] = Object.assign({ x: 10, y: 11, site: 1 }, fs === 'home' ? { type: 'house', w: 5, roof: HF_ROOF, honey: 1, lit: 1, smoke: 1 } : fs === 'ready' ? { type: 'house', w: 5, roof: HF_ROOF, honey: 1, lit: WR.cine ? was.lit : 0, smoke: WR.cine ? was.smoke : 0 } : fs === 'build' ? { type: 'plot', stage: [1, 2, 3][k], roof: HF_ROOF } : { type: 'plot', stage: 1 }); }
-    if (fs === 'home') { const sp = hfSpots(); HF_IDS.forEach(id => E.push({ id, npc: 1, x: sp[id][0], y: sp[id][1] })); }
+    if (fs === 'home') { const sp = hfSpots(); HF_IDS.forEach(id => { const [x, y] = WALK[id] ? walkerAt(id, sp[id][0], sp[id][1]) : sp[id]; E.push({ id, npc: 1, x, y }); }); }
   }
   if (WR.cur === 'village') {                                    // the east clearing: Wren builds Ziggy's workshop, then he lives there
     const V = WR.maps.village, zs = zgStage(), k = zgBuildStage(), i = V.props.findIndex(q => q.zsite), was = i >= 0 ? V.props[i] : {};
     const np = zs === 'home' ? { type: 'zwork', lit: 1 } : zs === 'ready' ? { type: 'zwork', lit: WR.cine ? was.lit : 0 } : zs === 'build' ? { type: 'plot', stage: [1, 2, 3][k], roof: ZIG_ROOF } : null;
     if (i >= 0) V.props.splice(i, 1); if (np) V.props.push(Object.assign({ x: 41, y: 11, zsite: 1 }, np));
     for (let j = 0; j < 3; j++) for (let ii = 0; ii < 5; ii++) V.solid[11 + j][41 + ii] = np ? 1 : 0;
-    if (zs === 'home' && !(WR.cine && WR.cine.zg)) { const sp = zgSpot(); E.push({ id: 'ziggy', npc: 1, x: sp[0], y: sp[1] }); }
+    if (zs === 'home' && !(WR.cine && WR.cine.zg)) { const sp = zgSpot(), [x, y] = walkerAt('ziggy', sp[0], sp[1]); E.push({ id: 'ziggy', npc: 1, x, y }); }
   }
   WR.ents = E;
   const M = WR.maps[WR.cur]; M.solidE = {};
@@ -4187,6 +4403,7 @@ function worldBindInput() {
 function worldTick(now) {
   if (!WR || view !== 'world') return;
   const dt = Math.min(.05, (now - WR.last) / 1000); WR.last = now;
+  walkTick(dt, now);
   const M = WR.maps[WR.cur], p = WR.p, k = WR.keys;
   let vx = 0, vy = 0;
   if (!WR.dlg && !WR.busy) {
@@ -4651,8 +4868,8 @@ function worldDraw() {
   const tnow = performance.now();
   WR.ents.forEach(e => {
     if (WR.cine && WR.cine.hide && WR.cine.hide.includes(e.id)) return;
-    const c = e.act ? actCanvas(boss().b.id, Math.floor(tnow / 520) % 2) : e.npc ? npcCanvas(e.id) : itemCanvas(e.obj), bob = e.pick ? Math.round(Math.sin(tnow / 300) * 1.5) : 0;
-    let x = Math.round(e.x * WT + 8 - c.width / 2), y = Math.round((e.y + 1) * WT - c.height - (e.lift || 0)) + bob;
+    const nf = e.npc ? npcFrame(e, tnow) : null, c = e.act ? actCanvas(boss().b.id, Math.floor(tnow / 520) % 2) : nf ? nf.c : itemCanvas(e.obj), bob = e.pick ? Math.round(Math.sin(tnow / 300) * 1.5) : nf ? nf.dy : 0;
+    let x = Math.round(e.x * WT + 8 - c.width / 2) + (nf ? nf.dx : 0), y = Math.round((e.y + 1) * WT - c.height - (e.lift || 0)) + bob;
     if (e.act) {                                                   // the act: hit flashes and shakes, staggered wobble, the finishing spin
       const R = WR.replay, fl = R && R.flash && tnow - R.flash < 180, st = actState().staggered && !actState().pending && !R, fin = WR.finish && tnow - WR.finish < 1300;
       shadow(e.x * WT + 8, (e.y + 1) * WT - 2, 14);
@@ -4664,11 +4881,11 @@ function worldDraw() {
       g.restore(); return;
     }
     if (!e.noShadow && !e.flat) shadow(e.x * WT + 8, (e.y + 1) * WT - 2, c.width / 2.6);
-    draws.push({ z: e.flat ? (e.y + 1) * WT - 20 : (e.y + 1) * WT, c, x, y, e });
+    draws.push({ z: e.flat ? (e.y + 1) * WT - 20 : (e.y + 1) * WT, c, x, y, e, flip: nf && nf.flip, fx: nf && nf.fx });
   });
   famDrawActors(g, draws, shadow, tnow);
   const st = Math.min(3, tierOf('DIS') + 1), hasDog = (S.owned.spirit && S.equip.spirit && WR.cur !== 'tent') || (WR.cine && WR.cine.pup);
-  if (hasDog) { const c = spiritCanvas(st), sx = WR.spirit.x * WT - c.width / 2, sy = WR.spirit.y * WT + 6 - c.height; shadow(WR.spirit.x * WT, WR.spirit.y * WT + 5, c.width / 2.4); draws.push({ z: WR.spirit.y * WT + 6, c, x: Math.round(sx), y: Math.round(sy), flip: WR.spirit.x > p.x }); }
+  if (hasDog) { const c0 = spiritCanvas(st), c = !p.moving && S.settings.anim && tnow % 2400 < 1000 ? breathe(c0) : c0, sx = WR.spirit.x * WT - c.width / 2, sy = WR.spirit.y * WT + 6 - c.height; shadow(WR.spirit.x * WT, WR.spirit.y * WT + 5, c.width / 2.4); draws.push({ z: WR.spirit.y * WT + 6, c, x: Math.round(sx), y: Math.round(sy), flip: WR.spirit.x > p.x }); }
   if (p.moving || WR.dlg || WR.cine || p.dir === 0 || !S.settings.anim) { WR.idleAt = tnow; WR.qk = null; }   // standing still: your switched-on quirks play now and then
   else if (WR.idleAt == null) WR.idleAt = tnow;
   else if (!WR.qk && tnow - WR.idleAt > 4000) { const wat = fishSide(), on = QUIRKS.filter(q => S.owned['q_' + q.id] && S.qon[q.id] && (q.id !== 'fishing' || wat)); if (on.length) WR.qk = { q: on[Math.floor(Math.random() * on.length)], t0: tnow }; else WR.idleAt = tnow; }
@@ -4682,7 +4899,7 @@ function worldDraw() {
     const qx = Math.round(p.x * WT - h0.width / 2) - h0.x0 + qc.x0, fl = WR.qk && WR.qk.side === -1;   // fishing faces the water: mirror it when the pond is on the left
     draws.push({ z: p.y * WT + 6, c: qc, x: fl ? Math.round(2 * p.x * WT) - qx - qc.width : qx, y: Math.round(p.y * WT + 7 - h0.height) - h0.y0 + qc.y0, flip: fl }); }
   else draws.push({ z: p.y * WT + 6, c: hc, x: Math.round(p.x * WT - hc.width / 2), y: Math.round(p.y * WT + 7 - hc.height - hb), flip: flipH });
-  draws.sort((a, b) => a.z - b.z).forEach(d => { if (d.alpha != null && d.alpha < 1) { g.globalAlpha = d.alpha; g.drawImage(d.c, d.x, d.y); g.globalAlpha = 1; return; } if (d.clipH != null) { if (d.clipH > 0) g.drawImage(d.c, 0, d.c.height - d.clipH, d.c.width, d.clipH, d.x, d.y, d.c.width, d.clipH); return; } if (d.flip) { g.save(); g.translate(d.x + d.c.width, d.y); g.scale(-1, 1); g.drawImage(d.c, 0, 0); g.restore(); } else g.drawImage(d.c, d.x, d.y); });
+  draws.sort((a, b) => a.z - b.z).forEach(d => { if (d.alpha != null && d.alpha < 1) { g.globalAlpha = d.alpha; g.drawImage(d.c, d.x, d.y); g.globalAlpha = 1; return; } if (d.clipH != null) { if (d.clipH > 0) g.drawImage(d.c, 0, d.c.height - d.clipH, d.c.width, d.clipH, d.x, d.y, d.c.width, d.clipH); return; } if (d.flip) { g.save(); g.translate(d.x + d.c.width, d.y); g.scale(-1, 1); g.drawImage(d.c, 0, 0); g.restore(); } else g.drawImage(d.c, d.x, d.y); if (d.fx) d.fx(g, d.x, d.y); });
   // quest markers over mentors
   WR.ents.forEach(e => { if (WR.cine || !e.npc || !(WQ[e.id] || NEWC[e.id] || FAMQ[e.id])) return; let mark;
     if (opOn()) mark = opSt() === 'meet' && OP_M.includes(e.id) && !S.opening.met[e.id] ? 'S!' : '';
