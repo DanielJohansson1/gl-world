@@ -694,6 +694,7 @@ const SND = (() => {
     laugh() { const t = now(); [0, .55, 1.1].forEach((d, k) => { note('sfx', 150 - k * 14, t + d, .45, { type: 'triangle', vol: .09, a: .03, slide: .78, vib: 7, vibD: 9, cut: 900 }); note('sfx', 75 - k * 7, t + d, .5, { type: 'sine', vol: .07, a: .03, slide: .8 }); }); },
     creak() { const t = now(); for (let k = 0; k < 3; k++) note('sfx', 210 + k * 30, t + k * .32, .28, { type: 'triangle', vol: .05, slide: 1.35, slideT: .25, vib: 23, vibD: 18, cut: 1100 }); },
     growl() { const t = now(); note('sfx', 92, t, .7, { type: 'triangle', vol: .09, a: .05, vib: 17, vibD: 10, cut: 500, slide: .9 }); note('sfx', 61, t + .05, .6, { type: 'sine', vol: .07, a: .05, vib: 21, vibD: 6 }); },
+    knock() { [0, .16, .32].forEach(d => { const t = now() + d; note('sfx', 150 + Math.random() * 12, t, .07, { type: 'triangle', vol: .12, slide: .6, slideT: .04, cut: 900 }); note('sfx', 75, t, .08, { type: 'sine', vol: .08, slide: .8 }); }); },   // three soft taps on a wooden door
     hammer() { const t = now(); note('sfx', 190 + Math.random() * 30, t, .09, { type: 'triangle', vol: .14, slide: .55, slideT: .05, cut: 1200 }); note('sfx', 900, t, .025, { type: 'square', vol: .03, cut: 2500 }); note('sfx', 95, t, .12, { type: 'sine', vol: .1, slide: .7 }); },
     puff() { const t = now(); note('sfx', 300, t, .5, { type: 'triangle', vol: .07, slide: .4, cut: 700 }); bell('sfx', mtof(62), t + .1, 1.2, .05); },
     cart() { const t = now(); note('sfx', 150 + Math.random() * 25, t, .07, { type: 'triangle', vol: .07, slide: .8, cut: 700 }); note('sfx', 230 + Math.random() * 20, t + .11, .05, { type: 'triangle', vol: .045, slide: .8, cut: 900 }); },   // a handcart's wooden wheels
@@ -1759,11 +1760,13 @@ function buildVillage() {
   const tree = (x, y, kind) => { if (keep(x, y)) return; prop(kind || (hsh(x, y) % 4 === 0 ? 'pine' : 'tree'), x, y); block(x, y, 1, 1); };
   for (let x = 0; x < M.w; x++) { tree(x, M.h - 1); if (hsh(x, 7) % 2) tree(x, M.h - 2); if (x < 11 || x > 28) { tree(x, 0); } }
   for (let y = 1; y < M.h - 2; y++) { tree(0, y); tree(M.w - 1, y); if (hsh(3, y) % 3 === 0 && y > 3) tree(1, y); if (hsh(5, y) % 3 === 0 && y > 3 && (y < 6 || y > 18)) tree(M.w - 2, y); }
-  [[41, 4], [45, 2], [47, 7], [40, 21], [44, 24], [47, 20], [39, 28], [43, 30], [46, 27], [3, 4], [6, 2], [8, 6], [4, 8], [31, 3], [35, 2], [30, 6], [36, 5], [13, 22], [9, 22], [30, 25], [31, 29], [11, 9], [29, 9], [35, 26], [4, 21], [2, 13], [37, 20], [26, 31], [15, 31]].forEach(([x, y]) => tree(x, y));
+  [[41, 4], [45, 2], [47, 7], [40, 21], [44, 24], [47, 20], [39, 28], [43, 30], [46, 27], [3, 4], [6, 2], [8, 6], [4, 8], [31, 3], [35, 2], [36, 5], [13, 22], [9, 22], [30, 25], [31, 29], [11, 9], [35, 26], [4, 21], [2, 13], [37, 20], [26, 31], [15, 31]].forEach(([x, y]) => tree(x, y));
   [[14, 7], [24, 4], [15, 3], [23, 8], [37, 11], [34, 9]].forEach(([x, y]) => { prop('rock', x, y); block(x, y, 1, 1); });
   [[35, 9], [37, 8], [36, 13], [34, 12]].forEach(([x, y]) => prop('pine', x, y));
   prop('plot', 10, 11, { stage: 1, site: 1 }); block(10, 11, 5, 3);                 // an old frame, waiting for Wren
-  prop('house', 22, 10, { w: 5, roof: '#5f7fa8' }); block(22, 10, 5, 3);
+  prop('house', 22, 10, { w: 5, roof: '#5f7fa8' }); block(22, 10, 5, 3);   // Kai's house
+  prop('bcabin', 28, 7); block(28, 7, 5, 3);                                    // Bjørn's cabin, behind the gym
+  prop('fhut', 3, 31); block(3, 31, 4, 3);                                      // Finn's hut, on the pond
   prop('house', 14, 23, { w: 5, roof: '#c75b5b', bakery: 1 }); block(14, 23, 5, 3); M.solid[25][16] = 0; M.warps.push({ x: 16, y: 25, to: 'rose', tx: 9, ty: 8 });
   prop('well', 19, 16); block(19, 16, 2, 2);
   prop('tower', 3, 9); block(3, 11, 5, 5); M.solid[15][5] = 1;        // the door tile opens later
@@ -1773,7 +1776,7 @@ function buildVillage() {
   for (let x = 21; x < 29; x++) block(x, 30, 1, 1); block(21, 27, 1, 3); block(28, 27, 1, 3);
   prop('lamp', 15, 13); block(15, 13, 1, 1); prop('lamp', 24, 20); block(24, 20, 1, 1);
   prop('sign', 21, 13); block(21, 13, 1, 1);
-  [[3, 31], [12, 31], [33, 12], [26, 24], [9, 13], [17, 21], [27, 18]].forEach(([x, y]) => { prop('bush', x, y); block(x, y, 1, 1); });
+  [[12, 31], [33, 12], [26, 24], [9, 13], [17, 21], [27, 18]].forEach(([x, y]) => { prop('bush', x, y); block(x, y, 1, 1); });
   prop('lily', 6, 27); prop('lily', 8, 29); prop('lily', 4, 28);
   M.warps.push({ x: 35, y: 15, to: 'cave', tx: 6, ty: 8 }, { x: 5, y: 15, to: 'tower', tx: 5, ty: 7 });
   M.warps.push({ x: 19, y: 0, to: 'shrine', tx: 7, ty: 17 }, { x: 20, y: 0, to: 'shrine', tx: 7, ty: 17 });
@@ -1786,7 +1789,7 @@ function buildVillage() {
   box(19, 31, 2, 4, 'P'); box(6, 35, 30, 2, 'P');
   for (let y = 31; y < M.h - 2; y++) for (let x = 2; x < M.w - 2; x++) if (y > 36 && M.g[y][x] === '.' && hsh(x, y, 61) % 5 === 0) tree(x, y);
   for (let y = 38; y < M.h; y++) for (let x = 0; x < M.w; x++) M.solid[y][x] = 1;   // the woods south of the lane are thick: no wandering in
-  [[3, 33], [16, 32], [27, 33], [33, 32], [38, 34], [44, 33], [41, 38]].forEach(([x, y]) => tree(x, y));
+  [[16, 32], [27, 33], [33, 32], [38, 34], [44, 33], [41, 38]].forEach(([x, y]) => tree(x, y));
   [[22, 33], [31, 33], [5, 37]].forEach(([x, y]) => { prop('bush', x, y); block(x, y, 1, 1); });
   prop('lamp', 15, 34); block(15, 34, 1, 1); prop('lamp', 25, 34); block(25, 34, 1, 1); prop('bench', 7, 34); block(7, 34, 1, 1);
   { const A = SALON_AT, inFoot = (x, y) => (x >= A.x && x < A.x + 5 && y >= A.y && y < A.y + 3) || (x >= A.x && x < A.x + 3 && y === A.y + 3);   // Ferro's salon: clear the spot, walk in through the door
@@ -2025,6 +2028,45 @@ function propCanvas(p) {
     c.getContext('2d').fillStyle = '#ffd36b'; c.getContext('2d').fillRect(5, 6, 4, 4); ax = 1; ay = 10;
   } else if (p.type === 'rock') {
     c = matSprite(18, 14, a => { a.ell(9, 8, 8, 5.5, 'r'); a.ell(6, 6, 4, 3, 'r'); }, { r: [CL.r0, CL.r1, CL.r2] }); ax = 1; ay = 0;
+  } else if (p.type === 'bcabin') {                     // Bjørn's log cabin behind the gym: round log ends, stone chimney, a golden dumbbell over the door
+    const w = 80, H = 66;
+    c = matSprite(w + 8, H, a => {
+      a.rect(4, 30, w, H - 30, 'lg');
+      for (let y = 0; y < 30; y++) { const ins = Math.max(0, 9 - y); a.rect(ins, y + 2, w + 8 - ins * 2, 1, 'rf'); }
+      a.rect(w - 14, 0, 9, 13, 'ch');
+    }, { lg: ['#9a6438', '#b7804e', '#6b4423'], rf: ['#7a3b2a', '#a05440', '#4e2219'], ch: ['#8a8478', '#b7b0a3', '#5e5a52'] });
+    const g = c.getContext('2d'), R = (x, y, ww, hh, col) => { g.fillStyle = col; g.fillRect(x, y, ww, hh); }, rd = '#4e2219';
+    for (let y = 6; y < 32; y += 4) { R(4, y, w, 1, rd); for (let x = 4 + (y % 8 ? 0 : 5); x < w + 4; x += 10) R(x, y - 3, 1, 3, rd); }   // shingles
+    R(4, 31, w, 2, rd); R(4, 33, w, 1, 'rgba(0,0,0,.25)');
+    [[w - 13, 3], [w - 9, 6], [w - 12, 9]].forEach(([x, y]) => R(x, y, 3, 1, '#5e5a52'));
+    for (let y = 35; y < H - 1; y += 5) { R(4, y, w, 1, '#5a3820'); R(4, y + 1, w, 1, '#c08a58'); }                // the logs
+    for (let y = 34; y < H - 2; y += 5) [0, w + 4].forEach(x => { R(x, y, 4, 4, '#b7804e'); R(x + 1, y + 1, 2, 2, '#e0b07a'); R(x, y + 3, 4, 1, '#6b4423'); });   // log ends at the corners
+    const door = 36; R(door + 2, 39, 12, H - 40, '#3b2416'); R(door + 3, 40, 10, H - 41, '#7a4c2a'); for (let x = door + 5; x < door + 13; x += 3) R(x, 41, 1, H - 43, '#5a3820'); R(door + 11, 52, 1, 2, '#ffd36b');
+    R(door - 1, 31, 18, 7, '#3b2416'); R(door, 32, 16, 5, '#7a4c2a'); R(door + 4, 34, 8, 1, '#e8bf4f'); R(door + 2, 32, 3, 5, '#e8bf4f'); R(door + 11, 32, 3, 5, '#e8bf4f'); R(door + 2, 32, 1, 1, '#fff1a8');   // the dumbbell sign
+    [12, 60].forEach(wx => { R(wx - 1, 40, 14, 12, '#3b2416'); R(wx, 41, 12, 10, '#bfe2f5'); R(wx, 41, 12, 3, '#e3f4fb'); R(wx + 5, 41, 2, 10, '#3b2416'); R(wx, 45, 12, 1, '#3b2416');
+      R(wx - 5, 40, 4, 12, '#3f7a4a'); R(wx + 13, 40, 4, 12, '#3f7a4a'); R(wx - 4, 42, 2, 1, '#2a5a34'); R(wx + 14, 42, 2, 1, '#2a5a34'); R(wx - 4, 48, 2, 1, '#2a5a34'); R(wx + 14, 48, 2, 1, '#2a5a34'); R(wx - 1, 52, 14, 2, '#5a3820'); });
+    for (let j = 0; j < 2; j++) for (let i = 0; i < 4 - j; i++) { const x = 60 + i * 5 + j * 2, y = H - 7 - j * 5; R(x, y, 5, 5, '#5a3820'); R(x + 1, y + 1, 3, 3, '#c08a58'); R(x + 2, y + 2, 1, 1, '#8a5a32'); }   // a woodpile
+    ax = 4; ay = H - 48;
+  } else if (p.type === 'fhut') {                      // Finn's hut on the south shore of the pond: weathered planks, a porthole, a net with floats, a fish over the door
+    const w = 64, H = 60;
+    c = matSprite(w + 6, H, a => {
+      a.rect(3, 28, w, H - 28, 'wa');
+      for (let y = 0; y < 28; y++) { const ins = Math.max(0, 8 - y); a.rect(ins, y + 2, w + 6 - ins * 2, 1, 'rf'); }
+      a.rect(10, 1, 5, 9, 'ch');
+    }, { wa: ['#8aa2ae', '#a9bfca', '#5f7682'], rf: ['#3d6fb5', '#5a8ad0', '#284d82'], ch: ['#6b7280', '#8a91a0', '#4a505c'] });
+    const g = c.getContext('2d'), R = (x, y, ww, hh, col) => { g.fillStyle = col; g.fillRect(x, y, ww, hh); }, rd = '#284d82';
+    for (let y = 6; y < 30; y += 4) { R(3, y, w, 1, rd); for (let x = 3 + (y % 8 ? 0 : 4); x < w + 3; x += 8) R(x, y - 3, 1, 3, rd); }
+    R(44, 12, 10, 7, '#7a8a5a'); R(44, 12, 10, 1, '#9aaa72'); [[45, 13], [52, 13], [45, 17], [52, 17]].forEach(([x, y]) => R(x, y, 1, 1, '#3b2416'));   // a patch on the roof
+    R(3, 29, w, 2, rd); R(3, 31, w, 1, 'rgba(0,0,0,.25)');
+    for (let x = 9; x < w + 3; x += 6) R(x, 32, 1, H - 33, '#6f8692'); R(3, H - 2, w, 2, '#4a5a64');
+    const door = 35; R(door, 36, 12, H - 37, '#3b2416'); R(door + 1, 37, 10, H - 38, '#6b5a48'); R(door + 1, 44, 10, 1, '#3b2416'); R(door + 8, 47, 1, 2, '#ffd36b');
+    R(door - 1, 32, 14, 4, '#5a3820'); R(door + 2, 33, 7, 2, '#cfd6de'); R(door + 9, 32, 2, 4, '#cfd6de'); R(door + 3, 33, 1, 1, '#2a2d36');   // a wooden fish over the door
+    g.fillStyle = '#c8a24a'; g.beginPath(); g.arc(17, 44, 7, 0, 7); g.fill(); g.fillStyle = '#9fd0e8'; g.beginPath(); g.arc(17, 44, 5, 0, 7); g.fill(); R(14, 41, 3, 2, '#e3f4fb'); R(16, 39, 2, 1, '#8a6a20'); R(16, 49, 2, 1, '#8a6a20');   // porthole
+    for (let x = 52; x < 66; x += 3) R(x, 34, 1, 16, '#d8cfc0'); for (let y = 35; y < 50; y += 3) R(51, y, 15, 1, '#d8cfc0'); R(50, 33, 17, 1, '#7a4c2a');   // net
+    [[53, 40], [58, 46], [63, 38]].forEach(([x, y], i) => { R(x, y, 3, 3, i % 2 ? '#fffaf0' : '#d6453a'); });
+    R(5, H - 10, 9, 8, '#7a4c2a'); R(6, H - 9, 7, 6, '#a8703f'); R(5, H - 7, 9, 1, '#5a3820');   // a bait crate
+    R(23, H - 26, 2, 25, '#a8703f'); R(22, H - 7, 4, 6, '#a8703f'); R(26, H - 24, 2, 23, '#8a5a32'); R(25, H - 6, 4, 5, '#8a5a32');   // oars
+    ax = 3; ay = H - 48;
   } else if (p.type === 'house') {
     const w = p.w * 16, H = 3 * 16 + 14, roof = p.roof, rl = shadeHex(roof, 30), rd = shadeHex(roof, -45);
     c = matSprite(w + 6, H, a => {
@@ -2338,6 +2380,8 @@ function chibi(o) {
   return matSprite(W, H, a => {
     const hy = (o.kid ? 16 : 12) + (o.hd || 0), hw = o.kid ? 7 : 8;   // head centre / half width (kids: smaller, lower head)
     if (o.staff && !side) { a.rect(26, 6, 2, 29, 'st'); a.ell(27, 6, 2.5, 2.5, 'ac'); }
+    if (o.staff && side) { a.rect(cx + 6, 7, 2, 28, 'st'); a.ell(cx + 7, 7, 2.5, 2.5, 'ac'); }   // walking: the staff goes along in front
+    if (o.rod && side) { a.rect(cx - 6, 5, 1, 27, 'st'); for (let i = 0; i < 5; i++) a.px(cx - 6 - i, 5 - Math.round(i * .5), 'st'); }   // walking: the rod over his shoulder
     if (o.rod && !side) { if (o.tug) { a.rect(25, 10, 1, 24, 'st'); for (let i = 0; i < 6; i++) a.px(25 - i, 10 - Math.round(i * .6), 'st'); } else { a.rect(25, 8, 1, 26, 'st'); for (let i = 0; i < 6; i++) a.px(25 - i, 8 - i, 'st'); } }
     // body
     const tw0 = big ? 14 : o.robe ? 12 : o.kid ? 8 : 10, tw = side ? tw0 - 2 : tw0, ty = o.kid ? 23 : 21, lift = side && (st === 1 || st === 3) ? 1 : 0;
@@ -2385,9 +2429,11 @@ function chibi(o) {
     if (back) {                                                   // the back of the head: all hair
       if (o.hairStyle !== 'bald') a.ell(hx, hl - 1, hw + .5, (o.kid ? 6.5 : 7.5), 'hr');
       if (o.hairStyle === 'long') { a.rect(hx - hw, hl - 3, hw * 2, 11, 'hr'); a.ell(hx, hl + 8, hw - 1, 2, 'hr'); }
+      if (o.hairStyle === 'bun') a.ell(hx, hl - 9, 3.5, 3, 'hr');
     } else if (side) {                                            // profile: hair on top and down the back
       if (o.hairStyle !== 'bald') { a.ell(hx, hl - 4, hw + .5, 4.5, 'hr'); a.ell(hx - 3, hl - 1, hw - 2.5, 6, 'hr'); a.rect(hx + hw - 3, hl - 3, 3, 2, 'hr'); }
       if (o.hairStyle === 'long') a.rect(hx - hw - 1, hl - 2, 6, 13, 'hr');
+      if (o.hairStyle === 'bun') a.ell(hx - 4, hl - 8, 3.5, 3, 'hr');
     } else {
       if (o.hairStyle === 'short') { a.ell(cx, hl - 4, hw + .5, 4.5, 'hr'); a.rect(cx - hw, hl - 3, 2, 4, 'hr'); a.rect(cx + hw - 2, hl - 3, 2, 4, 'hr'); }
       if (o.hairStyle === 'bun') { a.ell(cx, hl - 4, hw + .5, 4.5, 'hr'); a.ell(cx, hl - 10, 3.5, 3, 'hr'); a.rect(cx - hw, hl - 3, 2, 6, 'hr'); a.rect(cx + hw - 2, hl - 3, 2, 6, 'hr'); }
@@ -2401,6 +2447,8 @@ function chibi(o) {
     if (o.bandana) { a.ell(hx, hl - 4.5, hw + .5, 4, 'bn'); a.rect(hx + hw - 1, hl - 3, 3, 2, 'bn'); a.rect(hx + hw + 1, hl - 1, 2, 2, 'bn'); }
     if (o.feathercap) { a.ell(hx, hl - 4.5, hw + .3, 4.2, 'ht'); a.rect(hx - hw - 1, hl - 2, hw * 2 + 2, 2, 'ht'); for (let i = 0; i < 7; i++) a.rect(hx + 3 + i, hl - 6 - i * 1.2, 2, 2, 'fe'); }
     if (o.hammer && !side) { const hd = o.ham === 1 ? -4 : o.ham === 2 ? 3 : 0; a.rect(25, 19 + hd, 2, 13, 'st'); a.rect(23, 16 + hd, 7, 4, 'mt'); }
+    if (o.lute && back) { a.ell(cx - 1, 27, 5.5, 4.5, 'lt'); for (let i = 0; i < 8; i++) a.rect(cx + 1 + i, 24 - i, 2, 2, 'st'); }   // walking away: the lute on his back
+    if (o.lute && side) { a.ell(cx - 5, 26, 3, 4.5, 'lt'); a.rect(cx - 6, 14, 2, 9, 'st'); }
     if (o.lute && !back && !side) { a.ell(cx + 2, 28, 5.5, 4.5, 'lt'); for (let i = 0; i < 9; i++) a.rect(cx + 4 - i, 26 - i, 2, 2, 'st'); a.rect(cx - 7, 16, 3, 2, 'st'); }
     if (o.wizard) { a.rect(hx - hw - 3, hl - 5, hw * 2 + 6, 2, 'ht'); for (let y = 0; y < 12; y++) { const ww = Math.max(1, Math.round((12 - y) * .7)); a.rect(hx - ww + Math.round(y / 4), hl - 6 - y, ww * 2, 1, 'ht'); } }
     if (o.cap) { a.ell(hx, hl - 4, hw, 4.5, 'ht'); a.rect(side ? hx - 2 : hx - hw - 2, hl - 2, side ? hw + 5 : hw * 2 + 3, 2, 'ht'); }
@@ -2697,7 +2745,7 @@ function buildRose() {                                    // Rose's room | the b
 }
 const NPC_LOOK = {
   bjorn: { top: '#c23b2c', bottom: '#3b3f4a', hair: '#e8c35a', hairStyle: 'short', beard: '#e8c35a', big: 1, brows: '#b8902e' },
-  orvel: { top: '#6a44ad', hat: '#5a38a0', wizard: 1, beard: '#f4f1ea', longBeard: 1, robe: 1, sleeves: 1, staff: 1, acc: '#7fd7ff', star: 1 },
+  orvel: { top: '#6a44ad', hat: '#5a38a0', hair: '#e4e0d8', wizard: 1, beard: '#f4f1ea', longBeard: 1, robe: 1, sleeves: 1, staff: 1, acc: '#7fd7ff', star: 1 },
   rose: { top: '#f08ca8', bottom: '#f08ca8', hair: '#c9c4d6', hairStyle: 'bun', apron: 1, acc: '#fffaf0', glasses: 1, robe: 1 },
   kai: { top: '#e8873a', hairStyle: 'bald', robe: 1, sleeves: 1, sash: 1, acc: '#c23b2c', closedEyes: 1 },
   fisher: { top: '#5c9e45', bottom: '#4a5774', cap: 1, hat: '#3d6fb5', hairStyle: 'short', hair: '#c8502a', rod: 1 },   // red like his mother's (2026-11-04); only a few tufts show under the cap
@@ -2779,6 +2827,74 @@ const WALK = {
   elias: { sp: 1.5, rate: 6, home: [14, 15], spots: [[14, 15], [2, 15], [9, 24], [11, 19], [2, 18]], stop: [5000, 10000], woods: [[2, 15], [2, 18]] },
   ziggy: { sp: 2.1, rate: 8, home: [44, 15], spots: [[44, 15], [18, 18], [15, 14], [24, 21], [30, 12], [9, 16], [24, 24], [40, 15], [33, 16]], stop: [4000, 9000] }
 };
+// ---- bedtime (DJ, 2026-11-11): from 23:00 to 5:00 everyone walks home and sleeps; their doors stay shut
+const BED_HOME = {                                   // the tile they walk to; the door you knock on is the tile above it
+  bjorn: [30, 10], kai: [24, 13], orvel: [5, 16], rose: [16, 26], fisher: [5, 34], wren: [5, 22], pip: [1, 16],
+  mira: [12, 14], elias: [12, 14], tove: [12, 14], ziggy: [43, 14]
+};
+const WALK_BED = { bjorn: { sp: 2.2, rate: 8 }, orvel: { sp: 1.2, rate: 5 }, rose: { sp: 1.3, rate: 6 }, kai: { sp: 1.6, rate: 6 }, fisher: { sp: 1.8, rate: 7 }, pip: { sp: 2.2, rate: 8 }, wren: { sp: 2.2, rate: 8 }, mira: { sp: 1.8, rate: 7 } };
+function bedTime() { const h = dnHour(); return h >= 23 || h < 5; }
+function sleepOn() { return bedTime() && !opOn(); }  // the opening never sleeps: a new player must be able to meet everyone
+function sleeper(id) { return !!BED_HOME[id] && !(id === 'orvel' && circusStage() === 'orvel'); }   // Monday night: Orvel waits up for you (the circus news)
+function inBed(id) { return !!(WR && WR.night && (sleeper(id) || id === 'ferro') && !(WR.walkers && WR.walkers[id] && WR.walkers[id].goal === 'bed')); }
+const BED_DOORS = [                                  // [door tile x, y, who, who lives there]
+  [30, 9, 'Bjørn is', ['bjorn'], 'Zzz... You can hear Bjørn snoring like thunder.'], [24, 12, 'Kai is', ['kai']], [5, 33, 'Finn is', ['fisher']],
+  [5, 21, 'Wren is', ['wren'], null, () => wrenStage() >= 3 && NS('wren').moved != null], [12, 13, 'Mira, Elias and Tove are', ['mira', 'elias', 'tove'], null, () => famStage() === 'home'],
+  [43, 13, 'Ziggy is', ['ziggy'], null, () => zgStage() === 'home']
+];
+function sleepMsg(who, pre) { return (pre ? [pre] : []).concat([who + ' sleeping. Come back tomorrow to finish your task and talk.']); }
+function bedNear() {                                 // a shut door at night (village), or Rose asleep in her bed
+  const p = WR.p; if (!WR.night) return null;
+  if (WR.cur === 'rose' && Math.hypot(3 - p.x, 4.5 - p.y) < 1.4) return { id: 'sleepdoor', msg: sleepMsg('Rose is', 'Rose is fast asleep under her rose quilt.') };
+  if (WR.cur !== 'village') return null;
+  const d = BED_DOORS.find(([x, y, w, ids, pre, ok]) => (!ok || ok()) && ids.some(inBed) && Math.hypot(x + .5 - p.x, y + 1.2 - p.y) < 1.1);
+  return d ? { id: 'sleepdoor', msg: sleepMsg(d[2], d[4]) } : null;
+}
+function bedCheck(now) {                             // the clock passed 23:00 or 5:00: send them home, or let them out
+  if (!WR || WR.cine || WR.busy) return; const n = sleepOn(); if (n === WR.night) return; WR.night = n;
+  if (WR.cur === 'village' && S.settings.anim) {
+    WR.walkers = WR.walkers || {};
+    if (n) { WR.ents.forEach(e => { if (!e.npc || !sleeper(e.id)) return; const W = WR.walkers[e.id] || (WR.walkers[e.id] = { t: 0 });
+      Object.assign(W, { x: Math.round(e.x), y: Math.round(e.y), st: 'wait', until: now + 500 + Math.random() * 5000, path: [], goal: 'bed', hold: 0 }); e.x = W.x; e.y = W.y; }); return; }
+    WR.waking = {}; Object.keys(BED_HOME).forEach(id => WR.waking[id] = 1);
+  }
+  worldEntities(); WR.waking = null;
+}
+function bedArrive(id) {                             // home: in through the door, lights out soon
+  delete WR.walkers[id]; WR.ents = WR.ents.filter(q => q.id !== id); const [x, y] = BED_HOME[id];
+  if (id !== 'pip') (WR.dust = WR.dust || []).push({ x: x + .5, y: y, t: 0, s: .6 });
+}
+function bedSort(E) {                                // called at the end of worldEntities: who is out, who is asleep, who is on the way
+  if (WR.night == null) WR.night = sleepOn(); const now = performance.now(), village = WR.cur === 'village';
+  return E.filter(e => {
+    if (!e.npc || !sleeper(e.id)) return true; const W = WR.walkers && WR.walkers[e.id];
+    if (WR.night) { if (village && W && W.goal === 'bed') { e.x = W.x; e.y = W.y; return true; } return false; }
+    if (village && WR.waking && WR.waking[e.id] && S.settings.anim) {   // morning: out of the door and off to their spot
+      WR.walkers = WR.walkers || {}; const Wk = WR.walkers[e.id] || (WR.walkers[e.id] = { t: 0 }), [hx, hy] = BED_HOME[e.id];
+      Object.assign(Wk, { x: hx, y: hy, st: 'wait', until: now + 400 + Math.random() * 5000, path: [], goal: 'wake', goTo: [Math.round(e.x), Math.round(e.y)], hold: 0 });
+    }
+    if (village && W && W.goal) { e.x = W.x; e.y = W.y; }
+    const W2 = WR.walkers && WR.walkers[e.id]; if (village && W2 && W2.goal) { e.x = W2.x; e.y = W2.y; }
+    return true;
+  });
+}
+function sleepZ(g, x, y, tnow, seed) {               // little Zzz floating up
+  const el = tnow / 1000 + seed;
+  for (let i = 0; i < 3; i++) { const k = ((el * .45) + i / 3) % 1, a = k < .15 ? k / .15 : 1 - (k - .15) / .85, s = 4 + Math.round(k * 3);
+    const zx = Math.round(x + k * 8 + Math.sin(k * 6 + i) * 2), zy = Math.round(y - k * 22); g.globalAlpha = Math.max(0, a) * .9; g.fillStyle = '#fffaf0';
+    g.fillRect(zx, zy, s, 1); g.fillRect(zx, zy + s - 1, s, 1); for (let j = 1; j < s - 1; j++) g.fillRect(zx + s - 1 - j, zy + j, 1, 1); }
+  g.globalAlpha = 1;
+}
+function houseSleepers(q) {                          // who sleeps in this building
+  if (q.type === 'bcabin') return ['bjorn']; if (q.type === 'fhut') return ['fisher']; if (q.type === 'tower') return ['orvel']; if (q.type === 'salon') return ['ferro'];
+  if (q.type === 'zwork') return q.lit ? ['ziggy'] : []; if (q.type !== 'house') return [];
+  if (q.wren) return ['wren']; if (q.honey) return q.lit ? ['mira', 'elias', 'tove'] : []; if (q.bakery) return ['rose']; if (q.x === 22 && q.y === 10) return ['kai']; return [];
+}
+function roseSleepCanvas() {                         // Rose asleep: just her head on the pillow, the quilt pulled up
+  if (NPC_ART.roseSleep) return NPC_ART.roseSleep; const h = npcPose('rose', { shut: 1 }), c = document.createElement('canvas'); c.width = 32; c.height = 22; const g = c.getContext('2d');
+  g.drawImage(h, 0, 0, h.width, 18, 16 - Math.round(h.width / 2), 1, h.width, 18); g.fillStyle = '#e5607e'; g.fillRect(1, 18, 30, 4); g.fillStyle = '#f08ca8'; g.fillRect(1, 18, 30, 1);
+  return NPC_ART.roseSleep = c;
+}
 function walkOn() { return WR && WR.cur === 'village' && S.settings.anim; }
 function walkDay() { const h = dnHour(); return h >= 7 && h < 20; }
 function walkerAt(id, x, y) {                        // where a walker stands now (falls back to today's spot)
@@ -2803,7 +2919,7 @@ function walkPath(M, id, sx, sy, tx, ty) {           // cheapest tile path: road
 function walkTick(dt, tnow) {
   if (!walkOn() || !WR.walkers) return; const M = WR.maps.village, p = WR.p;
   Object.keys(WR.walkers).forEach(id => {
-    const W = WR.walkers[id], C = WALK[id], e = WR.ents.find(q => q.id === id); if (!e) return;
+    const W = WR.walkers[id], C = WALK[id] || WALK_BED[id] || { sp: 1.8, rate: 7 }, e = WR.ents.find(q => q.id === id); if (!e) return;
     const dd = Math.hypot(W.x + .5 - p.x, W.y + .6 - p.y), busy = WR.cine || WR.dlg || WR.busy;
     if (dd > 3) W.nearT = 0; else if (dd < 2 && !busy) W.nearT = (W.nearT || 0) + dt;
     const near = dd < 2 && W.nearT < 5;                            // they stop for you, but don't wait forever if you just stand there
@@ -2811,12 +2927,17 @@ function walkTick(dt, tnow) {
     if (W.hold && tnow < W.hold) { W.moving = 0; e.walk = null; return; }
     if (W.st === 'wait') {
       e.walk = null; W.moving = 0; if (tnow < W.until) return;
+      if (W.goal) {                                                // bedtime / morning: straight home, or out to their spot
+        const to = W.goal === 'bed' ? BED_HOME[id] : W.goTo, path = walkPath(M, id, Math.round(W.x), Math.round(W.y), to[0], to[1]);
+        if (!path || !path.length) { if (W.goal === 'bed') return bedArrive(id); W.goal = null; if (!WALK[id]) delete WR.walkers[id]; return; }
+        Object.assign(W, { st: 'walk', path, to });
+      } else if (!WALK[id]) return; else {
       const day = walkDay(), at = s => Math.round(W.x) === s[0] && Math.round(W.y) === s[1];
       if (!day && at(C.home)) { W.until = tnow + 5000; return; }
       const opts = day ? C.spots.filter(s => !at(s)) : [C.home], to = opts[Math.floor(Math.random() * opts.length)];
       const path = walkPath(M, id, Math.round(W.x), Math.round(W.y), to[0], to[1]); if (!path || !path.length) { W.until = tnow + 3000; return; }
       Object.assign(W, { st: 'walk', path, to });
-    }
+    } }
     const n = W.path[0]; if (!n) { W.st = 'wait'; return; }
     const dx = n[0] - W.x, dy = n[1] - W.y, L = Math.hypot(dx, dy), st = C.sp * dt;
     const ah = Math.min(1, L) / (L || 1);                                     // the spot just ahead of them
@@ -2826,6 +2947,8 @@ function walkTick(dt, tnow) {
     W.blockT = 0;
     W.dir = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 2 : 3) : dy < 0 ? 0 : 1; W.t += dt; W.moving = 1;
     if (L <= st) { W.x = n[0]; W.y = n[1]; W.path.shift(); if (!W.path.length) {                    // arrived: stand and look around
+        if (W.goal === 'bed') return bedArrive(id);
+        if (W.goal === 'wake') { W.goal = null; if (!WALK[id]) { delete WR.walkers[id]; e.walk = null; e.x = W.x; e.y = W.y; W.moving = 0; return; } }
         W.st = 'wait'; W.moving = 0; W.until = tnow + C.stop[0] + Math.random() * (C.stop[1] - C.stop[0]);
         const wood = C.woods && C.woods.some(s => s[0] === n[0] && s[1] === n[1]), home = n[0] === C.home[0] && n[1] === C.home[1];
         if (wood) { W.until += 4000; NPC_ANIM[id] = Object.assign(NPC_ANIM[id] || {}, { pose: { p: { arm: 'brow' }, t0: tnow + 500, until: tnow + 4500 } }); }
@@ -2843,12 +2966,12 @@ function walkTick(dt, tnow) {
   M.solidE = {}; WR.ents.forEach(e => { if (e.npc || e.solid) M.solidE[Math.round(e.x) + ',' + Math.round(e.y)] = 1; });
 }
 // cinematics: these people walk with real steps instead of bobbing along
-const CINE_WALK = ['wren', 'tove', 'elias', 'ziggy', 'mira'];
+const CINE_WALK = ['wren', 'tove', 'elias', 'ziggy', 'mira', 'bjorn', 'orvel', 'rose', 'kai', 'fisher', 'pip'];
 function cineWalk(a, tnow) {
   const dx = a.x - (a.px == null ? a.x : a.px), dy = a.y - (a.py == null ? a.y : a.py); a.px = a.x; a.py = a.y;
   a.vx = (a.vx || 0) * .9 + dx; a.vy = (a.vy || 0) * .9 + dy;            // smoothed, so a little skip doesn't flip her around every frame
   if (Math.hypot(a.vx, a.vy) > .02) a.dir = Math.abs(a.vx) > Math.abs(a.vy) ? (a.vx > 0 ? 2 : 3) : a.vy < 0 ? 0 : 1;
-  const d = a.dir == null ? 1 : a.dir, r = (WALK[a.id] || { rate: 7 }).rate, side = d >= 2, t = tnow / 1000, f = side ? Math.floor(t * r * 1.6) % 4 : Math.floor(t * r) % 2;
+  const d = a.dir == null ? 1 : a.dir, r = (WALK[a.id] || WALK_BED[a.id] || { rate: 7 }).rate, side = d >= 2, t = tnow / 1000, f = side ? Math.floor(t * r * 1.6) % 4 : Math.floor(t * r) % 2;
   return { c: npcPose(a.id, d === 0 ? { view: 'back', step: f } : d === 1 ? { step: f } : { view: 'side', step: f }), flip: d === 3, bob: !side && f ? 1 : 0 };
 }
 function itemCanvas(kind) {
@@ -3151,7 +3274,7 @@ function wrenMoveEnd() {
 // ---- Wren's glade (Heart 4, 2026-11-02): she walks you to her secret spot in Whisperwood and the fireflies come out
 const GLADE_FLIES = [[3, 17], [6, 18], [4, 20], [7, 16], [2, 19], [5, 17], [7, 21], [4.2, 16.1], [2.4, 17.2], [6.2, 19.4], [1.8, 16.4]];   // the first 7 are the glade's own M.flies, so they carry on after the scene
 function gladeWait() { const ws = WS(); return (ws.seen.wren || 0) >= 4 && !(ws.f || {}).glade && !ws.gift.glade; }
-function gladeOpen() { const h = dnHour(); return h >= 20.5 || h < 5; }   // the fireflies are out: Wren only takes you after 20:30 (DJ, 2026-11-03)
+function gladeOpen() { const h = dnHour(); return h >= 20.5 && h < 23; }   // 20:30-23:00: after that Wren is asleep (bedtime, 2026-11-11)   // the fireflies are out: Wren only takes you after 20:30 (DJ, 2026-11-03)
 function gladeAsk(again) {
   if (!gladeOpen()) { WS().gladeTold = dn(); save(); return dialog('wren', [again ? 'Not yet! Come find me tonight after 20:30. Trust me, it\'s worth the wait.' : 'Come find me tonight after 20:30. I want to show you something magical in the woods.']); }
   dialog('wren', [again ? 'Hey! Ready to see that secret now? Come on, follow me!' : 'Want to see a secret? Come on, follow me!'], null, [{ label: 'LEAD THE WAY!', fn: gladeScene }]);
@@ -3536,6 +3659,7 @@ function circusOnEnter() {                          // called when the World ope
   if (first) return startCinematic();
   if (S.petScene && WR.cur === 'village') return setTimeout(() => { if (WR && WR.alive && !WR.cine) petCinematic(circusOnEnter); }, 500);
   const gate = () => { if (circusGate()) setTimeout(() => circusThought(!C.legend), 600); };
+  if (sleepOn() && (famStage() === 'ready' || zgStage() === 'ready')) return gate();   // move-ins wait for the morning: everyone is asleep
   if (famStage() === 'ready') return setTimeout(() => { if (WR && WR.alive && !WR.cine) hfCinematic(gate); }, 400);
   if (zgStage() === 'ready') return setTimeout(() => { if (WR && WR.alive && !WR.cine) zgCinematic(gate); }, 400);
   gate();
@@ -4375,9 +4499,9 @@ function worldEntities() {
     for (let j = 0; j < 3; j++) for (let ii = 0; ii < 5; ii++) V.solid[11 + j][41 + ii] = np ? 1 : 0;
     if (zs === 'home' && !(WR.cine && WR.cine.zg)) { const sp = zgSpot(), [x, y] = walkerAt('ziggy', sp[0], sp[1]); E.push({ id: 'ziggy', npc: 1, x, y }); }
   }
-  WR.ents = E;
+  WR.ents = bedSort(E);
   const M = WR.maps[WR.cur]; M.solidE = {};
-  E.forEach(e => { if (e.npc || e.solid) M.solidE[Math.floor(e.x) + ',' + Math.floor(e.y)] = 1; });
+  WR.ents.forEach(e => { if (e.npc || e.solid) M.solidE[Math.floor(e.x) + ',' + Math.floor(e.y)] = 1; });
   if (WR.cur === 'village') M.solid[15][5] = f.door ? 0 : 1;
 }
 function blocked(M, x, y) {
@@ -4426,6 +4550,7 @@ function worldTick(now) {
     if (WR.cur === 'forest' && !WR.cine && p.x < 9 && p.y > 16 && !WS().gift.glade) { NS('wren'); WS().gift.glade = 1; checkUnlocks(); save(); sfx('tier'); setTimeout(() => giftCard('NEW PLACE', 'Firefly glade', `<svg class="cpic" viewBox="0 0 44 44" shape-rendering="crispEdges">${runs(placeBg('glade'))}</svg>`, 'WREN\'S SECRET SPOT'), 200); }
     let w = M.warps.find(w => w.x === Math.floor(p.x) && w.y === Math.floor(p.y + .1));
     if (w && circusGate() && w.to !== 'village' && !(w.to === 'tent' && circusStage() === 'tent')) { p.x = px0; p.y = py0; w = null; if (!WR.gateSaid || performance.now() - WR.gateSaid > 4000) { WR.gateSaid = performance.now(); dialog('me', [gateLine()]); } }
+    if (w && WR.night && ((w.to === 'tower' && WS().f.door && inBed('orvel')) || w.to === 'salon')) { p.x = px0; p.y = py0 + .25; const who = w.to === 'salon' ? 'Ferro is' : 'Orvel is'; w = null; if (!WR.doorSaid || performance.now() - WR.doorSaid > 4000) { WR.doorSaid = performance.now(); dialog(null, sleepMsg(who, who === 'Ferro is' ? 'The salon is dark. Through the window, Ferro is asleep on his sofa, wearing a silk eye mask.' : null)); } }
     if (w && w.to === 'rose' && !WS().f.roseRoom) { p.x = px0; p.y = py0; w = null; if (!WR.doorSaid || performance.now() - WR.doorSaid > 4000) { WR.doorSaid = performance.now(); dialog(null, ['The bakery door is closed. Rose is usually right outside.']); } }
     if (w && (w.to !== 'tower' || WS().f.door) && (w.to !== 'tent' || CIRC().arrived)) worldWarp(w);
   }
@@ -4437,7 +4562,7 @@ function worldTick(now) {
   if (WR.cur === 'village' && !WR.cine && zgStage() === 'build' && Math.hypot(p.x - 43.5, p.y - 14) < 6 && (!WR.hamT || now - WR.hamT > 6500)) { WR.hamT = now; [0, 380, 760].forEach(ms => setTimeout(() => sfx('hammer'), ms)); }   // Wren hammering at Ziggy's workshop
   if (WR.cur === 'village' && !WR.cine && famStage() === 'build' && Math.hypot(p.x - 14.5, p.y - 14.5) < 6 && (!WR.hamT || now - WR.hamT > 6500)) { WR.hamT = now; [0, 380, 760].forEach(ms => setTimeout(() => sfx('hammer'), ms)); }   // Wren hammering at the site
   const lk = !!worldLocked(); if (lk !== WR.lk) { WR.lk = lk; document.body.classList.toggle('wlock', lk); }
-  if (!WR.hudT || now - WR.hudT > 1000) { WR.hudT = now; worldHud(); }   // quests change from dialogs and choices: keep the bar current
+  if (!WR.hudT || now - WR.hudT > 1000) { WR.hudT = now; worldHud(); bedCheck(now); }   // quests change from dialogs and choices: keep the bar current
   worldNear(); worldDraw(); WR.raf = requestAnimationFrame(worldTick);
 }
 function worldWarp(w) {
@@ -4462,19 +4587,21 @@ function worldNear() {
   WR.ents.forEach(e => { const d = Math.hypot(e.x + .5 - fx, e.y + .5 - fy) * .7 + Math.hypot(e.x + .5 - p.x, e.y + .6 - p.y) * .3; if (d < bd) { bd = d; best = e; } });
   if (WR.cur === 'tower' && Math.hypot(5.5 - p.x, 3.7 - p.y) < 1.3 && !best) best = { id: 'table' };
   if (WR.cur === 'rose' && Math.hypot(WR.maps.rose.bed.x - p.x, WR.maps.rose.bed.y - p.y) < 1.3 && !best) best = { id: 'bed' };
+  if (!best) best = bedNear();
   if (WR.cur === 'village' && Math.hypot(23 - p.x, 15.2 - p.y) < 1.4 && !best) best = { id: 'board' };
   if (WR.cur === 'village' && Math.hypot(12.5 - p.x, 14.4 - p.y) < 1.6 && !best && !['home', 'ready'].includes(famStage())) best = { id: 'site' };
   if (WR.cur === 'village' && CIRC().arrived && Math.hypot(27 - p.x, 23.2 - p.y) < 2.3 && !best) best = { id: 'wagon' };
   if (WR.cur === 'village' && Math.hypot(43.5 - p.x, 14.6 - p.y) < 1.5 && !best && zgStage() === 'build') best = { id: 'zsite' };
   WR.near = best;
   const b = document.getElementById('wact'); if (!b) return;
-  const lab = !best ? '' : best.act ? (() => { const B = actState(); return B.pending ? 'HIT IT' : B.staggered ? 'FINISH IT' : 'LOOK'; })() : best.id === 'board' || best.id === 'wagon' || best.id === 'site' || best.id === 'zsite' ? 'LOOK' : best.npc ? 'TALK' : best.id === 'boulder' ? 'PUSH' : best.id === 'runedoor' ? 'READ' : best.id === 'bell' ? 'RING' : best.id === 'bed' ? 'REST' : best.pick ? 'TAKE' : 'LOOK';
+  const lab = !best ? '' : best.act ? (() => { const B = actState(); return B.pending ? 'HIT IT' : B.staggered ? 'FINISH IT' : 'LOOK'; })() : best.id === 'board' || best.id === 'wagon' || best.id === 'site' || best.id === 'zsite' ? 'LOOK' : best.npc ? 'TALK' : best.id === 'boulder' ? 'PUSH' : best.id === 'runedoor' ? 'READ' : best.id === 'bell' ? 'RING' : best.id === 'bed' ? 'REST' : best.id === 'sleepdoor' ? (WR.cur === 'rose' ? 'LOOK' : 'KNOCK') : best.pick ? 'TAKE' : 'LOOK';
   if (b.textContent !== lab) b.textContent = lab; b.hidden = !best || !!WR.dlg || !!(WR.cine && WR.cine.nap);
 }
 function worldAct() {
   const e = WR.near; if (!e || WR.dlg || WR.busy) return; const ws = WS(), f = ws.f;
   if (e.npc) return talk(e.id);
   if (e.id === 'bed') return bedTalk();
+  if (e.id === 'sleepdoor') { if (WR.cur !== 'rose') sfx('knock'); return dialog(null, e.msg); }
   if (e.id === 'wagon') return checkWagon();
   if (e.id === 'zsite' && !circusGate()) return dialog(null, ['Wren\'s building site. Planks, nails, and a drawing of a very big window.', 'A note is pinned to a beam: "FOR ZIGGY. No, the door does NOT need a password. -W"']);
   if (e.id === 'site' && !circusGate() && famStage() === 'build') return dialog(null, ['Wren\'s building site. Fresh planks, sawdust, and a pencil sketch of round windows.', 'A note is pinned to a beam: "FOR THE HONEYFIELDS".']);
@@ -4648,6 +4775,7 @@ function smallTalk(id, own) {                      // one line: busy (3rd chat t
   return chatterLine(id);
 }
 function talk(id) {
+  if (WR && WR.night && (sleeper(id) || id === 'ferro')) return dialog(id, [id === 'ferro' ? '*Yawn*... Darling, even magic needs its beauty sleep. Come back tomorrow.' : '*Yawn*... It\'s way past my bedtime. Come back tomorrow, okay?']);
   if (opOn()) {                                      // the opening: unmet mentors give their pick card, nothing else from them yet
     if (OP_M.includes(id)) return S.opening.met[id] ? dialog(id, [OP_WAIT[id]]) : opMentor(id);
     if (id === 'ferro') return dialog('ferro', ['Go, go, darling! Bjørn, Orvel, Rose and Kai are waiting to meet you.']);
@@ -4808,7 +4936,9 @@ function dayLight(h) { h = h == null ? dnHour() : h; let i = 0; while (i < DN_KE
 const DN_OUT = { village: 1, forest: 1, shrine: 1 };
 function dnLights(M) {                                  // [x, y, radius, kind] in world pixels; kind w = window glow
   const L = [], cur = WR.cur;
-  M.props.forEach(q => { if (q.hidden) return;
+  M.props.forEach(q => { if (q.hidden) return; const sl = houseSleepers(q); if (sl.length && sl.every(inBed)) return;   // asleep: lights out
+    if (q.type === 'bcabin') [18, 66].forEach(dx => L.push([q.x * WT - 4 + dx, q.y * WT - 18 + 46, 24, 'w']));
+    if (q.type === 'fhut') L.push([q.x * WT - 3 + 17, q.y * WT - 14 + 44, 22, 'w']);
     if (q.type === 'lamp') L.push([q.x * WT + 8, q.y * WT - 15, 42, 'l']);
     if (q.type === 'slantern') L.push([q.x * WT + 6, q.y * WT - 2, 30, 'l']);
     if (q.type === 'fire' && NS('wren').moved == null) L.push([q.x * WT + 8, q.y * WT + 4, 56, 'l']);
@@ -4839,6 +4969,8 @@ function dnDraw(g, cx, cy, vw, vh, tnow) {
     g.restore();
     L.forEach(([x, y, r, k]) => { if (k !== 'w') return; g.fillStyle = `rgba(255,214,120,${.55 * lt})`; g.fillRect(Math.round(x) - 5, Math.round(y) - 4, 10, 8); });   // warm light in the windows
   }
+  if (WR.night) M.props.forEach(q => { const sl = houseSleepers(q); if (!sl.length || !sl.every(inBed)) return;   // Zzz from the houses where everyone is asleep
+    const o = { bcabin: [64, -8], fhut: [12, -8], tower: [40, -60], salon: [56, -2], zwork: [56, -10] }[q.type] || [62, -8]; sleepZ(g, q.x * WT + o[0], q.y * WT + o[1], tnow, q.x * .37); });
 }
 // ---- drawing
 function worldDraw() {
@@ -4894,6 +5026,7 @@ function worldDraw() {
   WR.frames = WR.frames || {}; const hc = pose ? (WR.frames[pose] || (WR.frames[pose] = heroCanvas(pose))) : WR.hero, hb = /run[13]/.test(pose) ? 1 : 0, flipH = p.moving && p.dir === 3;
   (WR.dust || []).forEach(d => { d.t += 1 / 60; const a = Math.max(0, 1 - d.t / (d.life || .4)), r = (1.5 + Math.min(d.t, .4) * 7) * (d.s || 1); g.fillStyle = `rgba(240,230,210,${a * .7})`; g.beginPath(); g.arc(d.x * WT, d.y * WT, r, 0, 7); g.fill(); }); WR.dust = (WR.dust || []).filter(d => d.t < (d.life || .4));
   const nap = WR.cine && WR.cine.nap; if (nap) draws.push({ z: nap.y + 47, c: nap.head, x: nap.x, y: nap.y + 1 });
+  if (WR.cur === 'rose' && WR.night) { const rb = WR.maps.rose.props.find(q => q.type === 'rbedr'); if (rb) draws.push({ z: rb.y * WT + 18, c: roseSleepCanvas(), x: rb.x * WT - 6, y: rb.y * WT - 20 }); }
   if (!nap) shadow(p.x * WT, p.y * WT + 6, hc.width / 2.8);
   if (nap) {} else if (qpose) { const qc = WR.frames['q:' + qpose] || (WR.frames['q:' + qpose] = heroCanvas(qpose)), h0 = WR.hero;   // keep the body where the idle frame stands
     const qx = Math.round(p.x * WT - h0.width / 2) - h0.x0 + qc.x0, fl = WR.qk && WR.qk.side === -1;   // fishing faces the water: mirror it when the pond is on the left
@@ -4945,6 +5078,7 @@ function worldDraw() {
   }
   if (WR.cine && WR.cine.glade) gladeDraw(g, cx, cy, vw, vh, tnow);
   restDraw(g, cx, cy, vw, vh, tnow);
+  if (WR.cur === 'rose' && WR.night) { const rb = WR.maps.rose.props.find(q => q.type === 'rbedr'); if (rb) sleepZ(g, rb.x * WT + 18, rb.y * WT - 18, tnow, 1); }
   if (WR.cine && WR.cine.gloom > .005) { g.fillStyle = `rgba(28,16,40,${WR.cine.gloom})`; g.fillRect(cx - 2, cy - 2, vw + 4, vh + 4); }
 }
 
