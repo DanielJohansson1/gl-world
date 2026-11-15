@@ -1353,7 +1353,7 @@ function charLayers(str, int, cha, gear, pose) {
   put(body, CX - 1 + fs, my + 1, 'm'); put(body, CX + fs, my + 1, 'm');
   if (run >= 0) { put(body, hR + 1, ey, null); put(body, hR + 1, ey + 1, null); rect(body, hL, ey - 1, 2, 3, 'H'); put(body, hL + 2, ey - 1, 'h'); }
   put(body, hL + 2, ey - 1, 'K'); put(body, hL + 3, ey - 1, 'K'); // cheek light
-  if (LK.g === 'f') { put(body, ex1 - 1, ey, 'e'); put(body, ex2 + 2, ey, 'e'); put(body, ex1 - 1, ey - 1, 'e'); put(body, ex2 + 2, ey - 1, 'e'); put(body, CX - 1 + fs, my + 1, 'k'); put(body, CX + fs, my + 1, 'k'); }   // lashes, a pinker smile
+  // v63: girls and boys share the same face (no lashes or pink lips, per DJ)
   const shut = x => { put(body, x, ey, 's'); put(body, x + 1, ey, 's'); put(body, x, ey + 1, 'e'); put(body, x + 1, ey + 1, 'e'); };
   if (pose === 'blink' || pose === 'breath' || pose === 'zen') { shut(ex1); shut(ex2); }
   if (pose === 'spell' || pose === 'spell2') { const sx = hR + 4, sy = top - 1, pts = pose === 'spell' ? [[0, -3], [3, 0], [-2, 2], [5, -4]] : [[2, -5], [5, -1], [-1, -1], [6, 2]]; pts.forEach(([a, b]) => { put(body, sx + a, sy + b, 'Y'); put(body, sx + a - 1, sy + b, 'y'); put(body, sx + a + 1, sy + b, 'y'); put(body, sx + a, sy + b - 1, 'y'); put(body, sx + a, sy + b + 1, 'y'); }); }
