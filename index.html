@@ -122,8 +122,8 @@ svg.sprite{width:150px;height:150px;flex:none;border:3px solid var(--fg)}
 .tier1 .badge{background:#d58b4a}.tier2 .badge{background:#c9d1da}.tier3 .badge,.tier4 .badge{background:#e8bf4f}
 .tier4 .badge{box-shadow:0 0 0 2px #fff1a8}
 .tier1 .seg i{border-color:#a0612a}.tier2 .seg i{border-color:#8f9aa6}.tier3 .seg i,.tier4 .seg i{border-color:#b8860b}
-.trial{font-size:8px;line-height:1.5;color:#8a6200;background:none;border:0;box-shadow:none;padding:2px 0;width:100%;text-align:left;display:flex;align-items:center;gap:0}
-.trial .ti{margin-left:auto;width:14px;height:14px;border:2px solid #8a6200;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:normal}
+
+
 .tbox{display:flex;gap:4px;justify-content:center;margin:4px 0}.tbox i{width:26px;height:26px;border:3px solid var(--fg);background:var(--field);display:flex;align-items:flex-end;justify-content:center}.tbox i.on{background:var(--c)}.tbox i.pre{opacity:.35}.tbox u{text-decoration:none;font-size:8px;margin-bottom:-18px;color:var(--mid)}.tbox:not(.cnt){margin-bottom:16px}
 .lock{display:inline-block;width:7px;height:7px;background:#8a6200;margin-right:4px;vertical-align:baseline}
 .prog{height:6px;background:var(--field);border:2px solid var(--fg)}
@@ -239,7 +239,7 @@ nav button[aria-current="true"]{background:var(--panel);color:var(--fg)}
 .tw-extra{display:flex;gap:4px;align-items:center;font-size:8px;color:var(--mid)}
 .tw-msg{margin:0;font-size:8px;line-height:1.7;text-align:center}.tw-msg b{font-weight:normal;color:var(--c)}
 .tw-days{width:100%;border-top:2px dashed var(--mid)}.tw-day{display:flex;gap:8px;align-items:center;padding:4px 2px;border-bottom:2px dashed rgba(0,0,0,.12);min-height:30px;text-align:left}.tw-day .dd{width:34px;flex:none;font-size:8px;line-height:1.3}.tw-day .dd small{display:block;color:var(--mid);font-size:7px}.tw-l{display:flex;flex-wrap:wrap;gap:4px;flex:1}.tw-l em{font-style:normal;font-size:8px;display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.4);border-left:4px solid var(--c);padding:3px 6px}.tw-l em.rest{background:none;border:0;color:var(--mid);padding:0}
-.tw-day.today{background:rgba(240,192,48,.3)}.tw-day.today .dd::after{content:'TODAY';display:block;font-size:6px;color:#8a5a00}.tw-day.fut{opacity:.4}
+.tw-day.today{background:rgba(240,192,48,.3)}.tw-day.pk{cursor:pointer}.tw-day.sel{outline:3px solid #3b2416;outline-offset:-3px;position:relative;padding-left:7px}.tw-day.sel .dd{color:#3b2416}.tw-day.sel::before{content:'';position:absolute;left:-9px;top:50%;margin-top:-5px;border:5px solid transparent;border-left-color:#3b2416}.tw-tap{font-size:7px;align-self:center}.tw-day.today .dd::after{content:'TODAY';display:block;font-size:6px;color:#8a5a00}.tw-day.fut{opacity:.4}
 .tw-lh{align-self:flex-start;font-size:8px;color:var(--mid)}.tw-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%}.tw-btn{margin:0;display:flex;align-items:center;gap:6px;font-size:8px;text-align:left;padding:8px 6px;min-width:0}.tw-btn small{display:block;font-size:7px;color:var(--mid);margin-top:3px}
 .ilh{align-self:flex-start;font-size:8px;color:var(--mid)}.ipick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%}.ipick button{margin:0;padding:6px 0;min-width:0;display:flex;justify-content:center;background:var(--field)}.ipick button.on{background:#f0c030;outline:3px solid #c0392b}
 .pick .chip .pxi{margin-right:2px}
@@ -270,8 +270,8 @@ const isRep=t=>!t.once&&!t.daily&&!t.weekly&&!t.mentor,todayN=id=>S.log.filter(e
 // repeatable tasks give points at most twice a day; after that they wait for tomorrow
 function finished(t){return doneToday(t)||(isRep(t)&&todayN(t.id)>=2)}
 const QUILL=`<svg viewBox="0 0 14 14" shape-rendering="crispEdges" aria-hidden="true"><rect x="10" y="1" width="1" height="1" fill="#3b2416"/><rect x="11" y="0" width="1" height="1" fill="#3b2416"/><rect x="13" y="1" width="1" height="1" fill="#3b2416"/><rect x="12" y="0" width="1" height="1" fill="#3b2416"/><rect x="8" y="2" width="1" height="1" fill="#3b2416"/><rect x="9" y="1" width="1" height="1" fill="#3b2416"/><rect x="13" y="2" width="1" height="1" fill="#3b2416"/><rect x="7" y="3" width="1" height="1" fill="#3b2416"/><rect x="13" y="3" width="1" height="1" fill="#3b2416"/><rect x="12" y="4" width="1" height="1" fill="#3b2416"/><rect x="6" y="4" width="1" height="1" fill="#3b2416"/><rect x="11" y="5" width="1" height="1" fill="#3b2416"/><rect x="5" y="5" width="1" height="1" fill="#3b2416"/><rect x="10" y="6" width="1" height="1" fill="#3b2416"/><rect x="4" y="6" width="1" height="1" fill="#3b2416"/><rect x="8" y="7" width="1" height="1" fill="#3b2416"/><rect x="9" y="7" width="1" height="1" fill="#3b2416"/><rect x="3" y="7" width="1" height="1" fill="#3b2416"/><rect x="7" y="8" width="1" height="1" fill="#3b2416"/><rect x="3" y="8" width="1" height="1" fill="#3b2416"/><rect x="5" y="9" width="1" height="1" fill="#3b2416"/><rect x="6" y="9" width="1" height="1" fill="#3b2416"/><rect x="2" y="9" width="1" height="1" fill="#3b2416"/><rect x="4" y="10" width="1" height="1" fill="#3b2416"/><rect x="1" y="10" width="1" height="1" fill="#3b2416"/><rect x="3" y="11" width="1" height="1" fill="#3b2416"/><rect x="1" y="11" width="1" height="1" fill="#3b2416"/><rect x="2" y="12" width="1" height="1" fill="#3b2416"/><rect x="0" y="12" width="1" height="1" fill="#3b2416"/><rect x="1" y="13" width="1" height="1" fill="#3b2416"/><rect x="11" y="1" width="1" height="1" fill="#fffaf0"/><rect x="12" y="1" width="1" height="1" fill="#fffaf0"/><rect x="9" y="2" width="1" height="1" fill="#fffaf0"/><rect x="10" y="2" width="1" height="1" fill="#fffaf0"/><rect x="11" y="2" width="1" height="1" fill="#fffaf0"/><rect x="12" y="2" width="1" height="1" fill="#fffaf0"/><rect x="8" y="3" width="1" height="1" fill="#fffaf0"/><rect x="9" y="3" width="1" height="1" fill="#fffaf0"/><rect x="10" y="3" width="1" height="1" fill="#fffaf0"/><rect x="11" y="3" width="1" height="1" fill="#fffaf0"/><rect x="12" y="3" width="1" height="1" fill="#c9c2b0"/><rect x="7" y="4" width="1" height="1" fill="#fffaf0"/><rect x="8" y="4" width="1" height="1" fill="#fffaf0"/><rect x="9" y="4" width="1" height="1" fill="#fffaf0"/><rect x="10" y="4" width="1" height="1" fill="#fffaf0"/><rect x="11" y="4" width="1" height="1" fill="#c9c2b0"/><rect x="6" y="5" width="1" height="1" fill="#fffaf0"/><rect x="7" y="5" width="1" height="1" fill="#fffaf0"/><rect x="8" y="5" width="1" height="1" fill="#fffaf0"/><rect x="9" y="5" width="1" height="1" fill="#fffaf0"/><rect x="10" y="5" width="1" height="1" fill="#c9c2b0"/><rect x="5" y="6" width="1" height="1" fill="#fffaf0"/><rect x="6" y="6" width="1" height="1" fill="#fffaf0"/><rect x="7" y="6" width="1" height="1" fill="#fffaf0"/><rect x="8" y="6" width="1" height="1" fill="#fffaf0"/><rect x="9" y="6" width="1" height="1" fill="#c9c2b0"/><rect x="4" y="7" width="1" height="1" fill="#fffaf0"/><rect x="5" y="7" width="1" height="1" fill="#fffaf0"/><rect x="6" y="7" width="1" height="1" fill="#fffaf0"/><rect x="7" y="7" width="1" height="1" fill="#c9c2b0"/><rect x="4" y="8" width="1" height="1" fill="#fffaf0"/><rect x="5" y="8" width="1" height="1" fill="#fffaf0"/><rect x="6" y="8" width="1" height="1" fill="#c9c2b0"/><rect x="3" y="9" width="1" height="1" fill="#fffaf0"/><rect x="4" y="9" width="1" height="1" fill="#c9c2b0"/><rect x="2" y="10" width="1" height="1" fill="#c9c2b0"/><rect x="3" y="10" width="1" height="1" fill="#c9c2b0"/><rect x="2" y="11" width="1" height="1" fill="#3b2416"/><rect x="1" y="12" width="1" height="1" fill="#3b2416"/></svg>`;
-let view='home',rc=0,wtab='gear',editMode=false,addOpen=false,trPick=false,trOff=0,editId=null,delArm=0,ideaDraft=null,openWQ=false,openDone=false,trialK=null,S=load();
-function ensure(){if(!S.circus1){S.circus1=1;S.bossWon={};['nightcap','bloom','hoodie','chef','captainhat','antenna','arena'].forEach(k=>{if(S.owned)delete S.owned[k];if(S.equip)delete S.equip[k];if(S.fresh)delete S.fresh[k]});if(S.place==='arena')S.place='meadow'}S.tasks.forEach(t=>{if(t.side){delete t.side;t.once=true;t.daily=false;t.weekly=false}});/* side quests are plain one-time tasks now (TO DO) */if(!S.tasks2&&!S.log.length&&!S.tasks.length){S.tasks2=1;S.slotOf={};S.nameAsked=1;S.opening={st:'arrive',met:{}}}/* a brand-new player: the opening story, no preset tasks */if(!S.tasks2)toSlots();S.settings=Object.assign({sound:true,anim:true,music:true},S.settings);if(S.bossSeen===undefined)S.bossSeen=wk();S.owned=S.owned||{};S.equip=S.equip||{};S.fresh=S.fresh||{};S.qon=S.qon||{};S.tier=S.tier||{};S.trialWk=S.trialWk||{};checkTrials();checkUnlocks();S.next=Math.max(S.next||4,4);if(opOn())view='world';save()}
+let view='home',rc=0,wtab='gear',editMode=false,addOpen=false,trPick=false,trOff=0,trDay=null,editId=null,delArm=0,ideaDraft=null,openWQ=false,openDone=false,S=load();
+function ensure(){if(!S.circus1){S.circus1=1;S.bossWon={};['nightcap','bloom','hoodie','chef','captainhat','antenna','arena'].forEach(k=>{if(S.owned)delete S.owned[k];if(S.equip)delete S.equip[k];if(S.fresh)delete S.fresh[k]});if(S.place==='arena')S.place='meadow'}S.tasks.forEach(t=>{if(t.side){delete t.side;t.once=true;t.daily=false;t.weekly=false}});/* side quests are plain one-time tasks now (TO DO) */if(!S.tasks2&&!S.log.length&&!S.tasks.length){S.tasks2=1;S.slotOf={};S.nameAsked=1;S.opening={st:'arrive',met:{}}}/* a brand-new player: the opening story, no preset tasks */if(!S.tasks2)toSlots();S.settings=Object.assign({sound:true,anim:true,music:true},S.settings);if(S.bossSeen===undefined)S.bossSeen=wk();S.owned=S.owned||{};S.equip=S.equip||{};S.fresh=S.fresh||{};S.qon=S.qon||{};S.tier=S.tier||{};trialsGone();checkUnlocks();S.next=Math.max(S.next||4,4);if(opOn())view='world';save()}
 // tasks v2 (2026-10-29): core tasks get slots and fixed points, own tasks get a size. A copy of the old save is kept first.
 function toSlots(){if(S.log&&S.log.length)try{localStorage.setItem(KEY+'-before-tasks2',JSON.stringify(S))}catch(e){}
 S.slotOf=S.slotOf||{};S.tasks=S.tasks.filter(t=>!(t.perm&&!CORE.some(c=>c.id==t.id)));
@@ -288,23 +288,28 @@ function lvl(p){let l=0,c=5;while(p>=c){p-=c;l++;c=5+3*l}return{l,cur:p,need:c}}
 function wk(d){const x=new Date(d||Date.now());x.setHours(0,0,0,0);x.setDate(x.getDate()-((x.getDay()+6)%7));return x.getFullYear()+'-'+x.getMonth()+'-'+x.getDate()}
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>t.style.display='none',2600)}
 const TIERN=['NOVICE','ADEPT','EXPERT','MASTER','LEGEND'],ROMAN=['I','II','III','IV','V','VI','VII','VIII','IX','X'];
-function tierOf(k){return (S.tier&&S.tier[k])||0}
+function tierOf(k){return Math.floor(lvl(S.pts[k]).l/10)}   // the rank, from the level; S.tier only remembers which ranks were celebrated
 function ptsFor(L){let p=0;for(let l=0;l<L;l++)p+=5+3*l;return p}
-// adds points but never past the current trial cap: an open trial is a natural stop
-function gain(k,n){const a=Math.max(0,Math.min(n,ptsFor(10*(tierOf(k)+1))-S.pts[k]));S.pts[k]+=a;return a}
-function Lv(k){return Math.min(lvl(S.pts[k]).l,10*(tierOf(k)+1))}
-function atTrial(k){return lvl(S.pts[k]).l>=10*(tierOf(k)+1)}
-function trialFrom(k){const o=S.trialOpen&&S.trialOpen[k],d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-6);return Math.max(o?o.at:Date.now(),d.getTime())}
-function trialProg(k){const from=trialFrom(k),L=S.log.filter(e=>e.t>from),days=f=>new Set(L.filter(f).map(e=>day(e.t))).size;
-if(k==='STR')return[L.filter(e=>isTr(e.id)).length,4,'TRAININGS'];
-if(k==='INT')return[days(e=>slotOf(e.id)==='learn'),5,'LEARNING DAYS'];
-if(k==='CHA')return[days(e=>e.stat==='CHA'),5,'HEART DAYS'];
-return[days(()=>true),6,'ACTIVE DAYS']}
-function checkTrials(e){const up=[];S.tier=S.tier||{};S.trialOpen=S.trialOpen||{};
-Object.keys(NAMES).forEach(k=>{if(!atTrial(k)){delete S.trialOpen[k];return}
-const o=S.trialOpen[k];if(!o||o.tier!==tierOf(k)){S.trialOpen[k]={tier:tierOf(k),at:Date.now()};return}
-const [a,b]=trialProg(k);if(a>=b){up.push(k);if(e){e.trOpen=e.trOpen||{};e.trOpen[k]=o}S.tier[k]=tierOf(k)+1;delete S.trialOpen[k];if(atTrial(k))S.trialOpen[k]={tier:tierOf(k),at:Date.now()}}});
-return up}
+// v67: no more caps. Points always count; a stat ranks up by itself every 10 levels (Novice, Adept, Expert...)
+function gain(k,n){const a=Math.max(0,n);S.pts[k]+=a;return a}
+function Lv(k){return lvl(S.pts[k]).l}
+// S.tier[k] = the last rank you saw the NEW RANK card for. Returns the stats that just ranked up.
+function checkRanks(){S.tier=S.tier||{};const up=[];Object.keys(NAMES).forEach(k=>{const r=tierOf(k);if(r>(S.tier[k]||0)){up.push(k);S.tier[k]=r}else if(r<(S.tier[k]||0))S.tier[k]=r});return up}
+// v67 one-time move off the old trials: give back the points a stat lost while it was paused at a trial
+function trialsGone(){if(S.trials0)return;S.trials0=1;const W={},add=(k,a,b)=>(W[k]=W[k]||[]).push([a-6e4,b]);
+S.log.forEach(e=>{if(e.trOpen)Object.keys(e.trOpen).forEach(k=>add(k,e.trOpen[k].at,e.t))});
+Object.keys(S.trialOpen||{}).forEach(k=>add(k,S.trialOpen[k].at,Infinity));
+const inW=(k,t)=>(W[k]||[]).some(([a,b])=>t>=a&&t<=b),back={},plus=(k,n)=>back[k]=(back[k]||0)+n;
+S.log.forEach(e=>{const t=S.tasks.find(x=>x.id==e.id),full=t?t.pts:null;
+if(full!=null&&e.pts!=null&&e.pts<full&&inW(e.stat,e.t)){plus(e.stat,full-e.pts);e.pts=full}
+if(e.bk){if(e.bs!=null&&e.bs<10&&inW(e.stat,e.t)){plus(e.stat,10-e.bs);e.bs=10}if(e.bd!=null&&e.bd<5&&inW('DIS',e.t)){plus('DIS',5-e.bd);e.bd=5}}
+delete e.trOpen});
+Object.keys(back).forEach(k=>S.pts[k]+=back[k]);delete S.trialOpen;delete S.trialWk;if(Object.keys(back).length)S.trialsBack=back}
+// shows what's waiting when you're on Home or ME: the points that came back, then any new rank
+function rankCheck(){if(opOn()||view==='world'||document.querySelector('.fxtier'))return;const back=S.trialsBack,tu=checkRanks();delete S.trialsBack;if(!back&&!tu.length)return;save();
+const q=[];if(back)q.push(nx=>fxCard('',`<small class="tpk">NO MORE PAUSES!</small><h3>Your stats grow freely now</h3><p>The old level 10 trials are gone. Points from the days a stat was paused are back:</p><p class="lbl">${Object.keys(NAMES).filter(k=>back[k]).map(k=>'+'+back[k]+' '+SHORT[k]).join(' · ')}</p><p>Trials now come from the keepers.</p>`,'AWESOME!',nx,'tier'));
+if(tu.length)q.push(nx=>fxOn()?tierCard(tu,nx):(toast(tu.map(k=>NAMES[k]+' → '+TIERN[Math.min(tierOf(k),4)]+'!').join(' ')),nx&&nx()));
+const run=()=>{const f=q.shift();if(f)f(run)};run()}
 function day(d){const x=new Date(d||Date.now());return x.getFullYear()+'-'+x.getMonth()+'-'+x.getDate()}
 function doneToday(t){return (!!t.daily&&S.log.some(e=>e.id==t.id&&day(e.t)===day()))||(!!t.weekly&&S.log.some(e=>e.id==t.id&&wk(e.t)===wk()))}
 const ITEMS=[
@@ -329,10 +334,10 @@ const ITEMS=[
 {id:'clown',slot:'head',name:'Clown nose and ruff',how:'Left behind by The Clockwork Clown',cond:()=>beat('captain'),ic:'<rect x="6" y="2" width="4" height="4" fill="#c23b2c"/><rect x="6" y="2" width="1" height="1" fill="#ec8a6c"/><rect x="1" y="9" width="14" height="3" fill="#fffaf0"/><rect x="1" y="12" width="2" height="1" fill="#fffaf0"/><rect x="5" y="12" width="2" height="1" fill="#fffaf0"/><rect x="9" y="12" width="2" height="1" fill="#fffaf0"/><rect x="13" y="12" width="2" height="1" fill="#fffaf0"/><rect x="4" y="10" width="1" height="1" fill="#e2d9c5"/><rect x="8" y="10" width="1" height="1" fill="#e2d9c5"/><rect x="12" y="10" width="1" height="1" fill="#e2d9c5"/>'},
 {id:'tophat',slot:'head',name:"Magician's top hat",how:'Left behind by The Mirror Magician',cond:()=>beat('excuse'),ic:'<rect x="4" y="1" width="8" height="9" fill="#1e1e24"/><rect x="4" y="7" width="8" height="2" fill="#c23b2c"/><rect x="1" y="10" width="14" height="2" fill="#1e1e24"/><rect x="5" y="2" width="1" height="3" fill="#3b3f5c"/>'},
 {id:'tank',slot:'torso',name:'Gym tank top',how:"Reward from Big Bjørn's quest",cond:()=>wq('bjorn')>=3,ic:'<rect x="4" y="3" width="2" height="3" fill="#9aa5b1"/><rect x="10" y="3" width="2" height="3" fill="#9aa5b1"/><rect x="3" y="6" width="10" height="8" fill="#9aa5b1"/><rect x="6" y="3" width="4" height="2" fill="#f3c4a2"/><rect x="3" y="9" width="10" height="1" fill="#c23b2c"/><rect x="3" y="13" width="10" height="1" fill="#6d7884"/>'},
-{id:'belt',slot:'torso',name:"Bjørn's lifting belt",how:"Reward from Big Bjørn's goal: trained 8 times",cond:()=>mgK('bjorn')>=1,ic:'<rect x="1" y="6" width="14" height="5" fill="#7a4c2a"/><rect x="1" y="6" width="14" height="1" fill="#9a6638"/><rect x="1" y="10" width="14" height="1" fill="#4e2f1a"/><rect x="6" y="5" width="4" height="7" fill="#e8bf4f"/><rect x="7" y="7" width="2" height="3" fill="#7a4c2a"/><rect x="6" y="5" width="1" height="1" fill="#fff1a8"/><rect x="3" y="8" width="1" height="1" fill="#9a6638"/><rect x="12" y="8" width="1" height="1" fill="#9a6638"/>'},
-{id:'monocle',slot:'head',name:"Orvel's monocle",how:"Reward from Old Orvel's goal: read on 7 days",cond:()=>mgK('orvel')>=1,ic:'<rect x="3" y="2" width="6" height="1" fill="#d4a63a"/><rect x="3" y="9" width="6" height="1" fill="#d4a63a"/><rect x="2" y="3" width="1" height="6" fill="#d4a63a"/><rect x="9" y="3" width="1" height="6" fill="#d4a63a"/><rect x="3" y="3" width="6" height="6" fill="#cfe9f7"/><rect x="4" y="4" width="2" height="1" fill="#ffffff"/><rect x="4" y="5" width="1" height="1" fill="#ffffff"/><rect x="9" y="2" width="1" height="1" fill="#fff1a8"/><rect x="10" y="10" width="1" height="1" fill="#e8bf4f"/><rect x="11" y="12" width="1" height="1" fill="#e8bf4f"/><rect x="12" y="14" width="1" height="1" fill="#e8bf4f"/>'},
-{id:'apron',slot:'torso',name:"Rose's apron",how:"Reward from Granny Rose's goal: kind words on 5 days",cond:()=>mgK('rose')>=1,ic:'<rect x="5" y="1" width="1" height="3" fill="#f08ca8"/><rect x="10" y="1" width="1" height="3" fill="#f08ca8"/><rect x="5" y="3" width="6" height="5" fill="#f08ca8"/><rect x="5" y="3" width="6" height="1" fill="#fffaf0"/><rect x="1" y="7" width="14" height="1" fill="#e5607e"/><rect x="3" y="8" width="10" height="6" fill="#f08ca8"/><rect x="11" y="8" width="2" height="6" fill="#e5607e"/><rect x="3" y="14" width="10" height="1" fill="#fffaf0"/><rect x="6" y="9" width="1" height="1" fill="#fffaf0"/><rect x="9" y="9" width="1" height="1" fill="#fffaf0"/><rect x="6" y="10" width="4" height="1" fill="#fffaf0"/><rect x="7" y="11" width="2" height="1" fill="#fffaf0"/>'},
-{id:'kasa',slot:'head',name:"Kai's straw hat",how:"Reward from Master Kai's goal: showed up on 10 days",cond:()=>mgK('kai')>=1,ic:'<rect x="7" y="3" width="2" height="1" fill="#e3c27a"/><rect x="6" y="4" width="4" height="1" fill="#e3c27a"/><rect x="5" y="5" width="6" height="1" fill="#e3c27a"/><rect x="4" y="6" width="8" height="1" fill="#e3c27a"/><rect x="3" y="7" width="10" height="1" fill="#8c2a1f"/><rect x="1" y="8" width="14" height="2" fill="#e3c27a"/><rect x="1" y="10" width="14" height="1" fill="#b8924a"/><rect x="9" y="4" width="1" height="3" fill="#b8924a"/><rect x="11" y="6" width="1" height="1" fill="#b8924a"/><rect x="13" y="8" width="2" height="2" fill="#b8924a"/><rect x="1" y="8" width="1" height="1" fill="#f4dc9c"/><rect x="5" y="5" width="1" height="1" fill="#f4dc9c"/><rect x="4" y="9" width="1" height="1" fill="#b8924a"/><rect x="8" y="9" width="1" height="1" fill="#b8924a"/>'},
+{id:'belt',slot:'torso',name:"Bjørn's lifting belt",how:"Reward from Big Bjørn's trial: trained 8 times",cond:()=>mgK('bjorn')>=1,ic:'<rect x="1" y="6" width="14" height="5" fill="#7a4c2a"/><rect x="1" y="6" width="14" height="1" fill="#9a6638"/><rect x="1" y="10" width="14" height="1" fill="#4e2f1a"/><rect x="6" y="5" width="4" height="7" fill="#e8bf4f"/><rect x="7" y="7" width="2" height="3" fill="#7a4c2a"/><rect x="6" y="5" width="1" height="1" fill="#fff1a8"/><rect x="3" y="8" width="1" height="1" fill="#9a6638"/><rect x="12" y="8" width="1" height="1" fill="#9a6638"/>'},
+{id:'monocle',slot:'head',name:"Orvel's monocle",how:"Reward from Old Orvel's trial: read on 7 days",cond:()=>mgK('orvel')>=1,ic:'<rect x="3" y="2" width="6" height="1" fill="#d4a63a"/><rect x="3" y="9" width="6" height="1" fill="#d4a63a"/><rect x="2" y="3" width="1" height="6" fill="#d4a63a"/><rect x="9" y="3" width="1" height="6" fill="#d4a63a"/><rect x="3" y="3" width="6" height="6" fill="#cfe9f7"/><rect x="4" y="4" width="2" height="1" fill="#ffffff"/><rect x="4" y="5" width="1" height="1" fill="#ffffff"/><rect x="9" y="2" width="1" height="1" fill="#fff1a8"/><rect x="10" y="10" width="1" height="1" fill="#e8bf4f"/><rect x="11" y="12" width="1" height="1" fill="#e8bf4f"/><rect x="12" y="14" width="1" height="1" fill="#e8bf4f"/>'},
+{id:'apron',slot:'torso',name:"Rose's apron",how:"Reward from Granny Rose's trial: kind words on 5 days",cond:()=>mgK('rose')>=1,ic:'<rect x="5" y="1" width="1" height="3" fill="#f08ca8"/><rect x="10" y="1" width="1" height="3" fill="#f08ca8"/><rect x="5" y="3" width="6" height="5" fill="#f08ca8"/><rect x="5" y="3" width="6" height="1" fill="#fffaf0"/><rect x="1" y="7" width="14" height="1" fill="#e5607e"/><rect x="3" y="8" width="10" height="6" fill="#f08ca8"/><rect x="11" y="8" width="2" height="6" fill="#e5607e"/><rect x="3" y="14" width="10" height="1" fill="#fffaf0"/><rect x="6" y="9" width="1" height="1" fill="#fffaf0"/><rect x="9" y="9" width="1" height="1" fill="#fffaf0"/><rect x="6" y="10" width="4" height="1" fill="#fffaf0"/><rect x="7" y="11" width="2" height="1" fill="#fffaf0"/>'},
+{id:'kasa',slot:'head',name:"Kai's straw hat",how:"Reward from Master Kai's trial: showed up on 10 days",cond:()=>mgK('kai')>=1,ic:'<rect x="7" y="3" width="2" height="1" fill="#e3c27a"/><rect x="6" y="4" width="4" height="1" fill="#e3c27a"/><rect x="5" y="5" width="6" height="1" fill="#e3c27a"/><rect x="4" y="6" width="8" height="1" fill="#e3c27a"/><rect x="3" y="7" width="10" height="1" fill="#8c2a1f"/><rect x="1" y="8" width="14" height="2" fill="#e3c27a"/><rect x="1" y="10" width="14" height="1" fill="#b8924a"/><rect x="9" y="4" width="1" height="3" fill="#b8924a"/><rect x="11" y="6" width="1" height="1" fill="#b8924a"/><rect x="13" y="8" width="2" height="2" fill="#b8924a"/><rect x="1" y="8" width="1" height="1" fill="#f4dc9c"/><rect x="5" y="5" width="1" height="1" fill="#f4dc9c"/><rect x="4" y="9" width="1" height="1" fill="#b8924a"/><rect x="8" y="9" width="1" height="1" fill="#b8924a"/>'},
 {id:'lantern',slot:'keep',name:"Mother's lantern",how:'A gift from Finn. His mother worked late by its light.',cond:()=>!!(S.world&&S.world.gift&&S.world.gift.lantern),ic:'<rect x="6" y="1" width="4" height="1" fill="#3b2416"/><rect x="5" y="2" width="1" height="2" fill="#3b2416"/><rect x="10" y="2" width="1" height="2" fill="#3b2416"/><rect x="4" y="4" width="8" height="2" fill="#4e2f1a"/><rect x="5" y="4" width="6" height="1" fill="#7a4c2a"/><rect x="4" y="6" width="1" height="7" fill="#4e2f1a"/><rect x="11" y="6" width="1" height="7" fill="#4e2f1a"/><rect x="5" y="6" width="6" height="7" fill="#ffe7a0"/><rect x="6" y="7" width="2" height="4" fill="#fff6d0"/><rect x="8" y="9" width="2" height="3" fill="#ffb84a"/><rect x="8" y="11" width="2" height="1" fill="#e8762a"/><rect x="7" y="6" width="1" height="7" fill="#4e2f1a"/><rect x="4" y="13" width="8" height="2" fill="#4e2f1a"/><rect x="5" y="13" width="6" height="1" fill="#7a4c2a"/><rect x="3" y="15" width="10" height="1" fill="#3b2416"/>'},
 {id:'fmap',slot:'keep',name:'Map to Emberbrook',how:'A gift from Finn. His mother drew the way back, past Whisperwood.',cond:()=>!!(S.world&&S.world.gift&&S.world.gift.finnmap),ic:'<rect x="1" y="3" width="14" height="11" fill="#b98a52"/><rect x="2" y="4" width="12" height="9" fill="#ecd9a8"/><rect x="6" y="4" width="1" height="9" fill="#d9c08a"/><rect x="10" y="4" width="1" height="9" fill="#d9c08a"/><rect x="2" y="8" width="3" height="4" fill="#5c9e45"/><rect x="3" y="9" width="1" height="2" fill="#3a7a2a"/><rect x="11" y="5" width="3" height="2" fill="#6fb4dd"/><rect x="11" y="9" width="3" height="3" fill="#8a8f96"/><rect x="12" y="10" width="1" height="1" fill="#6d7178"/><rect x="4" y="6" width="1" height="1" fill="#c23b2c"/><rect x="6" y="7" width="1" height="1" fill="#c23b2c"/><rect x="8" y="8" width="1" height="1" fill="#c23b2c"/><rect x="10" y="9" width="1" height="1" fill="#c23b2c"/><rect x="12" y="8" width="1" height="1" fill="#c23b2c"/><rect x="11" y="7" width="1" height="1" fill="#c23b2c"/><rect x="13" y="7" width="1" height="1" fill="#c23b2c"/><rect x="12" y="6" width="1" height="1" fill="#c23b2c"/>'}
 ];
@@ -368,10 +373,10 @@ const QUIRKS=[
 {id:'zen',name:'Meditate',how:"Reward from Master Kai's quest",key:'zen',cond:()=>wq('kai')>=3,f:[['zen',1600]]},
 {id:'fishing',name:'Fishing',how:'A gift from a quiet friend',key:'fish',cond:()=>!!(S.world&&S.world.gift&&S.world.gift.fishing),f:[['fish',1100],['fish2',300],['fish',500],['fish2',300],['fish3',1200]]},
 {id:'whistle',name:'Whistle',how:'Learned from a traveling friend',key:'whistle',cond:()=>!!(S.world&&S.world.gift&&S.world.gift.whistle),f:[['whistle',450],['whistle2',450],['whistle',450],['whistle2',450]]},
-{id:'curl',name:'Dumbbell curls',how:"Reward from Big Bjørn's goal: 4 trainings in one week",key:'curl',cond:()=>mgK('bjorn')>=2,f:[['curl',400],['curl2',400],['curl',400],['curl2',400]]},
-{id:'book',name:'Read a book',how:"Reward from Old Orvel's goal: learned something on 7 different days",key:'read',cond:()=>mgK('orvel')>=2,f:[['read',900],['read2',300],['read',900]]},
-{id:'kiss',name:'Blow a kiss',how:"Reward from Granny Rose's goal: finished 3 of her tasks",key:'kiss',cond:()=>mgK('rose')>=2,f:[['kiss',500],['kiss2',350],['kiss3',650]]},
-{id:'kata',name:'Kata',how:"Reward from Master Kai's goal: food prep 3 times",key:'kata',cond:()=>mgK('kai')>=2,f:[['kata',350],['',150],['kata2',350],['',150],['kata',400]]}];
+{id:'curl',name:'Dumbbell curls',how:"Reward from Big Bjørn's trial: 4 trainings in one week",key:'curl',cond:()=>mgK('bjorn')>=2,f:[['curl',400],['curl2',400],['curl',400],['curl2',400]]},
+{id:'book',name:'Read a book',how:"Reward from Old Orvel's trial: learned something on 7 different days",key:'read',cond:()=>mgK('orvel')>=2,f:[['read',900],['read2',300],['read',900]]},
+{id:'kiss',name:'Blow a kiss',how:"Reward from Granny Rose's trial: finished 3 of her tasks",key:'kiss',cond:()=>mgK('rose')>=2,f:[['kiss',500],['kiss2',350],['kiss3',650]]},
+{id:'kata',name:'Kata',how:"Reward from Master Kai's trial: food prep 3 times",key:'kata',cond:()=>mgK('kai')>=2,f:[['kata',350],['',150],['kata2',350],['',150],['kata',400]]}];
 function checkQuirks(){const n=[];QUIRKS.forEach(q=>{const k='q_'+q.id;if(!S.owned[k]&&q.cond()){S.owned[k]=Date.now();if(q.id==='blink')S.qon.blink=1;else{S.qon[q.id]=0;S.fresh[k]=1;n.push(k)}}});return n}
 let playing=0;
 function playQuirk(q){if(playing)return;playing=1;let i=0;const show=p=>document.querySelectorAll('svg.sprite').forEach(e=>{e.outerHTML=sprite(p)});
@@ -386,7 +391,7 @@ if(h>=5&&h<11)L.push('Good morning!','New day, new XP');
 if(h>=22||h<4)L.push('Late night grind?','Sleep is a stat too');
 const today=S.log.filter(e=>day(e.t)===day()).length;if(h>=17&&today)P.push('Nice work today');
 const tn=S.log.filter(e=>isTr(e.id)&&wk(e.t)===w).length;if(tn>=2)P.push(tn+' trainings this week!');
-Object.keys(NAMES).forEach(k=>{if(atTrial(k)){const [a,b]=trialProg(k);P.push(k+' trial: '+Math.min(a,b)+'/'+b)}else{const r=lvl(S.pts[k]);if(r.cur/r.need>=.75)P.push(k+' almost level '+(Lv(k)+1)+'!')}});
+Object.keys(NAMES).forEach(k=>{const r=lvl(S.pts[k]);if(r.cur/r.need>=.75)P.push(k+' almost level '+(Lv(k)+1)+'!')});
 if(S.log.some(e=>slotOf(e.id)==='routine'&&wk(e.t)===w))P.push(sn('routine','Routine')+' done!');
 {const bs=boss();if(bs.won)P.push('Boss defeated!');else if(bs.dealt>0)P.push(bs.b.name+': '+bs.left+' HP left!')}
 return Math.random()<(P.length?.5:0)?P[Math.floor(Math.random()*P.length)]:L[Math.floor(Math.random()*L.length)]}
@@ -622,7 +627,7 @@ const kind=t==='g'?(it.slot==='pet'?'PET':it.slot==='keep'?'KEEPSAKE':'GEAR'):t=
 return`<div class="ovl" onclick="if(event.target===this){infoId=null;render()}"><div class="box card" role="dialog" aria-modal="true" aria-label="${it.name}">
 ${pic}<small>${kind}</small><h3>${it.name}</h3><p class="lbl">HOW YOU GOT IT</p><p>${it.how}</p>${date?`<p class="lbl">UNLOCKED</p><p>${date}</p>`:''}
 <button onclick="infoId=null;render()">CLOSE</button></div></div>`}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(editId!=null||ideaDraft!=null||trialK||addOpen||trPick)){editId=null;ideaDraft=null;trialK=null;addOpen=false;trPick=false;render();return}if(e.key==='Escape'&&suggOpen){suggAnswer(0);return}if(e.key==='Escape'&&(infoId||bossOpen)){infoId=null;bossOpen=0;render()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(editId!=null||ideaDraft!=null||addOpen||trPick)){editId=null;ideaDraft=null;addOpen=false;trPick=false;render();return}if(e.key==='Escape'&&suggOpen){suggAnswer(0);return}if(e.key==='Escape'&&(infoId||bossOpen)){infoId=null;bossOpen=0;render()}});
 function wardrobe(){
 const tiles=Array.from({length:Math.ceil(Math.max(SLOTS,ITEMS.length)/2)*2},(_,k)=>{const i=ITEMS[k];   // grows with ITEMS, so new gear never falls off the grid
 if(i&&S.owned[i.id]){const on=S.equip[i.id],f=S.fresh[i.id];return`<div class="tw"><button class="tile" onclick="wear('${i.id}')" aria-pressed="${!!on}">${f?'<i class="spk" style="position:absolute;top:8px;right:10px"></i>':''}<svg viewBox="0 0 16 16" shape-rendering="crispEdges">${i.ic}</svg><span>${i.name}</span><small>${i.slot==='head'?'HEAD':i.slot==='pet'?'PET':i.slot==='keep'?'KEEPSAKE':'SHIRT'} · ${f?'NEW!':i.slot==='pet'?(on?'WITH YOU':'AT HOME'):i.slot==='keep'?'TAP TO LOOK':(on?'WORN':'TAP TO WEAR')}</small></button>${ib('g:'+i.id,i.name)}</div>`}
@@ -637,7 +642,7 @@ const f=S.fresh[k],on=!!S.qon[q.id],d=charLayers(L[0],L[1],L[2],gear(),q.key);
 return`<div class="tw"><button class="tile" onclick="quirkTap('${q.id}')" aria-pressed="${on}">${f?'<i class="spk" style="position:absolute;top:8px;right:10px"></i>':''}<svg class="thumb qth" viewBox="0 0 44 44" shape-rendering="crispEdges"><g transform="translate(${d.dx} ${d.dy})">${runs(d.layers.body)}</g></svg><span>${q.name}</span><small>${f?'NEW! TAP TO TURN ON':on?'ON':'OFF'}</small></button>${ib('q:'+q.id,q.name)}</div>`}).join('');
 return`${infoCard()}<h1>ME</h1><div class="box hero">${heroInner()}</div>
 <div class="tabs"><button aria-pressed="${wtab==='gear'}" onclick="wtab='gear';render()">GEAR${fresh(ITEMS.map(i=>i.id))}</button><button aria-pressed="${wtab==='places'}" onclick="wtab='places';render()">PLACES${fresh(PLACES.map(p=>p.id))}</button><button aria-pressed="${wtab==='quirks'}" onclick="wtab='quirks';render()">QUIRKS${fresh(QUIRKS.map(q=>'q_'+q.id))}</button></div>
-<div class="grid">${wtab==='gear'?tiles:wtab==='places'?pt:qt}</div>${trialCard()}`}
+<div class="grid">${wtab==='gear'?tiles:wtab==='places'?pt:qt}</div>`}
 
 // ===================== Hearthsvale sound engine: soft sounds, cozy music, character voices =====================
 // Everything is made live with WebAudio (no audio files). Three buses: sfx, music, voices, all with a touch of room reverb.
@@ -874,7 +879,8 @@ ${sec('LEVELS',[`Points fill up your level bar.`,`Level 1 takes ${lvl(0).need} p
 ${sec('DISCIPLINE',['Kai\'s daily habit and weekly routine build Discipline.','Missing a day costs you nothing.'])}
 ${sec('WEEKLY BONUS',['Finish 4 quests for the same stat in one week (Mon–Sun).','You get +10 in that stat and +5 Discipline.'])}
 ${sec('CIRCUS MAÑANA',['Every Monday a new act takes the stage in the big top on the east side of the village.','Real tasks hurt it. Walk into the tent to see your hits land.','When it drops to 0, finish it before Sunday night for a reward and its poster.'])}
-${sec('TRIALS',['Every 10 levels a stat reaches a trial and stops gaining points.','Tap the trial under the bar to see what it asks.','Pass it within 7 days to reach the next tier. You can\'t fail.'])}
+${sec('RANKS',['Every 10 levels a stat ranks up: Novice, Adept, Expert, Master, Legend.','Your look grows with your ranks.'])}
+${sec('TRIALS',['After their story quest, the four keepers give you trials: bigger challenges over several real days.','Only what you do after you accept counts.','Pass one, then tell the keeper for a reward.'])}
 ${sec('WORLD',['Drag anywhere on the screen to walk. Tap the yellow button to talk or use things.','Mentors give quests on days you\'ve done at least one real task.','Your real levels open new paths, and quest rewards show up in your wardrobe.','New faces may find their way to the village.'])}
 ${sec('FRIENDSHIP',['Friends notice what you do in real life.','Each friend cares about one of your stats. Every day you work on it, you grow closer.','Their tasks help too.','Friendship never goes down.'])}
 ${sec('SECRETS',['Keep growing to unlock new gear, places and quirks.'])}
@@ -905,28 +911,27 @@ function readBackup(inp){const f=inp.files&&inp.files[0];inp.value='';if(!f)retu
 r.onload=()=>{try{const o=JSON.parse(r.result),d=o&&o.data;if(!o||o.app!=='grindlife'||!d||!d.pts||!Array.isArray(d.tasks)||!Array.isArray(d.log))throw 0;loadPend={at:o.at||Date.now(),data:d};render()}catch(e){toast('That is not a Hearthsvale backup')}};
 r.onerror=()=>toast('Could not read that file');r.readAsText(f)}
 function applyBackup(){if(!loadPend)return;S=loadPend.data;loadPend=null;ensure();save();render();toast('Backup loaded!');sfx('lvl')}
-function done(id){const t=S.tasks.find(t=>t.id==id);if(!t||t.done||finished(t))return;const p0={...S.pts},lv0={};Object.keys(NAMES).forEach(k=>lv0[k]=Lv(k));
-const before=Lv(t.stat),wasTrial=atTrial(t.stat);
-const e={t:Date.now(),id,stat:t.stat,pts:t.pts,dis:0};const first=!S.log.some(x=>day(x.t)===day(e.t));S.log.push(e);e.pts=gain(t.stat,t.pts);if(first)e.show=1;e.sh=0;if(t.once)t.done=true;
-const w=wk(),n=S.log.filter(x=>x.stat===t.stat&&wk(x.t)===w).length,k=w+t.stat;let m='';
+function done(id,at){const t=S.tasks.find(t=>t.id==id);if(!t||t.done||(at?dayN(t.id,at)>=2:finished(t)))return;const p0={...S.pts},lv0={};Object.keys(NAMES).forEach(k=>lv0[k]=Lv(k));
+const before=Lv(t.stat);
+const e={t:at||Date.now(),id,stat:t.stat,pts:t.pts,dis:0};if(at)e.late=1;const first=!S.log.some(x=>day(x.t)===day(e.t));S.log.push(e);e.pts=gain(t.stat,t.pts);if(first)e.show=1;e.sh=0;if(t.once)t.done=true;
+const w=wk(e.t),n=S.log.filter(x=>x.stat===t.stat&&wk(x.t)===w).length,k=w+t.stat;let m='';
 if(n>=4&&!S.bonus[k]){S.bonus[k]=1;e.bk=k;e.bs=gain(t.stat,10);e.bd=gain('DIS',5);m='Weekly bonus! Discipline up'}
-else if(Lv(t.stat)>before)m=atTrial(t.stat)&&!wasTrial?NAMES[t.stat]+' TRIAL OPEN!':NAMES[t.stat]+' LEVEL UP!';
-const tu=checkTrials(e);if(tu.includes(t.stat)){if(!e.pts)e.pts=gain(t.stat,t.pts);if(e.bk&&!e.bs)e.bs=gain(t.stat,10)}if(tu.includes('DIS')){if(e.bk&&!e.bd)e.bd=gain('DIS',5)}if(tu.length){e.tr=tu;m=tu.map(k=>NAMES[k]+' → '+TIERN[Math.min(tierOf(k),4)]+'!').join(' ')}
+else if(Lv(t.stat)>before)m=NAMES[t.stat]+' LEVEL UP!';
+const tu=checkRanks();if(tu.length){e.tr=tu;m=tu.map(k=>NAMES[k]+' → '+TIERN[Math.min(tierOf(k),4)]+'!').join(' ')}
 const nu=checkUnlocks();if(nu.includes('spirit')&&!tu.length)m=S.petScene?'SOMEONE IS FOLLOWING YOU...':petName().toUpperCase()+' JOINED YOU!';else if(nu.length&&!tu.length)m=nu.some(id=>PLACES.some(p=>p.id===id))?'NEW PLACE UNLOCKED!':nu.some(id=>id.startsWith('q_'))&&!nu.some(id=>ITEMS.some(i=>i.id===id))?'NEW QUIRK UNLOCKED!':'NEW GEAR UNLOCKED!';
-if(atTrial(t.stat)&&!wasTrial&&!tu.includes(t.stat)&&!m.includes('TRIAL OPEN'))m=(m?m+' · ':'')+NAMES[t.stat]+' TRIAL OPEN!';
-sfx(tu.length?'tier':nu.length?'gear':m?'lvl':'tap');const bs=boss(),hit=bs.won?0:bs.b.dmg(e);
+sfx(tu.length?'tier':nu.length?'gear':m?'lvl':'tap');const bs=boss(),hit=bs.won||wk(e.t)!==bs.w?0:bs.b.dmg(e);
 var loot=null;
 const ups=Object.keys(NAMES).filter(k=>Lv(k)>lv0[k]&&!tu.includes(k)),joined=nu.includes('spirit')&&!S.petScene,bw=e.bossWin?{id:bs.b.id,loot:loot||[]}:null;
 const big=fxOn()&&(tu.length||ups.length||joined||bw);if(m&&!big)toast(m);save();
-const gains={};Object.keys(NAMES).forEach(k=>{const d=S.pts[k]-p0[k];if(d>0)gains[k]=d});if(!gains[t.stat]&&atTrial(t.stat))gains[t.stat]='T';flashDone(id,gains,0);pop();if(big)celebrate(ups,tu,bw,joined)}
-// ---- celebrations: confetti + banner on level up, a big tap-to-close card when a trial is passed
+const gains={};Object.keys(NAMES).forEach(k=>{const d=S.pts[k]-p0[k];if(d>0)gains[k]=d});flashDone(id,gains,0);pop();if(big)celebrate(ups,tu,bw,joined)}
+// ---- celebrations: confetti + banner on level up, a big tap-to-close card on a new rank (every 10 levels)
 function fxOn(){return S.settings.anim&&!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)}
 const STATC={STR:['#c0392b','#e8735e'],INT:['#2f6fd0','#7fb3ff'],CHA:['#d9658f','#ffb3c9'],DIS:['#3f9b3f','#8fcf6a']},GOLD=['#f0c030','#fff1a8','#e8bf4f','#ffffff'];
 function confetti(colors,n,ox,oy,spread){const c=document.createElement('canvas');c.className='fxc';const W=c.width=innerWidth,H=c.height=innerHeight;document.body.appendChild(c);const g=c.getContext('2d');
 const P=Array.from({length:n},()=>({x:ox,y:oy,vx:(Math.random()-.5)*spread,vy:-Math.random()*spread*.9-2,s:3+Math.floor(Math.random()*3)*2,c:colors[Math.floor(Math.random()*colors.length)],r:Math.random()<.5}));
 let f=0;(function tick(){g.clearRect(0,0,W,H);P.forEach(p=>{p.vy+=.35;p.vx*=.98;p.x+=p.vx;p.y+=p.vy;g.fillStyle=p.c;const w=p.r&&f%8<4?p.s/2:p.s;g.fillRect(Math.round(p.x),Math.round(p.y),w,p.s)});
 if(++f<95)requestAnimationFrame(tick);else c.remove()})()}
-// one thing on screen at a time: trial card -> boss card -> Spirit card -> level-up banner (last, closes by itself)
+// one thing on screen at a time: rank card -> boss card -> Spirit card -> level-up banner (last, closes by itself)
 function celebrate(ups,tiers,boss,joined){if(!fxOn())return;const q=[];
 if(tiers.length)q.push(nx=>tierCard(tiers,nx));if(boss)q.push((nx,first)=>bossWinCard(boss,nx,first));if(joined)q.push((nx,first)=>spiritCard(nx,first));if(ups.length)q.push(()=>levelBanner(ups));
 q.first=true;const run=()=>{const f=q.shift();if(!f)return;const first=q.first;q.first=false;f(run,first)};run()}
@@ -942,9 +947,9 @@ function petSvg(st,size){const pm=PET_MAPS[st]||[],pw=(pm[0]||'').length,ph=pm.l
 function tierCard(tiers,next){const d=charLayers(Lv('STR'),Lv('INT'),Lv('CHA'),gear(),''),grew=tiers.includes('DIS')&&S.owned.spirit&&tierOf('DIS')<=2;
 const fl=document.createElement('div');fl.className='fxgold';document.body.appendChild(fl);setTimeout(()=>fl.remove(),700);
 confetti(GOLD,140,innerWidth/2,innerHeight*.45,16);setTimeout(()=>confetti(GOLD,80,innerWidth/2,innerHeight*.35,12),450);
-fxCard('',`<small class="tpk">TRIAL PASSED!</small><h3>${tiers.map(x=>NAMES[x]+' → TIER '+ROMAN[Math.min(tierOf(x),9)]).join('<br>')}</h3>
+fxCard('',`<small class="tpk">NEW RANK!</small><h3>${tiers.map(x=>NAMES[x][0]+NAMES[x].slice(1).toLowerCase()+' → '+TIERN[Math.min(tierOf(x),4)][0]+TIERN[Math.min(tierOf(x),4)].slice(1).toLowerCase()).join('<br>')}</h3>
 <svg class="cpic" viewBox="0 0 44 44" shape-rendering="crispEdges">${runs(d.layers.bg)}${runs(d.layers.shadow)}<g transform="translate(${d.dx} ${d.dy})">${runs(d.layers.body)}</g>${runs(d.layers.bubble)}</svg>
-<p>Your ${tiers.length>1?'stats start':'stat starts'} growing again.</p>${grew?`<div class="tpdog">${petSvg(Math.min(3,tierOf('DIS')+1),64)}<p><b>${esc(petName()).toUpperCase()} GREW UP!</b></p></div>`:''}`,'AWESOME!',next);
+<p>${tiers.map(x=>SHORT[x]+' level '+tierOf(x)*10).join(' · ')} reached. Your look grows with your rank.</p>${grew?`<div class="tpdog">${petSvg(Math.min(3,tierOf('DIS')+1),64)}<p><b>${esc(petName()).toUpperCase()} GREW UP!</b></p></div>`:''}`,'AWESOME!',next);
 if(grew)setTimeout(()=>sfx('bark'),600)}
 function bossWinCard(w,next,first){const b=BOSSES.find(x=>x.id===w.id);if(!b)return next&&next();
 const loot=ITEMS.find(i=>(w.loot||[]).includes(i.id));
@@ -956,7 +961,7 @@ function flashDone(id,gains,hit){const b=document.querySelector(`button.chk[oncl
 if(!row){render();return}
 if(pend){clearTimeout(pend.t);pend=null}
 row.classList.add('won');b.disabled=true;
-const g=document.createElement('span');g.className='gain';g.textContent=Object.keys(gains).map(k=>gains[k]==='T'?'+0 '+SHORT[k]+' (TRIAL)':'+'+gains[k]+' '+SHORT[k]).join('  ')+(hit?'  HIT -'+hit:'');row.appendChild(g);
+const g=document.createElement('span');g.className='gain';g.textContent=Object.keys(gains).map(k=>'+'+gains[k]+' '+SHORT[k]).join('  ')+(hit?'  HIT -'+hit:'');row.appendChild(g);
 const tmp=document.createElement('div');tmp.innerHTML=home();const nh=tmp.querySelector('.hero'),oh=document.querySelector('.hero');if(nh&&oh)oh.replaceWith(nh);
 const nw=tmp.querySelector('#wbtn'),ow=document.querySelector('#wbtn');if(nw&&ow)ow.replaceWith(nw);
 const nb=tmp.querySelector('.boss'),ob=document.querySelector('.boss');if(nb&&ob){ob.replaceWith(nb);if(hit){nb.classList.add('hurt');const d=document.createElement('span');d.className='dmg';d.textContent='-'+hit;nb.appendChild(d)}}
@@ -968,13 +973,13 @@ S.pts[e.stat]=Math.max(0,S.pts[e.stat]-(e.pts!=null?e.pts:(t?t.pts:0)));
 S.pts.DIS=Math.max(0,S.pts.DIS-(e.dis||0)-(e.sh!=null?e.sh:e.show?2:0));
 if(e.bk){S.pts[e.stat]=Math.max(0,S.pts[e.stat]-(e.bs!=null?e.bs:10));S.pts.DIS=Math.max(0,S.pts.DIS-(e.bd!=null?e.bd:15));delete S.bonus[e.bk]}
 if(e.bossWin){const b=BOSSES.find(x=>x.id===S.bossWon[e.bossWin]);if(b)Object.keys(b.rw).forEach(k=>S.pts[k]=Math.max(0,S.pts[k]-(e.brw?e.brw[k]||0:b.rw[k])));delete S.bossWon[e.bossWin]}
-if(e.tr)e.tr.forEach(k=>{S.tier[k]=Math.max(0,tierOf(k)-1);if(e.trOpen&&e.trOpen[k])S.trialOpen[k]=e.trOpen[k]});
+checkRanks();
 if(t&&t.once)t.done=false;save();render();toast('Undone');sfx('undo')}
 function addTask(name,stat,pts,once,side){name=(name||'').trim();if(!name)return toast('Give the task a name');if(once==4){side=true;once=1}
 const t={id:S.next++,name,stat,pts:snapPts(pts),once:once==1||once==4,daily:once==2,weekly:once==3};S.tasks.push(t);save();render()}
 function del(id){S.tasks=S.tasks.filter(t=>t.id!=id);save();render()}
 const worldLocked=()=>view==='world'&&WR&&(WR.cine||WR.replay||(WR.finish&&performance.now()-WR.finish<1500));
-function go(v){if(worldLocked())return;if(view==='world'&&v!=='world')worldStop();loadPend=null;view=v==='wardrobe'||v==='tasks'?(v==='tasks'?'home':'me'):v;infoId=null;bossOpen=0;editId=null;delArm=0;ideaDraft=null;trialK=null;addOpen=false;trPick=false;editMode=false;render()}
+function go(v){if(worldLocked())return;if(view==='world'&&v!=='world')worldStop();loadPend=null;view=v==='wardrobe'||v==='tasks'?(v==='tasks'?'home':'me'):v;infoId=null;bossOpen=0;editId=null;delArm=0;ideaDraft=null;addOpen=false;trPick=false;editMode=false;render();if(view==='home'||view==='me')setTimeout(rankCheck,350)}
 // Hearthsvale character generator: returns pixel layers for given stat levels.
 // Golden retriever pet: three growth stages, drawn facing the character (left).
 // A fur, a shade, l light cream, x dark (eye/nose), T tongue, c collar, j tag
@@ -1538,7 +1543,7 @@ function charLayers(str, int, cha, gear, pose) {
   }
   if (run >= 0) for (let y = 0; y < shirtTop; y++) { body[y].pop(); body[y].unshift(null); }   // lean into the run
   outline(body);
-  if (aura) {                                     // all four stats past their first trial: soft golden glow
+  if (aura) {                                     // all four stats at rank Adept (level 10+): soft golden glow
     const near = (x, y) => [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, -1], [1, -1], [-1, 1]].some(([dx, dy]) => { const r = body[y + dy]; return r && r[x + dx] === 'o'; });
     const ring = [];
     for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (!body[y][x] && near(x, y) && y < FB) ring.push([x, y]);
@@ -1595,7 +1600,7 @@ STR:{say:'Your muscles are getting restless.',l:[['Go for a long walk',2],['Stre
 INT:{say:'Your brain is hungry for something new.',l:[['Learn something new',4],['Watch a documentary',3],['Listen to a podcast',2],['Write in a journal',2],['Visit a museum',4],['Try a new recipe',3],['Do a puzzle',2]]},
 DIS:{say:'Your discipline could use a boost.',l:[['Plan the week',3],['Clean your room',3],['Go to bed on time',3],['Clear your inbox',3],['Wake up early',3],['No phone for an hour',3],["Do a chore you've put off",4]]}};
 let suggOpen=null;
-function suggCheck(){if(opOn()||suggOpen||S.bossDay===day()||view!=='home'||bossOpen||infoId||trialK||editId!=null||ideaDraft!=null||addOpen||trPick||editMode)return;const sg=S.sugg=S.sugg||{at:0,seen:{}};
+function suggCheck(){if(opOn()||suggOpen||S.bossDay===day()||view!=='home'||bossOpen||infoId||editId!=null||ideaDraft!=null||addOpen||trPick||editMode)return;const sg=S.sugg=S.sugg||{at:0,seen:{}};
 const d0=new Date();d0.setHours(0,0,0,0);const last=new Date(sg.at||0);last.setHours(0,0,0,0);if(d0-last<2*864e5-36e5)return;
 const from=Date.now()-7*864e5,g={};Object.keys(NAMES).forEach(k=>g[k]=0);S.log.forEach(e=>{if(e.t>from&&g[e.stat]!=null)g[e.stat]+=e.pts});
 let order=Object.keys(NAMES).sort((a,b)=>g[a]-g[b]||lvl(S.pts[a]).l-lvl(S.pts[b]).l);
@@ -1612,16 +1617,16 @@ return`<div class="ovl" onclick="if(event.target===this)suggAnswer(0)"><div clas
 <small>QUEST IDEA</small><p>${o.say||IDEAS[o.k].say}</p><p class="lbl">HOW ABOUT</p><h3>${esc(o.n)}</h3><small class="sgpts">+${snapPts(o.p)} ${NAMES[o.k]} · ONE-TIME</small>
 <button onclick="suggAnswer(1)">ADD TASK</button><button class="ghost" onclick="suggAnswer(0)">NOT NOW</button></div></div>`}
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){bossCheck();suggCheck()}});
-// the big portrait with stat bars and trials: lives on the ME page
+// the big portrait with stat bars: lives on the ME page
 function heroInner(){
-const stats=Object.keys(NAMES).map(k=>{const raw=lvl(S.pts[k]),T=tierOf(k),L=Lv(k),f=L-10*T,tr=atTrial(k),pr=trialProg(k);
+const stats=Object.keys(NAMES).map(k=>{const raw=lvl(S.pts[k]),T=tierOf(k),L=Lv(k),f=L-10*T;
 return`<div class="stat s-${k} tier${Math.min(T,4)}"><div class="row"><span>${SHORT[k]}</span><span>LV${L}</span></div>
 <div class="seg">${Array.from({length:10},(_,i)=>`<i class="${i<f?'on':''}"></i>`).join('')}</div>
-${tr?`<button class="trial" onclick="trialK='${k}';render()" aria-label="${NAMES[k]} trial details"><span class="lock"></span>TRIAL ${Math.min(pr[0],pr[1])}/${pr[1]}<b class="ti">i</b></button>`:`<div class="prog"><b style="width:${Math.round(raw.cur/raw.need*100)}%"></b></div>`}</div>`}).join('');
+<div class="prog"><b style="width:${Math.round(raw.cur/raw.need*100)}%"></b></div></div>`}).join('');
 return`<div class="spr">${sprite()}<div id="say" class="say" aria-live="polite"></div></div><div class="stats">${stats}</div>`}
 // Home: a slim strip (tap it for ME), then one clean list
-function strip(){const bars=Object.keys(NAMES).map(k=>{const raw=lvl(S.pts[k]),tr=atTrial(k);
-return`<div class="mst s-${k}"><b>${SHORT[k]}<span>${tr?'TRIAL':'LV'+Lv(k)}</span></b><i><u style="width:${tr?100:Math.round(raw.cur/raw.need*100)}%"></u></i></div>`}).join('');
+function strip(){const bars=Object.keys(NAMES).map(k=>{const raw=lvl(S.pts[k]);
+return`<div class="mst s-${k}"><b>${SHORT[k]}<span>LV${Lv(k)}</span></b><i><u style="width:${Math.round(raw.cur/raw.need*100)}%"></u></i></div>`}).join('');
 return`<button class="box hero strip" onclick="go('me')" aria-label="Open ME"><div class="spr">${sprite()}</div><div class="minis">${bars}</div>${Object.keys(S.fresh).length?'<i class="spk"></i>':''}</button>`}
 function trow(t,shown){const dn=shown||finished(t),n=todayN(t.id);
 const sub='+'+t.pts+' '+SHORT[t.stat]+' · '+(t.once?'one-time':t.weekly?(dn?'done this week':'weekly'):t.daily?(dn?'done today':'daily'):isTr(t.id)?(n?n+' today':'training'):(n?n+' of 2 today':'up to 2 a day'));
@@ -1651,18 +1656,6 @@ return`<h1>HEARTHSVALE${COG}</h1>${strip()}${S.petScene?`<div class="box opwait"
 <div class="bar"><button class="add" onclick="addOpen=true;render()" ${editMode?'disabled':''}>+ ADD</button><button onclick="editMode=!editMode;render()" aria-pressed="${editMode}">${editMode?'DONE':'EDIT'}</button><button onclick="undo()" ${S.log.length&&!editMode?'':'disabled'}>UNDO</button></div>
 <div class="box">${tl||'<p class="empty">No open quests. Tap + ADD to make one.</p>'}</div>${tiles?`<div class="tiles">${tiles}</div>`:''}${drop}
 ${bossCard()}${suggCard()}${addCard()}${editCard()}${trainCard()}`}
-const trialTxt=k=>k==='INT'?sn('learn','Learn')+' on 5 different days within 7 days.':TRIAL_TXT[k];
-const TRIAL_TXT={STR:'Do 4 trainings within 7 days.',CHA:'Finish a Heart quest on 5 different days within 7 days.',DIS:'Finish at least one quest on 6 different days within 7 days.'};
-function trialCard(){const k=trialK;if(!k||!atTrial(k))return'';const [a,b]=trialProg(k),from=trialFrom(k);let boxes;
-if(k==='STR')boxes=Array.from({length:b},(_,i)=>`<i class="${i<a?'on':''}"></i>`).join('');
-else{const f=k==='INT'?e=>slotOf(e.id)==='learn':k==='CHA'?e=>e.stat==='CHA':()=>true;
-boxes=Array.from({length:7},(_,i)=>{const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-6+i);const end=d.getTime()+864e5,pre=end<=from;
-const on=S.log.some(e=>e.t>from&&e.t>=d.getTime()&&e.t<end&&f(e));return`<i class="${on?'on':''}${pre?' pre':''}"><u>${'SMTWTFS'[d.getDay()]}</u></i>`}).join('')}
-return`<div class="ovl" onclick="if(event.target===this){trialK=null;render()}"><div class="box card s-${k}" role="dialog" aria-modal="true" aria-label="${NAMES[k]} trial">
-<h3>${NAMES[k]} TRIAL</h3><p class="lbl">WHAT TO DO</p><p>${esc(trialTxt(k))}</p>
-<p class="lbl">PROGRESS</p><div class="tbox${k==='STR'?' cnt':''}">${boxes}</div><p>${Math.min(a,b)} / ${b}</p>
-<p class="lbl">REWARD</p><p>Pass to unlock the next tier. Your stat starts growing again.</p>
-<button onclick="trialK=null;render()">CLOSE</button></div></div>`}
 // training is one row: with several kinds, ✔ asks which one
 // ---- training week (v62): pixel icons, Mon-Sun log and the 4-a-week chest. The chest counts every STR task this week, exactly like the weekly bonus in done().
 const PXC={o:'#3a2414',r:'#c0392b',g:'#9a9a9a',w:'#fff8e0',y:'#f0c030',b:'#3d7fc4',k:'#5a5a5a',n:'#8b5a2b',p:'#8e5bb5',c:'#7fc8e8'};
@@ -1687,20 +1680,26 @@ function strWeek(off){const st=wkStart(off),k=wk(st);return{st,es:S.log.filter(e
 const strIcon=e=>{const t=S.tasks.find(x=>x.id==e.id);return t&&isTr(e.id)?trIcon(t):'star'};
 const strName=e=>{const t=S.tasks.find(x=>x.id==e.id);return t?t.name:'Strength task'};
 function trDays(){const w=strWeek(0),n=w.es.length,td=(new Date().getDay()+6)%7;
-return`<span class="trdays">${[...'MTWTFSS'].map((l,i)=>{const d=new Date(w.st);d.setDate(w.st.getDate()+i);const on=w.es.some(e=>day(e.t)===day(d));return`<b class="${on?'on':''}${i===td?' td':''}">${l}</b>`}).join('')}<u>${n>=4?'4/4 ✔':n+'/4'}</u></span>`}
-function trainTap(){trPick=true;trOff=0;render()}
-function trainDo(id){trPick=false;render();done(id)}
+return`<span class="trdays">${[...'MTWTFSS'].map((l,i)=>{const d=new Date(w.st);d.setDate(w.st.getDate()+i);const on=w.es.some(e=>day(e.t)===day(d));return`<b class="${on?'on':''}${i===td?' td':''}">${l}</b>`}).join('')}<u>${Math.min(n,4)}/4</u></span>`}
+function trainTap(){trPick=true;trOff=0;trDay=null;render()}
+// log a training on an earlier day (2026-11-18): this week and last week; it counts as done at noon that day
+const dayN=(id,at)=>S.log.filter(e=>e.id==id&&day(e.t)===day(at)).length;
+function trSel(dk){trDay=dk;render()}
+function trWeek(d){trOff+=d;trDay=null;render()}
+function trainDo(id){let at;if(trDay&&trDay!==day()){const p=trDay.split('-');at=new Date(+p[0],+p[1],+p[2],12).getTime()}trPick=false;trDay=null;render();done(id,at)}
 const MON3=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
 function trainCard(){if(!trPick)return'';const{st,es}=strWeek(trOff),n=es.length,got=n>=4,ex=n-4,cur=trOff===0,now=new Date(),td=day();
 const end=new Date(st);end.setDate(st.getDate()+6);
 const rng=st.getMonth()===end.getMonth()?`${MON3[st.getMonth()]} ${st.getDate()} – ${end.getDate()}`:`${MON3[st.getMonth()]} ${st.getDate()} – ${MON3[end.getMonth()]} ${end.getDate()}`;
 const slots=[0,1,2,3].map(i=>`<b class="${i<n?'on':''}">${i<n?pxi(strIcon(es[i]),2.4):pxi('dumb',2.4,1)}</b>`).join('<i></i>');
 const msg=got?`Goal done! Weekly bonus: <b>+10 STR +5 DIS</b>`:cur?`<b>${n} of 4</b> · ${4-n} more for the weekly bonus (+10 STR, +5 DIS)`:`<b>${n} of 4</b> that week`;
-const days=['MON','TUE','WED','THU','FRI','SAT','SUN'].map((dn,i)=>{const d=new Date(st);d.setDate(st.getDate()+i);const dk=day(d),l=es.filter(e=>day(e.t)===dk),isT=dk===td,fut=d>now&&!isT;
-return`<div class="tw-day${isT?' today':''}${fut?' fut':''}"><span class="dd">${dn}<small>${d.getDate()}</small></span><span class="tw-l">${l.length?l.map(e=>`<em>${pxi(strIcon(e),1.6)}${esc(strName(e))}</em>`).join(''):`<em class="rest">${fut?'':isT?'not yet today':'rest day'}</em>`}</span></div>`}).join('');
-const trs=coreOf('train'),log=cur&&trs.length?`<small class="tw-lh">LOG A TRAINING</small><div class="tw-grid">${trs.map(t=>{const m=todayN(t.id);return`<button class="tw-btn" onclick="trainDo(${t.id})" ${finished(t)?'disabled':''}>${pxi(trIcon(t),2)}<span>${esc(t.name)}${m?`<small>${m} today</small>`:''}</span></button>`}).join('')}</div>`:'';
+const can=trOff>=-1,sel=can?(trDay||(cur?td:null)):null;let selL='';
+const days=['MON','TUE','WED','THU','FRI','SAT','SUN'].map((dn,i)=>{const d=new Date(st);d.setDate(st.getDate()+i);const dk=day(d),l=es.filter(e=>day(e.t)===dk),isT=dk===td,fut=d>now&&!isT,pk=can&&!fut,on=pk&&dk===sel;if(on)selL=isT?'TODAY':dn+' '+d.getDate();
+return`<div class="tw-day${isT?' today':''}${fut?' fut':''}${pk?' pk':''}${on?' sel':''}"${pk?` role="button" tabindex="0" aria-pressed="${on}" onclick="trSel('${dk}')"`:''}><span class="dd">${dn}<small>${d.getDate()}</small></span><span class="tw-l">${l.length?l.map(e=>`<em>${pxi(strIcon(e),1.6)}${esc(strName(e))}</em>`).join(''):`<em class="rest">${fut?'':isT?'not yet today':'rest day'}</em>`}</span></div>`}).join('');
+const trs=coreOf('train'),sp=sel?sel.split('-'):0,sat=sel?new Date(+sp[0],+sp[1],+sp[2],12).getTime():0,isTd=sel===td;
+const log=!can||!trs.length?'':!sel?`<small class="tw-lh tw-tap">Tap a day above to log a training on it.</small>`:`<small class="tw-lh">LOG FOR ${selL}</small><div class="tw-grid">${trs.map(t=>{const m=dayN(t.id,sat);return`<button class="tw-btn" onclick="trainDo(${t.id})" ${(isTd?finished(t):m>=2)?'disabled':''}>${pxi(trIcon(t),2)}<span>${esc(t.name)}${m?`<small>${m} ${isTd?'today':'that day'}</small>`:''}</span></button>`}).join('')}</div>${cur?`<small class="tw-lh tw-tap">Missed one? Tap an earlier day.</small>`:''}`;
 return`<div class="ovl" onclick="if(event.target===this){trPick=false;render()}"><div class="box card tw s-STR" role="dialog" aria-modal="true" aria-label="Training week">
-<div class="tw-hd"><button class="ghost" onclick="trOff--;render()" aria-label="Earlier week" ${trOff<=-52?'disabled':''}>◀</button><span><small>TRAINING WEEK</small><br>${rng}</span><button class="ghost" onclick="trOff++;render()" aria-label="Later week" ${cur?'disabled':''}>▶</button></div>
+<div class="tw-hd"><button class="ghost" onclick="trWeek(-1)" aria-label="Earlier week" ${trOff<=-52?'disabled':''}>◀</button><span><small>TRAINING WEEK</small><br>${rng}</span><button class="ghost" onclick="trWeek(1)" aria-label="Later week" ${cur?'disabled':''}>▶</button></div>
 <div class="tw-track">${slots}<i></i><span class="tw-chest${got?' got':''}">${pxi(got?'open':'chest',3)}</span></div>${ex>0?`<div class="tw-extra">${Array.from({length:Math.min(ex,8)},()=>pxi('star',2)).join('')}<span>+${ex} extra</span></div>`:''}
 <p class="tw-msg">${msg}</p><div class="tw-days">${days}</div>${log}<button class="ghost" onclick="trPick=false;render()">CLOSE</button></div></div>`}
 function tiPick(b){b.parentNode.querySelectorAll('button').forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',x===b)})}
@@ -2423,10 +2422,8 @@ function chibi(o) {
   const W = 30, H = 36, cx = 15, big = o.big, vw = o.view || '', back = vw === 'back', side = vw === 'side', st = o.step == null ? -1 : o.step;
   return matSprite(W, H, a => {
     const hy = (o.kid ? 16 : 12) + (o.hd || 0), hw = o.kid ? 7 : 8;   // head centre / half width (kids: smaller, lower head)
-    if (o.staff && !side) { a.rect(26, 6, 2, 29, 'st'); a.ell(27, 6, 2.5, 2.5, 'ac'); }
     if (o.staff && side) { a.rect(cx + 6, 7, 2, 28, 'st'); a.ell(cx + 7, 7, 2.5, 2.5, 'ac'); }   // walking: the staff goes along in front
     if (o.rod && side) { a.rect(cx - 6, 5, 1, 27, 'st'); for (let i = 0; i < 5; i++) a.px(cx - 6 - i, 5 - Math.round(i * .5), 'st'); }   // walking: the rod over his shoulder
-    if (o.rod && !side) { if (o.tug) { a.rect(25, 10, 1, 24, 'st'); for (let i = 0; i < 6; i++) a.px(25 - i, 10 - Math.round(i * .6), 'st'); } else { a.rect(25, 8, 1, 26, 'st'); for (let i = 0; i < 6; i++) a.px(25 - i, 8 - i, 'st'); } }
     // body
     const tw0 = big ? 14 : o.robe ? 12 : o.kid ? 8 : 10, tw = side ? tw0 - 2 : tw0, ty = o.kid ? 23 : 21, lift = side && (st === 1 || st === 3) ? 1 : 0;
     const legs = () => {                                         // pants + shoes; walking moves them
@@ -2451,6 +2448,7 @@ function chibi(o) {
       const fd = !back && !side && st >= 0, dl = fd || back ? (st === 0 ? 1 : st === 1 ? -1 : 0) : 0;
       // left arm (viewer's left)
       if (o.arm === 'pray') { a.rect(ax + 1, ty + 1, aw, 5, ak); }
+      else if (o.lute && !back) {}                               // Pip: the hand goes up to the lute's neck, below
       else if (o.arm !== 'up') arm(ax, dl, false);
       // right arm
       if (o.arm === 'pray') a.rect(axr - 1, ty + 1, aw, 4, ak);
@@ -2459,6 +2457,8 @@ function chibi(o) {
       else if (o.arm === 'brow') { a.rect(axr, hy + 4, aw, ty + 3 - hy - 4, ak); a.rect(cx + 1, hy - 3, axr + aw - cx - 1, 3, 'sk'); }
       else if (o.arm === 'face') { a.rect(axr, ty + 1, aw, 3, ak); a.rect(axr - 2, ty - 2, aw, 4, ak); a.rect(cx + 2, hy + 1, 3, 3, 'sk'); }
       else if (o.arm === 'scratch') { a.rect(axr, hy + 2, aw, ty + 3 - hy - 2, ak); a.rect(axr - 1, hy - 4, aw + 1, 6, 'sk'); }
+      else if (o.arm === 'scis') { a.rect(axr, ty + 1, aw + 1, 5, ak); a.rect(axr + 1, ty, aw + 2, 4, 'sk'); }   // Ferro: scissors held up
+      else if (o.hammer) {}                                      // Wren: the arm comes with the hammer, below
       else arm(axr, -dl, true);
     }
     if (o.apron && !back && !side) { a.rect(cx - 4, ty + 2, 8, 9, 'ac'); }
@@ -2490,10 +2490,27 @@ function chibi(o) {
     if (o.tail && !side) { const tx = back ? hx - hw - 1.5 : hx + hw + 1.5; a.ell(tx, hl + 1, 2.2, 3.5, 'hr'); a.ell(back ? tx - 1 : tx + 1, hl + 5, 1.8, 2.5, 'hr'); }
     if (o.bandana) { a.ell(hx, hl - 4.5, hw + .5, 4, 'bn'); a.rect(hx + hw - 1, hl - 3, 3, 2, 'bn'); a.rect(hx + hw + 1, hl - 1, 2, 2, 'bn'); }
     if (o.feathercap) { a.ell(hx, hl - 4.5, hw + .3, 4.2, 'ht'); a.rect(hx - hw - 1, hl - 2, hw * 2 + 2, 2, 'ht'); for (let i = 0; i < 7; i++) a.rect(hx + 3 + i, hl - 6 - i * 1.2, 2, 2, 'fe'); }
-    if (o.hammer && !side) { const hd = o.ham === 1 ? -4 : o.ham === 2 ? 3 : 0; a.rect(25, 19 + hd, 2, 13, 'st'); a.rect(23, 16 + hd, 7, 4, 'mt'); }
+    const line = (x0, y0, x1, y1, w, m) => { const n = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0)); for (let i = 0; i <= n; i++) a.rect(Math.round(x0 + (x1 - x0) * i / n), Math.round(y0 + (y1 - y0) * i / n), w, w, m); };
+    const dl2 = !side && !back && st >= 0 ? (st === 0 ? 1 : st === 1 ? -1 : 0) : 0, grip = () => a.rect(axr, ty + al - dl2 - lift, aw + 1, 2, 'sk');   // fingers over a held item
+    if (o.staff && !side) { a.rect(24, 4, 2, 31, 'st'); a.ell(25, 3, 2.5, 2.5, 'ac'); a.rect(axr, ty + al - dl2 - lift, aw + 2, 2, 'sk'); }   // Orvel's hand round his staff
+    if (o.rod && !side) { if (o.tug) { line(21, 33, 26, 9, 1, 'st'); a.px(27, 9, 'st'); a.px(28, 10, 'st'); a.px(29, 11, 'st'); } else { line(21, 33, 27, 5, 1, 'st'); a.px(28, 4, 'st'); a.px(29, 5, 'st'); } grip(); }   // Finn grips his rod
+    if (o.hammer && side) {                                       // walking: the hammer swings along in her hand
+      const sw = st === 0 ? 2 : st === 2 ? -2 : 0, hx2 = cx - Math.floor(aw / 2) - 1 + sw, hy2 = ty + al - lift;
+      a.rect(hx2 + 1, hy2 - 5, 1, 9, 'st'); a.rect(hx2 - 1, hy2 - 7, 5, 3, 'mt'); a.rect(hx2, hy2, aw, 2, 'sk'); }
+    if (o.hammer && !side) {                                      // she grips the handle: arm, then the hammer, then her fingers over it
+      const up = o.ham === 1, dn = o.ham === 2, x = axr, y = ty + 1 - lift;
+      if (up) { a.rect(x, y, aw, 3, ak); a.rect(x + 1, y - 3, aw, 4, ak); line(x + 2, y - 4, x + 6, y - 10, 2, 'st'); a.rect(x + 4, y - 14, 6, 4, 'mt'); a.rect(x + 1, y - 5, aw + 1, 2, 'sk'); }
+      else if (dn) { a.rect(x, y, aw, 4, ak); a.rect(x + 1, y + 3, aw, 3, ak); line(x + 3, y + 7, x + 6, y + 7, 2, 'st'); a.rect(x + 7, y + 4, 3, 6, 'mt'); a.rect(x + 1, y + 6, aw + 1, 2, 'sk'); }
+      else { a.rect(x, y, aw, 4, ak); a.rect(x + 1, y + 3, aw, 3, ak); line(x + 2, y + 7, x + 5, y - 3, 2, 'st'); a.rect(x + 3, y - 6, 6, 4, 'mt'); a.rect(x + 1, y + 6, aw + 1, 2, 'sk'); }
+    }
     if (o.lute && back) { a.ell(cx - 1, 27, 5.5, 4.5, 'lt'); for (let i = 0; i < 8; i++) a.rect(cx + 1 + i, 24 - i, 2, 2, 'st'); }   // walking away: the lute on his back
     if (o.lute && side) { a.ell(cx - 5, 26, 3, 4.5, 'lt'); a.rect(cx - 6, 14, 2, 9, 'st'); }
-    if (o.lute && !back && !side) { a.ell(cx + 2, 28, 5.5, 4.5, 'lt'); for (let i = 0; i < 9; i++) a.rect(cx + 4 - i, 26 - i, 2, 2, 'st'); a.rect(cx - 7, 16, 3, 2, 'st'); }
+    if (o.lute && !back && !side) {                               // held to play: body at his hip, neck out to the side, one hand on the neck, one strumming
+      const y = ty - lift, sm = o.strum ? 1 : 0;
+      a.ell(cx - 2, 28, 5, 4, 'lt'); line(cx + 2, y + 5, cx + 10, y, 2, 'st'); a.rect(cx + 10, y - 2, 3, 3, 'st');
+      a.rect(axr, y + 1, aw, 3, ak); a.rect(axr + 1, y + 1, aw, 2, 'sk');                                      // fretting hand round the neck
+      arm(ax, 0, false); a.rect(ax + 1, y + 4, aw, 3, ak); a.rect(ax + 2, y + 6 + sm, 3, 2, 'sk');            // strumming hand over the body
+    }
     if (o.wizard) { a.rect(hx - hw - 3, hl - 5, hw * 2 + 6, 2, 'ht'); for (let y = 0; y < 12; y++) { const ww = Math.max(1, Math.round((12 - y) * .7)); a.rect(hx - ww + Math.round(y / 4), hl - 6 - y, ww * 2, 1, 'ht'); } }
     if (o.cap) { a.ell(hx, hl - 4, hw, 4.5, 'ht'); a.rect(side ? hx - 2 : hx - hw - 2, hl - 2, side ? hw + 5 : hw * 2 + 3, 2, 'ht'); }
     if (o.beard !== undefined && !back) {
@@ -2529,18 +2546,19 @@ function drawFace(c, o) {   // eyes, blush, mouth, glasses as crisp details on t
   else if (!o.longBeard && !o.happy) { R(cx - 1, hy + 4, 2, 1, '#a5433b'); }
   if (o.flower) { R(cx - 9, hy - 6, 3, 3, '#f08ca8'); R(cx - 8, hy - 7, 1, 5, '#f08ca8'); R(cx - 10, hy - 5, 5, 1, '#f08ca8'); R(cx - 8, hy - 5, 1, 1, '#ffd36b'); }
   if (o.book) { R(20, 24, 7, 8, '#3b2416'); R(21, 25, 5, 6, '#fffaf0'); R(21, 25, 1, 6, '#c23b2c'); [26.5, 28.5].forEach(y => R(23, Math.floor(y), 2, 1, '#8a8478'));
-    if (o.page != null) { const px = [25, 23, 21][o.page]; R(px, 24, 2, 7, '#ffffff'); R(px, 24, 1, 7, '#e2d9c5'); } }
+    if (o.page != null) { const px = [25, 23, 21][o.page]; R(px, 24, 2, 7, '#ffffff'); R(px, 24, 1, 7, '#e2d9c5'); }
+    R(19, 28, 1, 3, '#3b2416'); R(20, 28, 3, 2, '#f3c4a2'); R(20, 30, 3, 1, '#d99b7e'); R(20, 31, 3, 1, '#3b2416'); }   // her hand holds the book
   if (o.glasses) { g.strokeStyle = '#8a6200'; g.lineWidth = 1; g.strokeRect(cx - 5.5, hy - .5, 4, 4); g.strokeRect(cx + 1.5, hy - .5, 4, 4); R(cx - 1, hy + 1, 2, 1, '#8a6200');
     if (o.glint) { R(cx - 5, hy, 2, 1, '#ffffff'); R(cx + 2, hy, 2, 1, '#ffffff'); R(cx - 4, hy + 1, 1, 1, '#ffffff'); R(cx + 3, hy + 1, 1, 1, '#ffffff'); } }
   if (o.brows) { R(cx - 5, hy - 2, 3, 1, o.brows); R(cx + 2, hy - 2, 3, 1, o.brows); }
   if (o.star) { R(cx + 2, 1, 2, 2, '#ffd36b'); }
   if (o.bandana) { [[cx - 5, hy - 6], [cx + 1, hy - 7], [cx + 4, hy - 4], [cx - 2, hy - 3]].forEach(([x, y]) => R(x, y, 1, 1, '#fffaf0')); }
-  if (o.lute) { R(cx, 27, 3, 3, '#5a3820'); R(cx - 1, 25, 1, 1, '#fffaf0'); }
+  if (o.lute) { R(cx - 3, 27, 2, 2, '#5a3820'); R(cx + 1, 27, 1, 2, '#5a3820'); }
   if (o.freckles) { R(cx - 6, hy + 2, 1, 1, '#c8843c'); R(cx - 4, hy + 3, 1, 1, '#c8843c'); R(cx + 4, hy + 2, 1, 1, '#c8843c'); R(cx + 5, hy + 3, 1, 1, '#c8843c'); }
   return c;
 }
 // ---- Ferro the Magic Barber and his salon (left of the shrine stairs)
-const FERRO_LOOK = { top: '#6a2f8a', bottom: '#2a2236', hair: '#d8d2ee', hairStyle: 'short', sleeves: 1, brows: '#8a82a8' };
+const FERRO_LOOK = { top: '#6a2f8a', bottom: '#2a2236', hair: '#d8d2ee', hairStyle: 'short', sleeves: 1, brows: '#8a82a8', arm: 'scis' };
 const FERRO_ROOF = '#a8457a';
 function ferroCanvas(o) {
   o = Object.assign({}, FERRO_LOOK, o || {});
@@ -2564,7 +2582,8 @@ function ferroCanvas(o) {
   if (o.snip) for (let i = 0; i < 7; i++) { R(23, 18 - i, 1, 1, '#3b2416'); R(25, 18 - i, 1, 1, '#3b2416'); R(24, 18 - i, 1, 1, i % 2 ? '#dfe6ee' : '#9aa5b1'); }   // snip! the blades snap shut
   else for (let i = 0; i < 7; i++) { R(22 + Math.round(i * .5), 18 - i, 1, 1, '#3b2416'); R(26 - Math.round(i * .5), 18 - i, 1, 1, '#3b2416'); R(23 + Math.round(i * .5), 18 - i, 1, 1, '#dfe6ee'); R(25 - Math.round(i * .5), 18 - i, 1, 1, '#9aa5b1'); }
   R(24, 17, 1, 2, '#e8bf4f');                                                                  // pivot
-  [[20, 19], [25, 19]].forEach(([x, y]) => { R(x, y, 4, 4, '#3b2416'); R(x + 1, y + 1, 2, 2, '#e8bf4f'); R(x + 1, y + 1, 1, 1, '#fff1a8'); });   // gold ring handles
+  [[20, 19], [25, 19]].forEach(([x, y]) => { R(x, y, 4, 4, '#3b2416'); R(x + 1, y + 1, 2, 2, '#e8bf4f'); R(x + 1, y + 1, 1, 1, '#fff1a8'); });
+  R(22, 21, 2, 2, '#f3c4a2'); R(26, 21, 1, 2, '#f3c4a2'); R(22, 23, 5, 1, '#f3c4a2'); R(22, 24, 5, 1, '#d99b7e');   // gold ring handles, his fingers through them
   [[28, 9], [19, 8]].forEach(([x, y], i) => { R(x, y - 1, 1, 3, i ? '#fff1a8' : '#ffffff'); R(x - 1, y, 3, 1, i ? '#fff1a8' : '#ffffff'); });
   return c;
 }
@@ -2827,12 +2846,12 @@ function breathe(c) {                              // the chest rises a pixel: e
 // each move: frames [pose, ms], optional fx(g, x, y, t) drawn on top (x, y = the sprite's top-left; t = ms into the move)
 const NPC_IDLE = {
   bjorn: { br: 3400, f: [[{ arm: 'flex' }, 1500]], fx: (g, x, y, t) => sparkle(g, x + 27, y + 12, t, 1500) },
-  orvel: { br: 3200, f: [[{}, 2000]], fx: (g, x, y, t) => { const k = Math.sin(Math.min(1, t / 2000) * Math.PI); g.fillStyle = `rgba(127,215,255,${k * .55})`; g.beginPath(); g.arc(x + 27, y + 6, 4 + k * 2, 0, 7); g.fill(); starUp(g, x + 27, y + 2, t / 2000); } },
+  orvel: { br: 3200, f: [[{}, 2000]], fx: (g, x, y, t) => { const k = Math.sin(Math.min(1, t / 2000) * Math.PI); g.fillStyle = `rgba(127,215,255,${k * .55})`; g.beginPath(); g.arc(x + 25, y + 3, 4 + k * 2, 0, 7); g.fill(); starUp(g, x + 25, y - 1, t / 2000); } },
   rose: { br: 3000, f: [[{ arm: 'face' }, 450], [{ arm: 'face', glint: 1 }, 300], [{ glint: 1 }, 250], [{}, 500]] },
   kai: { br: 4200, f: [[{ arm: 'pray' }, 400], [{ arm: 'pray', hd: 1 }, 1200], [{ arm: 'pray' }, 400]] },
   fisher: { br: 3000, f: [[{ tug: 1 }, 220], [{}, 200], [{ tug: 1 }, 220], [{}, 860]], bare: [[{ arm: 'scratch' }, 300], [{ arm: 'scratch', hd: 1 }, 300], [{ arm: 'scratch' }, 300], [{ arm: 'scratch', hd: 1 }, 300], [{}, 300]] },
-  wren: { br: 2800, f: [[{ ham: 1 }, 260], [{ ham: 2 }, 300], [{ ham: 1 }, 260], [{ ham: 2 }, 400], [{}, 300]], fx: (g, x, y, t) => { [560, 1080].forEach(t0 => { const a = (t - t0) / 380; if (a > 0 && a < 1) { g.fillStyle = `rgba(222,190,140,${(1 - a) * .9})`; [[-3, 0], [3, -1], [0, -2]].forEach(([u, v]) => { g.beginPath(); g.arc(x + 26 + u * (1 + a * 2), y + 35 + v * (1 + a * 2), 1.2 + a, 0, 7); g.fill(); }); } }); } },
-  pip: { br: 2600, f: [[{ shut: 1 }, 2000]], fx: (g, x, y, t) => { noteUp(g, x + 22, y + 18, t / 1400); noteUp(g, x + 12, y + 16, (t - 600) / 1400); } },
+  wren: { br: 2800, f: [[{ ham: 1 }, 260], [{ ham: 2 }, 300], [{ ham: 1 }, 260], [{ ham: 2 }, 400], [{}, 300]], fx: (g, x, y, t) => { [560, 1080].forEach(t0 => { const a = (t - t0) / 380; if (a > 0 && a < 1) { g.fillStyle = `rgba(222,190,140,${(1 - a) * .9})`; [[-3, 0], [3, -1], [0, -2]].forEach(([u, v]) => { g.beginPath(); g.arc(x + 28 + u * (1 + a * 2), y + 31 + v * (1 + a * 2), 1.2 + a, 0, 7); g.fill(); }); } }); } },
+  pip: { br: 2600, f: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => [i % 2 ? { shut: 1 } : { shut: 1, strum: 1 }, 200]), fx: (g, x, y, t) => { noteUp(g, x + 1, y + 22, t / 1400); noteUp(g, x + 26, y + 16, (t - 600) / 1400); } },   // strums while he plays
   mira: { br: 3000, f: [[{ page: 0 }, 200], [{ page: 1 }, 200], [{ page: 2 }, 200], [{ shut: 1 }, 400], [{}, 500]] },
   elias: { br: 3600, f: [[{ hd: -1 }, 250], [{}, 250], [{ hd: -1 }, 250], [{}, 250], [{ hd: -1 }, 250], [{}, 250], [{ hd: -1 }, 250], [{}, 250]], shake: 1, fx: (g, x, y, t) => haText(g, x + 25, y + 4, t / 2000) },
   tove: { br: 2200, f: [[{ arm: 'up', open: 1 }, 1000]], hop: 1000 },
@@ -3087,7 +3106,7 @@ const mgDone = id => mgActive(id) && mgProg(id) >= mgCur(id).n;
 const mgReady = id => { const g = mgCur(id), m = MG[id] && mgS(id); return !!g && wq(id) === 3 && !m.at && m.last !== day() && (!g.req || Lv(WQ[id].stat) >= g.req); };
 function mgOffer(id) {
   const g = mgCur(id), t = MG_TXT[id][mgK(id)];
-  return dialog(id, [t[0], `GOAL: ${g.goal}. I'll count what you do from today.`], null,
+  return dialog(id, [t[0], `TRIAL: ${g.goal}. I'll count what you do from today.`], null,
     [{ label: 'ACCEPT', fn: () => { const m = mgS(id); m.at = Date.now(); m.rl = 0; save(); sfx('ok'); worldHud(); dialog(id, ['Wonderful! It\'s in your quests. I\'ll keep count.']); } },
      { label: 'MAYBE LATER', fn: () => dialog(id, ['No rush. I\'ll be right here.']) }]);
 }
@@ -3095,13 +3114,13 @@ function mgHandIn(id) {
   const k = mgK(id), g = MG[id][k], m = mgS(id); m.k = k + 1; m.at = null; m.last = day(); save(); checkUnlocks(); save(); worldHud();
   dialog(id, [MG_TXT[id][k][1]], () => {
     const r = rewardInfo(g.reward); sfx('tier'); confetti(GOLD, 90, innerWidth / 2, innerHeight * .4, 13);
-    fxCard('', `<small class="tpk">GOAL REACHED!</small><h3>${esc(g.goal)}</h3>${r.pic}<p class="lbl">NEW ${r.kind}</p><p>${r.name}</p>${MG[id][k + 1] ? '<p class="lbl">MORE TO COME</p>' : ''}`, 'AWESOME!', null);
+    fxCard('', `<small class="tpk">TRIAL PASSED!</small><h3>${esc(g.goal)}</h3>${r.pic}<p class="lbl">NEW ${r.kind}</p><p>${r.name}</p>${MG[id][k + 1] ? '<p class="lbl">MORE TO COME</p>' : ''}`, 'AWESOME!', null);
   });
 }
 const mgRemind = id => dialog(id, [`${mgCur(id).goal}: ${mgProg(id)} of ${mgCur(id).n}. ${MG_CHEER[id]}`]);
 function mgRows() {
   return Object.keys(MG).filter(mgActive).map(id => { const g = mgCur(id), n = mgProg(id), ok = n >= g.n;
-    return `<div class="task mq${ok ? ' rep' : ''}"><div class="n">${esc(g.goal)}<small>${ok ? 'Goal reached! Tell ' + MN[id] : 'goal from ' + MN[id]}</small></div><small class="mtag">${n}/${g.n}</small></div>`; }).join('');
+    return `<div class="task mq${ok ? ' rep' : ''}"><div class="n">${esc(g.goal)}<small>${ok ? 'Trial passed! Tell ' + MN[id] : 'trial from ' + MN[id]}</small></div><small class="mtag">${n}/${g.n}</small></div>`; }).join('');
 }
 // ---- real-life quests: one new task per mentor per day, only while you don't already have one from them
 const MN = { bjorn: 'Bjørn', orvel: 'Orvel', rose: 'Rose', kai: 'Kai', wren: 'Wren', pip: 'Pip', fisher: 'Finn' };
@@ -3674,7 +3693,7 @@ function bigCanvasImg(c, z, cls) { const b = document.createElement('canvas'); b
 
 // ---- Monday: a short note on Home, the warning when you enter the World
 function bossCheck() {
-  if (opOn() || view !== 'home' || suggOpen || trialK || editId != null || ideaDraft != null || addOpen || trPick || editMode || infoId || document.querySelector('.fxtier')) return;
+  if (opOn() || view !== 'home' || suggOpen || editId != null || ideaDraft != null || addOpen || trPick || editMode || infoId || document.querySelector('.fxtier')) return;
   if (S.bossSeen === wk()) return; S.bossSeen = wk(); S.bossDay = day(); save();
   fxCard('fxgloom', `<small class="tpk">MONDAY GLOOMS...</small>${bigCanvasImg(tentCanvas(boss().b.id), 2, 'gtent')}<p>A new act is threatening the village.</p><p class="lbl">Visit the World to face it.</p>`, 'OK', null, 'open');
 }
@@ -3758,7 +3777,7 @@ function circusReplay() {                           // HIT IT: every real thing 
 function finishAct() {
   const B = actState(); if (!B.staggered) return;
   S.bossWon = S.bossWon || {}; S.bossWon[B.w] = B.b.id; const rw = {}; Object.keys(B.b.rw).forEach(k => rw[k] = gain(k, B.b.rw[k]));
-  checkTrials(); const loot = checkUnlocks(); save(); WR.finish = performance.now(); WR.busy = 1; sfx('tier'); worldShake();
+  const loot = checkUnlocks(); save(); WR.finish = performance.now(); WR.busy = 1; sfx('tier'); worldShake();
   setTimeout(() => {
     WR.busy = 0; worldEntities(); musicFor('tent');
     const it = ITEMS.find(i => loot.includes(i.id)), n = Object.values(S.bossWon).filter(v => v === B.b.id).length;
@@ -4368,9 +4387,9 @@ function restDraw(g, cx, cy, vw, vh, tnow) {           // the nap: dim the room,
 }
 function restReport(t) {
   const lv0 = {}; Object.keys(NAMES).forEach(k => lv0[k] = Lv(k));
-  const a = gain('DIS', 1); S.tasks = S.tasks.filter(x => x !== t); checkTrials(); checkUnlocks(); save(); worldHud();
+  const a = gain('DIS', 1); S.tasks = S.tasks.filter(x => x !== t); checkUnlocks(); save(); worldHud();
   const ups = Object.keys(NAMES).filter(k => Lv(k) > lv0[k]), nm = NAMES.DIS[0] + NAMES.DIS.slice(1).toLowerCase(); sfx('lvl');
-  fxCard('', `<small class="tpk">REST TASK DONE!</small><h3>${esc(t.name)}</h3><p>${a ? '+' + a + ' ' + nm : 'Your ' + nm + ' trial is open, so no new points right now.'}</p><p class="lbl">NEW REST TASK TOMORROW</p>`, 'AWESOME!', () => { if (ups.length && fxOn()) levelBanner(ups); });
+  fxCard('', `<small class="tpk">REST TASK DONE!</small><h3>${esc(t.name)}</h3><p>+${a} ${nm}</p><p class="lbl">NEW REST TASK TOMORROW</p>`, 'AWESOME!', () => { if (ups.length && fxOn()) levelBanner(ups); });
 }
 // ---- 9. later: the pet you named for Ferro finds you (Heart 2), a small cinematic in the village
 function petCinematic(after) {
@@ -4393,9 +4412,9 @@ function petCinematic(after) {
   }));
 }
 // texts that name DJ's own tasks: a new player gets words that fit any core task they picked
-[['read', 'Learned something on 20 different days'], ['flower', 'Did a daily kindness 10 times'], ['monocle', "Reward from Old Orvel's goal: learned on 7 days"], ['apron', "Reward from Granny Rose's goal: kind on 5 days"]].forEach(([id, t]) => {
+[['read', 'Learned something on 20 different days'], ['flower', 'Did a daily kindness 10 times'], ['monocle', "Reward from Old Orvel's trial: learned on 7 days"], ['apron', "Reward from Granny Rose's trial: kind on 5 days"]].forEach(([id, t]) => {
   const it = ITEMS.find(i => i.id === id), dj = it.how; Object.defineProperty(it, 'how', { get: () => S.opening ? t : dj }); });
-{ const q = QUIRKS.find(q => q.id === 'kata'), dj = q.how; Object.defineProperty(q, 'how', { get: () => S.opening ? "Reward from Master Kai's goal: weekly routine 3 times" : dj }); }
+{ const q = QUIRKS.find(q => q.id === 'kata'), dj = q.how; Object.defineProperty(q, 'how', { get: () => S.opening ? "Reward from Master Kai's trial: weekly routine 3 times" : dj }); }
 { const sp = ITEMS.find(i => i.id === 'spirit'), dj = sp.how; Object.defineProperty(sp, 'name', { get: petName }); Object.defineProperty(sp, 'how', { get: () => S.opening ? 'Reached Heart level 2' : dj }); sp.cond = () => S.opening ? Lv('CHA') >= 2 : Lv('DIS') >= 3; }
 { const gy = PLACES.find(p => p.id === 'gym'), dj = gy.how; Object.defineProperty(gy, 'how', { get: () => S.opening ? 'Trained 20 times' : dj }); gy.cond = () => S.log.filter(e => S.opening ? isTr(e.id) : e.id == 1).length >= 20; }
 [['orvel', 0, 1, 'Seven days of learning! Take my spare monocle. Everything looks wiser through it.'], ['rose', 0, 1, 'Five days of kindness! I sewed you an apron, dear.'], ['kai', 1, 0, 'A calm week starts with a good routine. Prepare, and you are free.']].forEach(([id, k, j, t]) => {
@@ -4884,13 +4903,13 @@ function rlAccept(id, off) {
 function rlReport(id, t) {
   const ws = WS(), st = t.stat, lv0 = {}; Object.keys(NAMES).forEach(k => lv0[k] = Lv(k));
   const a = gain(st, t.reward), b = gain(st, 1);
-  S.tasks = S.tasks.filter(x => x !== t); ws.rl[id] = null; ws.rlLast[id] = t.name; if (id === 'rose' && mgActive('rose') && mgK('rose') === 1) mgS('rose').rl = (mgS('rose').rl || 0) + 1; if (NEWC[id]) frBonus(id, 4); if (NEWC[id] || FAMQ[id]) ws.rlDay[id] = dn(); checkTrials(); checkUnlocks(); save();
+  S.tasks = S.tasks.filter(x => x !== t); ws.rl[id] = null; ws.rlLast[id] = t.name; if (id === 'rose' && mgActive('rose') && mgK('rose') === 1) mgS('rose').rl = (mgS('rose').rl || 0) + 1; if (NEWC[id]) frBonus(id, 4); if (NEWC[id] || FAMQ[id]) ws.rlDay[id] = dn(); checkUnlocks(); save();
   const ups = Object.keys(NAMES).filter(k => Lv(k) > lv0[k]), nm = NAMES[st][0] + NAMES[st].slice(1).toLowerCase();
   const thanks = { rose: 'Oh, that warms my heart, dear!', bjorn: 'THAT\'S what I\'m talking about! Strong!', orvel: 'Marvelous! A sharper mind every day!', kai: 'Good. Small steps build mountains.', wren: 'Nice work! See? You\'re a builder too.', pip: 'Bravo! That one\'s going in a song.', fisher: '...Nice. Really. Thanks for doing that.', mira: 'Wonderful! That\'s exactly what Grandma meant by "show up for each other".' }[id];
   const next = NEWC[id] ? 'NEW TASK IN A COUPLE OF DAYS' : FAMQ[id] ? 'NEW TASK IN A FEW DAYS' : 'NEW TASK TOMORROW';
   dialog(id, [thanks], () => {
     sfx('lvl');
-    fxCard('', `<small class="tpk">REAL-LIFE QUEST DONE!</small><h3>${esc(t.name)}</h3>${npcCanvas(id) ? '<div class="rlport"></div>' : ''}<p class="lbl">FROM ${MN[id].toUpperCase()}</p><p>${a || b ? '+' + (a + b) + ' ' + nm : 'Your ' + nm + ' trial is open, so no new points right now.'}</p><p class="lbl">${next}</p>`, 'AWESOME!', () => { if (ups.length && fxOn()) levelBanner(ups); });
+    fxCard('', `<small class="tpk">REAL-LIFE QUEST DONE!</small><h3>${esc(t.name)}</h3>${npcCanvas(id) ? '<div class="rlport"></div>' : ''}<p class="lbl">FROM ${MN[id].toUpperCase()}</p><p>+${a + b} ${nm}</p><p class="lbl">${next}</p>`, 'AWESOME!', () => { if (ups.length && fxOn()) levelBanner(ups); });
     const port = document.querySelector('.fxtier .rlport'); if (port) { const c = npcCanvas(id), big = document.createElement('canvas'); big.width = c.width * 3; big.height = c.height * 3; const g = big.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(c, 0, 0, big.width, big.height); port.appendChild(big); }
   });
 }
@@ -4947,7 +4966,7 @@ function questLog() {
   Object.keys(WQ).forEach(id => { const s = wq(id); if (s === 1 || s === 2) add('STORY', s === 1 ? WQ[id].goal : WQ[id].back, s === 2 ? 'Ready! Go see ' + MN[id] : 'From ' + MN[id], s === 2); });
   if (nw.ask && nw.met == null) add('STORY', nw.box ? 'Bring the toolbox back to Wren' : 'Find Wren\'s toolbox in Whisperwood', nw.box ? 'Ready! Go see Wren' : 'From Wren', !!nw.box);
   if (np.ask && !np.featherBack) add('STORY', np.feather ? 'Bring the feather to Pip' : 'Find Pip\'s blue feather in Whisperwood', np.feather ? 'Ready! Go see Pip' : 'From Pip', !!np.feather);
-  Object.keys(MG).filter(mgActive).forEach(id => { const g = mgCur(id), n = mgProg(id), ok = n >= g.n; add('GOALS', g.goal, ok ? 'Goal reached! Tell ' + MN[id] : 'From ' + MN[id] + ' · ' + n + '/' + g.n, ok); });
+  Object.keys(MG).filter(mgActive).forEach(id => { const g = mgCur(id), n = mgProg(id), ok = n >= g.n; add('TRIALS', g.goal, ok ? 'Trial passed! Tell ' + MN[id] : 'From ' + MN[id] + ' · ' + n + '/' + g.n, ok); });
   S.tasks.filter(t => t.mentor).forEach(t => add('REAL-LIFE TASKS', t.name, t.done ? 'Done! Report to ' + MN[t.mentor] : 'From ' + MN[t.mentor] + ' · check it off in your quests', !!t.done));
   return L;
 }
@@ -5129,6 +5148,7 @@ function worldDraw() {
 ensure();render();
 if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+setTimeout(rankCheck,800);   // v67: points back from the old trials, and any new rank waiting
 setTimeout(()=>{bossCheck();suggCheck()},1200);
 </script>
 </body>
