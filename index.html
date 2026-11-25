@@ -1035,7 +1035,8 @@ function charLayers(str, int, cha, gear, pose) {
   const W = 44, H = 44, FB = 40, CX = (gear && gear.pet) ? ((gear.tiers && gear.tiers.STR) ? 17 : 19) : 22; // FB = feet bottom row, CX = centre (between CX-1 and CX)
   const tier = l => l >= 6 ? 2 : l >= 3 ? 1 : 0;
   const sT = tier(str), iT = tier(int), cT = tier(cha), TT = (gear && gear.tiers) || {}, stT = TT.STR || 0, inT = TT.INT || 0, chT = TT.CHA || 0;
-  const aura = ['STR', 'INT', 'CHA', 'DIS'].every(k => (TT[k] || 0) >= 1);
+  const inWorld = !!(gear && gear.world);           // World sprite: no gold aura and no INT gem (DJ, 2026-11-22: they looked weird in the World)
+  const aura = !inWorld && ['STR', 'INT', 'CHA', 'DIS'].every(k => (TT[k] || 0) >= 1);
   const C = {
     o: '#3b2416',                                      // outline (dark warm brown)
     s: '#f3c4a2', S: '#d99b7e', K: '#ffe0c9', b: '#ef9b8f', // skin
@@ -1536,7 +1537,7 @@ function charLayers(str, int, cha, gear, pose) {
     const m = PET_MAPS[petStage], pw = m[0].length, px = 43 - pw, py = FB - m.length + 1;
     m.forEach((row, j) => [...row].forEach((ch, i) => { if (ch !== '.' && !body[py + j][px + i]) body[py + j][px + i] = '#p' + ch; }));
   }
-  if (inT >= 1 && pose !== 'bulb') {            // floats in the sky to the upper left, clear of the head
+  if (inT >= 1 && pose !== 'bulb' && !inWorld) {            // floats in the sky to the upper left, clear of the head
     const rn = ['..B..', '.BLB.', 'BLYBB', '.BBB.', '..B..'], ry = inT >= 2 ? 9 : 6;
     rn.forEach((row, j) => [...row].forEach((c, i) => { if (c !== '.') put(body, 2 + i, ry + j, c === 'L' ? 'n' : c); }));
     if (inT >= 2) ['.nn.nn.', 'nNnInNn', 'nnnInnn', 'IIIAIII'].forEach((row, j) => [...row].forEach((c, i) => { if (c !== '.') put(body, 2 + i, 2 + j, c); }));
@@ -3062,7 +3063,7 @@ function spiritCanvas(stage) {
 }
 // The hero is drawn by the home-screen character code, so equipped gear and tier looks always match
 function heroCanvas(pose) {
-  const gr = Object.assign({}, gear(), { pet: 0 }), d = charLayers(Lv('STR'), Lv('INT'), Lv('CHA'), gr, pose || '');
+  const gr = Object.assign({}, gear(), { pet: 0, world: 1 }), d = charLayers(Lv('STR'), Lv('INT'), Lv('CHA'), gr, pose || '');
   const body = d.layers.body; let x0 = 99, y0 = 99, x1 = 0, y1 = 0;
   body.forEach((row, y) => row.forEach((col, x) => { if (col) { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); } }));
   const c = document.createElement('canvas'); c.width = x1 - x0 + 1; c.height = y1 - y0 + 1; const g = c.getContext('2d');
